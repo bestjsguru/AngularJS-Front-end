@@ -1,0 +1,259 @@
+<div class="chart-settings">
+    <div class="modal-header">
+        <h4 class="modal-title">Chart Settings</h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-tabs-wrapper">
+            <ul class="nav nav-tabs nav-justified">
+                <li ng-class="{'active': $ctrl.tabs.is('general')}">
+                    <a ng-click="$ctrl.tabs.activate('general')">General</a>
+                </li>
+                <li ng-class="{'active': $ctrl.tabs.is('axisLeft')}">
+                    <a ng-click="$ctrl.tabs.activate('axisLeft')">Left Y Axis</a>
+                </li>
+                <li ng-class="{'active': $ctrl.tabs.is('axisRight')}">
+                    <a ng-click="$ctrl.tabs.activate('axisRight')">Right Y Axis</a>
+                </li>
+                <li ng-class="{'active': $ctrl.tabs.is('metrics')}">
+                    <a ng-click="$ctrl.tabs.activate('metrics')">Metrics</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+
+            <!-- GENERAL -->
+            <div class="tab-pane" ng-class="{'active': $ctrl.tabs.is('general')}">
+                <div class="form-group">
+                    <label class="m-r-10">X Axis</label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.xAxis.show" ng-value="true"> Show
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.xAxis.show" ng-value="false"> Hide
+                    </label>
+                    <input type="text" class="form-control" ng-model="$ctrl.settings.xAxis.label" placeholder="Axis Label">
+                </div>
+
+                <div class="form-group">
+                    <label class="w-100">General Settings</label>
+
+                    <div class="settings-wrapper">
+                        <div class="item" ng-class="{active: $ctrl.settings.legend.show}" ng-click="$ctrl.toggleLegend()">
+                            <div class="chart-wrapper">
+                                <svg class="chart" viewbox="0 0 160 100">
+                                    <polyline fill="none" stroke-width="2" points="00,120 20,60 40,80 60,20 80,80 100,80 120,60 140,80 160,90 180,80 200, 110 220, 10 240, 70 260, 100"></polyline>
+                                </svg>
+                            </div>
+                            <div class="legend-drawing-wrapper">
+                                <div class="legend-drawing"></div>
+                                <div class="legend-drawing"></div>
+                                <div class="legend-drawing"></div>
+                            </div>
+                            <span class="item-title">Chart Legend</span>
+                        </div>
+                        <div class="item" ng-class="{active: $ctrl.settings.valueLabels.show}" ng-click="$ctrl.toggleValueLabels()">
+                            <div class="chart-wrapper value-labels">
+                                <div class="value-label"></div>
+                                <div class="value-label second"></div>
+                                <div class="value-label third"></div>
+                                <svg class="chart" viewbox="0 0 160 105">
+                                    <polyline fill="none" stroke-width="2" points="00,120 20,60 40,80 60,20 80,80 100,80 120,60 140,80 160,90 180,80 200, 110 220, 10 240, 70 260, 100"></polyline>
+                                </svg>
+                            </div>
+                            <span class="item-title">Value labels</span>
+                        </div>
+                        <div class="item" ng-class="{active: $ctrl.settings.fillChart}" ng-click="$ctrl.toggleFillChart()">
+                            <div class="chart-wrapper fill-chart">
+                                <svg class="chart" viewbox="0 0 160 105">
+                                    <polyline stroke-width="2" points="00,120 20,60 40,80 60,20 80,80 100,80 120,60 140,80 160,90 180,80 200, 110 220, 10 240, 70 260, 100"></polyline>
+                                </svg>
+                            </div>
+                            <span class="item-title">Fill chart</span>
+                        </div>
+                        <div class="item spider-chart-item" ng-class="{active: $ctrl.settings.spider.enabled}" ng-click="$ctrl.toggleSpiderChart()">
+                            <div class="chart-wrapper spider-chart">
+                                <div class="line-1"></div>
+                                <div class="line-2"></div>
+                                <div class="line-3"></div>
+                                <div class="hexagon-wrapper">
+                                    <div class="hexagon h-4">
+                                        <div class="left"></div>
+                                        <div class="right"></div>
+                                    </div>
+                                    <div class="hexagon h-5">
+                                        <div class="left"></div>
+                                        <div class="right"></div>
+                                    </div>
+                                    <div class="hexagon h-6">
+                                        <div class="left"></div>
+                                        <div class="right"></div>
+                                    </div>
+                                    <div class="axis"></div>
+                                </div>
+                            </div>
+                            <span class="item-title">Spider chart</span>
+                        </div>
+                        <div class="item spider-chart-item" ng-class="{active: $ctrl.settings.stacked}" ng-click="$ctrl.toggleStacked()">
+                            <div class="chart-wrapper stacked-chart">
+                                <div class="bar-1"></div>
+                                <div class="bar-2"></div>
+                                <div class="bar-3"></div>
+                                <div class="bar-4"></div>
+                            </div>
+                            <span class="item-title">Stacked chart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEFT Y AXIS -->
+            <div class="tab-pane" ng-class="{'active': $ctrl.tabs.is('axisLeft')}">
+                <div class="form-group">
+                    <label class="m-r-10">Y Axis (left)</label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.leftYAxis.show" ng-value="true"> Show
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.leftYAxis.show" ng-value="false"> Hide
+                    </label>
+
+                    <input type="text" class="form-control m-b-5" ng-model="$ctrl.settings.leftYAxis.label" placeholder="Axis Label">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="$ctrl.settings.leftYAxis.autoLabel" ng-value="true"> Auto Label
+                    </label>
+                </div>
+
+                <div class="form-group m-t-20">
+                    <label class="w-100 d-block m-b-n5">Axis Settings</label>
+                    <label class="checkbox text-left" ng-click="$ctrl.autoScaleAxisRange($ctrl.settings.leftYAxis)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.settings.leftYAxis.autoScale, 'fa-square-o': !$ctrl.settings.leftYAxis.autoScale}">&nbsp;</i>
+                        <span>Auto Scale Axis</span>
+                    </label>
+
+                    <label class="checkbox text-left" ng-click="$ctrl.customAxisRange($ctrl.settings.leftYAxis)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.settings.leftYAxis.range, 'fa-square-o': !$ctrl.settings.leftYAxis.range}">&nbsp;</i>
+                        <span>Custom Axis Range</span>
+                    </label>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control m-b-10" ng-model="$ctrl.settings.leftYAxis.rangeFrom"
+                                   placeholder="From" ng-hide="!$ctrl.settings.leftYAxis.range">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control m-b-10" ng-model="$ctrl.settings.leftYAxis.rangeTo"
+                                   placeholder="To" ng-hide="!$ctrl.settings.leftYAxis.range">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="d-block m-b-n5">Metrics on this axis</label>
+                    <ul>
+                        <li ng-repeat="metric in $ctrl.settings.metrics track by $index" ng-if="!metric.hidden" ng-click="$ctrl.toggleMetricAxis(metric)">
+                            <label class="checkbox">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': metric.leftYAxis, 'fa-square-o': !metric.leftYAxis}">&nbsp;</i>
+                                <span ng-bind="metric.name"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <span class="help-block">* Selected metrics will be displayed on this axis while others will display on the right Y axis</span>
+                </div>
+            </div>
+
+            <!-- RIGHT Y AXIS -->
+            <div class="tab-pane" ng-class="{'active': $ctrl.tabs.is('axisRight')}">
+                <div class="form-group">
+                    <label class="m-r-10">Y Axis (right)</label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.rightYAxis.show" ng-value="true"> Show
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" ng-model="$ctrl.settings.rightYAxis.show" ng-value="false"> Hide
+                    </label>
+
+                    <input type="text" class="form-control m-b-5" ng-model="$ctrl.settings.rightYAxis.label" placeholder="Axis Label">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="$ctrl.settings.rightYAxis.autoLabel" ng-value="true"> Auto Label
+                    </label>
+                </div>
+
+                <div class="form-group m-t-20">
+                    <label class="w-100 d-block m-b-n5">Axis Settings</label>
+                    <label class="checkbox text-left" ng-click="$ctrl.autoScaleAxisRange($ctrl.settings.rightYAxis)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.settings.rightYAxis.autoScale, 'fa-square-o': !$ctrl.settings.rightYAxis.autoScale}">&nbsp;</i>
+                        <span>Auto Scale Axis</span>
+                    </label>
+
+                    <label class="checkbox text-left" ng-click="$ctrl.customAxisRange($ctrl.settings.rightYAxis)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.settings.rightYAxis.range, 'fa-square-o': !$ctrl.settings.rightYAxis.range}">&nbsp;</i>
+                        <span>Custom Axis Range</span>
+                    </label>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control m-b-10" ng-model="$ctrl.settings.rightYAxis.rangeFrom"
+                                   placeholder="From" ng-hide="!$ctrl.settings.rightYAxis.range">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control m-b-10" ng-model="$ctrl.settings.rightYAxis.rangeTo"
+                                   placeholder="To" ng-hide="!$ctrl.settings.rightYAxis.range">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="d-block m-b-n5">Metrics on this axis</label>
+                    <ul>
+                        <li ng-repeat="metric in $ctrl.settings.metrics track by $index" ng-if="!metric.hidden" ng-click="$ctrl.toggleMetricAxis(metric)">
+                            <label class="checkbox">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': !metric.leftYAxis, 'fa-square-o': metric.leftYAxis}">&nbsp;</i>
+                                <span ng-bind="metric.name"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <span class="help-block">* Selected metrics will be displayed on this axis while others will display on the left Y axis</span>
+                </div>
+            </div>
+
+            <!-- METRICS -->
+            <div class="tab-pane" ng-class="{'active': $ctrl.tabs.is('metrics')}">
+                <table class="table metric-table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Metric Name</th>
+                            <th>Select Axis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="metric in $ctrl.settings.metrics track by $index" ng-if="!metric.hidden">
+                            <td ng-bind="metric.name"></td>
+                            <td class="">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="metric.leftYAxis" ng-value="true"> Left
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="metric.leftYAxis" ng-value="false"> Right
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-second btn-block" ng-disabled="$ctrl.saving" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-first btn-block" ng-disabled="$ctrl.saving" ng-click="$ctrl.save()">
+                    {{$ctrl.saving ? 'Saving...' : 'Save'}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="dexi-link" ng-if="$ctrl.card">
+
+    <div ng-if="!$ctrl.integrations.length" class="dexi-link-wrapper">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="preview-area-wrapper">
+                    <div class="preview-area">
+                        <div class="preview-icon animated zoomIn">
+                            <i class="fa fa-plug" aria-hidden="true"></i>
+                        </div>
+                        <span class="preview-title">Dexi integration is not configured</span>
+                        <span ng-if="$ctrl.user.isAdmin()">In order to export to Dexi you will need to configure this integration first</span>
+                        <span ng-if="!$ctrl.user.isAdmin()">Please contact organisation administrator in order to configure this integration</span>
+
+                        <div class="clearfix"></div>
+
+                        <span ng-if="$ctrl.user.isAdmin()" ui-sref="profile.organisation({tab: 'integrations'})" class="btn btn-sm btn-first m-t-15">
+                            Go to integrations page
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.integrations.length" class="dexi-link-wrapper">
+
+        <div class="row">
+            <div class="col-md-12">
+                Select a Dexi configuration for data processing. This specifies the Dexi robot where the data is sent to, and ultimately the third party system where the data is input.
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-4" ng-repeat="link in $ctrl.links track by $index">
+                        <div class="thumbnail" ng-click="$ctrl.select(link)" ng-class="{active: $ctrl.isSelected(link)}">
+                            <i class="fa fa-fw fa-check"></i>
+                            <div class="caption">
+                                <h3 ng-bind="link.displayName"></h3>
+                                <pre ng-bind="link.exportLink"></pre>
+                                <p class="text-right m-b-0">
+                                    <span class="btn btn-link" ng-click="$ctrl.delete(link, $event)" ng-disabled="$ctrl.deleting">Delete configuration?</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" ng-class="{'new-configuration': $ctrl.newConfiguration}">
+                        <div class="thumbnail new-configuration-button" ng-click="$ctrl.openForm()">
+                            <div class="text-center">
+                                <i class="fa fa-fw fa-plus fa-2x"></i>
+                                <span>New Dexi Robot Configuration</span>
+                            </div>
+                        </div>
+                        <div class="thumbnail new-configuration-form">
+                            <div class="caption">
+                                <form name="$ctrl.form" ng-submit="$ctrl.save()" novalidate>
+                                    <div class="form-group">
+                                        <label>Create new configuration</label>
+                                        <input name="displayName" ng-model="$ctrl.displayName" type="text" class="form-control" placeholder="Title" ng-disabled="$ctrl.loading" required>
+
+                                        <div class="error-messages" ng-messages="$ctrl.form.displayName.$error" ng-if="$ctrl.form.$submitted">
+                                            <div ng-messages-include="error-messages"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group configuration-key">
+                                        <input name="exportLink" ng-model="$ctrl.exportLink" type="text" class="form-control" placeholder="Configuration key" ng-disabled="$ctrl.loading" required>
+
+                                        <div class="error-messages" ng-messages="$ctrl.form.exportLink.$error" ng-if="$ctrl.form.$submitted">
+                                            <div ng-messages-include="error-messages"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        <span class="help-block">* New configuration will be auto selected</span>
+                                        <span class="btn btn-link" ng-click="$ctrl.closeForm()" ng-disabled="$ctrl.loading">Cancel</span>
+                                        <button type="submit" class="btn btn-success" ng-disabled="$ctrl.loading">
+                                            {{$ctrl.loading ? 'Creating' : 'Create'}}
+                                        </button>
+                                    </div>
+                                    <div class="form-group text-danger" ng-if="$ctrl.error">
+                                        <span>{{$ctrl.error}}</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row border-top pad-t-15">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <span class="btn btn-success pull-right" ng-disabled="!$ctrl.link" ng-click="$ctrl.process()">Process data</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

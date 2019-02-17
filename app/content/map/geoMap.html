@@ -1,0 +1,14 @@
+<div class="chart-loading">
+    <loader ctrl-check="$ctrl.loading"></loader>
+    <leaflet markers="$ctrl.markers"
+             geojson="$ctrl.geojson"
+             layers="$ctrl.defaults.layers"
+             lf-center="$ctrl.center"
+             legend="$ctrl.legend"
+             height="{{$ctrl.height}}"
+             width="{{$ctrl.width}}" defaults="{attributionControl: false}">
+    </leaflet>
+    <div ng-if="$ctrl.feature" class="counter-map country f32">
+        <span ng-bind-html="$ctrl.getLabelData()"></span>
+    </div>
+</div>

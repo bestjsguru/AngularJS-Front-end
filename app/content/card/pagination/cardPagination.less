@@ -1,0 +1,60 @@
+.card-pagination-wrapper {
+    position: absolute;
+    opacity: 0;
+    bottom: 0;
+    left: 105px;
+    z-index: 5;
+    height: 36px;
+    padding-top: 8px;
+    margin: 0;
+    width: calc(~"100% - 210px");
+    overflow: visible;
+    border-radius: 0 0 3px 3px;
+    transition: bottom 0.1s linear;
+
+    .card-pagination {
+        display: block;
+
+        .pagination-buttons {
+            display: block;
+            text-align: center;
+
+            .fa {
+                font-size: 11px;
+                color: @gray-light;
+            }
+
+            .fa-2x {
+                font-size: 14px;
+            }
+
+            .pagination {
+                margin: 0 auto;
+                display: flex;
+                flex-wrap: nowrap;
+
+                > li {
+                    display: flex;
+                    flex: 1 1 auto;
+                }
+            }
+        }
+
+        .pagination-suffix {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+    }
+
+    &.small-card {
+        width: calc(~"100% - 140px");
+        left: 35px;
+    }
+}
+
+.card-wrapper-explore, .expand-card-wrapper {
+    .card-pagination-wrapper {
+        opacity: 1;
+    }
+}

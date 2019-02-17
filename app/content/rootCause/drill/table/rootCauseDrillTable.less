@@ -1,0 +1,49 @@
+.root-cause-drill-table {
+    overflow-x: auto;
+    position: relative;
+
+    .drill-filter {
+        padding: 15px;
+    }
+
+    .table {
+        th {
+            .fa {
+                position: absolute;
+                top: 14px;
+                right: 4px;
+            }
+        }
+
+        tr {
+            td {
+                padding: 8px 14px;
+
+                .root-cause-metric-value-wrapper {
+                    margin: -5px 0;
+                }
+
+                .root-cause-value {
+                    max-width: 280px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    .fa {
+                        &[title] {
+                            display: none;
+                        }
+                    }
+                }
+
+                @import '../metricValue/rootCauseMetricValue';
+
+                &:first-child {
+                    padding-left: 14px;
+                }
+            }
+        }
+    }
+}
+
+@import '../metricOverview/rootCauseMetricOverview';

@@ -1,0 +1,44 @@
+<div class="forecast-analysis-dimensions">
+    <ul class="nav nav-tabs no-border">
+        <li class="w-100">
+            <a href="#">Dimensions</a>
+            <div class="dimension-mode text-right">
+                <span ng-click="$ctrl.setManualMode(false)">Auto</span>
+                <i ng-click="$ctrl.setManualMode(!$ctrl.dimension.manualMode)" class="fa fa-fw text-danger fa-toggle-on"
+                   ng-class="{'fa-rotate-180': !$ctrl.dimension.manualMode}"></i>
+                <span ng-click="$ctrl.setManualMode(true)">Manual</span>
+            </div>
+        </li>
+    </ul>
+
+    <div ng-if="!$ctrl.dimension.manualMode" class="auto-mode-message">
+        <i class="fa fa-fw fa-magic"></i>
+        Our system will find the most relevant dimensions
+    </div>
+
+    <div ng-if="$ctrl.dimension.manualMode">
+        <div class="form-group has-feedback dimensions-search">
+            <input type="text" class="form-control" placeholder="{{$ctrl.searchPlaceholder}}"
+                   ng-disabled="!$ctrl.actualMetric || !$ctrl.forecastMetric || $ctrl.loading" ng-model="$ctrl.search">
+            <i class="fa form-control-feedback" ng-class="{'fa-search': !$ctrl.loading, 'fa-spin fa-circle-o-notch': $ctrl.loading}"></i>
+        </div>
+
+        <div class="forecast-analysis-dimensions-list" ng-if="$ctrl.actualMetric && $ctrl.forecastMetric && !$ctrl.loading">
+            <ul ng-if="$ctrl.dimension.items.length">
+                <li ng-repeat="dimension in $ctrl.dimension.items | filter: {name: $ctrl.search} track by $index">
+                    <a href ng-class="{'selected': dimension.selected}" ng-click="$ctrl.selectDimension(dimension)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': dimension.selected, 'fa-square-o': !dimension.selected}"></i>
+                        {{dimension.name}}
+                    </a>
+                </li>
+            </ul>
+            <div class="no-available-dimensions text-center" ng-if="!$ctrl.dimension.items.length">
+                No available dimensions
+            </div>
+        </div>
+        <div class="available-dimensions-limit" ng-class="{'limit-reached': $ctrl.dimensionLimitIsReached}"
+             ng-if="$ctrl.showLimitMessage()" ng-bind="$ctrl.dimensionLimitMessage">
+
+        </div>
+    </div>
+</div>

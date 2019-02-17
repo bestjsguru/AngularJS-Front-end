@@ -1,0 +1,36 @@
+<div class="panel-group datasource-wrapper" id="accordion" role="tablist" aria-multiselectable="true">
+    <div ng-if="$ctrl.tables.length" class="panel panel-default single-datasource">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" ng-click="$ctrl.isCollapsed = !$ctrl.isCollapsed"  aria-expanded="true">
+                    <span class="datasource-name"><i class="fa fa-database"></i> Datasource 1</span>
+                    <div class="datasource-indicator-wrapper">
+                        <span class="datasource-indicator">
+                            <span>T</span>
+                            <span ng-bind-html="$ctrl.tables.length"></span>
+                        </span>
+                    </div>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+            </h4>
+        </div>
+        <div id="datasource1" uib-collapse="$ctrl.isCollapsed" class="panel-collapse" role="tabpanel">
+            <div class="panel-body">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 200, 'blur': 0 } }" ng-model="$ctrl.tableFilter" placeholder="Search Tables">
+                </div>
+                <div id="tables">
+                    <ul class="list-group sortable" dragula="'bag-one'" dragula-scope="$ctrl.parent.$scope"  >
+                        <li data-id="{{::table.id}}" tu-popover tu-popover-html="{{table.label}}" tu-popover-placement="top" class="list-group-item"
+                            ng-repeat="table in $ctrl.tables | customSearch: 'label' : $ctrl.tableFilter track by table.id" >
+                            <a href ng-class="{'active' : table.isSelected}">[{{table.connectionCount}}] {{table.label}}</a>
+                            <span class="icons">
+                                <i class="fa fa-file-text" aria-hidden="true" ng-click="$ctrl.openModal(table)"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

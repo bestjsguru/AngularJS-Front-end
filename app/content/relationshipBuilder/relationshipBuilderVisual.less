@@ -1,0 +1,60 @@
+.relationship-builder-visual {
+    margin: 0 0 0 370px;
+    min-height: calc(~"100vh - 143px");
+    background: @white;
+    border-top: 1px solid @iron;
+
+    .items {
+        display: flex;
+        flex-wrap: wrap-reverse;
+        flex-direction: row-reverse;
+        padding: 0 7px 7px 7px;
+        border-bottom: 1px solid @iron;
+
+        .item {
+            flex: 1 1 220px;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+
+            &.form-group {
+                align-self: baseline;
+                margin: 0;
+                padding: 13px 7px 7px 7px;
+            }
+        }
+    }
+
+    @import (multiple) './relationshipBuilderTable';
+
+    .metric-btn {
+        cursor: move;
+
+        &.goal-metric {
+            cursor: default;
+        }
+    }
+
+    .relationship-preview-tab {
+        .metric-btn {
+            cursor: default;
+        }
+    }
+
+    .formula-wrapper {
+        padding: 14px;
+        background: @td-gray-pale;
+        border-top: 1px solid @iron;
+
+        .help-block {
+            margin-bottom: 0;
+        }
+    }
+
+    .button-wrapper {
+        float: left;
+        width: 100%;
+        padding: 14px;
+        border-top: 1px solid @iron;
+    }
+}

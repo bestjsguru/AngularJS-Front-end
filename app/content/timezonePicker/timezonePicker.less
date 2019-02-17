@@ -1,0 +1,45 @@
+app-timezone-picker {
+    display: block;
+    width: 100%;
+}
+
+.timezone-picker {
+    .dropdown {
+        min-height: 35px;
+
+        &.open {
+            .dropdown-toggle {
+                border-color: @hoki;
+            }
+        }
+
+        .dropdown-toggle {
+            padding-top: 11px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            .fa-caret-down {
+                float: right;
+                margin-top: 3px;
+            }
+        }
+
+        .dropdown-menu {
+            right: 0;
+            border-color: @hoki;
+            top: 39px;
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+
+            li {
+                &:last-child {
+                    border-top: solid 1px @porcelain;
+                }
+            }
+        }
+    }
+}
+
+@import './modal/timezonePickerModal';

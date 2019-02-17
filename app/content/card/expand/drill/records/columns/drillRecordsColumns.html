@@ -1,0 +1,92 @@
+<div class="drill-records-columns" ng-if="$ctrl.isVisible">
+    <div class="drill-columns-title" ng-if="!$ctrl.metric.isFormula()">
+        <i class="fa fa-arrow-left" ng-click="$ctrl.close()" ng-if="$ctrl.value"></i>
+
+        Show records <span>{{$ctrl.metric.name}}</span>
+
+        <i class="fa fa-times" ng-click="$ctrl.hide()" ng-if="!$ctrl.value"></i>
+    </div>
+
+    <div ng-if="!$ctrl.metric.isFormula()">
+        <div class="drill-search">
+            <input type="text"  ng-change="$ctrl.filter()" ng-model="$ctrl.query" class="form-control" placeholder="Filter columns"
+                   ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 200, 'blur': 0 } }">
+            <i class="fa fa-search"></i>
+        </div>
+
+        <div class="drill-columns-wrapper">
+            <loader ctrl-check="$ctrl.loading"></loader>
+
+            <ul ng-if="!$ctrl.loading">
+                <li class="select-actions">
+                    <a ng-click="$ctrl.selectAll()">Select all</a>
+                    <a ng-click="$ctrl.unselectAll()">Unselect all</a>
+                </li>
+
+                <li ng-repeat="table in $ctrl.tables track by $index">
+
+                    <div class="drill-column-table">
+                        <div class="drill-column-table-name">
+                            <i class="fa fa-fw" ng-class="$ctrl.tableIconClass(table)" ng-click="$ctrl.toggleTableColumns(table)"></i>
+
+                            <div class="table-title" ng-click="$ctrl.toggleTable(table)">
+                                <span ng-bind-html="table.name | highlight: $ctrl.query"></span>
+                                <span class="column-count">({{$ctrl.columnCount(table)}})</span>
+                            </div>
+
+                            <div class="table-collapse" ng-click="$ctrl.toggleTable(table)">
+                                <i class="fa fa-fw" ng-class="{'fa-angle-right': table.collapsed, 'fa-angle-down': !table.collapsed}"></i>
+                            </div>
+                        </div>
+
+                        <ul ng-if="!table.collapsed">
+                            <li ng-repeat="column in table.columns track by $index" ng-disabled="$ctrl.isOriginalGrouping(column)"
+                                ng-class="{'drill-active': $ctrl.isOriginalGrouping(column)}" ng-click="$ctrl.toggleColumn(column)">
+                                <div class="drill-table-columns">
+                                    <div class="drill-column-name">
+                                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': column.selected, 'fa-square-o': !column.selected}"></i>
+
+                                        <span ng-bind-html="column.getLabel() | highlight: $ctrl.query"></span>
+
+                                        <span class="drill-position" ng-if="$ctrl.isOriginalGrouping(column)">
+                                            <i class="fa fa-level-down"></i>
+                                        </span>
+
+                                        <span class="column-type" ng-bind-html="column.type.toLowerCase()"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="drill-error" ng-if="!$ctrl.tables.length">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    <span>No columns available</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="drill-error" ng-if="$ctrl.metric.isFormula()">
+        <i class="fa fa-fw fa-exclamation-triangle"></i>
+        <span>Drill on formulas not yet supported</span>
+    </div>
+
+    <div class="drill-footer">
+        <div ng-if="$ctrl.selectedColumns().length > 100" class="column-limit">
+            <div class="help-block">
+                Selecting many (100+) columns may detrimentally impact performance - for best practice, only bring back columns of interest
+            </div>
+        </div>
+
+        <span class="help-block pull-left">
+            * {{$ctrl.selectedColumns().length ? $ctrl.selectedColumns().length + ' columns selected' : 'Select columns you want to include'}}
+        </span>
+        <span class="btn btn-sm btn-fourth pull-right" ng-disabled="!$ctrl.selectedColumns().length" ng-click="$ctrl.drillRecords()">
+            <i class="fa fa-fw fa-eye"></i> Show records
+        </span>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

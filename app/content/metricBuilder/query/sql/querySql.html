@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <textarea ui-codemirror ui-codemirror-opts="qs.codemirrorConfig.get()" ui-refresh="true"
+          name="sqlQuery" ng-model-options="{ debounce: 400 }" required tu-sql-metric-validator
+          ng-model="$parent.$parent.$parent.md.data.statement" placeholder="Put SQL statement here">
+    </textarea>
+</div>
+<div class="error-messages" ng-messages="$parent.$parent.$parent.md.form.sqlQuery.$error" ng-if="$parent.$parent.$parent.md.form.sqlQuery.$dirty">
+    <div ng-messages-include="error-messages"></div>
+</div>
+<span class="help-block">Press Ctrl + Space to see autocomplete options ( tables and SQL syntax )</span>
+

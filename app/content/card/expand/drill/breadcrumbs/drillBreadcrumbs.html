@@ -1,0 +1,72 @@
+<div ng-if="$ctrl.card.drill.isActive() || $ctrl.card.drill.presets.active">
+    <div class="drill-breadcrumbs">
+        <div class="item-title">
+            <div class="item-name">Drill path:</div>
+        </div>
+
+        <div class="item-breadcrumbs">
+            <div class="item" ng-if="$ctrl.dates.length">
+                <div class="item-name">Date</div>
+                <div class="item-value">
+                    <ui-select name="date" ng-disabled="$ctrl.card.metrics.loading" ng-model="$ctrl.dates.selected" on-select="$ctrl.selectDate($item)" search-enabled="false" class="w-100" required>
+                        <ui-select-match placeholder="Select date"  tu-popover tu-popover-html="{{ $ctrl.card.getDateRangeString(false) }}" tu-popover-placement="top">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="date in $ctrl.dates">
+                            <div ng-bind="date.label"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="item" ng-repeat="grouping in $ctrl.card.groupings.items">
+                <div class="item-name">
+                    {{grouping.column.getLabel()}}
+                </div>
+                <div class="item-value" ng-if="grouping.values.length">
+                    <app-column-value-dropdown
+                            class="input-md"
+                            name="value"
+                            ng-model="grouping.firstValue"
+                            column="grouping.column"
+                            placeholder="Select Value"
+                            on-change="$ctrl.refresh()"
+                            is-disabled="$ctrl.card.metrics.loading">
+                    </app-column-value-dropdown>
+                </div>
+                <div class="item-delete" ng-if="!$ctrl.card.drill.isOriginalGrouping(grouping)" ng-disabled="$ctrl.card.metrics.loading" ng-click="$ctrl.remove(grouping)">
+                    <i class="fa fa-times"></i>
+                </div>
+            </div>
+            <div class="item future-column" ng-repeat="column in $ctrl.card.drill.presets.futureColumns()">
+                <div class="item-name">
+                    {{column.getLabel()}}
+                </div>
+            </div>
+        </div>
+
+        <div class="item-options" ng-if="!$ctrl.card.drill.isRecords">
+            <button ng-if="$ctrl.card.drill.presets.active" ng-click="$ctrl.exitPreset()" class="btn btn-fourth exit-path">
+                <i class="fa fa-fw fa-times"></i> Exit path
+            </button>
+
+            <div class="preset-form" ng-if="!$ctrl.card.drill.presets.active">
+                <button ng-click="$ctrl.preset.saveMode = true" ng-if="!$ctrl.preset.saveMode" class="btn btn-info">
+                    Save path <i class="fa fa-fw fa-floppy-o"></i>
+                </button>
+
+                <div class="form-inline" ng-if="$ctrl.preset.saveMode">
+                    <input type="text" ng-model="$ctrl.preset.name" ng-disabled="$ctrl.preset.loading" class="form-control input-sm"
+                           placeholder="Preset name. Leave empty to use default">
+
+                    <button ng-click="$ctrl.savePreset()" ng-disabled="$ctrl.preset.loading" class="btn btn-success">
+                        {{$ctrl.preset.loading ? 'Saving' : 'Save'}}
+                    </button>
+
+                    <button ng-click="$ctrl.preset.saveMode = false" ng-disabled="$ctrl.preset.loading" class="btn btn-link">Cancel</button>
+
+                    <span ng-if="$ctrl.preset.error && !$ctrl.preset.loading" class="btn text-danger">
+                        <i class="fa fa-fw fa-exclamation"></i> {{$ctrl.preset.message}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

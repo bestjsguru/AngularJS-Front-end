@@ -1,0 +1,225 @@
+<div class="user-permissions-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">User Permissions</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="modal-tabs-wrapper">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li ng-class="{active: $ctrl.selectedTab=='permissions'}">
+                    <a ng-click="$ctrl.selectedTab='permissions'" ng-class="{disabled: $ctrl.error}">Permissions</a>
+                </li>
+                <li ng-class="{active: $ctrl.selectedTab=='groups'}">
+                    <a ng-click="$ctrl.selectedTab='groups'" ng-class="{disabled: $ctrl.error}">User groups</a>
+                </li>
+                <li ng-class="{active: $ctrl.selectedTab=='limit'}">
+                    <a ng-click="$ctrl.selectedTab='limit'" ng-class="{disabled: $ctrl.error}">Limit</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane" ng-if="!$ctrl.isAdminSelected" ng-class="{active: $ctrl.selectedTab == 'permissions'}">
+                <div class="form-group">
+                    <label>Select folders to give users access:</label>
+                    <div class="input-group">
+                        <input ng-model="$ctrl.query" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 300 }"
+                               class="form-control" type="text" placeholder="Search folders">
+
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.clear()" class="btn btn-lg btn-fourth">
+                                Clear <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                            </button>
+                       </span>
+                    </div>
+                </div>
+
+                <div ng-if="!$ctrl.loading && !$ctrl.folders.isEmpty()" class="select-button-wrapper">
+                    <span ng-click="$ctrl.toggleSelection()" class="text-uppercase">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.allSelected(), 'fa-square-o': !$ctrl.allSelected()}"></i>
+                        Select All
+                    </span>
+                    <span ng-click="$ctrl.toggleCollapse()" class="text-uppercase">
+                        {{$ctrl.allCollapsed() ? 'Expand' : 'Collapse'}} All
+                    </span>
+                </div>
+
+                <div class="folder-list-wrapper">
+                    <ul ng-if="!$ctrl.loading">
+                        <li ng-repeat="folder in $ctrl.folders.items track by folder.id" ng-if="!folder.hidden">
+                            <div class="folder-wrapper" ng-click="$ctrl.toggleFolder(folder)">
+                                <div class="item-data bold">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': folder.selected, 'fa-square-o': !folder.selected}"></i>
+                                    <i class="fa fa-fw fa-square" ng-if="!folder.selected && folder.partiallySelected"></i>
+
+                                    <div class="folder-title">
+                                        <span ng-bind-html="folder.title | highlight: $ctrl.query"></span>
+                                        <span class="dashboard-count">({{$ctrl.dashboardCount(folder)}})</span>
+                                    </div>
+
+                                    <div class="folder-collapse" ng-click="$ctrl.toggleFolderCollapse($event, folder)">
+                                        <i class="fa fa-fw" ng-class="{'fa-angle-right': folder.collapsed, 'fa-angle-down': !folder.collapsed}"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul ng-if="folder.hasDashboards() && !folder.collapsed">
+                                <li ng-repeat="dashboard in folder.dashboards track by dashboard.id" ng-if="!dashboard.hidden">
+                                    <div ng-click="$ctrl.toggleDashboard(folder, dashboard)">
+                                        <div class="item-data">
+                                            <i class="fa fa-fw" ng-if="!folder.selected" ng-class="{'fa-check-square-o': dashboard.selected, 'fa-square-o': !dashboard.selected}"></i>
+                                            <div ng-bind-html="dashboard.name | highlight: $ctrl.query"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li ng-if="!$ctrl.folders.isEmpty() && $ctrl.allHidden()">
+                            <div class="no-item-data text-center">
+                                <div>There are no items. Please refine your search query.</div>
+                            </div>
+                        </li>
+                        <li ng-if="$ctrl.folders.isEmpty()">
+                            <div class="no-item-data text-center">
+                                <div>No folders were created for your organisation...</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="$ctrl.loading">
+                        <li>
+                            <div class="no-item-data text-center">
+                                Loading folder list...
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="error-wrapper" ng-if="$ctrl.error">
+                    <div class="text-danger">
+                        <small>* You have to select at least one folder or dashboard to share.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" ng-class="{active: $ctrl.selectedTab == 'groups'}">
+                <div class="form-group">
+                    <label>Select user groups:</label>
+                    <div class="input-group">
+                        <input ng-model="$ctrl.groupsQuery" class="form-control" type="text" placeholder="Search groups">
+                        <span class="input-group-btn">
+                            <button ng-click="$ctrl.groupsQuery = ''" class="btn btn-lg btn-fourth">
+                                Clear <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                            </button>
+                       </span>
+                    </div>
+                </div>
+
+                <div ng-if="!$ctrl.loading && $ctrl.groups.length" class="select-button-wrapper">
+                    <span ng-click="$ctrl.toggleGroupsSelection()" class="text-uppercase">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.allGroupsSelected(), 'fa-square-o': !$ctrl.allGroupsSelected()}"></i>
+                        Select All
+                    </span>
+                </div>
+
+                <div class="folder-list-wrapper">
+                    <ul ng-if="!$ctrl.loading">
+                        <li ng-repeat="group in $ctrl.groups | searchByProperties: 'name' : $ctrl.groupsQuery as filteredGroups track by group.id" ng-click="$ctrl.toggleGroup(group)">
+                            <div class="folder-wrapper">
+                                <div class="item-data">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': group.selected, 'fa-square-o': !group.selected}"></i>
+                                    <div ng-bind-html="group.name | highlight: $ctrl.groupsQuery"></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-if="$ctrl.groups.length && !filteredGroups.length">
+                            <div class="no-item-data text-center">
+                                <div>There are no items. Please refine your search query.</div>
+                            </div>
+                        </li>
+                        <li ng-if="!$ctrl.groups.length">
+                            <div class="no-item-data text-center">
+                                <div>No groups were created for your organisation...</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <ul ng-if="$ctrl.loading">
+                        <li>
+                            <div class="no-item-data text-center">
+                                Loading group list...
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="error-wrapper" ng-if="$ctrl.error">
+                    <div class="text-danger">
+                        <small>* You have to select at least one user group.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" ng-if="$ctrl.isAdminSelected" ng-class="{active: $ctrl.selectedTab == 'permissions'}">
+                <div class="preview-area-wrapper">
+                    <div class="preview-area">
+                        <div class="preview-icon animated zoomIn">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </div>
+                        <span class="preview-title">Admin users</span>
+                        <span>Admin will have access to all available folders, dashboards and cards.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" ng-class="{active: $ctrl.selectedTab == 'limit'}">
+                <div ng-if="!$ctrl.isCurrentUser" class="alert text-center"
+                     ng-class="{'alert-warning': $ctrl.user.hasExpired(), 'alert-info': !$ctrl.user.hasExpired()}"
+                     ng-bind-html="::$ctrl.user.expirationString() || 'Has access forever'"></div>
+
+                <div class="col-lg-12 border-bottom m-t-15" ng-class="{disabled: $ctrl.limit.period}">
+                    <div class="group-option">
+                        <label class="checkbox text-left" ng-click="$ctrl.limit.forever = !$ctrl.limit.forever">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.limit.forever, 'fa-square-o': !$ctrl.limit.forever}">&nbsp;</i>
+                            <span>Grant access forever</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 form-group" ng-class="{disabled: $ctrl.limit.forever}">
+                    <label class="checkbox text-left" ng-click="$ctrl.limit.period = !$ctrl.limit.period">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.limit.period, 'fa-square-o': !$ctrl.limit.period}">&nbsp;</i>
+                        <span>Grant access for</span>
+                    </label>
+                    <input type="number" class="form-control" ng-model="$ctrl.limit.number"
+                           required min="1" maxlength="2" ng-disabled="!$ctrl.limit.period">
+                </div>
+
+                <div class="col-lg-6 form-group select frequency-select" ng-class="{disabled: $ctrl.limit.forever}">
+                    <label class="checkbox">
+                        <span>&nbsp;</span>
+                    </label>
+                    <ui-select class="w-100" ng-model="$ctrl.limit.range" ng-disabled="!$ctrl.limit.period">
+                        <ui-select-match placeholder="Range">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.ranges">
+                            <span ng-bind-html="item.label"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <a class="btn btn-second btn-lg btn-block" ng-click="$ctrl.$dismiss()">Cancel</a>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-first btn-lg btn-block" ng-click="$ctrl.save()">Send</a>
+            </div>
+        </div>
+    </div>
+</div>

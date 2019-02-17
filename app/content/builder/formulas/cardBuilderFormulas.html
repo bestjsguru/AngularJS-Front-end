@@ -1,0 +1,108 @@
+<div class="card-builder-formulas">
+    <loader ng-if="$ctrl.showLoader" ctrl-check="true"></loader>
+
+    <div class="preview-area-wrapper" ng-if="$ctrl.showNoFormulas()">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-calculator" aria-hidden="true"></i>
+            </div>
+            <span class="preview-title">No added formulas at the moment</span>
+            <span><a href="#" ng-click="$ctrl.addNewFormula()">Click here</a> to add formulas to your card</span>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.showFormulasList()">
+
+            <div class="available-metric-formulas">
+                <div class="formula-alias" ng-repeat="input in $ctrl.letters" ng-click="$ctrl.addFormulaInput(input[0])">
+                    <a class="btn" href="#" ng-bind-html="input[0]"></a>
+                    <span class="dimension-name" ng-bind-html="input[1]"></span>
+                </div>
+            </div>
+
+            <div ng-repeat="formula in $ctrl.formulas track by $index">
+
+                <form name="$ctrl.forms.formula_{{$index}}_form" ng-click="$ctrl.focusFormula(formula)" novalidate>
+                    <div class="single-formula" ng-class="{highlight: !formula.added}">
+                        <div class="formula-option">
+                            <div class="input-group">
+                                <input type="text" name="expression" app-valid-math-expression ng-model-options="{ allowInvalid: true }"
+                                       inputs="$ctrl.letters" ng-model="formula.data.expression"
+                                       class="form-control" placeholder="Enter your formula">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-fourth dropdown-toggle" data-toggle="dropdown">
+                                        {{ formula.data.type }}
+                                        <i class="fa fa-fw fa-sort-desc"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li ng-repeat="type in $ctrl.formulaTypes">
+                                            <a href="#" ng-click="$ctrl.changeFormulaType(formula, type)">
+                                                <span class="formula-symbol">{{type.value}}</span> {{type.label}}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <label class="checkbox" ng-click="formula.data.isColoring = !formula.data.isColoring">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': formula.data.isColoring, 'fa-square-o': !formula.data.isColoring}"></i>
+                                <span>Table colors?</span>
+                            </label>
+                        </div>
+
+                        <div class="formula-option">
+                            <input type="text" ng-model="formula.data.name" class="form-control" placeholder="Enter formula name" required>
+                        </div>
+
+                        <div class="formula-option">
+                            <ui-select name="yAxisType" ng-model="formula.isIncrease" ng-change="formula.data.isIncrease = $select.selected.value" search-enabled="false"
+                                       class="w-100" ng-class="{ 'good': formula.data.isIncrease, 'bad': !formula.data.isIncrease }">
+                                <ui-select-match placeholder="Increase = {{ formula.data.isIncrease ? 'Good' : 'Bad' }}">
+                                    Increase = {{$select.selected.label}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="item in [{label: 'Good', value: true}, {label: 'Bad', value: false}]">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="formula-option formula-color-picker">
+                            <div class="color-picker">
+                                <spectrum-colorpicker ng-model="formula.color" options="$ctrl.ColorPickerConfig.get()"></spectrum-colorpicker>
+                                <i class="fa fa-times remove-cross" ng-click="$ctrl.removeColor(formula)"></i>
+                            </div>
+                        </div>
+
+                        <div class="formula-option formula-buttons">
+                            <div ng-if="!$ctrl.checkDelete[$index]">
+                                <button ng-disabled="$ctrl.isLoading()" class="btn btn-second" ng-click="$ctrl.checkDelete[$index] = true">
+                                    Delete
+                                </button>
+                                <button ng-disabled="$ctrl.isLoading()" class="btn btn-first" ng-click="$ctrl.applyFormula($index)">
+                                    {{formula.added ? 'Update' : 'Apply'}}
+                                </button>
+                            </div>
+                            <div ng-if="$ctrl.checkDelete[$index]">
+                                <button class="btn btn-fourth" ng-click="$ctrl.checkDelete[$index] = false">No</button>
+                                <button class="btn btn-first" ng-click="$ctrl.deleteFormula($index)">Yes</button>
+                            </div>
+                            <div ng-if="$ctrl.deleting[$index]">
+                                <button class="btn btn-fourth btn-block"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Deleting</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div class="single-formula new-formula">
+                <div class="formula-option">
+                    <p class="help-block">You can use + - / * ( ) for formula expression</p>
+                </div>
+                <div class="formula-option formula-buttons">
+                    <button type="button" class="btn btn-third btn-block" ng-click="$ctrl.addNewFormula()"><i class="fa fa-plus fa-fw"></i> New formula</button>
+                </div>
+            </div>
+
+    </div>
+</div>

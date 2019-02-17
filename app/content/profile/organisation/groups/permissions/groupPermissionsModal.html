@@ -1,0 +1,43 @@
+<div class="group-permissions-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">{{$ctrl.group.name}}</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.modalInstance.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="tab-content">
+            <div class="tab-pane active">
+
+                <div class="permission-list-wrapper">
+                    <loader ctrl-check="$ctrl.loading"></loader>
+
+                    <table ng-if="!$ctrl.loading" class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="item in $ctrl.permissions" ng-class="{'selected': item.selected}" ng-click="item.selected = !item.selected">
+                                <td>
+                                    <div class="permission-data">
+                                        <span ng-bind="item.title"></span>
+                                        <a ng-bind="item.description"></a>
+                                    </div>
+                                </td>
+                                <td width="30" class="text-right">
+                                    <i class="fa" ng-class="{'fa-square-o': !item.selected, 'fa-check-square-o': item.selected}"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-click="$ctrl.modalInstance.dismiss()" class="btn btn-second btn-lg btn-block">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button ng-click="$ctrl.apply()" class="btn btn-first btn-lg btn-block">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>

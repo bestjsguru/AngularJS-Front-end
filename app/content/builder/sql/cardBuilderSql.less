@@ -1,0 +1,40 @@
+.card-builder-sql {
+    position: relative;
+    min-height: 300px;
+    margin-top: -2px;
+    border-top: 1px solid @iron;
+    border-bottom: 1px solid @iron;
+
+    .gutter-helper {
+        border-right: 1px solid #ddd;
+        background-color: #f7f7f7;
+        width: 40px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 0;
+    }
+
+    .CodeMirror {
+        border-radius: 0;
+        padding: 15px 10px;
+
+        pre {
+            padding: 0 4px 0 14px;
+        }
+
+        // in case we use material theme again
+        &.cm-s-material {
+            background: @madison;
+
+            .CodeMirror-gutters {
+                background: @ebony-clay;
+            }
+
+            .CodeMirror-linenumber {
+                color: @hoki;
+            }
+        }
+    }
+}

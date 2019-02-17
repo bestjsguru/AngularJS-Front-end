@@ -1,0 +1,129 @@
+.resizable-enabled {
+    .card-footer {
+        .card-footer-wrapper {
+            padding: 0 23px 0 10px;
+        }
+    }
+}
+
+.card-footer {
+    position: absolute;
+    left: 0px;
+    bottom: 0;
+    opacity: 0;
+    z-index: -1;
+    width: 100%;
+    height: 36px;
+    padding: 7px 0 0 0;
+    background: @white;
+    border-top: 1px solid @porcelain;
+    transition: bottom 0.1s linear;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    .card-footer-wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+        flex-wrap: nowrap;
+        padding: 0 8px 0 10px;
+
+        .card-date-holder {
+            flex: 0 0 105px;
+            margin-right: auto;
+            display: flex;
+            height: 25px;
+            overflow: hidden;
+            margin-top: -2px;
+
+            a {
+                flex: 0 0 25px;
+                align-self: center;
+                font-size: 15px;
+                opacity: .7;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .updated-date {
+                flex: 1 1 auto;
+                align-self: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 0 0 2px;
+                font-size: 10px;
+                line-height: 10px;
+            }
+        }
+
+        .footer-icons-holder {
+            flex: 0 0 auto;
+
+            .footer-icons {
+                float: right;
+                min-width: 82px;
+
+                a {
+                    padding: 2px 4px;
+                    height: 25px;
+                    float: right;
+                    opacity: .7;
+
+                    .fa{
+                        font-size: 15px;
+                    }
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+
+                .card-alert{
+                    position: relative;
+
+                    .badge{
+                        position: absolute;
+                        top: -3px;
+                        right: -5px;
+                        border: 2px solid @white;
+                    }
+                }
+            }
+        }
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: -13px;
+        left: -10px;
+        width: calc(~"100% + 20px");
+        height: 13px;
+        z-index: 1;
+        border-radius: 0 0 3px 3px;
+    }
+
+    &:after {
+        width: 100%;
+        height: 6px;
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        z-index: 2;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.06) 0%,rgba(0,0,0,0) 100%);
+    }
+
+    &.small-card {
+        .card-footer-wrapper {
+            .card-date-holder {
+                flex: 0 0 30px;
+
+                .updated-date {
+                    display: none;
+                }
+            }
+        }
+    }
+}

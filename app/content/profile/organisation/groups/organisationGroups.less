@@ -1,0 +1,65 @@
+.organisation-groups {
+    .new-group-button {
+        float: right;
+
+        i {
+            color: @td-turquoise;
+        }
+    }
+
+    .container-fluid {
+        position: relative;
+        min-height: 200px;
+
+        table {
+            th {
+                font-weight: 500;
+            }
+
+            td {
+                &:first-child {
+                    vertical-align: middle;
+                    padding-right: 0;
+                }
+            }
+        }
+
+        .group-data {
+            span {
+                display: block;
+                font-size: 14px;
+                line-height: 14px;
+                margin-top: 0;
+
+                & + span {
+                    font-size: 12px;
+                    line-height: 12px;
+                    margin-top: 3px;
+                    opacity: .8;
+                };
+            }
+        }
+
+        .group-form {
+            display: flex;
+
+            div {
+                flex: 1;
+                margin-right: 20px;
+
+                &:last-child {
+                    margin-right: 0;
+                    flex: 0 0 170px;
+                    text-align: right;
+
+                    label {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@import './users/groupUsersModal';
+@import './permissions/groupPermissionsModal';

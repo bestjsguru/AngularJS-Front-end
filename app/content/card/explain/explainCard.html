@@ -1,0 +1,24 @@
+<div class="explain-card">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-bind-html="$ctrl.card.name"></h4>
+    </div>
+    <div class="modal-body">
+        <div class="modal-tabs-wrapper">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li ng-class="{active: $ctrl.tab == 'info'}" ng-click="$ctrl.tab = 'info'"><a>Card Info</a></li>
+                <li ng-class="{active: $ctrl.tab == 'definition'}" ng-click="$ctrl.tab = 'definition'"><a>Metric Definition</a></li>
+                <li ng-class="{active: $ctrl.tab == 'sql'}" ng-click="$ctrl.tab = 'sql'"><a>SQL</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+
+            <app-explain-card-info ng-if="$ctrl.tab == 'info'" card="$ctrl.card"></app-explain-card-info>
+
+            <app-explain-card-definition ng-if="$ctrl.tab == 'definition'" card="$ctrl.card"></app-explain-card-definition>
+
+            <app-explain-card-sql ng-if="$ctrl.tab == 'sql'" card="$ctrl.card"></app-explain-card-sql>
+
+        </div>
+    </div>
+</div>

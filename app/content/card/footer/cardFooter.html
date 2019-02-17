@@ -1,0 +1,42 @@
+<div class="card-footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card-footer-wrapper">
+                <div ng-if="$ctrl.isOnDashboard()" class="footer-icons-holder">
+                    <div class="footer-icons">
+                        <div ng-if="!$ctrl.tuCard.isError()" class="pull-right">
+                            <a ui-sref="cardExplore({cardId: $ctrl.card.id, dashboardId: $ctrl.tuCard.getTargetDashboardId()})">
+                                <i class="fa fa-expand"></i>
+                            </a>
+                        </div>
+
+                        <a app-access level="user" ng-if="!$ctrl.card.isText() && !$ctrl.tuCard.isError() && !$ctrl.tuCard.isOnFavouriteDashboard() && !$ctrl.tuCard.isSQLBased() && !$ctrl.card.isImage()" ui-sref="cardExplore({cardId: $ctrl.card.id, tab: 'alerts'})" class="card-alert">
+                            <i class="fa fa-bell-o"></i>
+                            <span ng-if="$ctrl.card.alerts.length" class="badge badge-danager animated bounceIn" ng-bind-html="$ctrl.card.alerts.length"></span>
+                        </a>
+
+                        <a app-access level="user" ng-if="!$ctrl.tuCard.isError()" class="card-favorite">
+                            <i class="fa" ng-class="{'fa-heart-o': !$ctrl.tuCard.favourite, 'fa-heart': $ctrl.tuCard.favourite}" ng-click="$ctrl.tuCard.toggleFavouriteStatus()"></i>
+                        </a>
+
+                        <a app-access level="view" ng-if="!$ctrl.tuCard.isError() && $ctrl.tuCard.isOnFavouriteDashboard()">
+                            <app-card-dashboard-name card="$ctrl.card"></app-card-dashboard-name>
+                        </a>
+
+                        <div app-access level="user" ng-if="!$ctrl.tuCard.isError() && !$ctrl.card.isImageOrDraft() && !$ctrl.card.isText()" class="pull-right">
+                            <a app-explain-card-modal card="$ctrl.card" ng-click="$ctrl.open()">
+                                <i class="fa fa-info"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="$ctrl.isOnDashboard() && !$ctrl.card.isImageOrDraft() && !$ctrl.card.isText()" class="card-date-holder">
+                    <a href ng-click="$ctrl.tuCard.restoreOriginalCardDatesAndReloadData()" tu-popover tu-popover-html="{{ $ctrl.card.lastUpdateFormatted() }}" tu-popover-placement="top">
+                        <i class="fa fa-refresh fa-fw" ng-class="{'fa-spin': $ctrl.card.metricsAreLoading()}"></i>
+                    </a>
+                    <span class="updated-date" ng-if="!$ctrl.card.metricsAreLoading()" ng-bind-html="$ctrl.card.lastUpdateFormatted()"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+.drill-save {
+    .modal-body {
+        padding-bottom: 10px;
+    }
+
+    .dashboard-list-wrapper {
+        max-height: 250px;
+        width: 100%;
+        border: 1px solid @borderColorLight;
+        padding: 6px;
+        display: block;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        border-radius: 3px;
+
+        ul {
+            display: block;
+            list-style: none;
+            float: left;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+
+            li {
+                float: left;
+                width: 100%;
+                list-style: none;
+                border-bottom: 1px solid @borderColorLight;
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+
+                > div {
+                    padding: 4px 6px;
+                    border-radius: 3px;
+                    width: 100%;
+                    float: left;
+                    border: 1px solid @white;
+                    min-height: 50px;
+
+                    &.no-dashboard-data {
+                        border: none !important;
+
+                        &:hover {
+                            background: none;
+                        }
+                    }
+
+                    &.disabled {
+                        opacity: 0.5;
+                    }
+
+                    .dashboard-data {
+                        float: left;
+                        width: 100%;
+                        display: flex;
+
+                        i {
+                            margin-top: 5px;
+                        }
+
+                        div {
+                            display: inline-block;
+                            font-size: 16px;
+                            margin-left: 7px;
+                            flex: 1;
+
+                            .ui-select-highlight {
+                                font-weight: 500;
+                                color: @deep-blue;
+                            }
+                        }
+
+                        .reached-cards-limit {
+                            margin-left: 22px;
+                            margin-top: 4px;
+                            font-size: 12px;
+                            color: #ef3943;
+                            text-align: right;
+                        }
+
+                    }
+
+                    .dashboard-folder {
+                        display: block;
+                        float: left;
+                        margin-left: 27px;
+                        font-size: 12px;
+                        color: @silver-sand;
+                        font-style: italic;
+                    }
+
+                    &:hover {
+                        background: @porcelain;
+                        color: inherit;
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    .help-block {
+        margin-top: 30px;
+        color: @pickled-bluewood;
+        font-size: 14px;
+
+        kbd {
+            color: @pickled-bluewood;
+            padding: 3px 6px;
+        }
+    }
+}

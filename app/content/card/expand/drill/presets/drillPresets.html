@@ -1,0 +1,44 @@
+<div class="drill-presets" ng-if="$ctrl.isVisible">
+    <div class="drill-presets-title">
+        <i class="fa fa-arrow-left" ng-click="$ctrl.close()"></i> Manage drill presets
+    </div>
+
+    <div class="drill-options">
+        <div ng-if="$ctrl.card.drill.presets.loading" class="grey-text">
+            <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+            Loading presets...
+        </div>
+
+        <div ng-if="!$ctrl.card.drill.presets.loading && !$ctrl.card.drill.presets.items.length" class="no-presets">
+            No presets saved for this card
+        </div>
+
+        <ul ng-if="!$ctrl.card.drill.presets.loading && $ctrl.card.drill.presets.items.length">
+            <li class="m-t-10" ng-if="!$ctrl.card.drill.presets.active" ng-disabled="preset.loading"
+                ng-repeat="preset in $ctrl.card.drill.presets.items track by $index">
+
+                <div class="form-inline" ng-if="preset.saveMode">
+                    <input type="text" ng-model="preset.name" ng-disabled="preset.loading" class="form-control"
+                           placeholder="Preset name. Leave empty to use default">
+                    <span ng-click="$ctrl.card.drill.presets.save(preset)" ng-disabled="preset.loading" class="btn btn-success btn-xs">
+                        {{preset.loading ? 'Saving...' : 'Save'}}
+                    </span>
+                    <span ng-click="preset.saveMode = false" ng-disabled="preset.loading" class="btn btn-link btn-xs">Cancel</span>
+                    <span ng-if="preset.error && !preset.loading" class="text-danger">
+                        <i class="fa fa-fw fa-exclamation"></i> {{preset.message}}
+                    </span>
+                </div>
+
+                <div ng-if="!preset.saveMode" ng-click="preset.saveMode = true" class="preset-wrapper">
+                    <span class="preset-name" ng-if="preset.name" ng-bind="preset.name"></span>
+                    <span ng-if="!preset.name" class="grey-text">Click to add custom name</span>
+                    <i class="fa fa-fw fa-edit drill-option"></i>
+                </div>
+
+                <span class="drill-option" ng-click="$ctrl.selectPreset(preset)">{{preset.getPathLabel()}}</span>
+
+                <i class="fa fa-fw fa-trash-o pull-right drill-option" ng-click="$ctrl.card.drill.presets.remove(preset)" title="Delete preset"></i>
+            </li>
+        </ul>
+    </div>
+</div>

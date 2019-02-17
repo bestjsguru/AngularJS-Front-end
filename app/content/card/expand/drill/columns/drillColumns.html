@@ -1,0 +1,58 @@
+<div class="drill-columns" ng-if="$ctrl.isVisible">
+    <div class="drill-columns-title" ng-if="!$ctrl.metric.isFormula()">
+        <i class="fa fa-arrow-left" ng-click="$ctrl.close()"></i>
+
+        Drill into <span>{{$ctrl.metric.name}}</span>
+    </div>
+
+    <div ng-if="!$ctrl.metric.isFormula()">
+        <div class="drill-search">
+            <input type="text"  ng-change="$ctrl.filter()" ng-model="$ctrl.query" class="form-control" placeholder="Filter columns"
+                   ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 200, 'blur': 0 } }">
+            <i class="fa fa-search"></i>
+        </div>
+
+        <div class="drill-columns-wrapper">
+            <loader ctrl-check="$ctrl.loading"></loader>
+
+            <ul ng-if="!$ctrl.loading">
+                <li ng-repeat="table in $ctrl.tables track by $index">
+
+                    <div class="drill-column-table">
+                        <span class="drill-column-table-name" ng-click="$ctrl.toggleTable(table)">
+                            <i class="fa fa-fw" ng-class="{'fa-plus': table.collapsed, 'fa-minus': !table.collapsed}"></i>
+                            {{table.name}}
+                        </span>
+
+                        <ul ng-if="!table.collapsed">
+                            <li ng-repeat="column in table.columns track by $index"
+                                ng-class="{'drill-active': $ctrl.card.drill.columnPosition(column)}" ng-click="$ctrl.customDrill(column)">
+                                <div class="drill-table-columns">
+                                    <div class="drill-column-name">
+                                        {{column.getLabel()}}
+
+                                        <span class="drill-position" ng-if="$ctrl.isOriginalGrouping(column)">
+                                            <i class="fa fa-level-down"></i>
+                                        </span>
+
+                                        <span ng-bind-html="column.type.toLowerCase()"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="drill-error" ng-if="!$ctrl.tables.length">
+                    <i class="fa fa-fw fa-exclamation-triangle"></i>
+                    <span>No columns available</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="drill-error" ng-if="$ctrl.metric.isFormula()">
+        <i class="fa fa-fw fa-exclamation-triangle"></i>
+        <span>Drill on formulas not yet supported</span>
+    </div>
+</div>

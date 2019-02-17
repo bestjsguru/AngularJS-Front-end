@@ -1,0 +1,35 @@
+tu-card-totals {
+    display: block;
+
+    .card-totals {
+        padding: 5px 10px;
+
+        .total-value {
+            display: inline-block;
+            font-size: 19px;
+            margin-right: 5px;
+        }
+        .grow-icon {
+            font-size: 13px;
+            display: inline-block;
+
+            .fa{
+                font-size: 14px;
+                font-weight: bold;
+
+                &.fa-minus {
+                    font-size: 10px;
+                    font-weight: normal;
+                }
+            }
+            &.up {
+                color: @brand-success;
+            }
+            &.down {
+                color: @brand-danger;
+            }
+        }
+    }
+
+
+}

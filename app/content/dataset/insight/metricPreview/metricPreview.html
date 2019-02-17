@@ -1,0 +1,70 @@
+<div class="metric-preview">
+    <div class="modal-header">
+        <h4 class="modal-title">{{$ctrl.metric.label}}</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="metric-data">
+            <div class="panel-group" ng-if="!$ctrl.hidden">
+                <loader ng-if="$ctrl.showLoader()" ctrl-check="true"></loader>
+
+                <div ng-if="!$ctrl.showLoader()" class="card-content ps-container"
+                     ng-class="{'long-table': $ctrl.metricData.longTable}">
+
+                    <perfect-scrollbar class="scroller-x" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                                       always-visible="true" suppress-scroll-y="true">
+
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th ng-repeat="column in $ctrl.metricData.columns track by $index" title="{{ ::column }}">
+                                        <span ng-bind-html="column"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <perfect-scrollbar class="scroller-y" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                                           always-visible="true" suppress-scroll-x="true"
+                                           scroll-parent=".card-content" >
+                            <div class="datatable-container">
+                                <table class="table table-condensed table-hover">
+                                    <tbody>
+                                        <tr ng-repeat="row in $ctrl.metricData.results track by $index"
+                                            total-items="::$ctrl.metricData.total" current-page="$ctrl.metricData.currentPage">
+                                            <td ng-repeat="value in row track by $index" ng-bind-html="value" title="{{ value }}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div ng-if="!$ctrl.metricData.results.length" class="no-data">
+                                    <span>No data</span>
+                                </div>
+                            </div>
+                        </perfect-scrollbar>
+
+                    </perfect-scrollbar>
+                </div>
+
+                <div ng-if="!$ctrl.showLoader()" class="panel-footer">
+
+                    <div class="row">
+
+                        <div class="col-lg-12 pagination-wrapper">
+                            <div class="row pagination-holder" ng-if="$ctrl.showPagination()">
+                                <div class="col-md-offset-2 col-md-8 text-center">
+                                    <div class="pagination-buttons">
+                                        <div uib-pagination items-per-page="20" max-size="0" total-items="$ctrl.total"
+                                             ng-model="$ctrl.metricData.currentPage" ng-change="$ctrl.changePage()"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

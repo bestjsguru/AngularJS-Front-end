@@ -1,0 +1,27 @@
+.CodeMirror {
+    border-radius: 4px;
+    height: auto;
+    min-height: 58px;
+
+    &.code-mirror-input {
+        padding: 6px 10px;
+        min-height: 40px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+
+        .CodeMirror-sizer {
+            min-height: 28px !important;
+        }
+    }
+}
+
+.CodeMirror-hints {
+    z-index: 1100;
+}
+
+.has-error {
+    .code-mirror-input {
+        border-color: @brand-danger;
+    }
+}
+

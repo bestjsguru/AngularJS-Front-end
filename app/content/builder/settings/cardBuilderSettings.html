@@ -1,0 +1,54 @@
+<ul class="nav nav-tabs">
+    <li ng-class="{active : $ctrl.tabs.is('general')}"><a href ng-click="$ctrl.setTab('general')">General</a></li>
+    <li ng-class="{active : $ctrl.tabs.is('options')}"><a href ng-click="$ctrl.setTab('options')">Options</a></li>
+    <li ng-class="{active : $ctrl.tabs.is('style')}"><a href ng-click="$ctrl.setTab('style')">Style</a></li>
+    <li ng-class="{active : $ctrl.tabs.is('image')}"><a href ng-click="$ctrl.setTab('image')">Image</a></li>
+    <li ng-class="{active : $ctrl.tabs.is('formulas')}" ng-if="$ctrl.card.metrics.length" ng-disabled="$ctrl.card.metrics.loading || $ctrl.card.isCustomSQL()">
+        <a href ng-click="$ctrl.setTab('formulas')">
+            Formulas
+            <span class="badge animated bounceIn" ng-if="$ctrl.card.formulas.length" ng-bind-html="$ctrl.card.formulas.length"></span></a>
+        </a>
+    </li>
+    <li ng-class="{active : $ctrl.tabs.is('compares')}" ng-if="$ctrl.card.metrics.length" ng-disabled="$ctrl.card.metrics.loading || $ctrl.card.isCustomSQL()">
+        <a href ng-click="$ctrl.setTab('compares')">
+            Compares
+            <span class="badge animated bounceIn" ng-if="$ctrl.card.compare.getList().length" ng-bind-html="$ctrl.card.compare.getList().length"></span></a>
+        </a>
+    </li>
+    <li ng-class="{active : $ctrl.tabs.is('formatting')}" ng-if="$ctrl.card.metrics.length && $ctrl.formattingTabIsVisible()" ng-disabled="$ctrl.card.metrics.loading">
+        <a href ng-click="$ctrl.setTab('formatting')">
+            Formatting
+        </a>
+    </li>
+</ul>
+
+<div class="tab-nav-content">
+    <div ng-if="$ctrl.tabs.is('general')">
+        <app-card-builder-general></app-card-builder-general>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('options')">
+        <app-card-builder-options></app-card-builder-options>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('style')">
+        <app-card-builder-style></app-card-builder-style>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('image')">
+        <app-card-builder-image></app-card-builder-image>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('formulas') && !$ctrl.card.isCustomSQL()">
+        <app-card-builder-formulas></app-card-builder-formulas>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('compares') && !$ctrl.card.isCustomSQL()">
+        <app-card-builder-compares></app-card-builder-compares>
+    </div>
+
+    <div ng-if="$ctrl.tabs.is('formatting')">
+        <app-formatting ng-if="$ctrl.card.isCustomSQL()"></app-formatting>
+        <app-regular-formatting ng-if="!$ctrl.card.isCustomSQL() && $ctrl.formattingTabIsVisible()"></app-regular-formatting>
+    </div>
+</div>

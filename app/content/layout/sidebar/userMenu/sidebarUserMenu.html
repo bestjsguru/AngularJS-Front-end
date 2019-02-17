@@ -1,0 +1,109 @@
+<a ng-click="$ctrl.toggle()" class="workspace-toggle user-area">
+    <div class="image-wrapper">
+        <img ng-src="{{ $ctrl.user.photo }}">
+    </div>
+
+    <span ng-if="$ctrl.unreadCount" class="badge" ng-bind-html="$ctrl.unreadCount"></span>
+</a>
+
+<div class="workspace-menu-wrapper collapse" ng-class="{in: $ctrl.isVisible}">
+
+    <div class="workspace-title user-area">
+        {{$ctrl.user.fullName}}
+        <span class="user-email">{{$ctrl.user.email}}</span>
+        <a ng-click="$ctrl.hide()"><i class="fa fa-times"></i></a>
+    </div>
+
+    <div ng-if="!$ctrl.error" id="user-menu-carousel" class="carousel slide" data-interval="false">
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="list-group">
+                    <a app-access level="view" ng-if="!$ctrl.isEmbed" class="list-group-single-item dashboard-link" ui-sref="profile.profile"
+                       ng-class="{'active': $ctrl.isLinkActive('profile.profile')}">
+                        <div class="folder-title"> Edit Profile </div>
+                    </a>
+
+                    <div class="admin-menu">
+                        <a app-access permission="metric-builder" class="list-group-single-item dashboard-link" ui-sref="metricBuilder"
+                           ng-class="{'active': $ctrl.isLinkActive('metricBuilder')}">
+                            <div class="folder-title"> Metric Builder </div>
+                        </a>
+
+                        <a app-access permission="schema-designer" class="list-group-single-item dashboard-link" ui-sref="schemaDesign"
+                           ng-class="{'active': $ctrl.isLinkActive('schemaDesign')}">
+                            <div class="folder-title"> Schema Designer </div>
+                        </a>
+
+                        <a app-access permission="database-explorer" class="list-group-single-item dashboard-link" ui-sref="databaseExplorer"
+                           ng-class="{'active': $ctrl.isLinkActive('databaseExplorer')}">
+                            <div class="folder-title"> Database Explorer </div>
+                        </a>
+
+                        <a app-access permission="relationship-builder" class="list-group-single-item dashboard-link" ui-sref="relationshipBuilder"
+                           ng-class="{'active': $ctrl.isLinkActive('relationshipBuilder')}">
+                            <div class="folder-title"> Relationship Builder </div>
+                        </a>
+
+                        <a app-access permission="data-feeds" class="list-group-single-item dashboard-link" ui-sref="feeds"
+                           ng-class="{'active': $ctrl.isLinkActive('feeds')}">
+                            <div class="folder-title">Data Feeds</div>
+                        </a>
+
+                        <a app-access permission="dataset" class="list-group-single-item dashboard-link" ui-sref="dataset"
+                           ng-class="{'active': $ctrl.isLinkActive('dataset')}">
+                            <div class="folder-title">Dataset</div>
+                        </a>
+
+                        <a app-access permission="dashboards" class="list-group-single-item dashboard-link" ui-sref="profile.dashboards"
+                           ng-class="{'active': $ctrl.isLinkActive('profile.dashboards')}">
+                            <div class="folder-title">Workspaces</div>
+                        </a>
+
+                        <a app-access permission="email-reports" class="list-group-single-item dashboard-link" ui-sref="profile.report"
+                           ng-class="{'active': $ctrl.isLinkActive('profile.report')}">
+                            <div class="folder-title">Email Reports</div>
+                        </a>
+
+                        <a app-access level="admin" class="list-group-single-item dashboard-link" ui-sref="profile.organisation"
+                           ng-class="{'active': $ctrl.isLinkActive('profile.organisation')}">
+                            <div class="folder-title">Organisation</div>
+                        </a>
+
+                        <a app-access level="admin" class="list-group-single-item dashboard-link" ui-sref="profile.members"
+                           ng-class="{'active': $ctrl.isLinkActive('profile.members')}">
+                            <div class="folder-title">Users</div>
+                        </a>
+                    </div>
+
+                    <a class="list-group-single-item help-center-link" data-slide-to="1" data-target="#user-menu-carousel">
+                        <div class="folder-title">Help centre</div>
+                        <i class="fa fa-arrow-right"></i>
+                        <span ng-if="$ctrl.unreadCount" class="badge" ng-bind-html="$ctrl.unreadCount"></span>
+                    </a>
+
+                    <a ng-if="!$ctrl.isEmbed" ui-sref="logout" app-access level="all" class="list-group-single-item dashboard-link">
+                        <div class="folder-title">Sign out</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Help centre sub menu -->
+            <div class="item">
+                <div class="list-group">
+                    <a class="list-group-single-item back" data-slide-to="0" data-target="#user-menu-carousel">
+                        <i class="fa fa-fw fa-arrow-left"></i>
+                        <div class="folder-title">Help centre</div>
+                    </a>
+
+                    <a class="list-group-single-item dashboard-link" ng-if="$ctrl.isChatInitiated()" ng-click="$ctrl.onChatClick()">
+                        <div class="folder-title">Talk to us</div>
+                        <span ng-if="$ctrl.unreadCount" class="badge" ng-bind-html="$ctrl.unreadCount"></span>
+                    </a>
+                    <a class="list-group-single-item dashboard-link" href="https://support.avora.com" target="_blank">
+                        <div class="folder-title"> Knowledgebase</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

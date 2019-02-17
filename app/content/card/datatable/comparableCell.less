@@ -1,0 +1,37 @@
+.comparable-table{
+    tbody > tr > td{
+        padding: 0;
+
+        .comparable-first-value{
+            min-width: 50px;
+            padding-right: 20px;
+        }
+
+        .comparable-second-value {
+            display: flex;
+            flex-wrap: nowrap;
+
+            .comparable-value {
+                flex: 1 1 auto;
+                font-weight: 500;
+            }
+
+            .comparable-percentage {
+                flex: 1 1 auto;
+                padding-left: 10px;
+            }
+
+            .fa {
+                flex: 1 1 auto;
+            }
+
+            .lower {
+                color: @td-red;
+            }
+
+            .higher {
+                color: @td-turquoise;
+            }
+        }
+    }
+}

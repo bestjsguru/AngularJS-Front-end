@@ -1,0 +1,39 @@
+<div class="drill-table">
+    <table class="table table-striped table-bordered fixed-table">
+        <thead>
+            <tr>
+                <th class="fixed-table-data">Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="metric in $ctrl.data" ng-if="metric.data.length">
+                <td class="fixed-table-data" ng-bind-html="metric.label" tu-popover tu-popover-html="{{ metric.label }}" tu-popover-placement="right"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="scrollable-table">
+
+        <perfect-scrollbar class="scroller" wheel-speed="5" always-visible="true">
+            <div class="datatable-container" ng-class="{loading: $ctrl.isLoading}">
+                <table ng-mouseleave="$ctrl.unfocusColumns()" class="table table-striped datatable-body table-bordered">
+                    <thead>
+                        <tr>
+                            <th ng-mouseover="$ctrl.focusColumn($index)" ng-class="{active: $ctrl.currentColumn === $index}" ng-repeat="column in $ctrl.columns track by $index">
+                                <span ng-bind-html="$ctrl.processValue(column)"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="metric in $ctrl.data track by $index">
+                            <td ng-mouseover="$ctrl.focusColumn($index)" ng-class="{active: $ctrl.currentColumn === $index}" ng-repeat="metricValue in metric.data track by $index" ng-bind-html="$ctrl.formatMetricValue(metricValue[1], metric)"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </perfect-scrollbar>
+
+    </div>
+</div>
+
+

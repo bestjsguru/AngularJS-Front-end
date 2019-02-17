@@ -1,0 +1,65 @@
+.key-drivers-dimensions {
+    .dimension-mode {
+        position: absolute;
+        top: 10px;
+        right: 0px;
+    }
+
+    .auto-mode-message {
+        font-size: 12px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .dimensions-search {
+        .form-control-feedback {
+            line-height: 34px;
+        }
+    }
+
+    .key-drivers-dimensions-list {
+        margin-bottom: 15px;
+        max-height: 315px;
+        overflow-y: scroll;
+
+        li {
+            position: relative;
+
+            a {
+                padding: 3px 0px 3px 0px;
+                display: block;
+                cursor: pointer;
+                color: @hoki;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-transform: capitalize;
+
+                &:hover{
+                    color: @brand-danger;
+                }
+
+                &:focus {
+                    text-decoration: none;
+                }
+
+                &.selected {
+                    color: @madison;
+                    .fa {
+                        color: @brand-danger;
+                    }
+                }
+            }
+        }
+    }
+
+    .available-dimensions-limit {
+        color: @hoki;
+        margin-bottom: 10px;
+        text-align: right;
+
+        &.limit-reached {
+            color: @brand-danger;
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<div class="form-inline" ng-hide="data.pagination.show == 'all'">
+	<div class="form-group">
+	  	<label for="">
+	  		<span >Found </span>
+	  		<span class="entries-count">{{data.pagination.getTotal() | number}}</span>
+	  		<span >entries</span>
+	  	</label>
+	</div>
+	<div class="form-group">
+	 	<ul class="pagination pagination-sm">
+		  	<li ng-repeat="item in data.pagination.pages">
+				<span class="current-page" ng-show="!item.enabled || data.pagination.getPage() == item.page" ng-bind-html="item.text"></span>
+				<a ng-show="item.enabled && data.pagination.getPage() != item.page" ng-click="item.enabled && data.pagination.setPage(item.page)" class="{{item.active && 'active' || ''}}" ng-stop-click>
+					<span ng-bind-html="item.text"></span>
+				</a>
+			</li>
+  		</ul>
+	</div>
+	<div class="form-group">
+	  	<label for="" >Show:</label>
+	 	<select class="span1"
+	  		ng-model="data.pagination.limit" ng-change="data.pagination.setShow(data.pagination.limit)" ng-options="value for value in [5, 10, 20, 50, 100]"
+			>
+		</select>
+	  	<label for="">
+		  	<span>of</span>
+		  	<span class="entries-count">{{data.pagination.getTotalPages()}}</span>
+		  	<span ng-if="data.pagination.getTotalPages() > 1"><span >pages</span></span>
+		  	<span ng-if="!data.pagination.getTotalPages() > 1"><span >page</span></span>
+	  	</label>
+	</div>
+</div>

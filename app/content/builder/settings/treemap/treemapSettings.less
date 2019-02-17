@@ -1,0 +1,106 @@
+.treemap-settings {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 7px;
+    width: 100%;
+
+    .treemap-icons {
+        padding: 7px;
+        flex: 0 0 auto;
+
+        label {
+            width: 100%;
+        }
+
+        .btn-group {
+            display: block;
+            white-space: nowrap;
+            margin: 0;
+
+            .btn {
+                float: none;
+                display: inline-block;
+                padding: 0 6px 0 0;
+                height: 34px;
+
+                span {
+                    float: left;
+                    margin: 6px 0 0 0;
+                    padding: 0 2px 0 2px;
+                }
+
+                .treemap-icon {
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 2px;
+                    float: left;
+                    filter: grayscale(100%);
+                    opacity: .6;
+
+                    &.squarified {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: 0 0;
+                    }
+
+                    &.slice-dice {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: -32px 0;
+                    }
+
+                    &.stripes {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: -64px 0;
+                    }
+
+                    &.strip {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: -96px 0;
+                    }
+
+                    &.vertical {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: -128px 0;
+                    }
+
+                    &.horizontal {
+                        background: url(images/treemap-icons.svg) no-repeat;
+                        background-size: 192px 32px;
+                        background-position: -160px 0;
+                    }
+                }
+
+                &.active {
+                    color: darken(@btn-default-color, 20%);
+
+                    .treemap-icon {
+                        filter: grayscale(0%);
+                        opacity: 1;
+                    }
+                }
+
+                &:hover {
+                    background: @white;
+                    color: darken(@btn-default-color, 20%);
+
+                    .treemap-icon {
+                        filter: grayscale(0%);
+                        opacity: 1;
+                    }
+                }
+
+                &:focus {
+                    background: @white;
+                }
+
+                & + .btn {
+                    margin-left: -5px;
+                }
+            }
+        }
+    }
+}

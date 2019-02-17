@@ -1,0 +1,62 @@
+<div class="root-cause-digest">
+    <div class="digest-header">
+        Summary
+    </div>
+
+    <div class="digest-item first">
+        <span ng-bind="$ctrl.impacts.goal.metric.name"></span>
+        <span ng-class="{'text-success': $ctrl.impacts.goal.isGood, 'text-danger': !$ctrl.impacts.goal.isGood}" ng-bind="$ctrl.impactString($ctrl.impacts.goal)"></span><br>
+        <span class="from-to">For </span> <span ng-bind-html="$ctrl.rootCause.getCurrentDateString()"></span><br>
+        <span class="from-to">Compared to </span> <span ng-bind-html="$ctrl.rootCause.getPreviousDateString()"></span>
+    </div>
+
+
+    <div class="digest-item" ng-class="{'digest-collapsed': $ctrl.topReasonsCollapsed}" ng-if="$ctrl.topReasons.length">
+        <span class="digest-heading">Top Individual Contributor to Change <a class="digest-toggle" ng-click="$ctrl.toggleTopReasons()"></a></span>
+
+        <table class="table table-condensed digest-table">
+            <thead>
+                <tr>
+                    <th>Contributors</th>
+                    <th class="text-right">Impact</th>
+                    <th class="text-right">Explains</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="reason in $ctrl.topReasons track by $index">
+                    <td>{{reason.dimension}}: <strong>{{reason.value}}</strong></td>
+                    <td class="digest-value text-right" ng-class="{'text-success': reason.isGood, 'text-danger': !reason.isGood}">
+                        {{reason.shortDifference}}
+                    </td>
+                    <td class="digest-value text-right">{{reason.variance}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="digest-item" ng-class="{'digest-collapsed': $ctrl.combinationsCollapsed}">
+        <span class="digest-heading">Most Relevant Combinations <a class="digest-toggle" ng-click="$ctrl.toggleCombinations()"></a></span>
+
+        <table class="table table-condensed digest-table">
+            <thead>
+                <tr>
+                    <th>Combination</th>
+                    <th class="text-right">Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in $ctrl.goalImpacts track by $index">
+                    <td>
+                        <span ng-repeat="dimension in item.dimensions track by $index">
+                            {{dimension.name}}: <strong>{{dimension.value}}</strong>
+                        </span>
+                    </td>
+                    <td class="text-right" ng-class="{'text-success': item.isGood, 'text-danger': !item.isGood}">
+                        {{item.formattedValue}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

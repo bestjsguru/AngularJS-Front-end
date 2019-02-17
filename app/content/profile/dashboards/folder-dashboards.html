@@ -1,0 +1,32 @@
+<ul id="{{folder.id}}" class="dashboard-list dashboards-sortable-list" ui-sortable="$ctrl.dashboardSortableOptions" ng-model="folder.dashboards"
+    ng-if="folder.dashboards && $ctrl.dashboardsAreVisible(folder)">
+    <li class="dashboard-item" ng-repeat="dashboard in folder.dashboards track by $index" ng-class="{'not-sortable': !$ctrl.folderCanBeDragged(folder)}">
+        <div class="dashboard-name">
+            <img ng-if="dashboard.owner" ng-src="{{dashboard.owner.photo}}"
+                 tu-popover tu-popover-placement="top" tu-popover-title="{{dashboard.owner.fullName}}" tu-popover-html="{{dashboard.owner.email}}">
+            {{ dashboard.name }}
+            <small ng-if="!dashboard.active" class="text-danger"><i>(Inactive)</i></small>
+        </div>
+        <div class="dropdown pull-right">
+            <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a ng-if="$ctrl.folderCanBeChanged(folder)" ng-click="$ctrl.toggleDashboardActive(folder, dashboard)">
+                        <i class="fa fa-fw" ng-class="{'fa-eye': !dashboard.active, 'fa-eye-slash': dashboard.active}"></i>
+                        {{dashboard.active ? 'Hide' : 'Show'}} Page
+                    </a>
+                </li>
+                <li>
+                    <a ng-if="$ctrl.folderCanBeChanged(folder)" ng-click="$ctrl.deleteDashboard(dashboard)">
+                        <i class="fa fa-fw fa-trash-o"></i> Delete Page
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li ng-if="!folder.dashboards.length" class="text-center dashboard-item no-dashboards not-sortable">
+        <i class="fa fa-fw fa-info"></i> There are no dashboards in this workspace
+    </li>
+</ul>

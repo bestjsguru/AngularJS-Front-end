@@ -1,0 +1,80 @@
+.drill-presets {
+    display: none;
+    position: absolute;
+    min-width: 400px;
+    z-index: 10;
+    padding: 10px 12px;
+    background: @white;
+    border: solid 1px @iron;
+    border-radius: 3px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+
+    .drill-presets-title {
+        display: block;
+        margin: -10px -12px 5px -12px;
+        padding: 10px 12px 8px 12px;
+        font-size: 15px;
+        border-bottom: 1px solid @iron;
+        background: @porcelain;
+
+        .fa {
+            float: left;
+            margin: 1px 10px 0 0;
+            -webkit-text-stroke: 2px @porcelain;
+            font-size: 18px;
+        }
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    .no-presets {
+        opacity: .5;
+        margin: 15px 0 5px 0;
+    }
+
+    ul {
+        margin: -5px -12px -10px -12px;
+        padding: 10px 12px 20px 12px;
+        max-height: 200px;
+        overflow: auto;
+
+        li {
+            margin-top: 10px;
+
+            &:not(:first-child) {
+                border-top: 1px solid @iron;
+                padding-top: 10px;
+            }
+
+            .grey-text {
+                display: inline;
+            }
+
+            .form-inline {
+                margin-bottom: 10px;
+
+                .form-control {
+                    height: 23px;
+                    border: none;
+                    border-bottom: solid 1px @iron;
+                    border-radius: 0;
+                    margin-right: 10px;
+                    padding: 5px;
+                    min-width: 250px;
+
+                    &:focus {
+                        border-color: @silver-sand;
+                    }
+                }
+            }
+
+            .preset-wrapper {
+                .preset-name {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}

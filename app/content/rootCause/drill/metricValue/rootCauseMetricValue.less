@@ -1,0 +1,74 @@
+.drill-metric-value {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 120px;
+    position: relative;
+
+    .drill-table-danger, .drill-table-success {
+        flex: 0 1 50%;
+        min-width: calc(~"50% + 15px");
+        display: flex;
+        flex-wrap: wrap;
+        align-self: flex-start;
+        position: relative;
+        cursor: pointer;
+        padding: 5px 0 5px 15px;
+        margin-left: -15px;
+        text-align: right;
+
+        .drill-table-value {
+            width: 100%;
+            display: block;
+            white-space: nowrap;
+        }
+
+        &:hover {
+            .drill-table-value {
+                &.turquoise {
+                    color: darken(@td-turquoise, 10%);
+                }
+
+                &.red {
+                    color: darken(@td-red, 20%);
+                }
+            }
+
+            .progress {
+                background-color: darken(@iron, 10%);
+            }
+        }
+
+        .progress-bar {
+            float: right;
+            background-color: @td-red-dark;
+        }
+    }
+
+    .drill-table-success {
+        text-align: left;
+        margin-left: auto;
+
+        .progress-bar {
+            float: left;
+            background-color: @brand-success;
+        }
+    }
+
+    &.plain-value {
+        .drill-table-danger, .drill-table-success {
+            flex: 0 1 auto;
+            text-align: left;
+            margin-left: -15px;
+        }
+    }
+
+    .progress {
+        width: 100%;
+        display: block;
+        margin-top: 1px;
+
+        .progress-bar {
+            min-width: 5%;
+        }
+    }
+}

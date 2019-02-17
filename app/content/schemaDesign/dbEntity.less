@@ -1,0 +1,189 @@
+.plumb-canvas {
+    .window {
+        border: 1px solid transparent;
+        z-index: 24;
+        cursor: pointer;
+        position: absolute;
+        min-width: 200px;
+        max-width: 300px;
+        line-height: 12px;
+        -webkit-transition: -webkit-box-shadow 0.15s ease-in;
+        -moz-transition: -moz-box-shadow 0.15s ease-in;
+        -o-transition: -o-box-shadow 0.15s ease-in;
+        transition: box-shadow 0.15s ease-in;
+
+        .panel {
+            overflow: hidden;
+
+            &.panel-default {
+                .panel-heading {
+                    padding: 0;
+                    min-height: 0;
+
+                    .panel-title {
+                        padding: 11px 51px 10px 33px;
+                        background: @brand-danger;
+                        color: @white;
+                        cursor: move;
+                        border-radius: 3px 3px 0 0;
+                        font-size: 14px;
+
+                        span {
+                            display: block;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            pointer-events: none;
+                        }
+
+                        .fa-table {
+                            pointer-events: none;
+                            position: absolute;
+                            top: 12px;
+                            left: 10px;
+                        }
+
+                        .datasource-icon (@right: 0) {
+                            position: absolute;
+                            right: @right;
+                            top: 6px;
+                            padding: 5px 3px;
+                            .fa {
+                                font-size: 16px;
+                            }
+                        }
+
+                        .datasource-collapse {
+                            .datasource-icon(7px);
+                        }
+
+                        .datasource-export {
+                            .datasource-icon(24px);
+                        }
+
+                    }
+                }
+                .panel-body {
+                    padding: 0;
+
+                    .list-group {
+                        margin-bottom: 0;
+
+                        .list-group-item {
+                            border-left: 0;
+                            border-right: 0;
+                            border-bottom: 0;
+                            border-radius: 0px;
+                            border-top: 1px solid @borderColorLight;
+                            line-height: 16px;
+
+                            .column-name-wrapper {
+                                display: block;
+                                padding-right: 20px;
+
+                                .column-name {
+                                    width: 100%;
+                                    display: block;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;
+                                }
+
+                                .fa {
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 8px;
+                                    color: @brand-danger;
+                                    display: none;
+                                }
+                            }
+
+                            &:first-child {
+                                border-top: 0;
+                            }
+
+                            &:last-child {
+                                border-radius: 0 0 3px 3px;
+                            }
+
+                            &:hover {
+                                .column-name-wrapper {
+                                    .fa {
+                                        display: block;
+                                    }
+                                }
+                            }
+
+                            &.columns-indicator {
+                                background: #fafafa;
+                                padding: 0;
+
+                                .btn-eighth {
+                                    color: @deep-blue;
+                                    border-radius: 0 0 3px 3px;
+
+                                    .columns-indicator-number {
+                                        font-weight: 500;
+                                        color: @brand-danger;
+                                    }
+
+                                    &:hover {
+                                        background: @white;
+                                        color: @brand-danger;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            z-index: 1039 !important;
+
+            .panel {
+                &.panel-default {
+                    border: 1px solid @td-deep-blue;
+                    opacity: 0.9;
+                }
+            }
+        }
+    }
+}
+
+.dull-schema-canvas {
+    opacity: 0.3;
+}
+
+/** LINKS IN WINDOWS **/
+.drag-locked {
+    border: 1px solid red;
+}
+
+.cmdLink {
+    font-size: 0.80em;
+}
+
+/** DRAG/DROP CLASSES **/
+.dragActive {
+    border: 2px dotted orange;
+}
+
+.dropHover {
+    border: 1px dotted red;
+}
+
+div.entity {
+    cursor: pointer;
+}
+
+li.active {
+    color: #627DF4;
+}
+
+a.remove {
+    cursor: pointer;
+}
+
+.popover{
+    max-width: 100%;
+}

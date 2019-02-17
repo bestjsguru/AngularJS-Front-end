@@ -1,0 +1,235 @@
+.truedash-calendar {
+
+    .dropdown-menu {
+        border: 0;
+    }
+
+    table {
+        text-transform: uppercase;
+        font-weight: normal;
+        border-color: @borderColor;
+
+        tbody, thead {
+            tr {
+                td.h6, th.h6 {
+                    color: @td-light-gray-dark;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        th, td {
+            .btn {
+                border: 0;
+                margin: 0;
+                background: none;
+                text-shadow: none;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+
+        th {
+            color: @madison;
+            font-weight: normal;
+            border: 1px solid @borderColor;
+            height: 35px;
+            width: 1%;
+
+            .glyphicon {
+                color: @brand-danger;
+            }
+
+            .btn {
+                text-transform: uppercase;
+                color: @brand-danger;
+
+                strong {
+                    font-weight: normal;
+                }
+            }
+
+        }
+
+        td {
+            color: @gray-light;
+            border: 1px solid @borderColor;
+            width: 35px;
+            height: 35px;
+            padding: 0;
+
+            .btn {
+                .text-muted {
+                    color: @white;
+                }
+
+                &.active, &.active:hover, &.btn-default, &.btn-default:hover {
+                    color: inherit;
+                    background-color: inherit;
+                }
+
+                &.btn-info, &.btn-info.active, &.btn-info:hover, &.btn-info.active:hover {
+                    background-color: @brand-danger;
+                    border-radius: 0;
+                    color: @white;
+                    height: 34px;
+
+                    &.btn-muted {
+                        background-color: lighten(@brand-danger, 20%);
+                    }
+
+                    .text-info {
+                        color: @white;
+                    }
+                }
+            }
+
+            &:hover {
+                background: #eeeeee;
+                cursor: pointer;
+            }
+
+            &.old, &.new {
+                color: @white;
+            }
+
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+}
+
+.truedash-calendar {
+
+    &.modal-calendar {
+        .dropdown-menu {
+            margin-right: 15px;
+        }
+    }
+
+}
+
+.calendar-holder {
+    position: absolute;
+    // This is because @zindex-popover is 1060 and we want calendar to show on top
+    z-index: 1070;
+    right: 15px;
+    top: 52px;
+    width: 286px;
+    background: @white;
+    border: 1px solid @borderColor;
+    display: none;
+
+    .calendar-buttons {
+        float: left;
+        width: 100%;
+        border: 1px solid @borderColor;
+        text-align: center;
+        padding: 14px 0 13px 0;
+        margin-top: -1px;
+    }
+
+    .calendar-from-wrapper, .calendar-to-wrapper {
+        float: left;
+        width: 50%;
+    }
+
+    .calendar-title {
+        border-bottom: 1px solid @borderColor;
+        padding: 10px 0;
+        float: left;
+        width: 100%;
+        text-align: center;
+        margin-bottom: -1px;
+    }
+
+    .calendar-from {
+        float: left;
+        margin-left: -1px;
+        height: auto;
+        padding: 0;
+        border: 0;
+        max-width: 286px;
+        min-width: 286px;
+    }
+
+    .calendar-to {
+        float: right;
+        margin-right: -1px;
+        height: auto;
+        padding: 0;
+        border: 0;
+        max-width: 286px;
+        min-width: 286px;
+
+        .datepicker .table-condensed {
+            width: 100%;
+        }
+    }
+
+    &.single-calendar {
+        width: 286px;
+    }
+
+    &.double-calendar {
+        width: 600px;
+
+        .calendar-buttons {
+            border-bottom: none;
+            border-left: none;
+            border-right: none;
+        }
+    }
+
+    &.week-picker-mode {
+
+        tbody > tr:hover {
+            td:not(.h6) {
+                background: #eeeeee;
+            }
+        }
+
+        tr.selected > td[role=gridcell] > button {
+            background-color: @brand-danger;
+            border-radius: 0;
+            color: @white;
+            height: 34px;
+        }
+    }
+
+}
+
+.calendar-input {
+    position: relative;
+
+    .fa {
+        position: absolute;
+        top: 13px;
+        left: 10px;
+        z-index: 1;
+    }
+
+    .card-builder-date {
+        padding: 6px 12px 6px 30px;
+    }
+}
+
+.uib-daypicker, .uib-yearpicker, .uib-monthpicker {
+    &:focus {
+        outline: 0;
+    }
+}
+
+.uib-monthpicker, .uib-yearpicker {
+    .btn-info, .btn-info.active, .btn-info.focus, .btn-info:active, .btn-info:hover, .open > .dropdown-toggle.btn-info, .btn-info:active:hover, .btn-info.active:focus {
+        color: @brand-danger;
+        background: @white;
+    }
+}

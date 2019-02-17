@@ -1,0 +1,285 @@
+<div class="smart-alerts-wrapper">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Smart Alerts</span>
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="pull-right">
+                <div class="dashboard-actions">
+                    <div class="dropdown pull-right dashboard-options" ng-class="{disabled: $ctrl.loading}">
+                        <a href="#" class="btn btn-eighth pull-right dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-fw fa-ellipsis-v" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li app-access permission="smart-alerts-management">
+                                <a title="Add new metric" ui-sref="createMetricAlert">
+                                    <i class="fa fa-fw fa-plus" aria-hidden="true"></i> Add new metric
+                                </a>
+                            </li>
+                            <li>
+                                <a title="Mark all alerts as read" ng-click="$ctrl.readAllAlerts()">
+                                    <i class="fa fa-fw fa-check" aria-hidden="true"></i> Mark all alerts as read
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <form ng-submit="$ctrl.filter()" class="smart-alert-form">
+                    <div class="item">
+                        <div class="form-group">
+                            <input ng-model="$ctrl.form.metric" type="text" class="form-control" placeholder="Metric Name" ng-disabled="$ctrl.loading"/>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="form-group">
+                            <div class="smart-alert-select">
+                                <ui-select class="w-100" on-select="" ng-model="$ctrl.form.show" ng-disabled="$ctrl.loading">
+                                    <ui-select-match allow-clear="true" placeholder="All alerts">{{$select.selected.label}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.show | filter: {label: $select.search}">
+                                        <span ng-bind-html="item.label"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="form-group">
+                            <div class="smart-alert-select">
+                                <ui-select class="w-100" on-select="" ng-model="$ctrl.form.level" ng-disabled="$ctrl.loading">
+                                    <ui-select-match allow-clear="true" placeholder="Alert Level">{{$select.selected.label}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.levels | filter: {label: $select.search}">
+                                        <span ng-bind-html="item.label"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="form-group">
+                            <div class="smart-alert-select">
+                                <ui-select class="w-100" on-select="" ng-model="$ctrl.form.frequency" ng-disabled="$ctrl.loading">
+                                    <ui-select-match allow-clear="true" placeholder="Frequency">{{$select.selected.label}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.frequencies | filter: {label: $select.search}">
+                                        <span ng-bind-html="item.label"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="form-group">
+                            <div class="smart-alert-select">
+                                <ui-select class="w-100" on-select="" ng-model="$ctrl.form.isGood" ng-disabled="$ctrl.loading">
+                                    <ui-select-match allow-clear="true" placeholder="Good/Bad">{{$select.selected.label}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.isGood | filter: {label: $select.search}">
+                                        <span ng-bind-html="item.label"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="btn-group" role="group">
+                            <button ng-disabled="$ctrl.loading" type="button" class="btn btn-fourth" ng-click="$ctrl.reset()">Reset</button>
+                            <button ng-disabled="$ctrl.loading" type="submit" class="btn btn-third">
+                                <i class="fa fa-check fa-fw" aria-hidden="true"></i> Apply
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row smart-alerts-header">
+            <div class="col-lg-12">
+                <span class="smart-alerts-heading">{{$ctrl.isNewAlerts() ? 'New' : 'All'}} alerts</span>
+
+                <div class="smart-alerts-buttons pull-right">
+                    <button class="btn btn-link" ng-click="$ctrl.layout = '3columns'">
+                        <i class="fa fa-fw fa-th" ng-class="{red: $ctrl.layout === '3columns'}"></i>
+                    </button>
+                    <button class="btn btn-link" ng-click="$ctrl.layout = '2columns'">
+                        <i class="fa fa-fw fa-th-large" ng-class="{red: $ctrl.layout === '2columns'}"></i>
+                    </button>
+                    <button class="btn btn-link" ng-click="$ctrl.layout = 'list'">
+                        <i class="fa fa-fw fa-bars" ng-class="{red: $ctrl.layout === 'list'}"></i>
+                    </button>
+                    <button class="btn btn-link" ng-click="$ctrl.layout = 'table'">
+                        <i class="fa fa-fw fa-table" ng-class="{red: $ctrl.layout === 'table'}"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Alerts List Page -->
+        <div class="smart-alerts-list-wrapper" ng-if="$ctrl.layout === 'table'">
+            <loader ctrl-check="$ctrl.loading"></loader>
+            <table class="table smart-alerts-list">
+                <thead>
+                    <tr>
+                        <th width="140">Alert Name</th>
+                        <th>Filters</th>
+                        <th class="narrow">Frequency</th>
+                        <th class="narrow">Alert Level</th>
+                        <th width="160">Send Alerts to</th>
+                        <th class="narrow">Alert via</th>
+                        <th class="narrow">Subscribed</th>
+                        <th app-access permission="smart-alerts-management" class="narrow">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="alert in $ctrl.alerts">
+                        <td>
+                            <a ng-if="$ctrl.userCanEdit()" ui-sref="updateMetricAlert({alertId: alert.id})">{{::alert.name}}</a>
+                            <span ng-if="!$ctrl.userCanEdit()">{{::alert.name}}</span>
+                        </td>
+                        <td>
+                            <div class="alert-metric-filter-wrapper">
+                                <span class="applied-filter" ng-repeat="filter in alert.filters" ng-bind-html="$ctrl.convertFilter(filter)"></span>
+                            </div>
+                        </td>
+                        <td class="text-capitalize">
+                            {{::alert.frequency}}
+                        </td>
+                        <td class="text-capitalize">
+                            <span class="frequency {{::alert.alert_level}}">{{::alert.alert_level}}</span>
+                        </td>
+                        <td>
+                            <span>{{alert.users.join(', ')}}</span>
+                        </td>
+                        <td class="text-capitalize">
+                            {{::alert.alertVia.join(', ')}}
+                        </td>
+                        <td class="text-center">
+                            <a href="#" class="alert-status" ng-click="$ctrl.subscribe(alert)" ng-disabled="$ctrl.loading">
+                                <i class="fa {{alert.isSubscribed ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+                            </a>
+                        </td>
+                        <td app-access permission="smart-alerts-management" class="text-center">
+                            <a href="#" class="remove-alert" ng-click="$ctrl.confirmRemove(alert)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- eof Smart Alerts List Page -->
+
+        <div class="row" ng-if="$ctrl.layout != 'table'">
+            <loader ctrl-check="$ctrl.loading"></loader>
+            <div class="{{$ctrl.layoutClass()}}" ng-repeat="card in $ctrl.cards track by $index">
+                <div class="smart-alert-wrapper">
+                    <div class="smart-alert-header">
+                        <div class="smart-alert-icon">
+                            <i class="fa fa-exclamation-triangle fa-2x fa-fw" ng-class="{lightgrey: !card.anomalies, red: card.anomalies && !card.anomalies.last().isGood, green: card.anomalies && card.anomalies.last().isGood}"></i>
+                        </div>
+
+                        <div class="smart-alert-info">
+                            <span class="smart-alert-name" ng-bind-html="card.getName()"></span>
+                            <span class="smart-alert-time" ng-bind-html="card.description"></span>
+                        </div>
+
+                        <div class="dropdown smart-alert-dropdown pull-right">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a ng-click="$ctrl.download(card.id, 'png', card.metrics.get(0).getName())">
+                                        <i class="fa fa-picture-o fa-fw"></i>
+                                        <span>Download PNG</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-click="$ctrl.download(card.id, 'svg', card.metrics.get(0).getName())">
+                                        <i class="fa fa-area-chart fa-fw"></i>
+                                        <span>Download SVG</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-click="$ctrl.download(card.id, 'pdf', card.metrics.get(0).getName())">
+                                        <i class="fa fa-file-pdf-o fa-fw"></i>
+                                        <span>Download PDF</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <a class="smart-alert-expand pull-right" ng-click="$ctrl.expand(card)">
+                            <i class="fa fa-fw fa-expand"></i>
+                        </a>
+                    </div>
+                    <div class="smart-alert-body">
+                        <loader ctrl-check="card.metrics.loading"></loader>
+
+                        <div class="smart-alert-data" ng-if="!card.metrics.loading">
+                            <app-highchart ng-if="card.hasData() && !card.metrics.error" card="card"></app-highchart>
+
+                            <div ng-if="!card.hasData() && !card.metrics.error" class="no-data">
+                                <span>No data</span>
+                            </div>
+
+                            <div ng-if="card.metrics.error" class="card-error-message">
+                                <i class="fa fa-2x fa-exclamation-triangle"></i>
+                                <span class="card-error-title">Oops!</span>
+                                <span ng-bind-html="card.metrics.errorMessage"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="smart-alert-footer">
+                        <app-metric-favourites card="card" heart-position="left"></app-metric-favourites>
+
+                        <a class="smart-alert-refresh pull-right" ng-click="$ctrl.refresh(card)">
+                            <i class="fa fa-fw fa-refresh" ng-class="{'fa-spin': card.loading}"></i>
+                        </a>
+                        <a class="read-all-alerts" ng-if="card.anomalies.hasUnreads()" ng-click="$ctrl.readAllCardAlerts(card)">
+                            <span>Mark all alerts as read ({{card.anomalies.unreadCount()}})</span>
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center no-metrics-message" ng-if="!$ctrl.loading && !$ctrl.cards.length">
+                <h5>
+                    <i class="fa fa-exclamation-triangle fa-fw"></i>
+                    There are no cards to display at the moment
+                </h5>
+            </div>
+        </div>
+
+        <div class="row" ng-if="!$ctrl.loading && $ctrl.cards.length">
+            <div class="col-md-12 text-center smart-alert-pagination">
+                <div class="smart-alert-legend" ng-if="$ctrl.layout != 'table'">
+                    <span>
+                        <i class="fa fa-fw fa-circle"></i> Read alert
+                    </span>
+                    <span>
+                        <i class="fa fa-fw fa-exclamation-circle"></i> Unread alert
+                    </span>
+                </div>
+                <div uib-pagination items-per-page="$ctrl.pagination.perPage" max-size="10" boundary-link-numbers="true" total-items="$ctrl.pagination.total"
+                    ng-model="$ctrl.pagination.currentPage" ng-change="$ctrl.getAnomalies()">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

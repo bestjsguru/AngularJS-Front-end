@@ -1,0 +1,27 @@
+<div class="calendar-holder truedash-calendar" ng-class="{'single-calendar': !calendar.isDouble(), 'double-calendar': calendar.isDouble()}">
+    <div ng-if="calendar.isDouble()">
+        <div class="calendar-from-wrapper">
+            <span class="calendar-title">From</span>
+            <div uib-datepicker class="calendar-from" ng-model="calendar.range.from" ng-if="calendar.options.from.startingDay !== undefined"
+                 datepicker-options="calendar.options.from" ng-required="true" placeholder="Starting Date"></div>
+        </div>
+    </div>
+    <div ng-class="{'calendar-to-wrapper': calendar.isDouble()}">
+        <span class="calendar-title">To</span>
+        <div uib-datepicker class="calendar-to" ng-model="calendar.range.to" ng-if="calendar.options.to.startingDay !== undefined"
+             datepicker-options="calendar.options.to" ng-required="true" placeholder="Ending Date"></div>
+    </div>
+
+    <div class="calendar-buttons">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <button ng-click="calendar.cancel()" id="cancel" type="button" class="btn btn-second btn-block">Cancel</button>
+                </div>
+                <div class="col-md-6">
+                    <button id="apply" type="button" ng-click="calendar.apply()" class="btn btn-first btn-block">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

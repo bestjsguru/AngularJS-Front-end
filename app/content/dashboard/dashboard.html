@@ -1,0 +1,20 @@
+<div class="container-fluid" ng-class="{'resizable-enabled': $ctrl.gridsterOptions.resizable.enabled, 'draggable-enabled': $ctrl.gridsterOptions.draggable.enabled}">
+    <div class="row main-content">
+        <div gridster="$ctrl.gridsterOptions" ng-if="$ctrl.dashboard && $ctrl.firstShow">
+            <div gridster-item="card.positioning.position" invalidate="$ctrl.invalidate()" ng-if="!card.isRemoved"
+                 class="card-dimensions" cardId="{{card.id}}" ng-class="{numeric: card.types.get() == 'numeric'}"
+                 ng-repeat="card in $ctrl.getCards() track by card.id">
+                <div tu-card="card" permissions="$ctrl.cardPermissions" class="card-wrapper"></div>
+            </div>
+        </div>
+
+        <div class="no-cards-on-dashboard" ng-if="$ctrl.dashboard && $ctrl.dashboard.cards.loaded && $ctrl.firstShow && !$ctrl.getCards().length">
+            <span>No cards on this dashboard yet</span>
+            <div app-access permission="cards" ng-if="$ctrl.showNewCardButton()">
+                <button class="btn btn-first btn-sm" ui-sref="cardBuilder({dashboardId: $ctrl.dashboard.id})">
+                    Add new card
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

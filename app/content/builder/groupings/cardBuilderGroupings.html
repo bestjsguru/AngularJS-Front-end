@@ -1,0 +1,70 @@
+<div class="card-builder-groups" ng-if="$ctrl.showGroupings">
+
+    <div class="groups-preview">
+        <a href ng-click="$ctrl.toggle()" class="groups-toggle">
+            <i class="fa fa-fw" ng-class="{'fa-caret-right': $ctrl.collapsed, 'fa-caret-down': !$ctrl.collapsed}" aria-hidden="true"></i>Groupings
+        </a>
+        <span ng-if="$ctrl.collapsed" class="applied-group" ng-repeat="grouping in $ctrl.card.groupings.items" ng-bind-html="$ctrl.convertGrouping.toText(grouping)"></span>
+    </div>
+
+    <div class="groups-edit-area" ng-if="!$ctrl.collapsed">
+        <div ng-repeat="grouping in $ctrl.groupings track by $index">
+            <div class="single-group" ng-class="{highlight: !grouping.added}" ng-form="$ctrl.forms.grouping_{{$index}}_form">
+                <loader ng-if="$ctrl.isGroupLoading($index)"></loader>
+                <div class="group-option">
+                    <div class="group-alias">
+                        <span class="dimension-name" ng-bind-html="grouping.column.getLabel()"></span>
+                    </div>
+                </div>
+                <div class="group-option">
+                    <input type="text" name="name" ng-change="$ctrl.onGroupingNameChange(grouping)" ng-model-options="{ debounce: 300 }"
+                           ng-model="grouping.name" placeholder="Grouping label" class="form-control"
+                           app-valid-grouping-name groupings="$ctrl.groupings" grouping="grouping">
+
+                    <div>
+                        <div class="error-messages" ng-messages="$ctrl.forms['grouping_' + $index + '_form'].name.$error"
+                             ng-if="$ctrl.forms['grouping_' + $index + '_form'].name.$dirty">
+                            <div ng-message="groupingName">Grouping name must be unique</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group-option">
+                    <app-column-value-dropdown
+                        name="value"
+                        ng-model="grouping.values"
+                        column="grouping.column"
+                        multiple="true"
+                        placeholder="Select Values"
+                        on-change="$ctrl.onColumnValueChange(grouping)">
+                    </app-column-value-dropdown>
+
+                    <label class="checkbox" ng-click="$ctrl.onGroupByNullClick(grouping)">
+                        <i class="fa fa-fw" ng-class="{'fa-check-square-o': grouping.applyGroupByNull, 'fa-square-o': !grouping.applyGroupByNull}">&nbsp;</i>
+                        <span>Include Nulls?</span>
+                    </label>
+                </div>
+                <div class="group-option group-buttons text-right">
+                    <div ng-if="!grouping.checkDelete && !grouping.deleting">
+                        <button ng-disabled="$ctrl.loading" class="btn btn-second" ng-click="grouping.checkDelete = true">Delete</button>
+                    </div>
+                    <div ng-if="grouping.checkDelete && !grouping.deleting">
+                        <button class="btn btn-fourth" ng-click="grouping.checkDelete = false">No</button>
+                        <button class="btn btn-first" ng-click="$ctrl.removeGrouping($index)">Yes</button>
+                    </div>
+                    <div ng-if="grouping.deleting">
+                        <button class="btn btn-fourth btn-block"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Deleting</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single-group">
+            <div class="group-option">
+                <label class="checkbox text-left" ng-disabled="$ctrl.loading" ng-click="$ctrl.onShowGroupingsAsPercentageClick()">
+                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.card.showGroupingAsPercentage, 'fa-square-o': !$ctrl.card.showGroupingAsPercentage}">&nbsp;</i>
+                    <span>Show results as percentage</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+</div>

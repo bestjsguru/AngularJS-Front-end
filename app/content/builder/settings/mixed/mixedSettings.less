@@ -1,0 +1,41 @@
+.mixed-settings {
+    .metric-table {
+        td {
+            vertical-align: middle;
+
+            label {
+                .fa-check {
+                    font-size: 20px;
+                    opacity: 0.4;
+                }
+
+                .text-success {
+                    opacity: 1;
+                }
+            }
+
+            .card-type-icon {
+                opacity: 0.2;
+                margin-left: 5px;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &.selected {
+                    opacity: 1;
+                }
+            }
+
+            &[disabled] {
+                .card-type-icon {
+                    opacity: 0.2;
+
+                    &.selected {
+                        opacity: 0.5;
+                    }
+                }
+            }
+        }
+    }
+}

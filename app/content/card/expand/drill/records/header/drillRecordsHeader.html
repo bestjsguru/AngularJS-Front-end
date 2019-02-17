@@ -1,0 +1,39 @@
+<div class="drill-records-header" ng-show="$ctrl.card.drill.isRecords">
+    <div ng-if="$ctrl.date || $ctrl.groupings.length" class="item-title">
+        <div class="item-name">Drill path:</div>
+    </div>
+
+    <div ng-if="$ctrl.date || $ctrl.groupings.length" class="item-breadcrumbs">
+        <div class="item" ng-if="$ctrl.date">
+            <div class="item-name">Date</div>
+            <div class="item-value">
+                {{$ctrl.date.label}}
+            </div>
+        </div>
+        <div class="item" ng-repeat="grouping in $ctrl.groupings">
+            <div class="item-name">
+                {{grouping.column.getLabel()}}
+            </div>
+            <div class="item-value" ng-if="grouping.values.length">
+                {{grouping.firstValue}}
+            </div>
+        </div>
+    </div>
+
+    <div class="item-options">
+        <button class="btn btn-fourth hide-records" ng-click="$ctrl.hideRecords()">
+            <i class="fa fa-fw fa-times"></i> Hide records
+        </button>
+    </div>
+</div>
+
+<div class="drill-records-header" ng-show="!$ctrl.card.drill.isRecords && !$ctrl.card.drill.isActive() && !$ctrl.card.drill.presets.active">
+    <span class="help-block m-b-0">
+        <i class="fa fa-lightbulb-o"></i>
+        <strong>Right click</strong> on a chart segment to drill in, or
+        <br> Select <strong>Show underlying records</strong> to view raw data behind metrics
+    </span>
+
+    <!-- This is a placeholder in order to show bottom border when nothing is -->
+    <!-- active as we do have button for underlying data in drillActions.html -->
+</div>

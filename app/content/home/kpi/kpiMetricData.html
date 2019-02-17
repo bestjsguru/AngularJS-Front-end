@@ -1,0 +1,12 @@
+<div class="kpi-info" ng-class="$ctrl.colorClass">
+    <span class="kpi-value bold" ng-if="!$ctrl.loading">{{$ctrl.format($ctrl.metricValue)}}</span>
+    <span class="kpi-percentage" ng-if="!$ctrl.loading" tu-popover
+          tu-popover-html="{{$ctrl.tooltipSentence}}"
+          tu-popover-placement="right">
+        {{$ctrl.getVariance()}}
+    </span>
+
+    <span class="loader" ng-if="$ctrl.loading">
+        <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+    </span>
+</div>

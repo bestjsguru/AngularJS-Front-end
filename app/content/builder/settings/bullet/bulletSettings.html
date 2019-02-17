@@ -1,0 +1,49 @@
+<div class="bullet-settings" ng-if="$ctrl.settings">
+    <table class="table metric-table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th width="200">Goal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="metric in $ctrl.settings.metrics track by $index" ng-if="!metric.hidden">
+                <td ng-bind="metric.name"></td>
+                <td class="text-center">
+                    <input type="number" ng-model="metric.goal" class="form-control" placeholder="Goal" ng-change="$ctrl.applySettings()"
+                           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                           ng-disabled="$ctrl.loading">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="range-wrapper">
+        <div class="single-range" ng-repeat="range in $ctrl.settings.bullet.valueRanges track by $index">
+            <div class="range-item">
+                <label>Value Range</label>
+                <input type="number" ng-model="range.from" class="form-control" placeholder="From" ng-change="$ctrl.applySettings()"
+                       ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                       ng-disabled="$ctrl.loading">
+            </div>
+            <div class="range-item">
+                <input type="number" ng-model="range.to" class="form-control" placeholder="To" ng-change="$ctrl.applySettings()"
+                       ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                       ng-disabled="$ctrl.loading">
+            </div>
+            <div class="range-item color-item">
+                <button class="btn-link remove-range" ng-click="$ctrl.remove(range)" ng-disabled="$ctrl.loading">Remove range?</button>
+                <div class="color-picker text-picker" tu-popover tu-popover-placement="top" tu-popover-html="Text color" ng-disabled="$ctrl.loading">
+                    <spectrum-colorpicker ng-model="range.color" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.applySettings()"></spectrum-colorpicker>
+                    <i class="fa fa-times remove-cross" ng-click="$ctrl.removeColor(range)"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="add-range-wrapper">
+        <button class="btn btn-fourth add-range" ng-click="$ctrl.addRange()" ng-disabled="$ctrl.loading"><i class="fa fa-fw fa-plus"></i> Add range</button>
+    </div>
+</div>

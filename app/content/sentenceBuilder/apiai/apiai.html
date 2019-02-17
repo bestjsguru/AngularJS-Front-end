@@ -1,0 +1,130 @@
+<div class="apiai-wrapper">
+
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Api.ai Playground</span>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.hasToken">
+        <div class="col-md-12">
+            <form ng-submit="$ctrl.getResponse()">
+
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-fw fa-pencil"></i></div>
+                    <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+                              ng-model="$ctrl.sentence" type="text" class="form-control"
+                              placeholder="Say something..." ng-disabled="!$ctrl.hasToken">
+                    </textarea>
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-lg btn-success" ng-disabled="!$ctrl.hasToken">Get data</button>
+                    </div>
+                </div>
+                <span class="help-block">Type <kbd>Ctrl + Space</kbd> to see available metrics</span>
+            </form>
+        </div>
+
+        <div class="col-md-12 m-t-15" ng-if="$ctrl.response">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">Card data</h3>
+                    <button class="btn btn-success pull-right" ng-if="$ctrl.findMetric()" ng-click="$ctrl.createCard()">Create card</button>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped" ng-if="$ctrl.findMetric()">
+
+                        <tbody>
+                            <tr>
+                                <td><strong>Metric</strong></td>
+                                <td>{{$ctrl.findMetric().id}} - {{$ctrl.findMetric().label}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Range</strong></td>
+                                <td>{{$ctrl.response.range.fromString}} / {{$ctrl.response.range.toString}}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frequency</strong></td>
+                                <td>{{$ctrl.response.frequency}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <span ng-if="!$ctrl.findMetric()">No metrics found. Please check your input and try again.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 m-t-15" ng-if="$ctrl.response">
+            <div class="panel" ng-class="$ctrl.panelClass()">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Api.ai response</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <thead>
+                            <tr ng-if="!$ctrl.response.isError()">
+                                <th><strong>Metric</strong></th>
+                                <th><strong>Date</strong></th>
+                                <th><strong>Date Range</strong></th>
+                            </tr>
+                            <tr ng-if="$ctrl.response.isError()">
+                                <th class="text-center" ng-bind="$ctrl.response.message"></th>
+                            </tr>
+                        </thead>
+                        <tbody ng-if="!$ctrl.response.isError()">
+                            <tr>
+                                <td ng-bind="$ctrl.response.metricName || $ctrl.response.message"></td>
+                                <td ng-bind="$ctrl.response.dateString"></td>
+                                <td ng-bind="$ctrl.response.dateRangeString"></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 m-t-15">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">Saved entries ({{$ctrl.entries.length}})</h3>
+                </div>
+                <div class="panel-body">
+                    <pre ng-if="$ctrl.metrics.length" ng-bind="$ctrl.syncMetricsCommand()"></pre>
+                    <table class="table table-striped" ng-if="$ctrl.entries.length">
+                        <thead>
+                            <tr class="bold">
+                                <th><strong>Name</strong></th>
+                                <th><strong>Synonyms</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="entry in $ctrl.entries track by $index">
+                                <td ng-bind-html="entry.value"></td>
+                                <td ng-bind-html="entry.synonyms.join(', ')"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.hasToken">
+        <div class="col-md-12 m-t-15">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        <i class="fa fa-fw fa-warning"></i>
+                        Warning
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    You haven't set any agent for this organisation inside api.ai dashboard. You have to set it up and get api tokens first.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,76 @@
+.drill-table{
+    .fixed-table {
+        float: left;
+        max-width: 200px;
+        border-right: none;
+        border-top: 1px solid @state-info-bg;
+
+        .fixed-table-data {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            height: 39px;
+        }
+
+        thead th {
+            background: @state-info-bg;
+            font-weight: 500;
+            border-color: @borderColor;
+            text-transform: uppercase;
+        }
+
+        tbody td {
+            background: @state-info-bg;
+            font-weight: 500;
+            border-color: @borderColor;
+        }
+
+    }
+
+    .scrollable-table {
+        margin-left: 202px;
+
+        td {
+            border-top: 1px solid #dddddd;
+            height: 39px;
+        }
+
+        .scroller {
+            overflow-x: hidden;
+            position: relative;
+            width: 100%;
+            margin: 0 0 15px 0;
+
+            .datatable-container{
+                margin-bottom: 20px;
+                th {
+                    cursor: pointer;
+                }
+            }
+
+            .table-bordered {
+                border-top: 1px solid transparent;
+            }
+        }
+    }
+
+    th{
+        background: @gray-pale;
+
+        span{
+            font-size: 13px;
+            line-height: 15px;
+        }
+
+    }
+
+    .table > thead > tr > th.active, .table > tbody > tr > td.active{
+        background: @state-info-bg;
+        border-color: @borderColor;
+    }
+
+    .table > thead > tr > th, .table tbody > tr > td {
+        white-space: nowrap;
+    }
+}

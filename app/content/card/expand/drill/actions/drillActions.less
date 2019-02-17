@@ -1,0 +1,54 @@
+.drill-actions {
+    position: absolute;
+    top: 5px;
+    right: 17px;
+
+    .dropdown {
+        display: inline-block;
+        margin-left: 10px;
+
+        .btn {
+            .beta {
+                color: inherit;
+                border-color: @white;
+                margin: -2px 4px 0 4px;
+            }
+
+            &:hover, &:focus {
+                .beta {
+                    border-color: inherit;
+                }
+            }
+        }
+
+        .dropdown-menu {
+            top: 44px;
+
+            &:after, &:before {
+                bottom: 100%;
+                right: 15px;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            &:after {
+                border-color: rgba(255, 255, 255, 0);
+                border-bottom-color: @white;
+                border-width: 7px;
+                margin-right: -7px;
+            }
+            &:before {
+                border-color: rgba(204, 204, 204, 0);
+                border-bottom-color: @borderColorLight;
+                border-width: 8px;
+                margin-right: -8px;
+            }
+        }
+    }
+}
+
+@import './save/drillSave';

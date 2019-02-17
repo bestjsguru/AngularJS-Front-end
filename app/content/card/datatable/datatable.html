@@ -1,0 +1,188 @@
+<div class="card-content chart-loading ps-container" ng-class="{
+    'long-table': $ctrl.datatableTransformer.longTable,
+    'cohort': $ctrl.isCohort
+}">
+    <tu-horizontal-pagination ng-if="$ctrl.showHorizontalPagination() && !$ctrl.isTranspose()" table="$ctrl"></tu-horizontal-pagination>
+    <loader ng-if="!$ctrl.noLoader" ctrl-check="!!$ctrl.isLoading()"></loader>
+    <div ng-if="!$ctrl.isLoading() && $ctrl.isNoData()" class="no-data">
+        <span>No data</span>
+    </div>
+
+    <perfect-scrollbar ng-if="!$ctrl.isLoading()" class="scroller-x" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                       always-visible="false" suppress-scroll-y="true">
+        <perfect-scrollbar class="scroller-y" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                           always-visible="false" suppress-scroll-x="true"
+                           scroll-parent=".card-content">
+
+            <!-- REGULAR TABLES -->
+            <div ng-if="!$ctrl.isNoData() && !$ctrl.isTranspose()" class="datatable-container">
+                <table ng-class="{'table-bordered': $ctrl.isCohort, 'with-multiheader': $ctrl.datatableTransformer.multiheader}" class="table table-condensed table-hover datatable-body">
+                    <thead ng-if="$ctrl.showHeader()">
+                        <col ng-repeat="column in $ctrl.datatableTransformer.metricData.columns track by $index"></col>
+                        <tr class="time-headers">
+                            <th colspan="{{ $index < $ctrl.datatableTransformer.groupColumnsNum ? 1 : $ctrl.card.metrics.getVisibleCount() }}"
+                                ng-repeat="column in $ctrl.datatableTransformer.topHeaders track by $index"
+                                ng-click="$index < $ctrl.datatableTransformer.groupColumnsNum ? $ctrl.setSorting($index, true) : null"
+                                title="{{ ::column }}">
+                                <span ng-bind-html="column"></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th ng-class="{'no-sort' : !$ctrl.columnSorting.canSort()}"
+                                ng-repeat="column in $ctrl.datatableTransformer.metricData.columns track by $index"
+                                ng-click="$ctrl.setSorting($index)"
+                                title="{{ ::column }}">
+
+                                <div class="header-content">
+                                    <div class="item small-item" ng-if="$ctrl.hasDashboardFilters(column)">
+                                        <i class="fa fa-fw fa-filter card-filter-icon"></i>
+                                    </div>
+                                    <div class="item">
+                                        <span ng-bind-html="column"></span>
+                                    </div>
+                                    <div class="item small-item" ng-if="$ctrl.getColumnsSortIndex($index)">
+                                        <span class="sorting-number" ng-bind-html="$ctrl.getColumnsSortIndex($index)"></span>
+                                    </div>
+                                    <div class="item small-item">
+                                        <i ng-if="!$ctrl.isSortingColumn($index)" class="fa fa-sort"></i>
+                                        <i ng-if="$ctrl.isSortingColumn($index)" class="fa fa-caret-{{$ctrl.getColumn($index).direction == 'asc' ? 'up' : 'down'}}"></i>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <col ng-repeat="column in $ctrl.datatableTransformer.metricData.columns track by $index"></col>
+                    <tbody>
+                        <tr ng-click="$ctrl.onRowClicked($index)" ng-repeat="(rowIndex, row) in $ctrl.datatableTransformer.metricData.results track by $index"
+                            total-items="::$ctrl.datatableTransformer.metricData.total" current-page="$ctrl.currentPage">
+
+                            <td ng-repeat="column in row track by $index"
+                                app-cell-format
+                                value="column"
+                                results="$ctrl.formattingOptions.results"
+                                columns="$ctrl.formattingOptions.columns"
+                                card="$ctrl.card"
+                                row-index="$ctrl.regularRowIndex(rowIndex, $index)"
+                                column-index="$ctrl.regularColumnIndex(rowIndex, $index)"
+                                ng-class="{'no-wrap': $ctrl.isNegativeValue(column)}">
+
+                                <app-comparable-cell
+                                    data="column"
+                                    ng-if="column.comparableValue !== undefined"
+                                    results="$ctrl.formattingOptions.results"
+                                    columns-data="$ctrl.formattingOptions.columns"
+                                    card="$ctrl.card"
+                                    row-index="$ctrl.regularRowIndex(rowIndex, $index)"
+                                    column-index="$ctrl.regularColumnIndex(rowIndex, $index)">
+                                </app-comparable-cell>
+
+                                <tu-common-cell
+                                    data="column"
+                                    ng-if="column.comparableValue === undefined && !$ctrl.isComplexityCohort"
+                                    results="$ctrl.formattingOptions.results"
+                                    columns-data="$ctrl.formattingOptions.columns"
+                                    card="$ctrl.card"
+                                    row-index="$ctrl.regularRowIndex(rowIndex, $index)"
+                                    column-index="$ctrl.regularColumnIndex(rowIndex, $index)">
+                                </tu-common-cell>
+
+                                <div ng-if="column.comparableValue === undefined && $ctrl.isComplexityCohort"
+                                     title="{{ column }}"
+                                     ng-bind-html="$ctrl.isComplexityCohort && column == 0 ? '' : column">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="$ctrl.datatableTransformer.metricData.rowTotal">
+                            <td colspan="{{$ctrl.datatableTransformer.metricData.rowTotal.length}}" ng-bind-html="'Totals'"></td>
+                        </tr>
+                        <tr ng-if="$ctrl.datatableTransformer.metricData.rowTotal">
+                            <td ng-repeat="total in $ctrl.datatableTransformer.metricData.rowTotal track by $index" ng-bind-html="total"></td>
+                        </tr>
+                    </tbody>
+
+                    <tbody ng-if="$ctrl.getTableTotals().length" class="datatable-footer">
+                        <tr>
+                            <th ng-if="_.isEmpty($ctrl.columnsMap)" ng-repeat="tableTotal in $ctrl.getTableTotals() track by $index"
+                                ng-class="{'no-wrap': $ctrl.isNegativeValue(tableTotal)}">
+                                <span ng-if="$index == 0">Total:</span>
+                                <span ng-if="$index > 0" ng-bind-html="tableTotal"></span>
+                            </th>
+                            <th ng-if="!_.isEmpty($ctrl.columnsMap)" ng-repeat="tableTotal in $ctrl.getTableTotals() track by $index"
+                                ng-class="{'no-wrap': $ctrl.isNegativeValue(tableTotal)}">
+                                <span ng-bind-html="tableTotal"></span>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TRANSPOSED TABLES -->
+            <div ng-if="!$ctrl.isNoData() && $ctrl.isTranspose()" class="datatable-container">
+                <table class="table table-condensed table-hover datatable-body">
+                    <thead>
+                        <tr>
+                            <th ng-class="{'no-sort' : true}"
+                                ng-repeat="column in $ctrl.columnsForTransposeHeader() track by $index"
+                                title="{{ ::column }}"
+                                app-cell-format
+                                value="column"
+                                results="$ctrl.formattingOptions.results"
+                                columns="$ctrl.formattingOptions.columns"
+                                card="$ctrl.card"
+                                row-index="$ctrl.transposedRowIndex(-1, $index)"
+                                column-index="$ctrl.transposedColumnIndex(-1, $index)"
+                                ng-class="{'no-wrap': $ctrl.isNegativeValue(column)}">
+
+                                <span ng-bind-html="column"></span>
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr ng-repeat="(rowIndex, row) in $ctrl.transposeResults() track by $index" total-items="::$ctrl.datatableTransformer.metricData.total" current-page="$ctrl.currentPage">
+                            <td ng-repeat="column in row track by $index"
+                                app-cell-format
+                                value="column"
+                                results="$ctrl.formattingOptions.results"
+                                columns="$ctrl.formattingOptions.columns"
+                                card="$ctrl.card"
+                                row-index="$ctrl.transposedRowIndex(rowIndex, $index)"
+                                column-index="$ctrl.transposedColumnIndex(rowIndex, $index)"
+                                ng-class="{'no-wrap': $ctrl.isNegativeValue(column)}">
+
+                                <app-comparable-cell
+                                    data="column"
+                                    ng-if="column.comparableValue !== undefined"
+                                    results="$ctrl.formattingOptions.results"
+                                    columns-data="$ctrl.formattingOptions.columns"
+                                    card="$ctrl.card"
+                                    row-index="$ctrl.transposedRowIndex(rowIndex, $index)"
+                                    column-index="$ctrl.transposedColumnIndex(rowIndex, $index)">
+                                </app-comparable-cell>
+
+                                <tu-common-cell
+                                    data="column"
+                                    ng-if="$ctrl.transposedRowIndex(rowIndex, $index) >= 0 && column.comparableValue === undefined && !$ctrl.isComplexityCohort"
+                                    results="$ctrl.formattingOptions.results"
+                                    columns-data="$ctrl.formattingOptions.columns"
+                                    card="$ctrl.card"
+                                    row-index="$ctrl.transposedRowIndex(rowIndex, $index)"
+                                    column-index="$ctrl.transposedColumnIndex(rowIndex, $index)">
+                                </tu-common-cell>
+
+                                <div ng-if="$ctrl.transposedRowIndex(rowIndex, $index) < 0 && column.comparableValue === undefined"
+                                     title="{{ column }}"
+                                     ng-bind-html="$ctrl.isComplexityCohort && column == 0 ? '' : column">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </perfect-scrollbar>
+    </perfect-scrollbar>
+</div>
+
+<app-card-pagination ng-if="!$ctrl.isTranspose()" card="$ctrl.card" table="$ctrl"></app-card-pagination>

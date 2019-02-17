@@ -1,0 +1,9 @@
+<div class="drill-visual-picker" ng-disabled="$ctrl.card.metrics.loading">
+    <ul>
+        <li ng-repeat="type in $ctrl.types" ng-click="$ctrl.setType(type)">
+            <a ng-class="{active: $ctrl.getType() == type}" tu-popover tu-popover-html="{{ type | capitalize }}" tu-popover-placement="top">
+                <span class="card-type-icon {{ type }}"></span>
+            </a>
+        </li>
+    </ul>
+</div>

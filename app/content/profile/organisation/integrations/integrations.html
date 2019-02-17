@@ -1,0 +1,14 @@
+<div class="organisation-integrations">
+    <div class="organisation-logo-big">
+        <div class="org-info">
+            <div class="fiscal-year" ng-if="$ctrl.organisation.fiscalYearStart != null">Fiscal year starts on <span>{{$ctrl.organisation.fiscalYearStarting}}</span></div>
+            <div class="week-start">Week starts on <span ng-bind="$ctrl.organisation.startDayName"></span></div>
+        </div>
+        <div class="company-logo">
+            <img ng-src="{{ $ctrl.organisation.logo }}" id="prevImage" alt="Company Logo" class="clearfix">
+        </div>
+    </div>
+    <div class="container-fluid" ng-if="!$ctrl.loadingIntegrations">
+        <app-dexi-integration integrations="$ctrl.integrations"></app-dexi-integration>
+    </div>
+</div>

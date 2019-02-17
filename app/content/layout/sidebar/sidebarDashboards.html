@@ -1,0 +1,77 @@
+<div ng-if="::$ctrl.hasSidebarDashboards">
+
+    <div class="workspace-action-icons">
+        <div ng-if="$ctrl.loading">
+            <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+        </div>
+        <i class="fa fa-angle-right" ng-if="!$ctrl.loading" aria-hidden="true"></i>
+    </div>
+
+    <a ng-click="$ctrl.toggle()" ng-class="{'active': $ctrl.isOnDashboardPage()}" class="workspace-toggle"
+        tu-popover tu-popover-html="Dashboards" tu-popover-placement="right">
+        <i class="fa fa-fw fa-desktop" aria-hidden="true"></i>
+        <i ng-if="$ctrl.error" class="fa fa-exclamation-circle" aria-hidden="true"></i>
+    </a>
+
+    <div ng-if="!$ctrl.loading" class="workspace-menu-wrapper collapse" ng-class="{in: $ctrl.isVisible}">
+
+        <span class="workspace-title">Workspaces
+            <a ng-click="$ctrl.hide()"><i class="fa fa-times"></i></a>
+        </span>
+
+        <div ng-if="!$ctrl.error" id="menu-carousel" class="carousel slide" data-interval="false">
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="list-group">
+                        <a ng-repeat="folder in ::$ctrl.folders track by $index" class="list-group-single-item"
+                           ng-class="{'active': folder.hasDashboard($ctrl.dashboard.id)}"
+                           data-slide-to="{{$index + 1}}" data-target="#menu-carousel">
+                            <i class="fa fa-lock fa-fw item-icon" ng-if="::folder.isLocked()"></i>
+                            <div class="folder-title">
+                                <span ng-bind-html="::folder.title"></span>
+                                <span ng-if="!folder.isOrganisationFolder()" class="personal">Personal</span>
+                            </div>
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+
+                        <a ui-sref="dashboard({dashboardId: dashboard.id})" ui-sref-active="active"
+                           class="list-group-single-item dashboard-link" ng-repeat="dashboard in ::$ctrl.getMenuDashboards() track by $index">
+                            <div ng-bind-html="::dashboard.name"></div>
+                            <span class="personal">Personal</span>
+                        </a>
+                    </div>
+                </div>
+                <div ng-repeat="folder in ::$ctrl.folders track by $index" class="item">
+                    <div class="list-group">
+                        <a class="list-group-single-item back" data-slide-to="0" data-target="#menu-carousel">
+                            <i class="fa fa-fw fa-arrow-left"></i>
+                            <i class="fa fa-lock fa-fw item-icon" ng-if="::folder.isLocked()"></i>
+                            <div class="folder-title">
+                                <span ng-bind-html="::folder.title"></span>
+                                <span ng-if="!folder.isOrganisationFolder()" class="personal">Personal</span>
+                            </div>
+                        </a>
+
+                        <a ng-repeat="dashboard in ::folder.getActiveDashboards()" class="list-group-single-item dashboard-link"
+                           ui-sref="dashboard({dashboardId: dashboard.id})" ui-sref-active="active">
+
+                            <i class="fa fa-lock fa-fw item-icon" ng-if="::dashboard.isLocked()"></i>
+                            <div ng-bind-html="::dashboard.name"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="$ctrl.error" class="carousel slide" data-interval="false">
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <div class="list-group">
+                        <a href ng-click="$ctrl.reload()">Something went wrong while loading dashboards. <br>Click here to try again.</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

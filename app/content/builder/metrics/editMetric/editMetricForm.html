@@ -1,0 +1,12 @@
+<div class="edit-metric-form" ng-if="$ctrl.visible" ng-keyup="$ctrl.checkEvents($event)">
+    <input type="text" ng-model="$ctrl.data.name" class="form-control" placeholder="Please provide metric name" required>
+
+    <div class="color-picker">
+        <spectrum-colorpicker ng-model="$ctrl.data.color" options="$ctrl.ColorPickerConfig.get()"></spectrum-colorpicker>
+        <i class="fa fa-times remove-cross" ng-click="$ctrl.removeColor()"></i>
+    </div>
+
+    <button class="btn btn-eighth" ng-click="$ctrl.close()"><i class="fa fa-times"></i></button>
+    <button class="btn btn-eighth" ng-click="$ctrl.update()"><i class="fa fa-check"></i></button>
+</div>
+

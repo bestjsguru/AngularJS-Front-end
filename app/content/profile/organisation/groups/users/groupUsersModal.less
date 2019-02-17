@@ -1,0 +1,125 @@
+.group-users-modal {
+    .modal-body {
+
+        .panel {
+            margin-bottom: 0;
+
+            .panel-heading {
+                border-radius: 4px;
+            }
+
+            .panel-body {
+                padding: 0;
+                border-radius: 4px;
+                min-height: 200px;
+                max-height: 350px;
+
+                .user-list-wrapper {
+                    min-height: 200px;
+                    max-height: 350px;
+                    width: 100%;
+                    border: none;
+                    padding: 0;
+                    display: block;
+                    overflow-y: auto;
+                    margin-bottom: 0;
+                    border-radius: 3px;
+                    position: relative;
+
+                    table {
+                        margin-top: -1px;
+
+                        tr {
+                            opacity: 0.5;
+
+                            &.selected {
+                                opacity: 1;
+                            }
+
+                            td {
+
+                                .user-image {
+                                    float: left;
+                                    margin: 0;
+                                    img {
+                                        width: 30px;
+                                        height: 30px;
+                                        border: 1px solid @borderColorLight;
+                                    }
+                                }
+
+                                .user-data {
+                                    float: left;
+
+                                    span {
+                                        color: @deep-blue;
+                                        font-weight: 500;
+                                        display: block;
+                                        font-size: 14px;
+                                        line-height: 14px;
+                                        margin-top: 0;
+                                    }
+
+                                    a {
+                                        color: @gray-light;
+                                        font-size: 12px;
+                                        line-height: 12px;
+                                    }
+
+                                }
+
+                                i {
+                                    margin-top: 4px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .user-list-actions {
+            margin-top: 20px;
+
+            .checkbox {
+                display: inline;
+                margin-right: 10px;
+
+                &[disabled] {
+                    color: @silver-sand;
+                }
+
+                &:hover {
+                    color: inherit;
+                }
+
+                .fa-check-square-o {
+                    color: inherit;
+                }
+
+                .fa-square-o.partialy-selected {
+                    position: relative;
+
+                    &:after {
+                        content: "\f0c8";
+                        font-family: FontAwesome;
+                        font-style: normal;
+                        font-weight: normal;
+                        position: absolute;
+                        z-index: 1;
+                        font-size: 5px;
+                        left: 5px;
+                        top: 4px;
+                    }
+                }
+            }
+
+            .users-count {
+                float: right;
+                color: @silver-sand;
+                font-size: 12px;
+                margin-top: 4px;
+            }
+        }
+    }
+}

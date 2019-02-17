@@ -1,0 +1,17 @@
+<div class="metric-favourites" ng-if="$ctrl.card.favourites">
+    <a class="favourite-button" ng-class="$ctrl.getDirectionClass()"
+            ng-click="$ctrl.toggleFavourite($ctrl.card)">
+        <i class="fa fa-fw" ng-class="{'fa-heart-o': !$ctrl.card.favourites.hasCurrentUser(), 'fa-heart': $ctrl.card.favourites.hasCurrentUser()}"></i>
+    </a>
+
+    <div class="user-images" ng-class="$ctrl.getDirectionClass()">
+        <img ng-repeat="favourite in $ctrl.getUsers() track by $index" src="{{favourite.user.photo}}" class="img-circle"
+             tu-popover tu-popover-html="{{favourite.user.fullName}}" tu-popover-placement="top">
+    </div>
+
+    <div class="user-toggle" ng-if="$ctrl.hiddenUsersLength">
+        <span ng-if="$ctrl.collapsed" ng-click="$ctrl.toggleHiddenUsers()">+{{$ctrl.hiddenUsersLength}}</span>
+        <i ng-if="!$ctrl.collapsed" ng-click="$ctrl.toggleHiddenUsers()" class="fa fa-fw"
+           ng-class="{'fa-arrow-right': $ctrl.heartPosition === 'right', 'fa-arrow-left': $ctrl.heartPosition === 'left'}"></i>
+    </div>
+</div>

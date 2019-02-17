@@ -1,0 +1,114 @@
+<div class="sub-header border">
+    <div class="item flex-0">
+        <div class="dropdown pull-left">
+            <a class="dropdown-toggle btn btn-fourth btn-lg" data-toggle="dropdown" href="#">
+                <span class="date-dropdown-txt" ng-bind-html="alerts.show.all ? 'All' : 'Created by you'"></span>
+                <i class="fa fa-sort"></i>
+            </a>
+            <ul class="dropdown-menu alerts-dropdown animated fadeIn">
+                <li ng-click="alerts.show.setTo('all')"><a>All</a></li>
+                <li ng-click="alerts.show.setTo('my')"><a>Created by you</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="item flex-1 m-l-10 m-r-10">
+        <input type="text" class="form-control" ng-model="alerts.searchQuery" placeholder="Filter alerts"/>
+    </div>
+    <div class="item flex-0">
+        <button class="btn btn-third btn-lg pull-left" ng-click="alerts.refreshList()" tu-popover tu-popover-html="Refresh alerts list" tu-popover-placement="left">
+            <i class="fa fa-refresh" ng-class="{'fa-spin': alerts.listLoading}"></i>
+        </button>
+    </div>
+</div>
+
+<div class="organisation-edit-area profile-alert">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="item-list col-lg-12">
+                <loader ctrl-check="alerts.loading"></loader>
+
+                <table class="table table-striped vertical-align-center" ng-if="!alerts.loading">
+                    <thead>
+                        <tr class="sortable-headers">
+                            <th ng-click="alerts.orderBy('formatAlertHeading()')"> Name
+                                <i ng-if="!alerts.isOrderedBy('formatAlertHeading()')" class="pull-right fa fa-sort"></i>
+                                <i ng-if="alerts.isOrderedBy('formatAlertHeading()')" class="pull-right fa" ng-class="{'fa-caret-down': !alerts.order.reverse, 'fa-caret-up': alerts.order.reverse}"></i>
+                            </th>
+                            <th ng-click="alerts.orderBy('user.fullName')"> Creator
+                                <i ng-if="!alerts.isOrderedBy('user.fullName')" class="pull-right fa fa-sort"></i>
+                                <i ng-if="alerts.isOrderedBy('user.fullName')" class="pull-right fa" ng-class="{'fa-caret-down': !alerts.order.reverse, 'fa-caret-up': alerts.order.reverse}"></i>
+                            </th>
+                            <th ng-click="alerts.orderBy('metric')">Metric
+                                <i ng-if="!alerts.isOrderedBy('metric')" class="pull-right fa fa-sort"></i>
+                                <i ng-if="alerts.isOrderedBy('metric')" class="pull-right fa" ng-class="{'fa-caret-down': !alerts.order.reverse, 'fa-caret-up': alerts.order.reverse}"></i>
+                            </th>
+                            <th ng-click="alerts.orderBy('subscribedUsers().length')" width="120">People
+                                <i ng-if="!alerts.isOrderedBy('subscribedUsers().length')" class="pull-right fa fa-sort"></i>
+                                <i ng-if="alerts.isOrderedBy('subscribedUsers().length')" class="pull-right fa" ng-class="{'fa-caret-down': !alerts.order.reverse, 'fa-caret-up': alerts.order.reverse}"></i>
+                            </th>
+                            <th>Subscribe</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="alert in alerts.alerts | alertFilter:alerts.searchQuery">
+                            <!-- Heading -->
+                            <td>
+                                <a ui-sref="cardExplore({cardId: alert.cardId, tab: 'alerts'})" ng-bind-html="alert.formatAlertHeading()"></a>
+                            </td>
+
+                            <!-- Owner -->
+                            <td>
+                                <div class="user-image">
+                                    <img ng-src="{{ alert.user.photo }}" alt="" class="img-rounded">
+                                    <span ng-bind-html="alert.user.getFullName(true, true)"></span>
+                                </div>
+                            </td>
+
+                            <!-- Metric -->
+                            <td ng-bind-html="alert.metric ? alert.metric.label : 'Undefined'"></td>
+
+                            <!-- Subscribers -->
+                            <td>
+                                <a class="user-image" app-alert-subscribers ng-click="alertSubscribers.openModal(alert.subscribedUsers())">
+                                    <img ng-src="{{ alert.user.photo }}" ng-if="alert.subscribedUsers().length" alt="" class="img-rounded"/>
+
+                                    <div class="alert-no" ng-if="alert.subscribedUsers().length > 1">
+                                        <span ng-bind="'+'+(alert.subscribedUsers().length - 1)"></span>
+                                    </div>
+                                </a>
+                            </td>
+
+                            <!-- Subscribe -->
+                            <td width="80" class="text-center subscribe-action-btns">
+                                <button ng-if="!alert.deleteConfirmation" ng-click="alert.subscription.toggle()" class="btn btn-xs btn-third"
+                                        ng-class="{'active': alert.subscription.subscribed}">
+                                    {{alert.subscription.subscribed ? 'Subscribed' : 'Subscribe'}}
+                                </button>
+
+                                <div ng-if="alert.isOwnAlert() && alert.deleteConfirmation">
+                                    <button ng-click="alerts.deleteAlert(alert)" class="btn btn-xs btn-first">Yes</button>
+                                </div>
+                            </td>
+
+                            <!-- Delete -->
+                            <td width="80" class="text-center subscribe-action-btns">
+                                <div ng-if="alert.isOwnAlert() && !alert.deleteConfirmation">
+                                    <button ng-click="alert.deleteConfirmation = true" class="btn btn-xs btn-second">Delete</button>
+                                </div>
+
+                                <div ng-if="alert.isOwnAlert() && alert.deleteConfirmation">
+                                    <button ng-click="alert.deleteConfirmation = false" class="btn btn-xs btn-second">No</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!(alerts.alerts | filter:alerts.search).length">
+                            <td colspan="6" class="text-center">There are no alerts {{alerts.show.my ? 'created by you' : 'in your organisation'}} at the moment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

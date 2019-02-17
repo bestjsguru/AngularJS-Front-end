@@ -1,0 +1,160 @@
+.card-builder-compares {
+    display: block;
+    width: 100%;
+    background: @td-gray-pale;
+    margin: 0px;
+
+    .preview-area-wrapper {
+        .preview-area {
+            margin: 20px auto;
+        }
+    }
+
+    .single-compare {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 7px;
+        width: 100%;
+        border-bottom: 1px solid @porcelain;
+
+        .compare-option {
+            flex: 1 1 200px;
+            margin: 0px 7px;
+            padding: 7px 0;
+            position: relative;
+
+            .checkbox {
+                margin-top: 4px;
+                margin-bottom: 0;
+                display: inline-block;
+
+                input[type="checkbox"] {
+                    position: static;
+                    margin: 0;
+                }
+            }
+
+            .compare-alias {
+                display: block;
+                width: 100%;
+                background: @porcelain;
+                border-radius: 3px;
+                position: relative;
+                padding: 7px 7px 7px 44px;
+                height: 34px;
+
+                a {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 1;
+                    color: @white;
+                    padding: 6px 0px;
+                    width: 34px;
+                    height: 34px;
+                    background: @td-deep-blue;
+                    border-radius: 3px 0 0 3px;
+                    cursor: default;
+
+                    .compare-icon {
+                        font-size: 14px;
+
+                        .fa + .fa {
+                            margin-left: -6px;
+                        }
+                    }
+                }
+
+                .dimension-name {
+                    text-transform: capitalize;
+                }
+
+            }
+
+
+
+            .compare-range-selector {
+
+                &.date-picker {
+
+                    .date-dropdown {
+                        float: none !important;
+
+                        &:after, &:before {
+                            display: none;
+                        }
+
+                        .dropdown-toggle {
+                            width: 100%;
+                            text-align: left;
+                            height: 34px;
+                            padding: 6px 12px;
+
+                            span {
+                                font-size: 14px;
+                            }
+
+                            .fa {
+                                position: absolute;
+                                font-size: 13px;
+                                right: 10px;
+                                top: 11px;
+                                z-index: 1;
+                            }
+                        }
+                    }
+
+                    .calendar-holder {
+                        right: 0px;
+                        top: 41px;
+                    }
+                }
+
+            }
+
+            &.compare-visibility {
+                flex: 0 0 34px;
+                text-align: center;
+                .btn {
+                    padding: 6px 7px;
+                    color: @td-deep-blue;
+
+                    &:hover {
+                        color: @brand-danger;
+                    }
+                }
+            }
+
+            &.compare-buttons {
+                flex: 0 0 172px;
+                text-align: right;
+                margin-left: auto;
+                padding-left: 7px;
+
+                .btn {
+                    min-width: 80px;
+                }
+            }
+
+            &:nth-child(2):not(.compare-buttons) {
+                flex: 1 1 250px;
+
+                .compare-alias {
+                    .dimension-name {
+                        white-space: nowrap;
+                    }
+                }
+            }
+
+            &.compare-color-picker {
+                flex: 0 0 34px;
+            }
+
+        }
+
+        &.new-compare {
+            border-bottom: 0;
+        }
+    }
+}

@@ -1,0 +1,94 @@
+.relationship-builder-sidebar {
+    border-right: 1px solid @iron;
+    position: absolute;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    width: 370px;
+    padding: 0 15px;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    .metrics-search {
+        .form-control-feedback {
+            line-height: 34px;
+        }
+    }
+
+
+    .metrics-folder-wrapper {
+
+        .metrics-folder {
+            border-bottom: 1px solid rgba(218,223,225,0.5);
+            position: relative;
+            min-height: 34px;
+            position: relative;
+
+            .folder-name {
+                width: 100%;
+                display: block;
+                padding: 7px 5px 7px 35px;
+                position: relative;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+
+                .fa {
+                    position: absolute;
+                    left: 1px;
+                    top: 8px;
+                    font-size: 16px;
+                }
+
+                .fa + .fa {
+                    left: 15px;
+                }
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+
+                &.active {
+                    font-weight: 500;
+                }
+
+                .badge {
+                    background-color: @brand-danger;
+                }
+
+            }
+
+            .folder-list {
+                margin: 2px 0px 10px 22px;
+
+                li {
+                    display: block;
+
+                    a {
+                        padding: 3px 0px 3px 0px;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-transform: capitalize;
+
+                        &.active {
+                            font-weight: 500;
+                        }
+
+                    }
+                }
+            }
+
+        }
+
+        .no-tables {
+            text-align: center;
+            padding-top: 20px;
+            color: #b7b7b7;
+        }
+    }
+
+}

@@ -1,0 +1,31 @@
+<div class="cg-notify-message" ng-class="[$classes,
+    $position === 'center' ? 'cg-notify-message-center' : '',
+    $position === 'left' ? 'cg-notify-message-left' : '',
+    $position === 'right' ? 'cg-notify-message-right' : '']"
+     ng-style="{'margin-left': $centerMargin}" ng-click="$message.closeOnClick && $close()">
+
+    <div class="notification-icon">
+        <i class="fa fa-fw"></i>
+    </div>
+    <div class="content" ng-class="{'without-close-btn': !$message.showCloseButton}">
+        <h4 class="title" ng-bind-html="$message.title" ng-if="$message.title"></h4>
+
+        <div class="message" ng-class="{'without-title': !$message.title}">
+            <div class="profile-photo" ng-if="$message.data.user">
+                <img ng-src="{{$message.data.user.photo}}" alt="" width="30" height="30" class="img-circle">
+            </div>
+            <span ng-bind-html="$message.text"></span>
+        </div>
+
+        <a ng-if="$message.buttons" class="btn btn-eighth btn-sm pull-right" ng-class="[button.classes]" ng-repeat="button in $message.buttons"
+           ng-click="button.action(); $close();">
+            {{button.text}}
+        </a>
+    </div>
+
+    <button type="button" class="cg-notify-close" ng-if="$message.showCloseButton" ng-click="$close()">
+        <span aria-hidden="true">&times;</span>
+        <span class="cg-notify-sr-only">Close</span>
+    </button>
+
+</div>

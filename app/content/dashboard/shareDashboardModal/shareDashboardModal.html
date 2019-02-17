@@ -1,0 +1,41 @@
+<div class="share-dashboard-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Share Dashboard</h4>
+    </div>
+
+    <div class="modal-body" ng-form="sdm.form">
+
+        <div class="tab-content">
+            <div class="form-group">
+                <label>Email address</label>
+                <input type="text" name="emails" ng-model="sdm.selected.email" class="form-control"
+                       placeholder="Enter email to invite user" tu-multiple-emails required>
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea placeholder="Enter email message" ng-model="sdm.selected.message" class="form-control"
+                          rows="6"></textarea>
+            </div>
+            <div class="form-group">
+                <span class="red">Please note: An external user role will be created upon registration whom will only have access to the current dashboard.</span>
+            </div>
+
+            <!--<div ng-if="!sdm.dashboard.isOrganisationDashboard() && !sdm.dashboard.isFavourite">-->
+                <!--<a href tu-share-dashboard ng-click="$dismiss() && sdc.openShareModal()" class="user-additional-links"> Share with internal users instead? </a>-->
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-second btn-block" ng-click="$dismiss()">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-first w-100 pull-right"
+                        ng-disabled="sdm.form.$invalid" ng-click="sdm.submit()">Share Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

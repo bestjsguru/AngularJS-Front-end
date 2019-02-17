@@ -1,0 +1,33 @@
+<div class="scatter-settings" ng-if="$ctrl.settings">
+    <div class="items">
+        <div class="item form-group">
+            <label>X Axis Metric:</label>
+            <ui-select ng-disabled="$ctrl.loading || !$ctrl.hasVisibleMetrics()" class="w-100" on-select="$ctrl.applySettings()" search-enabled="true" ng-model="$ctrl.settings.scatter.xAxisMetric">
+                <ui-select-match placeholder="Select X Axis Metric">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="metric in $ctrl.settings.metrics | filter: {name: $select.search, hidden: false}">
+                    <span ng-bind-html="metric.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="item form-group">
+            <label>Y Axis Metric:</label>
+            <ui-select ng-disabled="$ctrl.loading || !$ctrl.hasVisibleMetrics()" class="w-100" on-select="$ctrl.applySettings()" search-enabled="true" ng-model="$ctrl.settings.scatter.yAxisMetric">
+                <ui-select-match placeholder="Select Y Axis Metric">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="metric in $ctrl.settings.metrics | filter: {name: $select.search, hidden: false}">
+                    <span ng-bind-html="metric.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="item form-group">
+            <label>Dimension In Legend:</label>
+            <ui-select ng-disabled="$ctrl.loading || $ctrl.isDefaultDimension()" class="w-100" on-select="$ctrl.selectDimension($item)" search-enabled="true" ng-model="$ctrl.settings.scatter.dimension">
+                <ui-select-match placeholder="Select Dimension">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="dimension in $ctrl.dimensions | customSearch: 'name': $select.search">
+                    <span ng-bind-html="dimension.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>

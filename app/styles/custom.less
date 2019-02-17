@@ -1,0 +1,115 @@
+a span.date-dropdown-txt {
+    text-transform: capitalize;
+    margin-right: 5px;
+}
+
+.has-spinner.active {
+    cursor: progress;
+}
+
+.has-spinner.active .spinner {
+    opacity: 1;
+    max-width: 50px; /* More than it will ever come, notice that this affects on animation duration */
+}
+
+.spinner {
+    display: inline-block;
+    opacity: 0;
+    max-width: 0;
+}
+
+.frequencies ul > li > a {
+    text-transform: capitalize;
+}
+
+.loading {
+    opacity: 0.2;
+}
+
+button.csv-export {
+    position: relative;
+    left: 25px;
+    top: 4px;
+}
+
+.black-text-shadow {
+    color: rgb(97, 97, 97);
+    font-size: 42px;
+    text-shadow: rgb(239, 239, 239) 1px 1px 0px;
+}
+
+div.single-field a.delete-field {
+    cursor: pointer;
+}
+
+div[d3-line] path.line.main {
+    fill: none;
+}
+
+div[d3-line] path.area {
+    opacity: 0;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+div[d3-line] path.area.done {
+    opacity: 0.2;
+}
+
+div.d3-widget .axis text {
+    stroke: #BCBCBC;
+    font-weight: lighter;
+    font-size: 12px;
+}
+
+div.d3-widget .x.axis .tick line {
+    visibility: hidden;
+}
+
+div.d3-widget .y.axis .tick line {
+    stroke: #BCBCBC;
+    stroke-width: 1px;
+    opacity: 0.6;
+}
+
+div.d3-widget rect.bar {
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+div.d3-widget rect.bar:hover {
+    opacity: 1;
+}
+
+div.d3-widget path.domain {
+    display: none;
+}
+
+div[d3-line] circle.path.points {
+    fill: #FFFFFF;
+    stroke-width: 2px;
+}
+
+div[d3-line] text.chart-title {
+    font-size: 16px;
+}
+
+div[d3-line] circle.path.points {
+    cursor: pointer;
+}
+
+div.ui-sortable-placeholder div.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    border: none;
+}
+
+div.ui-state-highlight, div.ui-widget-content div.ui-state-highlight, div.ui-widget-header div.ui-state-highlight {
+    background-image: none;
+}
+
+div.data.row {
+    margin-top: 10px;
+    background-color: #FFFFFF;
+}

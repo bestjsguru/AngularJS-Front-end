@@ -1,0 +1,185 @@
+@import (reference) '../../../styles/common/custom-variables';
+
+tu-datatable, tu-metric-visual {
+    .datatable-container {
+        height: 100%;
+    }
+
+    .table {
+        background: @white;
+
+        &.with-multiheader {
+            > tbody > tr > th, > thead > tr > th {
+                top: 25px;
+            }
+        }
+
+        > tbody > tr {
+            &.time-headers {
+                > th {
+                    font-weight: 600;
+                    position: sticky;
+                    top: 0;
+                    z-index: 3;
+
+                    &:after {
+                        content:'';
+                        position:absolute;
+                        left: 0;
+                        bottom: -1px;
+                        width:100%;
+                        border-bottom: 1px solid @td-light-gray;
+                    }
+                }
+            }
+        }
+
+        > tbody > tr > th, > thead > tr > th {
+            position: sticky;
+            top: 0px;
+            z-index: 3;
+            font-size: 13px;
+            line-height: 15px;
+            font-weight: 500;
+            border-top: 0;
+            border-bottom: 1px solid @td-light-gray;
+            background: @white;
+
+            &:after {
+                content:'';
+                position:absolute;
+                left: 0;
+                bottom: -1px;
+                width:100%;
+                border-bottom: 1px solid @td-light-gray;
+            }
+
+            .header-content {
+                display: flex;
+                flex-wrap: nowrap;
+
+                .item {
+                    flex: 1 1 auto;
+
+                    .fa {
+                        opacity: 0.5;
+                        font-size: 14px;
+
+                        &.card-filter-icon {
+                            opacity: 1;
+                            font-size: 12px;
+                            margin: 0 7px 0 0;
+                        }
+                    }
+
+                    &.small-item {
+                        flex: 0 0 auto;
+                        margin: 0 0 0 7px;
+
+                        .sorting-number {
+                            font-size: 12px;
+                            opacity: .6;
+                        }
+                    }
+                }
+            }
+
+            &.no-sort {
+                .fa {
+                    display: none;
+                }
+
+                &:hover{
+                    cursor: default;
+                }
+            }
+
+            &:hover {
+                .header-content {
+                    .item {
+                        .fa {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        > tbody > tr > td {
+            vertical-align: middle;
+
+            &.td-green {
+                background-color: #eafaf1;
+                border-right: 1px solid @td-light-gray;
+
+                .fa {
+                    color: @td-green;
+                }
+
+                .comparable-first-value {
+                    background: #eafaf1;
+                }
+            }
+
+            &.td-red {
+                background-color: #fdedeb;
+                border-right: 1px solid @td-light-gray;
+
+                .fa {
+                    color: @td-red;
+                }
+
+                .comparable-first-value {
+                    background: #fdedeb;
+                }
+            }
+        }
+
+        .datatable-footer{
+            border-top: 1px solid @td-light-gray;
+
+            th {
+                font-weight: 600;
+                border-bottom: 0;
+                padding: 10px;
+            }
+        }
+    }
+}
+
+
+/* Custom scroller overrides */
+
+.scroller-x {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    > div {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.scroller-y {
+    overflow-y: hidden;
+    display: inline-block;
+    min-width: 100%;
+    height: 100%;
+}
+
+.ps-container {
+    .ps-scrollbar-y-rail, .ps-scrollbar-x-rail {
+        background-color: #dbdbdb;
+        z-index: 5;
+    }
+
+    .ps-scrollbar-x-rail {
+        left: 0px !important;
+    }
+
+    .ps-scrollbar-y-rail {
+        top: 0px !important;
+    }
+}

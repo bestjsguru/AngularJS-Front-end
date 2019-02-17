@@ -1,0 +1,16 @@
+node_modules
+dist
+.tmp
+app/bower_components
+app/main.*
+.idea/
+/nbproject/private/
+app/styles/*.css
+*.sublime-gulp.cache
+app/rev-manifest.json
+app/content/partials.min.js
+app/content/partials-*.js
+app/content/vendor-*.js
+.DS_Store
+.eslintrc
+cloud-build/

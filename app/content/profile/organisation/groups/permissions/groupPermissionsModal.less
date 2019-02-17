@@ -1,0 +1,57 @@
+.group-permissions-modal {
+
+    .modal-body {
+
+        .permission-list-wrapper {
+            min-height: 200px;
+            max-height: 350px;
+            width: 100%;
+            border: 1px solid @borderColorLight;
+            padding: 0;
+            display: block;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border-radius: 3px;
+            position: relative;
+
+            table {
+                margin-top: -1px;
+
+                tr {
+                    opacity: 0.5;
+
+                    &.selected {
+                        opacity: 1;
+                    }
+
+                    td {
+
+                        .permission-data {
+                            float: left;
+
+                            span {
+                                color: @deep-blue;
+                                font-weight: 500;
+                                display: block;
+                                font-size: 14px;
+                                line-height: 14px;
+                                margin-top: 0;
+                            }
+
+                            a {
+                                color: @gray-light;
+                                font-size: 12px;
+                                line-height: 12px;
+                            }
+
+                        }
+
+                        i {
+                            margin-top: 4px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

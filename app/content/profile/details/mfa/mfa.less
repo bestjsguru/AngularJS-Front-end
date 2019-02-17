@@ -1,0 +1,42 @@
+.multifactor-authentication {
+    .heading {
+        margin-top: 0 !important;
+    }
+
+    .mfa-enrollment-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        border-top: solid 1px @borderColorLight;
+        padding-top: 10px;
+
+        &:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .mfa-enrollment-icon {
+
+        }
+
+        .mfa-enrollment-value {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+
+            .mfa-enrollment-status {
+                margin-right: 10px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        .mfa-enrollment-actions {
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,108 @@
+<div class="organisation-edit-area">
+    <div class="container-fluid">
+        <div class="row" ng-if="details.userData">
+            <div class="col-md-12">
+                <div class="box organisation-box">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-class="{active: details.tabs.is('info')}"><a ng-click="details.setTab('info')">User Info</a></li>
+                        <li ng-class="{active: details.tabs.is('security')}"><a ng-click="details.setTab('security')">Security</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" ng-class="{active: details.tabs.is('info')}">
+                            <form name="details.form" novalidate>
+                                <div class="organisation-logo-big">
+                                    <img ng-if="details.user.photo" ng-src="{{ details.user.photo }}" id="prevImage" alt="User Picture" class="prevImage img-circle clearfix company-logo">
+                                    <div class="action-buttons">
+                                        <button id="uploadImageButton" class="btn btn-fourth btn-lg pull-right">Change photo</button>
+                                        <input class="hide" tu-picture-upload tu-image-preview=".prevImage"
+                                               tu-file="details.userData.picture" tu-file-button="#uploadImageButton" type="file"/>
+                                    </div>
+                                </div>
+                                <span class="heading">About you</span>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group" ng-class="{'has-error': details.dirty(details.form.firstName) && details.form.firstName.$invalid}">
+                                                <label>First name:</label>
+                                                <input type="text" name="firstName"
+                                                       ng-model="details.userData.firstName" placeholder="First name"
+                                                       class="form-control" required>
+
+                                                <div class="error-messages" ng-messages="details.form.firstName.$error"
+                                                     ng-if="details.dirty(details.form.firstName)">
+                                                    <div ng-messages-include="error-messages"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group" ng-class="{'has-error': details.dirty(details.form.lastName) && details.form.lastName.$invalid}">
+                                                <label>Last name:</label>
+                                                <input type="text" name="lastName" ng-model="details.userData.lastName"
+                                                       placeholder="Last name" class="form-control" required>
+
+                                                <div class="error-messages" ng-messages="details.form.lastName.$error"
+                                                     ng-if="details.dirty(details.form.lastName)">
+                                                    <div ng-messages-include="error-messages"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Email address:</label>
+                                                <input type="text" name="email" ng-model="details.userData.email"
+                                                       placeholder="Email address" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Organisation:</label>
+                                                <input type="text" name="organisation"
+                                                       ng-model="details.userData.organisation.name"
+                                                       placeholder="Organisation" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Language:</label>
+                                                <input type="text" name="locale" ng-model="details.locale.label"
+                                                       placeholder="Language" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Location / Timezone:</label>
+                                                <app-timezone-picker ng-if="details.timezone" timezone="details.timezone"></app-timezone-picker>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 organisation-box-footer">
+                                            <button type="button" class="btn btn-lg text-uppercase col-lg-6 col-lg-offset-3"
+                                                    ng-click="details.save()" ng-disabled="details.submitting"
+                                                    ng-class="{'btn-fourth': details.submitting, 'btn-first': !details.submitting}">
+                                                save changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane" ng-class="{active: details.tabs.is('security')}">
+                            <div class="organisation-logo-big">
+                                <img ng-src="{{ details.user.photo }}" id="prevImage" alt="User Picture"
+                                     class="img-circle clearfix company-logo prevImage">
+                            </div>
+
+                            <app-password ng-if="details.tabs.is('security')"></app-password>
+
+                            <app-api-token app-access level="user" ng-if="details.tabs.is('security')"></app-api-token>
+
+                            <app-mfa ng-if="details.tabs.is('security')"></app-mfa>
+
+                            <app-social ng-if="details.tabs.is('security')"></app-social>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

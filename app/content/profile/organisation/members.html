@@ -1,0 +1,158 @@
+<div class="sub-header">
+    <div class="item">
+        <div class="breadcrumbs">
+            <span ng-if="$ctrl.title" ng-bind-html="$ctrl.title"></span>
+            <span ng-if="$ctrl.subTitle" ng-bind-html="$ctrl.subTitle"></span>
+        </div>
+    </div>
+</div>
+
+<div class="organisation-edit-area">
+    <div class="container-fluid">
+        <div class="members-area">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <loader ctrl-check="!$ctrl.membersLoaded"></loader>
+                </div>
+
+                <div ng-if="$ctrl.membersLoaded && $ctrl.members.length" class="col-lg-12 form-group">
+                    <p>You are signed in as <span class="member-name" ng-bind-html="::$ctrl.user.fullName"></span> to <span class="app-name" ng-bind-html="::$ctrl.host"></span></p>
+                    <p>
+                        Your team is administered by
+                        <span class="member-name" ng-repeat="admin in $ctrl.members | filter:{role:3} | orderBy:'fullName'">
+                            {{::admin.fullName}} <i class="fa fa-lock fa-fw" aria-hidden="true"></i>{{$last ? '' : ', '}}
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-lg-12">
+
+                    <div class="row">
+                        <div class="col-sm-12" ng-class="{'col-lg-6 col-md-6': $ctrl.user.isAdmin(), 'col-lg-12 col-md-12': !$ctrl.user.isAdmin()}">
+                            <div ng-if="$ctrl.membersLoaded && $ctrl.members.length">
+                                <label>Search Team Directory</label>
+                                <div class="form-group">
+                                    <div class="left-inner-addon">
+                                        <i class="fa fa-search"></i>
+                                        <input type="text" ng-model="$ctrl.searchMember" class="form-control" placeholder="Enter Member Name or Email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="$ctrl.membersLoaded" app-access level="admin">
+                            <tu-invite-members></tu-invite-members>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="member-filters border-top" ng-if="$ctrl.membersLoaded && $ctrl.members.length">
+                                <label class="text-left checkbox-inline" ng-click="$ctrl.show.organisation = !$ctrl.show.organisation">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.show.organisation, 'fa-square-o': !$ctrl.show.organisation}">&nbsp;</i>
+                                    <span>Organisation users ({{$ctrl.countMembers('organisation')}})</span>
+                                </label>
+                                <label class="text-left checkbox-inline" ng-click="$ctrl.show.staff = !$ctrl.show.staff">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.show.staff, 'fa-square-o': !$ctrl.show.staff}">&nbsp;</i>
+                                    <span>Avora Staff ({{$ctrl.countMembers('staff')}})</span>
+                                </label>
+                                <label class="text-left checkbox-inline" ng-click="$ctrl.show.external = !$ctrl.show.external">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.show.external, 'fa-square-o': !$ctrl.show.external}">&nbsp;</i>
+                                    <span>External users ({{$ctrl.countMembers('external')}})</span>
+                                </label>
+                                <label class="text-left checkbox-inline" ng-click="$ctrl.show.invites = !$ctrl.show.invites">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.show.invites, 'fa-square-o': !$ctrl.show.invites}">&nbsp;</i>
+                                    <span>Pending invites ({{$ctrl.countMembers('invites')}})</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="$ctrl.membersLoaded && $ctrl.members.length" class="row">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 organisation-user" ng-class="{'pending-invite': member.isInvite()}"
+                             ng-repeat="member in $ctrl.filteredMembers() | orderBy:'fullName' | searchByProperties : 'fullName, username' : $ctrl.searchMember as filteredMembers">
+
+                            <div>
+                                <img ng-src="{{::member.photo}}" alt="" width="60" height="60" class="img-rounded">
+
+                                <div class="user-info" >
+                                    <div ng-if="!member.isInvite()">
+
+                                        <div class="member-name">
+                                            <span ng-bind-html="::member.fullNameOrEmail"></span>
+
+                                            <span ng-if="$ctrl.user.id != member.id" app-access level="admin">
+                                                <tu-user-permissions user="member"></tu-user-permissions>
+                                            </span>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+
+                                        <a class="mail" href="mailto:{{ ::member.email }}" ng-bind-html="::member.email"></a>
+
+                                        <div class="clearfix"></div>
+
+                                        <span class="user-level pull-left btn btn-xs btn-fourth" ng-if="member.role" ng-click="$ctrl.showPermissionsModal(member)">
+                                            <i class="fa fa-fw" ng-class="{'fa-lock': member.isAdmin(), 'fa-user': !member.isAdmin()}" aria-hidden="true"></i>
+                                            {{ member.roleName }}
+                                        </span>
+
+                                        <app-user-filter-button user="member"></app-user-filter-button>
+
+                                        <span class="expiration-date pull-left" ng-class="{'text-danger': member.hasExpired(), 'text-muted': !member.hasExpired()}"
+                                              ng-bind-html="member.expirationString()"></span>
+                                    </div>
+
+                                    <div ng-if="member.isInvite()">
+                                        <a href="mailto:{{ ::member.email }}" ng-bind-html="::member.email" class="m-t-20"></a>
+                                    </div>
+                                </div>
+
+                                <div class="user-groups">
+                                    <div class="user-groups-list" ng-if="$ctrl.memberGroups(member).length">
+                                        <i class="fa fa-group"></i>
+                                        <div>
+                                            <span ng-repeat="group in $ctrl.memberGroups(member)">{{group.name}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a class="resend-invite" ng-if="member.isInvite()" ng-click="$ctrl.resendInvite(member)">
+                                    <span>Resend Invite</span>
+                                    <i class="fa fa-refresh fa-fw" aria-hidden="true"></i>
+                                </a>
+
+                                <a ng-if="$ctrl.user.id != member.id" app-access level="admin" class="pull-right remove-member" ng-click="!member.isInvite() ? $ctrl.selectOwnerFor(member) : $ctrl.cancelInvite(member)">
+                                    <span>{{!member.isInvite() ? 'Remove' : 'Cancel Invite'}}</span>
+                                    <i class="fa fa-times fa-fw" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div ng-if="!filteredMembers.length">
+                            <div class="preview-area-wrapper">
+                                <div class="preview-area">
+                                    <div class="preview-icon animated zoomIn">
+                                        <i class="fa fa-user-o"></i>
+                                    </div>
+                                    <span class="preview-title">There are no users that satisfy your criteria</span>
+                                    <span>Please refine your search and try again</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div ng-if="$ctrl.membersLoaded && !$ctrl.members.length" class="organisation-box">
+                    <div class="col-lg-12 col-md-12 col-sm-12 organisation-user">
+                        <div class="text-center">
+                            There are no members in your organisation
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

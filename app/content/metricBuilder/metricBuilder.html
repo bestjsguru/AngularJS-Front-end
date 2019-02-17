@@ -1,0 +1,29 @@
+<div class="metric-builder-wrapper">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Metric builder</span>
+            </div>
+        </div>
+        <div class="item">
+            <button ng-click="m.openForm()" class="btn btn-third btn-add pull-left">
+                <i class="fa fa-plus"></i> Add new metric
+            </button>
+        </div>
+    </div>
+
+    <div class="metric-builder">
+        <div class="metric-builder-sidebar">
+            <tu-metric-list></tu-metric-list>
+        </div>
+        <div class="metric-builder-visual">
+            <div class="metric-preview-wrapper">
+                <tu-metric-preview></tu-metric-preview>
+            </div>
+            <div class="affected-cards-wrapper">
+                <tu-affected-cards></tu-affected-cards>
+                <tu-affected-people ng-if="0"></tu-affected-people>
+            </div>
+        </div>
+    </div>
+</div>

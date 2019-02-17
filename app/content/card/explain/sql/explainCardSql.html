@@ -1,0 +1,18 @@
+<span class="title"><span ng-bind-html="$ctrl.card.name"></span> / sql</span>
+
+<div class="explain-card-sql">
+    <div class="sql-editor" ng-if="$ctrl.sql">
+        <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true" ng-model="$ctrl.sql"></textarea>
+        <div class="gutter-helper"></div>
+    </div>
+
+    <div class="preview-area-wrapper" ng-if="!$ctrl.sql">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-code"></i>
+            </div>
+            <span class="preview-title">No SQL</span>
+            <span>There is no SQL query data for this card</span>
+        </div>
+    </div>
+</div>

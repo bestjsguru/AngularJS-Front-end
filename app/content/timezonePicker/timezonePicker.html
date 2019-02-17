@@ -1,0 +1,21 @@
+<div class="timezone-picker">
+    <div class="dropdown">
+        <a class="dropdown-toggle form-control" ng-disabled="$ctrl.isDisabled" data-toggle="dropdown" href="#">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+            {{$ctrl.selected.name}} <small>{{$ctrl.selected.offset}}</small>
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul class="dropdown-menu arrow-menu animated fadeIn">
+            <li ng-repeat="item in $ctrl.timezones" ng-class="{active: $ctrl.isSelected(item)}">
+                <a ng-click="$ctrl.select(item)">
+                    <span>{{::item.name}} <small>{{::item.offset}}</small></span>
+                </a>
+            </li>
+            <li>
+                <a ng-click="$ctrl.showMore()">
+                    <span>show more...</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

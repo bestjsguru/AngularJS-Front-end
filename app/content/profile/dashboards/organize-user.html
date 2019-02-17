@@ -1,0 +1,127 @@
+<loader ctrl-check="$ctrl.loading"></loader>
+
+<div class="dashboard-folders" ng-if="!$ctrl.loading">
+    <!-- Users Folders -->
+    <div class="column">
+        <div class="column-header">
+            <h4>
+                Your workspaces
+            </h4>
+            <div class="column-actions">
+                <a class="btn btn-eighth new-folder" ng-click="$ctrl.create.user.show()" ng-if="!$ctrl.create.user.visible">New Workspace <i class="fa fa-plus"></i></a>
+                <a class="btn btn-eighth" ng-click="$ctrl.toggle('user')">{{$ctrl.hasVisibleDashboards('user') ? 'Collapse All' : 'Expand All'}}</a>
+            </div>
+        </div>
+        <div class="column-body">
+            <form class="new-folder" ng-if="$ctrl.create.user.visible" name="$ctrl.create.user.form" ng-submit="$ctrl.save($ctrl.create.user)" role="form" novalidate>
+                <div class="new-folder-input">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" placeholder="Workspace Name"
+                               ng-model="$ctrl.create.user.folder.title" name="title" required>
+                        <span class="input-group-addon" ng-click="$ctrl.create.user.folder.active = !$ctrl.create.user.folder.active">
+                            Active? <i class="fa fa-fw" ng-class="{'fa-square-o' : !$ctrl.create.user.folder.active, 'fa-check-square-o' : $ctrl.create.user.folder.active}"></i>
+                        </span>
+                    </div>
+                    <div class="error-messages" ng-messages="$ctrl.create.user.form.title.$error"
+                         ng-if="$ctrl.create.user.form.$submitted">
+                        <div ng-message="unique">{{$ctrl.create.user.form.title.$error.unique}}</div>
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+                <div class="new-folder-buttons">
+                    <span class="btn btn-sm btn-second" ng-click="$ctrl.create.user.hide()">Cancel</span>
+                    <button class="btn btn-sm btn-first" type="submit">Save</button>
+                </div>
+            </form>
+
+            <div class="user-folders folders-sortable-list" ui-sortable="$ctrl.folderSortableOptions" ng-model="$ctrl.user.folders">
+                <div class="dashboard-folder" ng-repeat="folder in $ctrl.user.folders track by $index" ng-class="{'not-sortable': !$ctrl.folderCanBeDragged(folder), 'active': folder.active}">
+                    <!-- Include template to display folder form -->
+                    <div ng-include="'content/profile/dashboards/folder-form.html'"></div>
+
+                    <!-- Include template to display dashboards inside a folder -->
+                    <div ng-include="'content/profile/dashboards/folder-dashboards.html'"></div>
+                </div>
+                <div ng-if="!$ctrl.user.folders.length" class="dashboard-folder not-sortable">
+                    <div class="folder empty-folder">
+                        <i class="fa fa-fw fa-info"></i> There are no workspaces. You have to create one first
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column-header single-dashboards">
+            <h4>Single Dashboards</h4>
+        </div>
+        <!-- Include template to display dashboards that are not inside folders -->
+        <div ng-include="'content/profile/dashboards/plain-dashboards.html'"></div>
+    </div>
+
+    <!-- Organisation Folders -->
+    <div class="column">
+        <div class="column-header">
+            <h4>Organisation workspaces</h4>
+            <div class="column-actions">
+                <a class="btn btn-eighth" ng-click="$ctrl.toggle('organisation')">{{$ctrl.hasVisibleDashboards('organisation') ? 'Collapse All' : 'Expand All'}}</a>
+            </div>
+        </div>
+        <div class="column-body">
+            <div class="organisation-folders">
+                <div class="dashboard-folder not-sortable" ng-repeat="folder in $ctrl.organisation.folders track by $index" ng-class="{'active': folder.active}">
+
+                    <div class="folder">
+
+                        <div class="fa fa-lock"></div>
+
+                        <a class="folder-toggle" ng-click="$ctrl.toggleDashboards(folder)">
+                            <i class="fa fa-fw" ng-class="{'fa-folder-o': !folder.dashboardsAreVisible, 'fa-folder-open-o': folder.dashboardsAreVisible}"></i>
+                        </a>
+
+                        <div class="folder-name">
+                            {{ folder.title }}
+                            <small ng-if="!folder.active" class="text-danger"><i>(Inactive)</i></small>
+                        </div>
+
+
+                        <div class="folder-dropdown">
+                            <div class="dropdown pull-right">
+                                <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <i class="fa fa-fw fa-bars"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="#" ng-click="$ctrl.toggleActive(folder)">
+                                            <i class="fa fa-fw" ng-class="{'fa-eye': !folder.active, 'fa-eye-slash': folder.active}"></i>
+                                            {{folder.active ? 'Hide' : 'Show'}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <form class="organisation-folders-form">
+                            <ul class="dashboard-list not-sortable" ng-if="folder.dashboards" ng-show="$ctrl.dashboardsAreVisible(folder)">
+                                <li ng-repeat="dashboard in folder.dashboards track by $index" class="dashboard-item not-sortable">
+                                    <div class="fa fa-fw fa-lock"></div>
+                                    <div class="dashboard-name">
+                                        {{ dashboard.name }}
+                                        <small ng-if="!dashboard.active" class="text-danger"><i>(Inactive)</i></small>
+                                    </div>
+                                </li>
+                                <li ng-if="!folder.dashboards.length" class="text-center no-dashboards not-sortable">
+                                    There are no dashboards in this workspace
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+
+                <div ng-if="!$ctrl.organisation.folders.length" class="dashboard-folder not-sortable">
+                    <div class="folder empty-folder">
+                        <i class="fa fa-fw fa-info"></i> There are no workspaces.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

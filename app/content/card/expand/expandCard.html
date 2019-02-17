@@ -1,0 +1,12 @@
+<div class="expand-card" ng-if="$ctrl.card">
+    <div class="expand-card-header">
+        <span class="expand-card-name" ng-bind-html="$ctrl.card.getName()"></span>
+        <div class="expand-card-range" ng-if="!$ctrl.card.isImageOrDraft() && !$ctrl.card.isText()">
+            <span ng-bind-html="$ctrl.card.getDateRangeStringWithFrequencyAndTimezone()"></span>
+        </div>
+        <a class="modal-close" ng-click="$ctrl.collapse()"><i class="fa fa-times"></i></a>
+    </div>
+    <div class="expand-card-body">
+        <app-drill-card original-card="$ctrl.card"></app-drill-card>
+    </div>
+</div>

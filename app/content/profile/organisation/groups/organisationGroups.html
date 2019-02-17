@@ -1,0 +1,96 @@
+<div class="organisation-groups">
+    <div class="organisation-logo-big">
+        <div class="org-info">
+            <div class="fiscal-year" ng-if="$ctrl.organisation.fiscalYearStart != null">Fiscal year starts on <span>{{$ctrl.organisation.fiscalYearStarting}}</span></div>
+            <div class="week-start">Week starts on <span ng-bind="$ctrl.organisation.startDayName"></span></div>
+        </div>
+        <div class="company-logo">
+            <img ng-src="{{ $ctrl.organisation.logo }}" id="prevImage" alt="Company Logo" class="clearfix">
+        </div>
+    </div>
+    <span class="heading">
+        User groups
+
+        <a ng-click="$ctrl.add()" class="new-group-button">
+            <i class="fa fa-plus"></i> New group
+        </a>
+    </span>
+    <div class="container-fluid">
+        <div class="row">
+            <loader ctrl-check="$ctrl.loading"></loader>
+
+            <table ng-if="$ctrl.groups.length && !$ctrl.loading" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th width="10"></th>
+                        <th>Group</th>
+                        <th width="130">Permissions</th>
+                        <th width="100">Filters</th>
+                        <th width="100">Users</th>
+                        <th width="150" class="text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="group in $ctrl.groups track by $index">
+                        <td ng-if="!group.inEditMode" class="pad-r-0">
+                            <span class="text-success" ng-if="group.hasUser($ctrl.user)" tu-popover tu-popover-placement="right" tu-popover-html="You are member of this group">
+                                <i class="fa fa-fw fa-check"></i>
+                            </span>
+                        </td>
+                        <td colspan="{{group.inEditMode ? '6' : '1'}}">
+                            <div ng-if="!group.inEditMode" class="group-data">
+                                <span ng-bind="group.name"></span>
+                                <span ng-bind="group.description"></span>
+                            </div>
+
+                            <div ng-if="group.inEditMode" class="group-form">
+                                <div>
+                                    <label>Name</label>
+                                    <input class="form-control" type="text" ng-model="group.name" />
+                                </div>
+
+                                <div>
+                                    <label>Description</label>
+                                    <input class="form-control" type="text" ng-model="group.description" />
+                                </div>
+
+                                <div>
+                                    <label>&nbsp;</label>
+                                    <a ng-click="$ctrl.save(group)" class="btn btn-lg btn-first m-r-10">Save</a>
+                                    <a ng-click="$ctrl.cancel(group)" class="btn btn-lg btn-fourth">Cancel</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td ng-if="!group.inEditMode">
+                            <a ng-if="!group.inEditMode" ng-click="$ctrl.permissions(group)">Set permissions</a>
+                        </td>
+                        <td ng-if="!group.inEditMode">
+                            <app-group-filter-button group="group"></app-group-filter-button>
+                        </td>
+                        <td ng-if="!group.inEditMode">
+                            <a ng-if="!group.inEditMode" ng-click="$ctrl.users(group)">
+                                <ng-pluralize count="group.users.length" when="{'0': 'Add users', '1': '1 User', 'other': '{} Users'}"></ng-pluralize>
+                            </a>
+                        </td>
+                        <td class="text-right" ng-if="!group.inEditMode">
+                            <i ng-click="$ctrl.edit(group)" class="fa fa-fw fa-pencil"></i>
+                            <i ng-click="$ctrl.remove(group)" class="fa fa-fw fa-times"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div ng-if="!$ctrl.groups.length && !$ctrl.loading">
+                <div class="preview-area-wrapper">
+                    <div class="preview-area">
+                        <div class="preview-icon animated zoomIn">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <span class="preview-title">There are no user groups yet</span>
+                        <span>Click on <a ng-click="$ctrl.add()">here</a> to add one</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

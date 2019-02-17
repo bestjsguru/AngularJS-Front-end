@@ -1,0 +1,122 @@
+.alert-header {
+    background: @td-gray-pale;
+    border-top: 1px solid @iron;
+    border-bottom: 1px solid @iron;
+    padding: 15px;
+    margin-top: -1px;
+
+    h1 {
+        color: @deep-blue;
+        font-size: 18px;
+        line-height: 18px;
+        margin: 15px 0 0 0;
+        padding: 0;
+        text-transform: none;
+        float: left;
+    }
+
+    .btn {
+        margin-left: 10px;
+    }
+}
+
+.alert-list {
+    padding-top: 15px;
+    background: @td-gray-pale;
+    border-bottom: 1px solid @iron;
+
+    .no-alerts {
+        padding-bottom: 13px;
+        .fa {
+            color: @brand-danger;
+        }
+    }
+
+    .alert-list-item {
+        background: @white;
+        border: 1px solid @borderColorLight;
+        border-radius: @border-radius-small;
+        padding: 15px;
+        float: left;
+        width: 100%;
+        margin-bottom: 15px;
+
+        .fa-exclamation-triangle {
+            float: left;
+            color: @td-turquoise;
+            font-size: 26px;
+            margin: 8px 0 0 0;
+        }
+
+        a.alert-delete {
+            float: right;
+            border-left: 1px solid @borderColorLight;
+            padding: 24px;
+            margin: -15px -15px -15px 15px;
+            cursor: pointer;
+            color: @madison;
+
+            .fa {
+                float: left;
+                font-size: 25px;
+            }
+
+            &:hover {
+                color: @brand-danger;
+            }
+        }
+
+        .alert-message {
+            float: left;
+            margin: 2px 0 0 15px;
+
+            .first-line {
+                display: block;
+            }
+            .second-line {
+                display: block;
+                font-style: italic;
+                font-size: 13px;
+                color: lightgrey;
+            }
+
+        }
+
+        .btn, img.alert-list-avar, .alert-no {
+            margin: 0 0 0 15px;
+            float: left;
+        }
+
+        .img-rounded {
+            border-radius: @border-radius-small;
+        }
+
+    }
+
+    .alert-no {
+        position: relative;
+        width: 42px;
+        height: 42px;
+
+        img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+
+        span {
+            background: rgba(0, 0, 0, 0.7);
+            color: @white;
+            position: absolute;
+            z-index: 2;
+            width: 40px;
+            height: 40px;
+            padding-top: 13px;
+            text-align: center;
+            vertical-align: middle;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+    }
+}

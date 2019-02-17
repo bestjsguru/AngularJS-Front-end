@@ -1,0 +1,84 @@
+.drill-records-header {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    padding: 10px 310px 15px 25px;
+    border-bottom: 1px solid @porcelain;
+    min-height: 50px;
+
+    .item-title {
+        flex: 0 0 auto;
+    }
+
+    .help-block {
+        margin-top: 0;
+        font-size: 12px;
+        line-height: 15px;
+        padding-left: 25px;
+
+        .fa {
+            position: absolute;
+            font-size: 26px;
+            top: 12px;
+            left: 27px;
+        }
+    }
+
+    .item-breadcrumbs {
+        flex: 0 1 auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 10px;
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            min-height: 24px;
+            margin: 0;
+
+            .item-name {
+                font-weight: 500;
+                margin: 0 8px 0 0;
+            }
+
+            .item-value {
+
+            }
+
+            &:after {
+                content: "\f054";
+                font-family: FontAwesome;
+                -webkit-text-stroke: 1px @white;
+                font-size: 14px;
+                margin: 1px 5px 0 10px;
+                opacity: 0.5;
+            }
+
+            &:last-child {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .item-options {
+        position: absolute;
+        right: 65px;
+        top: 10px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        .hide-records {
+            margin: -5px 0 -5px 0;
+
+            .fa {
+                -webkit-text-stroke: 1px @white;
+            }
+        }
+    }
+}

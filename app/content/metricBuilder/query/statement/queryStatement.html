@@ -1,0 +1,20 @@
+<label>Query Statement</label>
+
+<div ng-if="!$ctrl.columns.items.length">
+    <input name="statement" placeholder="{{$ctrl.loadingPlaceholder()}}" type="text" class="form-control" disabled>
+</div>
+
+<div ng-if="$ctrl.columns.items.length">
+    <div class="panel panel-default">
+        <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+              name="statement" ng-model="$ctrl.data.statement" type="text" class="form-control"
+              placeholder="{{$ctrl.loadingPlaceholder()}}" required>
+        </textarea>
+    </div>
+
+    <div class="error-messages" ng-messages="$parent.$parent.$parent.md.form.statement.$error" ng-if="$parent.$parent.$parent.md.form.statement.$dirty">
+        <div ng-messages-include="error-messages"></div>
+    </div>
+</div>
+
+<span class="help-block">Type Ctrl + Space to see available columns and functions</span>

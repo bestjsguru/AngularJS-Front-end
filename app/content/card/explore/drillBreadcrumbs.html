@@ -1,0 +1,9 @@
+<div ng-if="$ctrl.levels.length">
+    <ol class="breadcrumb">
+        <li ng-class="{'active': $index <= $ctrl.activeLevel, 'disabled': $index > $ctrl.activeLevel}" ng-repeat="item in $ctrl.levels">
+            <a href="#" ng-bind-html="item.name"></a>
+        </li>
+    </ol>
+    <i class="fa fa-arrow-up up" ng-click="$ctrl.up()" tu-popover tu-popover-html="Drill Up" tu-popover-placement="top"></i>
+    <i class="fa fa-times reset" ng-click="$ctrl.reset()" tu-popover tu-popover-html="Reset Drill" tu-popover-placement="top"></i>
+</div>

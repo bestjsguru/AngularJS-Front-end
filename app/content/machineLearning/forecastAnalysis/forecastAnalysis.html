@@ -1,0 +1,243 @@
+<div class="forecast-analysis-wrapper">
+
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Forecast Analysis</span>
+            </div>
+        </div>
+        <div ng-if="false && $ctrl.$window.isDemo && $ctrl.showData()" class="item">
+            <div class="pull-right">
+                <div class="dashboard-actions">
+                    <div class="dropdown pull-right dashboard-options">
+                        <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+                           tu-popover tu-popover-placement="left" tu-popover-html="Sharing Options">
+                            <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li>
+                                <a href>
+                                    <i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> Export to PDF
+                                </a>
+                            </li>
+                            <li>
+                                <a href>
+                                    <i class="fa fa-fw fa-file-powerpoint-o" aria-hidden="true"></i> Export to PPT
+                                </a>
+                            </li>
+                            <li>
+                                <a href>
+                                    <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="forecast-analysis" ng-class="{'collapsed': $ctrl.collapsed}">
+        <form name="$ctrl.form" class="forecast-analysis-sidebar" ng-submit="$ctrl.calculate()">
+
+            <div class="sidebar-content">
+                <div class="form-group">
+                    <label>Actual Metric</label>
+                    <ui-select class="w-100" search-enabled="true" ng-change="$ctrl.onMetricSelect()" ng-model="$ctrl.actualMetric" name="actualMetric" required ng-disabled="!$ctrl.hasMetrics()">
+                        <ui-select-match placeholder="Select actual metric">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.metrics">
+                            <span ng-bind-html="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <div class="error-messages" ng-messages="$ctrl.form.actualMetric.$error" ng-if="$ctrl.form.$submitted">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Forecast Metric</label>
+                    <ui-select class="w-100" search-enabled="true" ng-change="$ctrl.onMetricSelect()" ng-model="$ctrl.forecastMetric" name="forecastMetric" required ng-disabled="!$ctrl.hasMetrics()">
+                        <ui-select-match placeholder="Select forecast metric">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.metrics">
+                            <span ng-bind-html="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <div class="error-messages" ng-messages="$ctrl.form.forecastMetric.$error" ng-if="$ctrl.form.$submitted">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Filters</label>
+
+                    <app-forecast-analysis-filter-button forecast-analysis="$ctrl"></app-forecast-analysis-filter-button>
+                </div>
+
+                <div class="form-group">
+                    <label>Date range</label>
+                    <tu-date-picker
+                        refresh="$ctrl.updateDates(dates, range)"
+                        current-range="$ctrl.date.rangeName"
+                        from="$ctrl.date.fromDate"
+                        to="$ctrl.date.toDate"
+                        hide="$ctrl.hiddenLabels"
+                        ng-disabled="!$ctrl.hasMetrics()">
+                    </tu-date-picker>
+                    <span class="date-string" ng-bind-html="$ctrl.getDateString()"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Number of top reasons</label>
+                    <input type="number" ng-model="$ctrl.numberOfTopReasons" name="numberOfTopReasons" class="form-control"
+                           min="10" max="100" required>
+
+                    <div class="error-messages" ng-messages="$ctrl.form.numberOfTopReasons.$error" ng-if="$ctrl.form.$submitted">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+
+                <app-forecast-analysis-dimensions dimension="$ctrl.dimension"></app-forecast-analysis-dimensions>
+
+                <button type="submit" class="btn btn-first btn-block" ng-disabled="!$ctrl.hasMetrics() || $ctrl.loading">
+                    <i class="fa fa-fw fa-cogs"></i>
+                    {{$ctrl.loading ? 'Calculating...' : 'Calculate'}}
+                </button>
+            </div>
+
+            <div class="sidebar-content-collapsed">
+                <a class="btn goal-metric"
+                   tu-popover tu-popover-html="{{$ctrl.actualMetric.name}}" tu-popover-placement="right">
+                    <i class="fa fa-bullseye"></i>
+                </a>
+                <a class="btn goal-metric"
+                   tu-popover tu-popover-html="{{$ctrl.forecastMetric.name}}" tu-popover-placement="right">
+                    <i class="fa fa-bullseye"></i>
+                </a>
+                <a class="btn btn-default"
+                   tu-popover tu-popover-html="{{$ctrl.getDateString()}}" tu-popover-placement="right">
+                    <i class="fa fa-calendar-check-o"></i>
+                </a>
+            </div>
+
+        </form>
+
+        <div class="forecast-analysis-visual">
+
+            <a href ng-click="$ctrl.toggleSidebar()" class="btn btn-link forecast-analysis-sidebar-toggle">
+                <i class="fa fa-fw" ng-class="{'fa-chevron-right': $ctrl.collapsed, 'fa-chevron-left': !$ctrl.collapsed}"></i>
+            </a>
+
+            <div ng-if="$ctrl.loading" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon loading-icon animated zoomIn">
+                        <loader ctrl-check="$ctrl.loading"></loader>
+                    </div>
+                    <span class="preview-title">Calculating Forecast Analysis</span>
+                    <span>Please be patient as this could take a few minutes</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showPreview()" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Preview</span>
+                    <span>Please select metrics and range to analise</span>
+                </div>
+            </div>
+
+            <div ng-if="!$ctrl.hasMetrics() && !$ctrl.metricsAreLoading" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Forecast Analysis not available</span>
+                    <span>No metrics set up for your organisation</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showError()" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-exclamation" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Something went wrong</span>
+                    <span>There is no data to display. </br> Make sure to check your filters and try again.</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showData()" class="forecast-analysis-heading">
+                <div class="item">
+                    <span class="forecast-analysis-name" ng-bind-html="$ctrl.impacts.actual.metric.name + ' / ' + $ctrl.impacts.forecast.metric.name"></span>
+                </div>
+
+                <div class="item">
+                    <button ng-if="$ctrl.showDrill()" ng-click="$ctrl.drillUp()" class="btn btn-eighth btn-sm">
+                        Exit drill
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="item">
+                    <div class="root-visual-picker">
+                        <a href class="icon-wrapper" ng-class="{active: $ctrl.type === 'table'}" ng-click="$ctrl.setType('table')" tu-popover tu-popover-html="Table" tu-popover-placement="top">
+                            <span class="card-type-icon table"></span>
+                        </a>
+                        <a ng-if="!$ctrl.showDrill()" href class="icon-wrapper" ng-class="{active: $ctrl.type === 'waterfall'}" ng-click="$ctrl.setType('waterfall')" tu-popover tu-popover-html="Waterfall" tu-popover-placement="top">
+                            <span class="card-type-icon bar"></span>
+                        </a>
+                        <a ng-if="$ctrl.showDrill()" href class="icon-wrapper" ng-class="{active: $ctrl.type === 'waterfall'}"
+                           ng-click="$ctrl.setType('waterfall')" tu-popover tu-popover-html="Bars" tu-popover-placement="top">
+                            <span class="card-type-icon horizontal"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div ng-if="$ctrl.showData() && !$ctrl.showDrill()" class="forecast-analysis-data">
+                <div class="total-variance-wrapper">
+                    <div class="total-variance-box">
+                        <span class="total-variance-title">Total Variance</span>
+                        <div class="total-variance" ng-bind="$ctrl.totalVariance.value"></div>
+                        <div class="total-variance-footer">
+                            <span class="btn btn-fourth pull-left" ng-click="$ctrl.drillDown($ctrl.impacts.actual)">
+                                <i class="fa fa-fw fa-search"></i>
+                                Drill into data
+                            </span>
+
+                            <div class="total-variance-value pull-right">
+                                <span>Forecast</span>
+                                <span ng-bind="::$ctrl.totalVariance.forecast"></span>
+                            </div>
+                            <div class="total-variance-value pull-right">
+                                <span>Actual</span>
+                                <span ng-bind="::$ctrl.totalVariance.actual"></span>
+                            </div>
+                            <!--<div class="total-variance-percentage">-->
+                                <!--<i class="fa fa-fw" ng-class="$ctrl.varianceClass(true)"></i>-->
+                                <!--<span ng-class="$ctrl.varianceClass()" ng-bind="::$ctrl.totalVariance.percentage"></span>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <app-forecast-analysis-top-reasons data="$ctrl.topReasons" ng-if="$ctrl.topReasons"></app-forecast-analysis-top-reasons>
+            </div>
+
+            <div ng-if="$ctrl.showDrill()" class="forecast-analysis-data">
+                <div ng-if="$ctrl.type === 'table'">
+                    <app-forecast-analysis-drill-table drill="$ctrl.drill" scroller="false"></app-forecast-analysis-drill-table>
+                </div>
+                <div ng-if="$ctrl.type === 'waterfall'">
+                    <app-forecast-analysis-drill-table drill="$ctrl.drill" scroller="true"></app-forecast-analysis-drill-table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

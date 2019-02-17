@@ -1,0 +1,351 @@
+<style type="text/scss">
+    /* Font color */
+    body {
+        color: {{$ctrl.theme.colors.font}};
+        font-family: {{$ctrl.theme.fontFamily}};
+    }
+
+    .gridster .gridster-item:after {
+        background: {{$ctrl.theme.colors.background}};
+    }
+
+    .gridster .gridster-item:hover .handle-se {
+        border-color: transparent transparent {{$ctrl.theme.colors.link.active}};
+    }
+
+    .card-footer:before {
+        background: {{$ctrl.theme.colors.background}};
+    }
+
+    .card-footer .card-footer-wrapper .footer-icons-holder .footer-icons .card-favorite .fa-heart {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Link color */
+    a, .nav.nav-tabs > li > a {
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    a:hover, a.active, .header .header-buttons .btn:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .nav.nav-tabs > li > a:hover, .nav.nav-tabs > li.active, .nav.nav-tabs > li.active > a,
+    .checkbox:hover, .fa-check-square-o, .fa-plus-square-o, .fa-plus-square,
+    .preview-area-wrapper .preview-area .preview-icon, .preview-area-wrapper .preview-area a{
+        color: {{$ctrl.theme.colors.link.active}};
+        border-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Metric Builder Links */
+    .metric-list .available-metrics .panel-group .single-folder > .panel-heading .panel-title a {
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .metric-list .available-metrics .panel-group .single-folder > .panel-heading .panel-title a:hover,
+    .metric-list .available-metrics .panel-group .single-folder > .panel-heading .panel-title a.active {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* DB Explorer */
+    .database-explorer-wrapper .database-explorer .database-explorer-sidebar .metrics-folder-wrapper .metrics-source .source-name:hover,
+    .database-explorer-wrapper .database-explorer .database-explorer-sidebar .metrics-folder-wrapper .metrics-source .source-name:focus,
+    .database-explorer-wrapper .database-explorer .database-explorer-sidebar .metrics-folder-wrapper .metrics-source .tables-list .metrics-folder .folder-name:hover,
+    .database-explorer-wrapper .database-explorer .database-explorer-sidebar .metrics-folder-wrapper .metrics-source .tables-list .metrics-folder .folder-name:focus,
+    .database-explorer-wrapper .database-explorer .database-explorer-sidebar .metrics-folder-wrapper .metrics-source .tables-list .metrics-folder .folder-list li a:focus{
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Relationship Builder */
+    .relationship-builder-sidebar .metrics-folder-wrapper .metrics-folder .folder-name:focus,
+    .relationship-builder-sidebar .metrics-folder-wrapper .metrics-folder .folder-list li a:focus {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Dropdown colors - inherited from link color */
+    .dropdown .dropdown-menu > li > a {
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .dropdown .dropdown-menu > li > a:hover, .dropdown .dropdown-menu > li > a:focus, .dropdown .dropdown-toggle:focus {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Select2 */
+    .select2-drop {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .select2-container .select2-choice {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .select2-default {
+        color: {{$ctrl.theme.colors.font}} !important;
+    }
+
+    .select2-results li.select2-result-with-children:hover > .select2-result-label,
+    .select2-results li.select2-result-with-children:hover > .expand-group-icon {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .select2-results .select2-highlighted, .ui-select-choices-row:hover {
+        background: transparent;
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Multiselect dropdown */
+    .multiselect-dropdown .dropdown .dropdown-toggle, .multiselect-dropdown .dropdown .dropdown-toggle:hover {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .multiselect-dropdown .dropdown .dropdown-menu li a {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .multiselect-dropdown .dropdown .dropdown-menu li a:hover, .multiselect-dropdown .dropdown .dropdown-menu li.active a, .multiselect-dropdown .dropdown .dropdown-menu li.show-more a {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Date Picker */
+    .date-picker .dropdown .dropdown-toggle, .date-picker .dropdown .dropdown-menu > li > a {
+        color: {{$ctrl.theme.colors.font}};
+        background: #fff;
+    }
+
+    .date-picker .dropdown .dropdown-toggle:hover {
+        color: {{$ctrl.theme.colors.font}};
+        background: #fff;
+    }
+
+    .date-picker .dropdown .dropdown-menu > li > a:hover, .date-picker .dropdown .dropdown-menu > li > a.selected {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Timezone Picker */
+    .timezone-picker .dropdown .dropdown-menu > li > a {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .timezone-picker .dropdown .dropdown-toggle:hover {
+        color: {{$ctrl.theme.colors.font}};
+        background: transparent;
+    }
+
+    .timezone-picker .dropdown .dropdown-menu > li.active > a, .timezone-picker .dropdown .dropdown-menu > li > a:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+        background: transparent;
+    }
+
+    /* CB totals */
+    .totals-dropdown .btn {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    .totals-dropdown .btn:hover, .totals-dropdown.open .btn, .totals-dropdown.open .btn:focus, .totals-dropdown.open .btn:hover {
+        color: {{$ctrl.theme.colors.font}};
+        background: transparent;
+    }
+
+    /* Form control */
+    .form-control {
+        color: {{$ctrl.theme.colors.font}};
+    }
+
+    /* Sidebar Background */
+    #wrapper #sidebar-wrapper {
+        background: {{$ctrl.theme.colors.sidebar.background}};
+    }
+
+    /* Sidebar Text Color */
+    #wrapper #sidebar-wrapper .sidebar-nav li a .fa, #wrapper #sidebar-wrapper .sidebar-nav li.workspace-dropdown .workspace-action-icons .fa {
+        color: {{$ctrl.theme.colors.sidebar.text}};
+    }
+
+    #wrapper #sidebar-wrapper .sidebar-nav li a:hover, #wrapper #sidebar-wrapper .sidebar-nav li a.active,
+    #wrapper #sidebar-wrapper .sidebar-nav li.workspace-dropdown:hover .workspace-toggle {
+        /* background: {{$ctrl.theme.colors.link.active}}; */
+    }
+
+    #wrapper #sidebar-wrapper .sidebar-nav li.workspace-dropdown .workspace-menu-wrapper .carousel .carousel-inner .item .list-group .list-group-single-item .personal {
+        color: {{$ctrl.theme.colors.link.active}};
+        border-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Header Background */
+    .header, .modal-content .modal-header {
+        background: {{$ctrl.theme.colors.header.background}};
+    }
+
+    /* Header Text Color */
+    .header .header-buttons .btn, .modal-content .modal-header .modal-title {
+        color: {{$ctrl.theme.colors.header.text}};
+    }
+
+    /* Sub Header Buttons */
+    .sub-header .btn.btn-eighth {
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .sub-header .btn.btn-eighth:hover, .sub-header .btn.btn-eighth:focus {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .sub-header .item .breadcrumbs span.dashboard-breadcrumbs .personal {
+        color: {{$ctrl.theme.colors.link.active}};
+        border-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Main Background Color */
+    .main-content-wrapper {
+        background: {{$ctrl.theme.colors.background}};
+    }
+
+    /* Footer Background */
+    .footer {
+        background: {{$ctrl.theme.colors.footer.background}};
+    }
+
+    /* Dashboard theme modal */
+    .dashboard-theme .theme-boxes .theme-box.active, .dashboard-theme .theme-boxes .theme-box.active .theme-heading, .dashboard-theme .theme-boxes .theme-box:hover {
+        border-color: {{$ctrl.theme.colors.link.active}};
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Chart settings */
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper .chart {
+        fill: {{$ctrl.theme.colors.link.active}};
+        stroke: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper .legend-drawing,
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper .legend-drawing:before {
+        background: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper .legend-drawing:nth-child(2),
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper:nth-child(2) .legend-drawing:before {
+        background: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper .legend-drawing:nth-child(3),
+    .chart-settings .modal-body .settings-wrapper .item .legend-drawing-wrapper:nth-child(3) .legend-drawing:before {
+        background: {{$ctrl.theme.colors.sidebar.background}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.value-labels .value-label {
+        background: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item:hover, .chart-settings .modal-body .settings-wrapper .item.active {
+        border-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper .chart:hover {
+        fill: {{$ctrl.theme.colors.link.active}};
+        stroke: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.spider-chart .line-1,
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.spider-chart .line-2,
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.spider-chart .line-3 {
+        border-top-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.stacked-chart .bar-1,
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.stacked-chart .bar-2,
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.stacked-chart .bar-3,
+    .chart-settings .modal-body .settings-wrapper .item .chart-wrapper.stacked-chart .bar-4 {
+    background: -moz-linear-gradient(top, {{$ctrl.theme.colors.link.text}} 0%, {{$ctrl.theme.colors.link.text}} 60%, {{$ctrl.theme.colors.link.text}} 60%, {{$ctrl.theme.colors.link.text}} 60%, {{$ctrl.theme.colors.link.text}} 60%, {{$ctrl.theme.colors.link.active}} 60%);
+    background: -webkit-linear-gradient(top, {{$ctrl.theme.colors.link.text}} 0%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.active}} 60%);
+    background: linear-gradient(to bottom, {{$ctrl.theme.colors.link.text}} 0%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.text}} 60%,{{$ctrl.theme.colors.link.active}} 60%);
+    }
+
+    /* Table headers */
+    tu-datatable .table > tbody:not(.datatable-footer) > tr > th, tu-datatable .table > thead > tr > th {
+        background: {{$ctrl.theme.colors.table.header.background}};
+        color: {{$ctrl.theme.colors.table.header.text}};
+    }
+
+    /* Regular formatting */
+    .formatting-wrapper .formatting-list .single-formatting .color-picker.background-picker .sp-replacer .sp-preview,
+    .formatting-wrapper .formatting-list .single-formatting .color-picker.text-picker .sp-replacer .sp-preview {
+        background: none;
+    }
+
+    .formatting-wrapper .formatting-list .single-formatting .item.align-icons .btn-group .btn.active {
+        background: #ffffff;
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .formatting-wrapper .formatting-list .single-formatting .number-btn.active,
+    .formatting-wrapper .formatting-list .single-formatting .comma-btn.active {
+        background-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .formatting-wrapper .formatting-list .single-formatting .condition-formatting-wrapper .condition .item .input-group-btn .btn.active,
+    .formatting-wrapper .formatting-list .single-formatting .condition-formatting-wrapper .formatting .item .input-group-btn .btn.active {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    /* Expand Drill */
+    .expand-card-wrapper app-drill-card .drill-wrapper .drill-visual-picker ul li a:hover,
+    .expand-card-wrapper app-drill-card .drill-wrapper .drill-visual-picker ul li a.active {
+        border-left-color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-columns .drill-columns-wrapper .drill-column-table ul li:hover .drill-table-columns .drill-column-name,
+    .expand-card-wrapper app-drill-card .drill-columns .drill-columns-wrapper .drill-column-table ul li:hover .drill-table-columns .drill-column-name .drill-table-name {
+        color: {{$ctrl.theme.colors.link.active}};
+        opacity: 1;
+    }
+    .expand-card-wrapper app-drill-card .drill-columns .drill-columns-wrapper ul li.drill-active:hover .drill-table-columns .drill-column-name {
+        color: inherit;
+    }
+
+    .expand-card-wrapper app-drill-card .drill-columns .drill-columns-wrapper ul li.drill-active:hover .drill-table-columns .drill-column-name .drill-table-name {
+        opacity: .6;
+        color: inherit;
+    }
+
+    .expand-card-wrapper app-drill-card .drill-breadcrumbs .item .item-value .select2-container .select2-choice {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-breadcrumbs .item .item-value .select2-container.select2-container-disabled .select2-choice {
+        background-image: none !important;
+        background-color: transparent !important;
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-breadcrumbs .item .item-value .multiselect-dropdown .dropdown .dropdown-toggle {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-breadcrumbs .item .item-value .multiselect-dropdown .dropdown .dropdown-toggle[disabled] {
+        background-image: none !important;
+        background-color: transparent !important;
+        color: {{$ctrl.theme.colors.link.text}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-options .drill-option:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .expand-card-wrapper app-drill-card .drill-columns .drill-columns-title .fa:hover,
+    .expand-card-wrapper app-drill-card .drill-presets .drill-presets-title .fa:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    app-drill-card .drill-columns .drill-columns-wrapper ul li .drill-column-table .drill-column-table-name:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    app-drill-card .drill-records-columns .drill-columns-wrapper ul li .drill-column-table ul li .drill-table-columns .drill-column-name:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+
+    .user-permissions-modal .folder-list-wrapper ul li .item-data .folder-collapse:hover {
+        color: {{$ctrl.theme.colors.link.active}};
+    }
+</style>

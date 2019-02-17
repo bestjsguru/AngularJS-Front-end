@@ -1,0 +1,30 @@
+.database-explorer-wrapper {
+    position: relative;
+    .full-height;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .database-explorer {
+        min-height: calc(~"100vh - 143px");
+        display: block;
+        position: relative;
+
+        @import './databaseExplorerSidebar';
+
+        .database-explorer-visual {
+            margin: 0 0 0 370px;
+            min-height: calc(~"100vh - 143px");
+            background: @white;
+            border-top: 1px solid @iron;
+            position: relative;
+
+            .tab-nav-content {
+                border: none;
+            }
+        }
+    }
+}
+
+@import './preview/databaseExplorerPreview';
+@import './sql/databaseExplorerSql';
+@import './table/databaseExplorerTable';

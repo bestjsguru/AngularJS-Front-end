@@ -1,0 +1,96 @@
+.column-value-dropdown-modal {
+
+    .modal-body {
+
+        .panel {
+            margin-bottom: 0;
+
+            .panel-heading {
+                border-radius: 4px;
+            }
+
+            .panel-body {
+                padding: 0;
+                border-radius: 4px;
+                min-height: inherit;
+
+                .CodeMirror {
+
+                    &.code-mirror-input {
+                        border: none;
+                    }
+
+                    &:not(.code-mirror-input) {
+                        min-height: 250px;
+
+                        .CodeMirror-sizer {
+                            min-height: 250px !important;
+                        }
+                    }
+
+                    pre {
+                        padding: 0 4px 0 14px;
+                    }
+
+                    .CodeMirror-scroll {
+                        margin-bottom: -35px;
+                    }
+                }
+
+                ul {
+                    margin: 0;
+                    padding: 0;
+
+                    li {
+                        margin: 0;
+                        padding: 0;
+                        border-radius: 0;
+
+                        &:hover {
+                            background-color: @gray-pale;
+                        }
+
+                        &.load-more {
+                            border-top: solid 1px @porcelain;
+                        }
+
+                        &.active {
+                            color: @td-gray-dark;
+                            background-color: @porcelain;
+
+                            &:nth-child(even) {
+                                background-color: darken(@porcelain, 2%);
+                            }
+
+                            a, a:hover {
+                                background: none;
+                                color: @td-gray-dark;
+                                padding-right: 30px;
+
+                                &:after {
+                                    content: "\f00c";
+                                    font-family: FontAwesome;
+                                    font-size: 13px;
+                                    position: absolute;
+                                    right: 5px;
+                                    top: 10px;
+                                }
+                            }
+                        }
+
+                        a {
+                            position: relative;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: block;
+                            padding: 8px 8px 8px 10px;
+
+                            background: none;
+                            color: @td-gray-dark;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

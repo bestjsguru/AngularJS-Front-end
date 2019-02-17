@@ -1,0 +1,90 @@
+.kpi-modal {
+    .metric-selection-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 100%;
+        min-height: 200px;
+
+        .metric-selection-column {
+            flex: 0 0 50%;
+            max-width: 50%;
+            align-self: flex-start;
+            padding: 0 20px 0 0;
+            border-right: 1px solid @td-light-gray;
+
+            & + .metric-selection-column {
+                border-right: 0;
+                padding: 0 0 0 20px;
+            }
+
+            .metric-selection-heading {
+                text-transform: uppercase;
+                font-size: 14px;
+                font-weight: 500;
+                display: block;
+                padding: 5px 0 10px 0;
+                margin: 0 0 10px 0;
+                text-align: center;
+                border-bottom: 1px solid @td-light-gray;
+            }
+
+            .kpi-metric-search {
+                .form-control {
+                    height: 34px;
+                }
+
+                .form-control-feedback {
+                    line-height: 34px;
+                }
+            }
+
+            .kpi-metric-list {
+                max-height: 370px;
+                overflow-y: auto;
+
+                .kpi-single-metric {
+                    display: block;
+                    position: relative;
+                    border-bottom: 1px solid @td-light-gray;
+                    padding: 8px 35px 8px 2px;
+
+                    .kpi-single-metric-name {
+                        width: 100%;
+                        display: block;
+                    }
+
+                    a {
+                        position: absolute;
+                        padding: 5px;
+                        top: 4px;
+                        right: 7px;
+                        z-index: 1;
+
+                        &:hover {
+                            .fa-plus {
+                                color: @td-turquoise;
+                            }
+
+                            .fa-times {
+                                color: @brand-danger;
+                            }
+                        }
+                    }
+
+                    &.selected {
+                        opacity: 0.5;
+                        cursor: not-allowed;
+
+                        a {
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+
+}

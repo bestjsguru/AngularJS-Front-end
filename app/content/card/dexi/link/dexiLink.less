@@ -1,0 +1,96 @@
+.dexi-link {
+    .dexi-link-wrapper {
+        .row {
+            margin-bottom: 10px;
+        }
+
+        .thumbnail {
+            min-height: 150px;
+
+            &:not(.active):not(.new-configuration-form):not(.new-configuration-button):hover {
+                border: solid 1px @hoki;
+            }
+
+            &.active {
+                border: solid 1px @td-turquoise-dark;
+
+                .fa-check {
+                    display: block;
+                }
+            }
+
+            .caption {
+                h3 {
+                    margin-top: 5px;
+                    margin-right: 35px;
+                }
+
+                pre {
+                    border: none;
+                }
+
+                .configuration-key {
+                    input {
+                        color: #333333;
+                        background-color: #f5f5f5;
+                    }
+                }
+
+                .help-block {
+                    float: left;
+                    margin-top: 10px;
+                }
+            }
+
+            .fa-check {
+                display: none;
+                position: absolute;
+                top: 10px;
+                right: 25px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: solid 2px @td-turquoise-dark;
+                color: @td-turquoise-dark;
+                background: white;
+                line-height: 27px;
+            }
+
+            &.new-configuration-button {
+                background: #f5f5f5;
+                display: block;
+
+                .fa-plus {
+                    width: 50px;
+                    height: 50px;
+                    background: @td-turquoise-dark;
+                    color: white;
+                    position: absolute;
+                    top: calc(~"50% - 50px");
+                    left: calc(~"50% - 25px");
+                    border-radius: 50%;
+                    line-height: 50px;
+                }
+
+                span {
+                    margin-top: 90px;
+                    display: block;
+                }
+            }
+
+            &.new-configuration-form {
+                display: none;
+            }
+        }
+
+        .new-configuration {
+            .new-configuration-button {
+                display: none;
+            }
+
+            .new-configuration-form {
+                display: block;
+            }
+        }
+    }
+}

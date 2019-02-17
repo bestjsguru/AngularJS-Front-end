@@ -1,0 +1,118 @@
+.user-permissions-modal {
+    .modal-body {
+        padding-bottom: 10px;
+    }
+
+    .select-button-wrapper {
+        padding: 5px 12px;
+        display: flex;
+
+        span {
+            flex: 0 0 auto;
+
+            & + span {
+                margin-left: auto;
+            }
+        }
+    }
+
+    .folder-list-wrapper {
+        width: 100%;
+        border: 1px solid @borderColorLight;
+        padding: 6px;
+        display: block;
+        margin-bottom: 15px;
+        border-radius: 3px;
+
+        > ul {
+            overflow-y: auto;
+            max-height: calc(~"100vh - 490px");
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+
+            li {
+                width: 100%;
+                list-style: none;
+                border-bottom: 1px solid @borderColorLight;
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+
+                .folder-wrapper {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    border-radius: 3px;
+                }
+
+                .item-data {
+                    width: 100%;
+                    flex: 1 1 100%;
+                    padding: 4px 4px 6px 4px;
+                    display: flex;
+                    flex-wrap: nowrap;
+                    align-items: center;
+                    font-size: 12px;
+                    min-height: 30px;
+                    position: relative;
+
+                    i {
+                        flex: 0 0 auto;
+                        font-size: 15px;
+
+                        & + i {
+                            position: absolute;
+                            font-size: 5px;
+                            left: 10px;
+                            top: 12px;
+                        }
+                    }
+
+                    .folder-title {
+                        margin-left: 5px;
+                        flex: 1 1 auto;
+
+                        .dashboard-count {
+                            color: @hoki;
+                            font-weight: normal;
+                            padding-left: 5px;
+                        }
+
+                        .ui-select-highlight {
+                            font-weight: 500;
+                            color: @deep-blue;
+                            background: @iron;
+                        }
+                    }
+
+                    .folder-collapse {
+                        flex: 0 0 30px;
+                        min-height: 30px;
+                        margin: -4px -4px -6px 0;
+                        text-align: center;
+
+                        .fa {
+                            margin-top: 7px;
+                        }
+                    }
+
+                    &:hover {
+                        background: @porcelain;
+                    }
+                }
+
+                > ul {
+                    padding: 0 0 0 20px;
+                }
+            }
+        }
+    }
+
+    .error-wrapper {
+        display: block;
+        width: 100%;
+        margin: 0 0 10px 0;
+    }
+}

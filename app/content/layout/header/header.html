@@ -1,0 +1,26 @@
+<div ng-if="indexCtrl.isVisible() && !indexCtrl.isEmbed">
+    <div class="header">
+        <app-header-logo></app-header-logo>
+
+        <div class="header-buttons">
+            <a app-access level="admin" ui-sref="profile.members" class="btn invite-colleagues"
+               tu-popover tu-popover-html="Invite colleagues" tu-popover-placement="left">
+                <i class="fa fa-user fa-fw"></i>
+            </a>
+
+            <div class="home-alerts-wrapper pull-right" app-access level="user">
+                <app-home-alerts></app-home-alerts>
+            </div>
+
+            <a ui-sref="profile.profile" ng-if="indexCtrl.user.timezone" class="btn"
+               tu-popover tu-popover-html="{{indexCtrl.user.timezoneString()}}" tu-popover-placement="left">
+                <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+            </a>
+
+            <a ng-if="indexCtrl.user.expirationString()" class="btn"
+               tu-popover tu-popover-html="{{indexCtrl.user.expirationString()}}" tu-popover-placement="left">
+                <i class="fa fa-fw fa-clock-o" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</div>

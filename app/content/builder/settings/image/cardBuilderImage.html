@@ -1,0 +1,57 @@
+<div class="items" ng-form="$ctrl.form">
+    <div class="item">
+        <div class="item form-group">
+            <label>Background Image URL:</label>
+            <input name="url" ng-model="$ctrl.card.image.url" type="url" app-valid-image-url
+                   placeholder="Enter Image URL" class="form-control">
+
+            <div class="error-messages" ng-messages="$ctrl.form.url.$error" ng-if="$ctrl.form.url.$dirty">
+                <div ng-message="validImageUrl">Please enter valid image url or it will not be saved</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="items">
+    <div class="item">
+        <div class="item form-group">
+            <label>Horizontal Position:</label>
+            <ui-select ng-model="$ctrl.card.image.horizontal">
+                <ui-select-match placeholder="Select something">{{$select.selected.capitalizeFirstLetter()}}</ui-select-match>
+                <ui-select-choices repeat="item in $ctrl.horizontal.items">
+                    <span ng-bind-html="item.capitalizeFirstLetter()"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="item form-group">
+            <label>Vertical Position:</label>
+            <ui-select ng-model="$ctrl.card.image.vertical">
+                <ui-select-match placeholder="Select something">{{$select.selected.capitalizeFirstLetter()}}</ui-select-match>
+                <ui-select-choices repeat="item in $ctrl.vertical.items">
+                    <span ng-bind-html="item.capitalizeFirstLetter()"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="item form-group">
+            <label>Display Type:</label>
+            <ui-select ng-model="$ctrl.card.image.displayType">
+                <ui-select-match placeholder="Select something">{{$select.selected.capitalizeFirstLetter()}}</ui-select-match>
+                <ui-select-choices repeat="item in $ctrl.displayType.items">
+                    <span ng-bind-html="item.capitalizeFirstLetter()"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="item form-group">
+            <label>Opacity:</label>
+            <ui-select ng-model="$ctrl.opacity.selected" on-select="$ctrl.onOpacitySelect($item)">
+                <ui-select-match placeholder="Select something">{{$select.selected.label.capitalizeFirstLetter()}}</ui-select-match>
+                <ui-select-choices repeat="item in $ctrl.opacity.items">
+                    <span ng-bind-html="item.label.capitalizeFirstLetter()"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="key-drivers-top-reasons">
+    <table class="table table-hover">
+        <thead class="bold">
+            <tr>
+                <td colspan="3">Top {{$ctrl.topReasons.length}} Reasons</td>
+            </tr>
+            <tr class="active">
+                <th>Dimension</th>
+                <th>Value</th>
+                <th class="text-right">Actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in $ctrl.topReasons">
+                <td ng-bind-html="item.dimension"></td>
+                <td>
+                    <button class="btn btn-xs btn-eighth" ng-click="$ctrl.drillDown(item)">
+                        {{item.value}}
+                    </button>
+                </td>
+                <td class="text-right" ng-bind-html="item.actual"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

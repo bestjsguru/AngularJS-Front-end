@@ -1,0 +1,28 @@
+<div class="drill-metric-overview">
+    <table class="table table-condensed text-left">
+        <tr>
+            <th></th>
+            <th>Metric Name</th>
+            <th class="text-right">Impact on goal</th>
+        </tr>
+        <tr ng-class="{'goal-metric-tr': item.goal, 'active': $ctrl.isActive(item)}" ng-repeat="item in $ctrl.impacts.items track by $index">
+            <td>
+                <div ng-class="{'goal-metric': item.goal, 'driver-metric': !item.goal}">
+                    <i ng-if="item.goal" class="fa fa-bullseye"></i>
+
+                    {{$ctrl.getLetter($index - 1)}}
+                </div>
+            </td>
+            <td>{{item.metric.name}}</td>
+            <td class="text-right" ng-class="$ctrl.getImpactClass(item)">
+                {{$ctrl.getImpactValue(item).formattedValue}}
+            </td>
+        </tr>
+    </table>
+
+    <div class="full-overview">
+        <button ng-click="$ctrl.showOverview()" class="btn btn-first btn-block">
+            Show more <i class="fa fa-fw fa-angle-right"></i>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div ng-if="$ctrl.metric">
+    <ul class="nav nav-tabs">
+        <li><a href="#">DIMENSIONS</a></li>
+    </ul>
+
+    <div class="metric-dimensions">
+        <div class="metric-dimensions-search border-bottom m-b-10 pad-b-15">
+            <input type="text" ng-model="$ctrl.query" class="form-control" placeholder="Search by Name or Table"
+                   ng-change="$ctrl.filter()" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 200, 'blur': 0 } }">
+            <i class="fa fa-search"></i>
+        </div>
+
+        <ul ng-if="$ctrl.tables.length && !$ctrl.loading">
+            <li ng-repeat="table in $ctrl.tables track by $index">
+                <span>
+                    <i class="fa fa-table"></i>
+                    {{table.name}}
+                </span>
+
+                <ul ng-if="table.columns.length && !$ctrl.loading">
+                    <li ng-repeat="column in table.columns | searchByProperties: 'getLabel, tableName' : $ctrl.query as filteredDimensions track by $index">
+                        <a>
+                            <span>{{column.getLabel()}}</span>
+                            <small class="gray"><i class="fa fa-fw fa-table"></i> {{column.tableName}}</small>
+                        </a>
+                        <a ng-class="{'active': $ctrl.filters(column).length}"
+                           ng-click="$ctrl.addNewFilter(column)" href class="filter-icon"
+                           tu-popover tu-popover-html="Add new filter" tu-popover-placement="top">
+                            {{$ctrl.filters(column).length || ''}}
+                            <i class="fa fa-filter" aria-hidden="true"></i>
+                        </a>
+                        <a ng-class="{'active': $ctrl.groupings(column).length}"
+                           ng-if="$ctrl.couldBeGroupedBy(column)"
+                           ng-click="$ctrl.addNewGrouping(column)" href class="grouping-icon"
+                           tu-popover tu-popover-html="Apply grouping" tu-popover-placement="top">
+                            <i class="fa fa-object-group" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <span class="dimensions-message" ng-if="!$ctrl.columns.length && !$ctrl.loading">
+            <i class="fa fa-fw fa-exclamation-triangle"></i> No dimensions available
+        </span>
+        <span class="dimensions-message" ng-if="$ctrl.loading">
+            <i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Loading dimensions ...
+        </span>
+    </div>
+</div>
+

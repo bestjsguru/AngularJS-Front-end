@@ -1,0 +1,82 @@
+#text-editor {
+    margin: 0;
+	padding: 0;
+    height: 100%;
+
+    .text-card-form {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 30px -7px 7px -7px;
+
+        .item {
+            flex: 1 1 50%;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+            padding: 0px 7px 7px 7px;
+            margin: 0;
+
+            .form-control {
+                height: 34px;
+            }
+
+            .select2-container {
+                .select2-choice {
+                    height: 34px;
+                    line-height: 32px;
+                }
+            }
+        }
+    }
+
+    .text-editor-container {
+        .ql-toolbar {
+            .ql-color-picker {
+                width: 30px;
+
+                .ql-color-label{
+                    &.ql-stroke {
+                        stroke: @td-red;
+                        opacity: 1;
+                    }
+
+                    &.ql-fill {
+                        fill: @td-red;
+                    }
+                }
+            }
+        }
+
+        .ql-container {
+            height: 600px;
+            border-top: transparent;
+
+            ol {
+                padding: 0;
+                margin: 0 0 0 -5px;
+            }
+
+            ul {
+                padding: 0;
+                margin: 0 0 0 -10px;
+            }
+
+            a {
+                color: @td-blue-dark !important;
+                text-decoration: none;
+
+                &:hover {
+                    color: @td-blue !important;
+                }
+            }
+        }
+
+        ng-quill-editor {
+            &.ng-invalid.ng-dirty {
+                .ql-container {
+                    border: 1px solid @td-red;
+                }
+            }
+        }
+    }
+}

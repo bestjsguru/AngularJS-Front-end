@@ -1,0 +1,32 @@
+<div class="modal-header black-header">
+    <h4 class="modal-title">{{ title || 'People following this alert' }}</h4>
+</div>
+<div class="modal-body">
+    <div class="tab-content">
+        <div class="tab-pane active">
+
+            <div class="user-list-wrapper">
+                <ul ng-repeat="user in subscribers">
+                    <li>
+                        <div class="alert-people">
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span ng-bind="user.fullName"></span>
+                                <a ng-bind="user.email"></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <a class="btn btn-first btn-lg text-uppercase w-100" ng-click="close()">Close</a>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,191 @@
+<div class="metric-filters-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Metric Filters</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="metric-filters-list">
+                    <loader ng-if="$ctrl.showLoader" ctrl-check="true"></loader>
+
+                    <div class="preview-area-wrapper" ng-if="$ctrl.noAvailableFiltersMessageIsVisible()">
+                        <div class="preview-area">
+                            <div class="preview-icon animated zoomIn">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </div>
+                            <span class="preview-title">No filters currently available</span>
+                            <span>This metric has no available filters at the moment</span>
+                        </div>
+                    </div>
+                    <div class="preview-area-wrapper" ng-if="$ctrl.noDefinedFiltersMessageIsVisible()">
+                        <div class="preview-area">
+                            <div class="preview-icon animated zoomIn">
+                                <i class="fa fa-filter" aria-hidden="true"></i>
+                            </div>
+                            <span class="preview-title">No defined filters at the moment</span>
+                            <span><a href="#" ng-click="$ctrl.addNewFilter()">Click here</a> to add filters</span>
+                        </div>
+                    </div>
+
+                    <div class="filters-edit-area" ng-if="$ctrl.filters.length && !$ctrl.showLoader">
+                        <div ng-repeat="filter in $ctrl.filters track by $index">
+                            <form class="single-filter" ng-class="{highlight: !$ctrl.isAdded($index)}" name="$ctrl.forms.filter_{{$index}}_form">
+
+                                <!-- FILTER LETTER -->
+                                <div class="filter-option">
+                                    <div class="filter-alias">
+                                        <a href="#" ng-if="!$ctrl.isLoading($index)" class="btn" ng-bind-html="filter.chainLetter"></a>
+                                        <a href="#" ng-if="$ctrl.isLoading($index)" class="btn"><i class="fa fa-spinner fa-spin"></i></a>
+                                    </div>
+                                </div>
+
+                                <!-- FILTER COLUMN -->
+                                <div class="filter-option" ng-class="{'has-error': !$ctrl.validateFormFields($index, ['filter'])}">
+                                    <ui-select ng-disabled="$ctrl.isLoading($index)" on-select="$ctrl.onColumnSelect($item, filter)"
+                                               name="filter" ng-model-options="{ debounce: 200 }" search-enabled="true"
+                                               ng-model="filter.column" class="min-w-100 text-left" required>
+                                        <ui-select-match class="form-control" placeholder="Select Filter">
+                                            {{$select.selected.label}}
+                                        </ui-select-match>
+
+                                        <ui-select-choices repeat="item in $ctrl.availableColumns | customSearch: 'label,tableName': $select.search track by $index">
+                                            <div ng-bind-html="item.getLabel(true) | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <!-- FILTER OPERATOR -->
+                                <div class="filter-option" ng-class="{'has-error': !$ctrl.validateFormFields($index, ['operator'])}">
+                                    <ui-select ng-disabled="$ctrl.isLoading($index) || !$ctrl.operators.getByFilter(filter).length" name="operator" search-enabled="true"
+                                               ng-model="filter.operator" class="w-100" required
+                                               on-select="$ctrl.onSelectOperator(filter)">
+                                        <ui-select-match placeholder="Select Operator">{{$select.selected.label}}</ui-select-match>
+                                        <ui-select-choices repeat="item in $ctrl.operators.getByFilter(filter) | filter: {label: $select.search} track by item.value">
+                                            <div ng-bind-html="item.label | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                                <!-- FILTER VALUES -->
+                                <div class="filter-option" ng-if="$ctrl.isMultiSelect(filter)">
+
+                                    <app-column-value-dropdown
+                                        required
+                                        name="value"
+                                        ng-model="filter.values"
+                                        column="filter.column"
+                                        multiple="true"
+                                        placeholder="Select Values">
+                                    </app-column-value-dropdown>
+
+                                </div>
+
+                                <div class="filter-option" ng-if="$ctrl.isSingleSelect(filter)">
+
+                                    <app-column-value-dropdown
+                                        required
+                                        name="value"
+                                        ng-model="filter.firstValue"
+                                        column="filter.column"
+                                        placeholder="Select Value">
+                                    </app-column-value-dropdown>
+
+                                </div>
+
+                                <!-- FILTER DATE OPTIONS -->
+                                <div class="filter-option filter-date" ng-if="filter.isDate && !filter.isNullLike()">
+                                    <div class="filter-date-wrapper" ng-class="{'has-error': !$ctrl.validateFormFields($index, ['value'])}">
+
+                                        <div class="input-group" ng-if="filter.isRange && !filter.isBetween()">
+                                            <tu-date-picker refresh="$ctrl.refreshDates(dates, range, filter)"
+                                                            current-range="$ctrl.getRangeName(filter)"
+                                                            current-number="filter.numbers"
+                                                            class="fullscreen-show pull-right dashboard-date-picker"
+                                                            show="['customDate']"
+                                                            hide="['custom', 'customWeek', 'cardDateRange']">
+
+                                            </tu-date-picker>
+                                        </div>
+                                        <div class="input-group truedash-calendar" ng-if="!filter.isRange && !filter.isBetween()">
+                                            <input name="value" type="text" class="form-control" ng-model="filter.firstValue"
+                                                   uib-datepicker-popup="{{$ctrl.format}}"
+                                                   ng-disabled="!$ctrl.filterValuesAreVisible(filter)"
+                                                   is-open="$ctrl.dateData[$index]"
+                                                   datepicker-options="{startingDay: $ctrl.user.organisation.startDayOfWeek % 7}"
+                                                   ng-required="true" />
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-fourth date-trigger" ng-click="$ctrl.openDatePicker($event, $index)">
+                                                    <i class="fa fa-calendar-check-o"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+
+                                        <div ng-if="filter.isRange && filter.isBetween()">
+                                            <tu-range-number ng-model="filter.values"></tu-range-number>
+                                        </div>
+
+                                        <div ng-disabled="$ctrl.isLoading($index) || !filter.column">
+                                            <label class="checkbox" ng-click="$ctrl.onRangeClick(filter)">
+                                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': filter.isRange, 'fa-square-o': !filter.isRange}">&nbsp;</i>
+                                                <span>Range?</span>
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- FILTER ACTION BUTTONS -->
+                                <div class="filter-option filter-buttons">
+                                    <div ng-if="!filter.checkDelete && !filter.deleting">
+                                        <button ng-disabled="$ctrl.isLoading($index) || $ctrl.isLoading()" class="btn btn-second"
+                                                ng-click="filter.checkDelete = true">
+                                            Delete
+                                        </button>
+                                        <button ng-disabled="$ctrl.isLoading($index) || $ctrl.isLoading()" class="btn btn-first"
+                                                ng-click="$ctrl.applyFilter($index)" ng-bind-html="$ctrl.isAdded($index) ? 'Update' : 'Apply'">
+
+                                        </button>
+                                    </div>
+                                    <div ng-if="filter.checkDelete && !filter.deleting">
+                                        <button class="btn btn-fourth" ng-click="filter.checkDelete = false">No</button>
+                                        <button class="btn btn-first" ng-click="$ctrl.removeFilter($index)">Yes</button>
+                                    </div>
+                                    <div ng-if="filter.deleting">
+                                        <button class="btn btn-fourth btn-block"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Deleting</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="filter-footer-actions text-center" ng-if="$ctrl.filters.length">
+                        <a class="btn btn-link" ng-click="$ctrl.addNewFilter()">Add new filter</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="$ctrl.filters.length">
+            <label>Filter rules:</label>
+            <div ng-form="$ctrl.filtersRuleForm" class="input-group">
+                <input ng-disabled="!$ctrl.filters.length || $ctrl.isLoading('any')" type="text" name="filterRulesInput"
+                       class="form-control" placeholder="Example: A AND B OR C" tu-valid-logical-expression
+                       filters="$parent.$ctrl.filters" ng-model="$ctrl.filtersRule">
+
+                <a ng-disabled="!$ctrl.filters.length || $ctrl.isLoading('any')"
+                   ng-click="$ctrl.applyFilterRules()" class="btn btn-third input-group-addon">
+                    <i ng-class="{'fa-check': !$ctrl.filtersRuleLoading, 'fa-spinner fa-spin': $ctrl.filtersRuleLoading}" class="fa"></i>
+                </a>
+            </div>
+            <div>
+                <div class="error-messages" ng-messages="filtersRuleForm.filterRulesInput.$error">
+                    <div ng-message="allVariablesPresent">Please list all available filters</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

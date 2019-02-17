@@ -1,0 +1,83 @@
+.card-builder-drill {
+    display: block;
+    width: 100%;
+    position: relative;
+    min-height: 161px;
+    background: @td-gray-pale;
+    margin: 0px;
+
+    .preview-area-wrapper {
+        .preview-area {
+            margin: 20px auto;
+        }
+    }
+
+    .single-drill {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 7px;
+        border-bottom: 1px solid @porcelain;
+
+        .drill-option {
+            flex: 1 1 200px;
+            margin: 0px 7px;
+            padding: 7px 0;
+            position: relative;
+
+            &.drill-buttons {
+                flex: 0 0 172px;
+                padding-left: 7px;
+                margin-left: auto;
+
+                .btn {
+                    min-width: 80px;
+                }
+            }
+
+            &.drill-button {
+                flex: 0 0 80px;
+            }
+
+            &.drill-new {
+                flex: 0 0 34px;
+
+                .drill-alias {
+                    padding: 7px;
+
+                    a {
+                        border-radius: 3px;
+                    }
+                }
+            }
+
+            .drill-alias {
+                display: block;
+                width: 100%;
+                background: @porcelain;
+                border-radius: 3px;
+                position: relative;
+                padding: 7px 7px 7px 44px;
+                height: 34px;
+
+                a {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 1;
+                    color: @white;
+                    padding: 6px 0px;
+                    width: 34px;
+                    height: 34px;
+                    background: @td-deep-blue;
+                    border-radius: 3px 0 0 3px;
+                    cursor: default;
+                }
+
+            }
+
+        }
+
+    }
+
+}

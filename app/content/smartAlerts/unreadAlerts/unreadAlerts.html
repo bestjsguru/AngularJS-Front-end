@@ -1,0 +1,6 @@
+<div class="unread-alerts" ng-if="$ctrl.visible">
+    <div class="alert alert-info" ng-click="$ctrl.openPanel($event)">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="$ctrl.hide($event)"><span aria-hidden="true">&times;</span></button>
+        You have <strong>{{$ctrl.number}}</strong> unread alerts!
+    </div>
+</div>

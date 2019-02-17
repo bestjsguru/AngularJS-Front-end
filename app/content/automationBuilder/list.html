@@ -1,0 +1,44 @@
+<div class="sub-header">
+    <div class="item">
+        <div class="breadcrumbs">
+            <span>Automation Builder</span>
+        </div>
+    </div>
+    <div class="item">
+        <button ng-click="$ctrl.openModal()" class="btn btn-third btn-lg btn-add pull-right"><i class="fa fa-plus"></i> New Automation</button>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row automation-builder">
+        <div class="col-lg-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Report name</th>
+                        <th>Last Run</th>
+                        <th>Next Run Time</th>
+                        <th>Errors</th>
+                        <th>Activate</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in $ctrl.items track by item.id" ng-class="{'activated': item.active}">
+                        <td>{{item.name}}</td>
+                        <td>{{item.lastRun}}</td>
+                        <td>{{item.nextRun}}</td>
+                        <td>{{item.errors.length ? item.errors.length : 'No Errors'}}</td>
+                        <td><a ng-click="$ctrl.toggleStatus(item)" class="activation">
+                            <i class="fa fa-fw" ng-class="{'fa-toggle-on': item.active, 'fa-toggle-off': !item.active}"></i>
+                            {{item.active ? 'Deactivate' : 'Activate'}}
+                        </a></td>
+                        <td><a ng-click="$ctrl.openModal(item)"><i class="fa fa-edit fa-fw"></i> Edit</a></td>
+                        <td><a ng-click="$ctrl.remove(item)" class="delete-report"><i class="fa fa-trash-o fa-fw"></i> Delete</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<ul class="nav nav-tabs" ng-class="{disabled: $ctrl.filtersCounterLoading}" ng-if="!$ctrl.showPreview()">
+    <li ng-class="{active: $ctrl.activeTab == 'details'}">
+        <a href ng-click="$ctrl.show('details')">{{$ctrl.dataIsVisible() ? 'Details' : 'New metric'}}</a>
+    </li>
+    <li ng-if="$ctrl.filtersAreVisible()" ng-class="{active: $ctrl.activeTab == 'filters'}">
+        <a href ng-click="$ctrl.show('filters')">
+            Filters
+            <span ng-switch="$ctrl.filtersCounterLoading">
+                <span ng-switch-when="false" class="badge" ng-if="$ctrl.isFiltersBadgeShow()" ng-bind-html="$ctrl.filtersCounter"></span>
+                <span ng-switch-when="true" ><i class="fa fa-spinner fa-spin"></i></span>
+            </span>
+        </a>
+    </li>
+    <li ng-if="$ctrl.dataIsVisible()" ng-class="{active: $ctrl.activeTab == 'data'}">
+        <a href ng-click="$ctrl.show('data')">Data</a>
+    </li>
+    <div class="metric-preview-icons">
+        <ul ng-if="$ctrl.dataIsVisible()" >
+            <!--<li class="pull-left" ng-if="$ctrl.showAvailableColumns()" tu-popover tu-popover-html="Available columns" tu-popover-placement="top">-->
+                <!--<tu-available-columns>-->
+                    <!--<a href class="btn btn-eighth" ng-click="ac.open($ctrl.metricBuilder.metricList.selectedMetric, $ctrl.metricBuilder.metricData.data.table)">-->
+                        <!--<i class="fa fa-list"></i>-->
+                    <!--</a>-->
+                <!--</tu-available-columns>-->
+            <!--</li>-->
+            <li class="pull-left" tu-popover tu-popover-html="Clone Metric" tu-popover-placement="top">
+                <a href class="btn btn-eighth" ng-click="$ctrl.metricBuilder.metricData.cloneMetric()">
+                    <i class="fa fa-clone"></i>
+                </a>
+            </li>
+            <li class="pull-left" tu-popover tu-popover-html="Delete Metric" tu-popover-placement="top">
+                <a href class="btn btn-eighth" ng-click="$ctrl.metricBuilder.metricList.delete($ctrl.metricBuilder.metricList.selectedMetric)">
+                    <i class="fa fa-times"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</ul>
+
+<div class="metric-preview-area">
+    <div ng-show="$ctrl.activeTab == 'details'">
+        <tu-metric-data ng-if="!$ctrl.showPreview()"></tu-metric-data>
+
+        <div class="preview-area-wrapper" ng-if="$ctrl.showPreview()">
+            <div class="preview-area">
+                <div class="preview-icon animated zoomIn">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </div>
+                <span class="preview-title">Preview</span>
+                <span>Add new metric or click on one of available metrics</span>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.activeTab == 'data'">
+        <tu-metric-visual></tu-metric-visual>
+    </div>
+
+    <div ng-if="$ctrl.activeTab == 'filters'">
+        <tu-metric-filters metric="$ctrl.metricBuilder.metricList.selectedMetric"></tu-metric-filters>
+    </div>
+</div>

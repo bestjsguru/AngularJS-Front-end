@@ -1,0 +1,45 @@
+<div class="treemap-settings" ng-if="$ctrl.settings">
+    <div class="treemap-icons">
+        <label>Layout algorithm</label>
+
+        <div class="btn-group">
+            <button class="btn btn-fourth active" ng-class="{active: $ctrl.settings.treemap.layoutAlgorithm === 'squarified'}"
+                    ng-click="$ctrl.setAlgorithm('squarified')">
+                <div class="treemap-icon squarified"></div>
+                <span>Squarified</span>
+            </button>
+            <button class="btn btn-fourth" ng-class="{active: $ctrl.settings.treemap.layoutAlgorithm === 'sliceAndDice'}"
+                    ng-click="$ctrl.setAlgorithm('sliceAndDice')">
+                <div class="treemap-icon slice-dice"></div>
+                <span>Slice and Dice</span>
+            </button>
+            <button class="btn btn-fourth" ng-class="{active: $ctrl.settings.treemap.layoutAlgorithm === 'stripes'}"
+                    ng-click="$ctrl.setAlgorithm('stripes')">
+                <div class="treemap-icon stripes"></div>
+                <span>Stripes</span>
+            </button>
+            <button class="btn btn-fourth" ng-class="{active: $ctrl.settings.treemap.layoutAlgorithm === 'strip'}"
+                    ng-click="$ctrl.setAlgorithm('strip')">
+                <div class="treemap-icon strip"></div>
+                <span>Strip</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="treemap-icons">
+        <label>Layout starting direction</label>
+
+        <div class="btn-group">
+            <button class="btn btn-fourth" ng-class="{active: $ctrl.settings.treemap.layoutStartingDirection === 'vertical'}"
+                    ng-click="$ctrl.setLayout('vertical')">
+                <div class="treemap-icon vertical"></div>
+                <span>Vertical</span>
+            </button>
+            <button class="btn btn-fourth" ng-class="{active: $ctrl.settings.treemap.layoutStartingDirection === 'horizontal'}"
+                    ng-click="$ctrl.setLayout('horizontal')">
+                <div class="treemap-icon horizontal"></div>
+                <span>Horizontal</span>
+            </button>
+        </div>
+    </div>
+</div>

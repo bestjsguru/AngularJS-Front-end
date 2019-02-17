@@ -1,0 +1,60 @@
+<div class="drill-dropdown" ng-if="$ctrl.isVisible">
+    <div class="drill-dropdown-group drill-header">
+        <div class="drill-dropdown-title" ng-if="!$ctrl.metric.isFormula()">
+            Drill options | <span>{{$ctrl.metric.name}}</span>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.metric.isFormula()">
+        <div class="drill-dropdown-group">
+            <div class="drill-dropdown-title">
+                <span>Preset path</span>
+                <a class="manage-presets" tu-popover tu-popover-html="Manage presets" tu-popover-placement="left" ng-if="!$ctrl.card.drill.presets.active" ng-click="$ctrl.showPresets()">
+                    <i class="fa fa-edit"></i>
+                </a>
+            </div>
+            <div class="drill-options">
+                <span ng-if="$ctrl.card.drill.presets.loading" class="grey-text">
+                    <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+                    Loading presets...
+                </span>
+
+                <ul ng-if="!$ctrl.card.drill.presets.loading && $ctrl.card.drill.presets.items.length">
+                    <li class="drill-option" ng-if="$ctrl.card.drill.presets.active && $ctrl.card.drill.presets.nextColumn()"
+                        ng-click="$ctrl.presetDrill($ctrl.card.drill.presets.nextColumn())">
+                        <i class="fa fa-fw fa-angle-right"></i>
+                        {{$ctrl.card.drill.presets.nextColumn().getLabel()}}
+                    </li>
+                    <li class="no-preset" ng-if="$ctrl.card.drill.presets.active && !$ctrl.card.drill.presets.nextColumn()">
+                        No more levels on this path
+                    </li>
+
+                    <li class="drill-option" ng-if="!$ctrl.card.drill.presets.active" ng-repeat="preset in $ctrl.card.drill.presets.items track by $index"
+                        ng-click="$ctrl.selectPreset(preset)">
+                        <i class="fa fa-fw fa-angle-right"></i>
+                        {{preset.getLabel()}}
+                    </li>
+                </ul>
+                <span class="no-preset" ng-if="!$ctrl.card.drill.presets.loading && !$ctrl.card.drill.presets.items.length">
+                    No presets saved for this card
+                </span>
+            </div>
+        </div>
+        <div class="drill-dropdown-group">
+            <div class="drill-dropdown-title">
+                <span>Custom path</span>
+            </div>
+            <div class="drill-options">
+                <span class="drill-option" ng-click="$ctrl.showColumns()"><i class="fa fa-fw fa-level-down"></i> Drill into</span>
+            </div>
+            <div class="drill-options">
+                <span class="drill-option" ng-click="$ctrl.showRecords()"><i class="fa fa-fw fa-eye"></i> Show records</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="drill-error" ng-if="$ctrl.metric.isFormula()">
+        <i class="fa fa-fw fa-exclamation-triangle"></i>
+        <span>Drill on formulas not yet supported</span>
+    </div>
+</div>

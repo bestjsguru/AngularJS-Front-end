@@ -1,0 +1,23 @@
+<div class="social-connections" ng-if="$ctrl.connections.length">
+    <span class="heading">Social Connections</span>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="social-connection-item" ng-repeat="item in $ctrl.connections">
+                    <div class="social-connection-icon">
+                        <i class="fa fa-fw fa-3x" ng-class="$ctrl.connectionClass(item)"></i>
+                    </div>
+                    <div class="social-connection-value">
+                        <span class="social-connection-name">
+                            {{$ctrl.connectionName(item)}}
+                        </span>
+                        <span>{{item.profileData.name}} {{item.profileData.email ? '(' + item.profileData.email + ')' : ''}}</span>
+                    </div>
+                    <div class="social-connection-actions">
+                        <span class="text-danger" ng-click="$ctrl.remove(item)" ng-disabled="$ctrl.loading">Unlink</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

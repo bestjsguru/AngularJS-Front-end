@@ -1,0 +1,76 @@
+<div class="column-value-dropdown-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Select values</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.modalInstance.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+
+        <div class="modal-tabs-wrapper">
+            <ul class="nav nav-tabs nav-justified">
+                <li ng-class="{'active': $ctrl.tabs.is('values')}">
+                    <a ng-click="$ctrl.tabs.activate('values')">Values</a>
+                </li>
+                <li ng-class="{'active': $ctrl.tabs.is('raw')}">
+                    <a ng-click="$ctrl.showRawValues()">Raw values</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane active" ng-if="$ctrl.tabs.is('values')">
+
+                <div class="panel panel-default searchable-list">
+                    <div class="panel-heading">
+                        <div class="left-inner-addon">
+                            <i class="fa fa-search"></i>
+                            <input type="text" class="form-control" ng-model="$ctrl.query" ng-change="$ctrl.filter()"
+                                   ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                                   placeholder="Filter values">
+                            <span class="search-loader" ng-if="$ctrl.loading"><i class="fa fa-fw fa-spin fa-circle-o-notch"></i></span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="value in $ctrl.values" ng-class="{active: $ctrl.isSelected(value)}">
+                                <a ng-click="$ctrl.toggle(value)">
+                                    <span>{{::value}}</span>
+                                </a>
+                            </li>
+                            <li ng-if="$ctrl.hasMoreValues" class="load-more">
+                                <a ng-click="$ctrl.loadMore()">
+                                    <span>load more...</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row m-t-10">
+                    <div class="col-sm-6 text-left"><a ng-click="$ctrl.selectAll()" class="btn btn-eighth btn-sm text-uppercase">Select All</a></div>
+                    <div class="col-sm-6 text-right"><a ng-click="$ctrl.selectNone()" class="btn btn-eighth btn-sm text-uppercase">Select None</a></div>
+                </div>
+            </div>
+
+            <div class="tab-pane active" ng-if="$ctrl.tabs.is('raw')">
+                <div class="panel panel-default searchable-list">
+                    <div class="panel-body">
+                        <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+                                  ng-model-options="{ debounce: 400 }" class="form-control" ng-model="$ctrl.rawValues"></textarea>
+                    </div>
+                </div>
+
+                <span class="help-block" ng-if="$ctrl.multiple">* Values are separated by new lines. You can also add any custom value you want.</span>
+                <span class="help-block" ng-if="!$ctrl.multiple">* Here you can enter any custom value you want</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-click="$ctrl.modalInstance.dismiss()" class="btn btn-second btn-lg btn-block">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button ng-click="$ctrl.apply()" class="btn btn-first btn-lg btn-block">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>

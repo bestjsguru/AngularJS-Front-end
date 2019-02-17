@@ -1,0 +1,29 @@
+app-drill-card {
+    .drill-wrapper {
+        position: relative;
+        min-height: 600px;
+        display: flex;
+        flex-wrap: nowrap;
+        max-width: 100%;
+
+        .drill-card {
+            flex: 1 1 auto;
+            overflow: hidden;
+            padding: 20px 20px 40px 20px;
+
+            .chart-container {
+                height: 100%;
+            }
+        }
+    }
+
+    @import './dropdown/drillDropdown';
+    @import './columns/drillColumns';
+    @import './presets/drillPresets';
+    @import './type/drillType';
+    @import './breadcrumbs/drillBreadcrumbs';
+    @import './records/header/drillRecordsHeader';
+    @import './records/columns/drillRecordsColumns';
+}
+
+@import './actions/drillActions';

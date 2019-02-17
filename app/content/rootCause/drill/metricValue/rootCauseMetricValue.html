@@ -1,0 +1,15 @@
+<div class="drill-metric-value" ng-class="{'plain-value': !$ctrl.scroller}" ng-mouseleave="$ctrl.hideMetricOverview()">
+    <div ng-class="{'drill-table-danger': !$ctrl.item.isGood, 'drill-table-success': $ctrl.item.isGood}"
+         ng-mouseover="$ctrl.showMetricOverview()">
+
+        <span class="drill-table-value" ng-class="$ctrl.itemClass()">
+            {{$ctrl.item.formattedValue}}
+        </span>
+
+        <div ng-if="$ctrl.scroller" class="progress">
+            <div class="progress-bar" ng-style="$ctrl.percentageStyle()"></div>
+        </div>
+
+        <app-root-cause-metric-overview ng-if="$ctrl.overviewIsVisible" impacts="$ctrl.impacts" item="$ctrl.item"></app-root-cause-metric-overview>
+    </div>
+</div>

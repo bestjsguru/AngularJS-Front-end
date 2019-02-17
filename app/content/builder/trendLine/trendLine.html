@@ -1,0 +1,49 @@
+<div class="trend-line">
+    <div class="modal-header">
+        <h4 class="modal-title">Set Trend Line</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label ng-click="$ctrl.toggleTrendLine()">
+                <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.showTrendLine, 'fa-square-o': !$ctrl.showTrendLine}"></i>
+                Forecast ahead by
+            </label>
+
+            <div class="input-group">
+                <input name="goal" type="text" ng-model="$ctrl.extendTrendLine" placeholder="Enter Value" class="form-control"
+                       ng-class="{disabled: !$ctrl.showTrendLine}">
+                <span class="input-group-btn">
+                    <button class="btn btn-lg btn-fourth" ng-class="{disabled: !$ctrl.showTrendLine}">{{$ctrl.frequency}}</button>
+               </span>
+            </div>
+        </div>
+
+        <div class="help-block helper-actions">
+            <span ng-click="$ctrl.extendTrendLine = '0'" class="btn btn-xs btn-fourth">None</span>
+            <span ng-click="$ctrl.extendTrendLine = '3'" class="btn btn-xs btn-fourth">3 {{$ctrl.frequency}}</span>
+            <span ng-click="$ctrl.extendTrendLine = '5'" class="btn btn-xs btn-fourth">5 {{$ctrl.frequency}}</span>
+            <span ng-click="$ctrl.extendTrendLine = '7'" class="btn btn-xs btn-fourth">7 {{$ctrl.frequency}}</span>
+            <span ng-click="$ctrl.extendTrendLine = '10'" class="btn btn-xs btn-fourth">10 {{$ctrl.frequency}}</span>
+            <span ng-click="$ctrl.extendTrendLine = '10%'" class="btn btn-xs btn-fourth">10%</span>
+            <span ng-click="$ctrl.extendTrendLine = '20%'" class="btn btn-xs btn-fourth">20%</span>
+            <span ng-click="$ctrl.extendTrendLine = '50%'" class="btn btn-xs btn-fourth">50%</span>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="help-block m-t-15">
+            * This plots a linear trend line, with a line of best fit across the full date range.
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>

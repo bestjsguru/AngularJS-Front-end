@@ -1,0 +1,28 @@
+<ul class="nav nav-tabs">
+    <li>
+        <a href>Affected Cards <span class="red" ng-click="$ctrl.toggleList()" ng-if="$ctrl.loaded && $ctrl.cards.length" ng-bind-html="$ctrl.cards.length"></span></a>
+    </li>
+</ul>
+
+<div class="affected-cards">
+    <loader ng-if="$ctrl.showLoader()" ctrl-check="true"></loader>
+
+    <div ng-if="$ctrl.showPreview()">
+        <ul class="cards-list">
+            <li class="no-cards">
+                <span>No metric selected</span>
+            </li>
+        </ul>
+    </div>
+
+    <ul ng-if="$ctrl.loaded" class="cards-list">
+        <li ng-repeat="card in $ctrl.cards track by $index">
+            <span class="card-type-icon {{card.subType}}"></span>
+            <span class="card-name" ng-if="!card.dashboard" ng-bind-html="card.name" title="{{card.name}}"></span>
+            <a class="card-name" ng-if="card.dashboard" target="_blank" ui-sref="cardExplore({cardId: card.id})" ng-bind-html="card.name" title="{{card.name}}"></a>
+        </li>
+        <li ng-if="!$ctrl.cards.length" class="no-cards">
+            <span>There are no cards affected by this metric</span>
+        </li>
+    </ul>
+</div>

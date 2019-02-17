@@ -1,0 +1,38 @@
+<a class="btn alert-icon" ng-click="$ctrl.toggle()" title="Alerts">
+    <i ng-show="!$ctrl.notifications.items.length" class="fa fa-fw fa-bell" aria-hidden="true"></i>
+    <span ng-show="$ctrl.notifications.items.length" class="badge badge-success animated bounceIn">
+        {{$ctrl.notifications.items.length + ($ctrl.moreThanLimit ? '+' : '')}}
+    </span>
+</a>
+
+<div class="home-alerts" ng-if="$ctrl.isVisible">
+    <div class="home-alerts-header">
+        Alerts
+        <i ng-click="$ctrl.toggle()" class="fa fa-fw fa-times pull-right"></i>
+    </div>
+    <div class="home-alerts-body">
+        <loader ctrl-check="$ctrl.loading"></loader>
+
+        <a ui-sref="alerts({metricId: notification.metric.id})" class="home-alert"
+           ng-class="{high: notification.alert.isGood, low: !notification.alert.isGood}"
+           ng-repeat="notification in $ctrl.notifications.items">
+            <i class="fa fa-exclamation-triangle fa-fw"></i>
+            <div class="home-alert-info">
+                <span class="alert-title">{{notification.alert.name}}</span>
+                <span class="alert-value">
+                    <strong>{{notification.alert.value}}</strong>
+                    ({{notification.alert.variance}})
+                </span>
+                <span class="alert-date">{{notification.alert.date.fromNow()}}</span>
+            </div>
+        </a>
+
+        <div class="no-home-alerts" ng-if="!$ctrl.loading && !$ctrl.notifications.items.length">
+            <i class="fa fa-fw fa-3x fa-check text-success"></i>
+            <span>No unread alerts</span>
+        </div>
+    </div>
+    <div class="home-alerts-footer">
+        <a ui-sref="smartAlerts({show: 'all'})">See all alerts</a>
+    </div>
+</div>

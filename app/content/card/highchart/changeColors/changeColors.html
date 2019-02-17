@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title">Change Highcharts colors</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <form name="$ctrl.form">
+            <textarea class="form-control" ng-model="$ctrl.colors" name="colors" rows="10" required></textarea>
+
+            <div class="error-messages" ng-messages="$ctrl.form.colors.$error" ng-if="$ctrl.form.colors.$dirty">
+                <div ng-messages-include="error-messages"></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <a href ng-click="$ctrl.reset()" class="btn btn-link">
+            <i class="fa fa-fw fa-times" aria-hidden="true"></i> Reset to default colors
+        </a>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-first btn-lg btn-block" ng-click="$ctrl.save()">Save</a>
+        </div>
+    </div>
+</div>

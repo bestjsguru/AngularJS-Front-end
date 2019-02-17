@@ -1,0 +1,163 @@
+<div class="modal-header">
+    <h4 class="modal-title" ng-bind-html="$ctrl.selectedFilter ? 'Edit Dashboard Filter' : 'Add Dashboard Filter'"></h4>
+</div>
+
+<div class="modal-body dashboard-filters-modal">
+    <div ng-disabled="$ctrl.loading" class="filters-list">
+        <div class="new-filter-btn-wrapper">
+            <button class="btn btn-first btn-block" ng-click="$ctrl.newFilter()" ng-disabled="$ctrl.loading">
+                <i class="fa fa-plus" aria-hidden="true"></i> New filter
+            </button>
+        </div>
+
+        <div class="filter-wrapper">
+            <div class="filter date-filter">
+                <a class="filter-name">
+                    <span>Date filter</span>
+                </a>
+                <div class="filter-controls">
+                    <a class="activation" ng-click="$ctrl.toggleDateFilter()">
+                        <i class="fa fa-fw {{$ctrl.dateFilter.isActive ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div ng-repeat="filter in $ctrl.dashboardFilters" class="w-100">
+                <div class="filter" ng-class="{'active': $ctrl.isFilterActive(filter)}">
+                    <a class="filter-name" ng-click="$ctrl.editSelectedFilter($index, filter)" ng-class="{'active': $ctrl.isFilterActive(filter)}">
+                        <span ng-bind-html="filter.name"></span>
+                    </a>
+                    <div ng-if="$ctrl.isOwnerOrAdmin(filter)" class="filter-controls">
+                        <a class="remove-filter" ng-click="$ctrl.removeDashboardFilter($index, filter)" title="Remove filter">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                        <a class="activation" ng-click="$ctrl.onToggleFilter($index, filter)">
+                            <i class="fa fa-fw {{filter.isActive ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-settings">
+        <loader ctrl-check="!$ctrl.dataSources.length"></loader>
+
+        <form ng-if="$ctrl.dataSources.length" name="$ctrl.form" novalidate>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Filter Name</label>
+
+                        <a class="activation pull-right" ng-click="$ctrl.toggleSelectedFilterStatus()">
+                            <i class="fa fa-fw {{$ctrl.selected.isActive ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+                            {{$ctrl.selected.isActive ? 'On' : 'Off'}}
+                        </a>
+                        <input name="name" type="text" class="form-control" ng-model="$ctrl.selected.filterName"
+                               placeholder="Enter Filter Name" required ng-minlength="3">
+                        <div class="error-messages" ng-messages="$ctrl.form.name.$error" ng-if="$ctrl.dirty($ctrl.form.name)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <label>Choose Values</label>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <ui-select name="table" ng-model="$ctrl.selected.table"
+                                           on-select="$ctrl.onFilterSettingUpdated('table')" search-enabled="true"
+                                           class="w-100" required>
+                                    <ui-select-match placeholder="Table name">{{$select.selected.tableName}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.selectedDataSourceTables() | filter: {tableName: $select.search} track by item.tableId">
+                                        <div ng-bind-html="item.tableName | highlight:$select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div class="error-messages" ng-messages="$ctrl.form.table.$error"
+                                     ng-if="$ctrl.dirty($ctrl.form.table)">
+                                    <div ng-messages-include="error-messages"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <ui-select name="column" ng-model="$ctrl.selected.column"
+                                           on-select="$ctrl.onFilterSettingUpdated('column')" search-enabled="true"
+                                           class="w-100" required>
+                                    <ui-select-match placeholder="Column name">{{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                        repeat="item in $ctrl.getFieldColumns($ctrl.selected.table) | filter: {name: $select.search} track by item.id">
+                                        <div ng-bind-html="item.name | highlight:$select.search "></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <div class="error-messages" ng-messages="$ctrl.form.column.$error"
+                                     ng-if="$ctrl.dirty($ctrl.form.column)">
+                                    <div ng-messages-include="error-messages"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12" ng-if="$ctrl.affectedCardsList.length"><hr></div>
+
+                <div class="col-lg-12" ng-if="$ctrl.affectedCardsList.length">
+                    <div class="row">
+                        <div class="col-lg-12" ng-if="$ctrl.hasColumnName(card)" ng-repeat="card in $ctrl.cards.items track by card.id">
+                            <label>Card: <span ng-bind-html="card.name"></span></label>
+                            <a class="activation pull-right" ng-click="$ctrl.toggleCard(card)">
+                                <i class="fa fa-fw {{card.enabled ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+                                {{card.enabled ? 'On' : 'Off'}}
+                            </a>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <ui-select ng-disabled="!card.enabled" ng-model="card.selected.table"
+                                                   on-select="$ctrl.onFilterSettingUpdatedForCardBy(card, 'table')"
+                                                   search-enabled="true" ng-required='card.enabled'
+                                                   class="w-100">
+                                            <ui-select-match placeholder="Table name">{{$select.selected.tableName}}</ui-select-match>
+                                            <ui-select-choices repeat="item in $ctrl.cardTables(card) | filter: {tableName: $select.search} track by item.tableId">
+                                                <div ng-bind-html="item.tableName | highlight:$select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <ui-select ng-disabled="!card.enabled" ng-model="card.selected.column"
+                                                   search-enabled="true" class="w-100"
+                                                   ng-required='card.enabled'>
+                                            <ui-select-match placeholder="Column name">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="item in $ctrl.getSubFilterFieldColumns(card.selected.table) | filter: {name: $select.search} track by item.id">
+                                                <div ng-bind-html="item.name | highlight:$select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <div class="row">
+        <div ng-class="{'col-md-12': !$ctrl.form.$dirty, 'col-md-6': $ctrl.form.$dirty}">
+            <button class="btn btn-lg btn-second btn-block" ng-disabled="$ctrl.loading" ng-click="$ctrl.cancel()">Close</button>
+        </div>
+        <div ng-if="$ctrl.form.$dirty" class="col-md-6">
+            <button class="btn btn-lg btn-first btn-block" ng-disabled="$ctrl.form.$invalid || $ctrl.loading"
+                ng-click="$ctrl.save()" ng-bind-html="$ctrl.selectedFilter ? 'Update' : 'Save'"></button>
+        </div>
+    </div>
+</div>

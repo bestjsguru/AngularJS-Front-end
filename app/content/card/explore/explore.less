@@ -1,0 +1,316 @@
+@import "./drillBreadcrumbs";
+@import "./../explain/explainCard";
+@import "./../annotations/annotations";
+@import (reference) '../../../styles/common/mixins';
+
+.explore-mode {
+    .counter-map {
+        &.country {
+            top: 2.4em;
+        }
+    }
+
+    .card-pagination {
+        display: block;
+        opacity: 1;
+        bottom: 3px;
+        padding-top: 0;
+        z-index: 6;
+    }
+
+    .card-wrapper-explore {
+        tu-visual {
+            height: 100%;
+            display: block;
+            position: relative;
+        }
+
+        .sub-header {
+            margin-bottom: 0;
+
+            .explore-card-header {
+                display: block;
+                width: 100%;
+
+                .card-name {
+                    text-transform: none;
+                    font-size: 17px;
+                    line-height: 22px;
+                    font-weight: 500;
+                    width: 100%;
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .card-range {
+                    font-size: 11px;
+                    line-height: 12px;
+                    width: 100%;
+                    display: block;
+                }
+            }
+
+
+            .date-picker {
+                .date-dropdown {
+                    &.open {
+                        &:before, &:after {
+                            left: 127px;
+                        }
+                    }
+                }
+
+                .dropdown-toggle {
+                    height: 34px;
+                    padding: 6px 12px;
+                }
+            }
+
+            .date-picker, .date-dropdown {
+                .dropdown-toggle {
+                    min-width: 130px;
+                    text-align: left;
+
+                    .date-dropdown-txt {
+                        font-size: 14px;
+                        margin-right: 15px;
+                    }
+
+                    .fa {
+                        position: absolute;
+                        font-size: 13px;
+                        right: 10px;
+                        top: 11px;
+                        z-index: 1;
+                    }
+                }
+            }
+
+            .explore-visual-picker {
+                position: relative;
+
+                .dropdown-toggle {
+                    padding: 4px 25px 3px 8px;
+
+                    .fa {
+                        position: absolute;
+                        top: 9px;
+                        right: 7px;
+                        font-size: 17px;
+                    }
+                }
+
+                .dropdown-menu {
+                    li {
+                        &:hover {
+                            background: @td-gray-pale;
+                            border-bottom: 1px solid @brand-danger;
+                            margin-bottom: -1px;
+                        }
+
+                        &.active {
+                            border-bottom: 1px solid @brand-danger;
+                            margin-bottom: -1px;
+
+                            a {
+                                background: @white;
+                            }
+                        }
+                    }
+                }
+
+                &.open {
+                    .dropdown-menu {
+                        display: flex;
+                        left: 10px;
+                        right: auto;
+
+                        &.arrow-menu {
+                            &:before, &:after {
+                                left: 20px;
+                            }
+
+                            &:after {
+                                margin-left: -7px;
+                            }
+
+                            &:before {
+                                margin-left: -8px;
+                            }
+
+                            li > a {
+                                padding: 6px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .calendar-holder {
+                top: 53px;
+            }
+        }
+
+        .card-content {
+            min-height: @cardContentMinHeight;
+            padding-bottom: 40px;
+            position: static;
+
+            .numeric-wrapper, tu-numeric, .card-numeric {
+                min-height: 430px;
+            }
+
+            .chart-container {
+                height: 100%;
+                min-height: 430px;
+                position: relative;
+
+                tu-card-totals .card-totals {
+                    padding: 10px 15px;
+
+                    .total-value {
+                        font-size: 21px;
+                    }
+                }
+
+                &.loading {
+                    opacity: 0.2;
+                }
+            }
+
+            .text-card-wrapper {
+                padding: 15px;
+                max-height: calc(~"100vh - 144px");
+                overflow-y: auto;
+
+                .ql-editor {
+                    padding: 0;
+
+                    a {
+                        color: @td-blue-dark !important;
+                        text-decoration: none;
+
+                        &:hover {
+                            color: @td-blue !important;
+                        }
+                    }
+
+                    ol {
+                        padding: 0;
+                        margin: 0;
+
+                        li {
+                            padding: 0 0 0 1.1em;
+                        }
+                    }
+
+                    ul {
+                        padding: 0;
+                        margin: 0;
+
+                        li {
+                            padding: 0 0 0 0.6em;
+                        }
+                    }
+                }
+            }
+
+            .table > thead > tr > th, .table > tbody > tr > th {
+                padding: 12px;
+                position: static;
+            }
+
+            .table tbody > tr > td {
+                padding: 7px 12px;
+            }
+
+            .comparable-table tbody > tr > td {
+                padding: 0px 5px 3px 5px;
+
+                .higher {
+                    padding-right: 3px;
+                }
+
+                .lower {
+                    padding-right: 3px;
+                }
+
+                .comparable-first-value {
+                    padding-right: 3px;
+                }
+            }
+        }
+
+        .arrow-menu{
+            left: auto;
+            right: 0;
+            border-top-right-radius: 4px;
+            margin-top: 9px;
+
+            &:after, &:before {
+                bottom: 100%;
+                right: 13px;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            &:after {
+                border-color: rgba(255, 255, 255, 0);
+                border-bottom-color: @white;
+                border-width: 7px;
+                margin-right: -7px;
+            }
+            &:before {
+                border-color: rgba(204, 204, 204, 0);
+                border-bottom-color: @borderColorLight;
+                border-width: 8px;
+                margin-right: -8px;
+            }
+        }
+
+        .explain-card-sql {
+            min-height: 200px;
+
+            .preview-area-wrapper .preview-area {
+                margin: 60px auto 30px auto;
+            }
+        }
+    }
+
+    .card-refresh {
+        position: absolute;
+        top: -9px;
+        right: -2px;
+        z-index: 5;
+        border: 0;
+        background: @white;
+        padding: 15px 0px 13px 26px;
+        width: 80px;
+        height: 49px;
+
+        &:hover {
+            background-color: @white;
+        }
+    }
+
+    .nav {
+        &.nav-tabs {
+            margin-bottom: 0px;
+            z-index: 1;
+        }
+    }
+
+    .tab-nav-content {
+        border-bottom: 0;
+
+        .explain-card {
+            padding: 10px 15px 0 15px;
+        }
+    }
+}

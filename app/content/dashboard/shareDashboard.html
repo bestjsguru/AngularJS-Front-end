@@ -1,0 +1,25 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Share Dashboard</h4>
+        </div>
+        <div class="modal-body">
+            <div class="tab-content">
+                <tu-user-selector ng-model="sdc.selectedUsers" users="sdc.usersPromise" class="tab-pane active" id="who" ng-class="{active: sdc.selectedTab==='who'}">
+                </tu-user-selector>
+
+                <a href ng-click="$dismiss() && sdc.openShareDashboardDialog()" class="user-additional-links">Not Listed? Send invite by email</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-second btn-block" ng-click="$dismiss()">Cancel</button>
+                </div>
+                <div class="col-md-6">
+                    <button ng-click="sdc.shareDashboard()" class="btn btn-first btn-lg col-md-12" >Share Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

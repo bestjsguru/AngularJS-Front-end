@@ -1,0 +1,87 @@
+<div class="single-anomaly">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-bind="::$ctrl.anomaly.metric.name"></h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+
+        <span class="previous-anomaly" ng-class="{'disabled-button': !$ctrl.findPrevious()}" ng-click="$ctrl.previous()"
+              tu-popover tu-popover-html="{{$ctrl.previousTooltip()}}" tu-popover-placement="left" tu-popover-disabled="!$ctrl.findPrevious()">
+            <i class="fa fa-fw fa-4x fa-angle-left"></i>
+        </span>
+        <span class="next-anomaly" ng-class="{'disabled-button': !$ctrl.findNext()}" ng-click="$ctrl.next()"
+              tu-popover tu-popover-html="{{$ctrl.nextTooltip()}}" tu-popover-placement="right" tu-popover-disabled="!$ctrl.findNext()">
+            <i class="fa fa-fw fa-4x fa-angle-right"></i>
+        </span>
+
+        <div class="anomaly-detection-details">
+            <div class="actual-value-wrapper">
+                <span>Actual Value</span>
+                <span class="actual-value" ng-bind="::$ctrl.anomaly.value"></span>
+                <div>
+                    <i class="fa fa-fw" ng-class="$ctrl.anomalyClass(false, true)"></i>
+                    <span ng-class="$ctrl.anomalyClass()" ng-bind="::$ctrl.anomaly.variance"></span>
+                </div>
+            </div>
+            <div class="more-details">
+                <div class="anomaly-metric-name">
+                    <i class="fa fa-circle" ng-class="$ctrl.anomalyClass()"></i>
+                    <span ng-bind="::$ctrl.anomaly.metric.name"></span>
+                </div>
+                <span ng-bind="::$ctrl.anomaly.formatedDate"></span>
+
+                <table class="table table-striped table-condensed">
+                    <tr>
+                        <td>Expected Value</td>
+                        <td ng-bind="::$ctrl.anomaly.expectedValue"></td>
+                    </tr>
+                    <tr>
+                        <td>Expected Range</td>
+                        <td ng-bind="::$ctrl.anomaly.rangeString"></td>
+                    </tr>
+                    <tr>
+                        <td>Alert Severity</td>
+                        <td ng-bind="::$ctrl.anomaly.alertLevel"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-if="!$ctrl.$window.isDemo">
+            <div ng-if="$ctrl.rootCauseRelations.length > 1" class="dropdown explore-dropdown">
+
+                <button type="button" ng-class="$ctrl.anomalyClass(true)"
+                        class="btn btn-sm m-t-15 dropdown-toggle" data-toggle="dropdown">
+
+                    <i class="fa fa-fw fa-search-plus" aria-hidden="true"></i>
+                    Explore Root Cause
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li ng-repeat="relation in $ctrl.rootCauseRelations track by $index" ng-click="$ctrl.explore(relation)">
+                        <a href="#">{{relation.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <a ng-if="$ctrl.rootCauseRelations.length === 1" ng-click="$ctrl.explore($ctrl.rootCauseRelations[0])"
+               ng-class="$ctrl.anomalyClass(true)" class="btn btn-sm m-t-15">
+
+                <i class="fa fa-fw fa-search-plus" aria-hidden="true"></i>
+                Explore Root Cause
+            </a>
+
+            <a ng-if="!$ctrl.rootCauseRelations.length" ng-click="$ctrl.createRelation()" class="btn btn-sm btn-link-outline m-t-15">
+                <i class="fa fa-fw fa-link" aria-hidden="true"></i>
+                Create root cause relationship
+            </a>
+        </div>
+        <div class="row text-center" ng-if="$ctrl.$window.isDemo">
+            <a ui-sref="rootCause({autoCalculate: true})" ng-class="$ctrl.anomalyClass(true)" class="btn btn-sm m-t-15">
+                <i class="fa fa-fw fa-search-plus" aria-hidden="true"></i>
+                Explore Root Cause
+            </a>
+        </div>
+
+    </div>
+</div>

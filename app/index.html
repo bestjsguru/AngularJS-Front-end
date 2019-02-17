@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="no-js" ng-app="truedashApp">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <meta name="description"
+              content="Bringing automatic insight and collaboration to business users through a cloud based Business Intelligence platform">
+        <meta name="author" content="">
+
+        <!-- Disable caching of index.html file -->
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <meta http-equiv="expires" content="-1"/>
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+
+        <title ng-bind="pageTitle || 'AVORA'"></title>
+        <base href="/"/>
+
+        <link rel="shortcut icon" href="favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+        <!-- build:css_vendor styles/vendor.css -->
+        <link rel="stylesheet" href="styles/bootstrap.css"/>
+        <link rel="stylesheet" href="bower_components/select2/select2.css"/>
+        <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.min.css"/>
+        <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css"/>
+        <link rel="stylesheet" href="bower_components/angular-notify/dist/angular-notify.css"/>
+        <link rel="stylesheet" href="bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
+        <link rel="stylesheet" href="styles/custom.css"/>
+        <link rel="stylesheet" href="bower_components/animate.css/animate.min.css"/>
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css"/>
+        <link rel="stylesheet" href="bower_components/switchery/dist/switchery.min.css"/>
+        <link rel="stylesheet" href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
+        <link rel="stylesheet" href="bower_components/angular-hotkeys/build/hotkeys.min.css"/>
+        <link rel="stylesheet" href="bower_components/jsPlumb/dist/css/jsPlumbToolkit-defaults.css"/>
+        <link rel="stylesheet" href="bower_components/jsPlumb/dist/css/jsPlumbToolkit-demo.css"/>
+        <link rel="stylesheet" href="bower_components/angularjs-dragula/dist/dragula.min.css"/>
+        <link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css"/>
+        <link rel="stylesheet" href="bower_components/codemirror/addon/hint/show-hint.css"/>
+        <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css"/>
+        <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css"/>
+        <link rel="stylesheet" href="bower_components/spectrum/spectrum.css"/>
+        <link rel="stylesheet" href="content/nonBower/quill/quill.core.css"/>
+        <link rel="stylesheet" href="content/nonBower/quill/quill.snow.css"/>
+        <!-- endbuild -->
+
+        <!-- build:css_main styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css"/>
+        <!-- endbuild -->
+
+        <script src="https://analytics.churnzero.net/churnzero.js"></script>
+        <script src="https://wchat.freshchat.com/js/widget.js"></script>
+    </head>
+
+    <body class="fadeIn {{indexCtrl.themeClass}}" ng-class="{phone: indexCtrl.isPhone, tablet: indexCtrl.isTablet, export: indexCtrl.isExport, embed: indexCtrl.isEmbed}" ng-cloak ng-controller="indexCtrl as indexCtrl">
+        <!-- Custom Theme CSS -->
+        <app-custom-theme-style ng-if="indexCtrl.isVisible()"></app-custom-theme-style>
+
+        <div ng-if="indexCtrl.isExport">
+            <div class="container-fluid export-header-holder clearfix">
+                <div id="export-header">
+                    <a class="export-logo">
+                        <img src="/styles/images/avora-logo.svg" alt="AVORA" width="120" height="20">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <ng-include src="'content/layout/header/header.html'"></ng-include>
+
+        <div id="wrapper" class="main-content-wrapper chart-loading" ng-class="{'no-margins': !indexCtrl.isVisible()}">
+
+            <tu-sidebar ng-if="indexCtrl.isVisible()"></tu-sidebar>
+
+            <app-unread-alerts ng-show="indexCtrl.isVisible()"></app-unread-alerts>
+
+            <div id="page-content-wrapper" ui-view class="angular">
+
+                <!-- Loader will be overwritten when view is loaded -->
+                <loader ctrl-check="true"></loader>
+
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+
+        <ng-include ng-if="indexCtrl.isVisible() && !indexCtrl.isEmbed" src="'content/layout/footer/footer.html'"></ng-include>
+
+        <!--[if lt IE 9]>
+        <script src="content/vendor/es5-shim.min.js"></script>
+        <script src="content/vendor/json3.min.js"></script>
+        <![endif]-->
+
+        <!-- build:js_vendor content/vendor.js -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+        <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+        <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+        <script src="bower_components/auth0.js/build/auth0.js"></script>
+        <script src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
+        <script src="bower_components/angular-auth0/dist/angular-auth0.js"></script>
+
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/angular-cache/dist/angular-cache.min.js"></script>
+        <script src="bower_components/angular-notify/dist/angular-notify.js"></script>
+        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="bower_components/jquery-ui/ui/widget.js"></script>
+        <script src="bower_components/lodash/lodash.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/d3/d3.min.js"></script>
+        <script src="bower_components/angular-ui-select/dist/select.js"></script>
+        <script src="bower_components/ui-select-infinity/lib/index.js"></script>
+        <script src="content/nonBower/topojson.v1.min.js"></script>
+        <script src="content/nonBower/ApiAi.js"></script>
+        <script src="bower_components/moment/min/moment.min.js"></script>
+        <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.min.js"></script>
+        <script src="content/nonBower/jstz-1.0.4.min.js"></script>
+        <script src="bower_components/angular-gridster/src/angular-gridster.js"></script>
+        <script src="bower_components/switchery/dist/switchery.min.js"></script>
+        <script src="bower_components/ng-switchery/src/ng-switchery.js"></script>
+        <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.min.js"></script>
+        <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
+        <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+        <script src="bower_components/angular-hotkeys/build/hotkeys.js"></script>
+        <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
+        <script src="content/nonBower/scalyr.js"></script>
+        <script src="bower_components/jsPlumb/dist/js/jsPlumb-2.0.5-min.js"></script>
+        <script src="bower_components/angularjs-dragula/dist/angularjs-dragula.js"></script>
+        <script src="bower_components/ngFitText/dist/ng-FitText.min.js"></script>
+        <script src="bower_components/ng-csv/build/ng-csv.min.js"></script>
+        <script src="bower_components/codemirror/lib/codemirror.js"></script>
+        <script src="bower_components/codemirror/mode/sql/sql.js"></script>
+        <script src="bower_components/codemirror/addon/hint/show-hint.js"></script>
+        <script src="bower_components/codemirror/addon/hint/sql-hint.js"></script>
+        <script src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+        <script src="bower_components/ui-leaflet/dist/ui-leaflet.js"></script>
+        <script src="bower_components/leaflet-plugins/layer/tile/Google.js"></script>
+        <script src="bower_components/pusher-angular/lib/pusher-angular.min.js"></script>
+        <script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="bower_components/ng-scrollbars/dist/scrollbars.min.js"></script>
+        <script src="bower_components/spectrum/spectrum.js"></script>
+        <script src="bower_components/angular-spectrum-colorpicker/dist/angular-spectrum-colorpicker.js"></script>
+        <script src="./content/nonBower/quill/quill.core.js"></script>
+        <script src="./content/nonBower/quill/quill.min.js"></script>
+        <script src="bower_components/ngQuill/src/ng-quill.js"></script>
+        <script src="bower_components/cleave.js/dist/cleave-angular.min.js"></script>
+        <!-- endbuild -->
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/4.0.1/moment-range.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+        <script src="https://maps.google.com/maps/api/js?v=3&key=AIzaSyBer1mQjt7_TfFbliULmV440D8_Cr1b6Qs"></script>
+
+        <!-- build:js_main built/main.js -->
+        <script src="built/main.js"></script>
+        <!-- endbuild -->
+
+        <!-- should be after main.js since module should be defined already -->
+
+        <!-- build:js_partials content/partials.js -->
+        <script src="content/partials.min.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

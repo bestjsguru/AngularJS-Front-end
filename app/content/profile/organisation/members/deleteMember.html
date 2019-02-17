@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h4 class="modal-title">Delete this member</h4>
+</div>
+<div class="modal-body">
+    <loader ctrl-check="modal.loading"></loader>
+
+    Are you sure you want to delete <strong>{{modal.member.fullName}}</strong>? This action cannot be undone.
+    Before deleting member you have to select new owner of their items like cards, dashboards, etc.
+
+    <form name="modal.form" action="" ng-submit="" novalidate>
+        <div class="form-group m-t-15" ng-class="{'has-error': modal.form.owner.$dirty && modal.form.owner.$invalid}">
+            <label>Select new owner to replace {{modal.member.fullName}}</label>
+            <ui-select name="owner" search-enabled="true" ng-model-options="{ debounce: 200 }" ng-model="modal.owner" theme="select2" required class="min-w-100 text-left member-select">
+                <ui-select-match placeholder="Select new owner">{{$select.selected.fullName}}</ui-select-match>
+                <ui-select-choices repeat="member in modal.members | searchByProperties : 'fullName, email' : $select.search track by member.id">
+                    <div>
+                        <img class="img-rounded" ng-src="{{member.photo}}">
+                        <span class="name" ng-bind-html="member.fullName | highlight: $select.search"></span>
+                        <span class="email" ng-bind-html="member.email | highlight: $select.search"></span>
+                    </div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <a ng-click="modal.takeOwnership()" class="pull-left">
+            <i class="fa fa-fw fa-key" aria-hidden="true"></i> Take Ownership
+        </a>
+        <div class="clearfix"></div>
+    </form>
+
+</div>
+<div class="modal-footer text-center">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$dismiss()">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-first btn-lg btn-block" ng-click="modal.delete()">Delete</button>
+        </div>
+    </div>
+</div>

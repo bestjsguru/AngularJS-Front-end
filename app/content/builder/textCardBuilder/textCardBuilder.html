@@ -1,0 +1,85 @@
+<loader ctrl-check="!$ctrl.card || $ctrl.loading.page || $ctrl.loading.saving"></loader>
+<div class="container-fluid">
+    <div id="text-editor" ng-if="!$ctrl.loading.page && $ctrl.card">
+        <form name="$ctrl.form" novalidate>
+            <div class="row">
+                <div class="sub-header">
+                    <div class="item">
+                        <div class="breadcrumbs">
+                            <span>Text Card Builder</span>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <button type="button" ng-click="$ctrl.exit()" class="btn btn-second">Cancel</button>
+                        <button ng-click="$ctrl.save(false)" ng-disabled="$ctrl.form.$invalid" class="btn btn-first">Save</button>
+                        <button ng-click="$ctrl.save(true)" ng-disabled="$ctrl.form.$invalid" class="btn btn-first">Save And Exit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item text-card-form">
+                <div class="item form-gorup" ng-class="{ 'has-error' : $ctrl.form.name.$invalid && !$ctrl.form.name.$pristine }">
+                    <label>Card name:</label>
+                    <input type="text" name="name" ng-model="$ctrl.card.name" placeholder="Enter Card Name" class="form-control" required/>
+                </div>
+
+                <div class="item form-group" ng-class="{ 'has-error' : $ctrl.form.dashboard.$invalid && !$ctrl.form.dashboard.$pristine }">
+                    <label>Dashboard:</label>
+                    <ui-select ng-model="$ctrl.card.dashboard" name="dashboard" required>
+                        <ui-select-match placeholder="Select dashboard">{{$select.selected.name || 'Select dashboard'}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.userDashboards">
+                            <span ng-bind-html="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+            <div class="text-editor-container">
+                <ng-quill-editor ng-model="$ctrl.card.text" required>
+                    <ng-quill-toolbar>
+                        <div>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-bold"></button>
+                                <button type="button" class="ql-italic"></button>
+                                <button type="button" class="ql-underline"></button>
+                                <button type="button" class="ql-strike"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-blockquote"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-header" value="1"></button>
+                                <button type="button" class="ql-header" value="2"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-list" value="ordered"></button>
+                                <button type="button" class="ql-list" value="bullet"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-script" value="sub"></button>
+                                <button type="button" class="ql-script" value="super"></button>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-size"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-header"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-color"></select>
+                                <select class="ql-background"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <select class="ql-align"></select>
+                            </span>
+                            <span class="ql-formats">
+                                <button type="button" class="ql-link"></button>
+                            </span>
+                        </div>
+                    </ng-quill-toolbar>
+                </ng-quill-editor>
+            </div>
+        </form>
+    </div>
+</div>

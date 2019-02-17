@@ -1,0 +1,122 @@
+<div class="modal-header">
+    <h4 class="modal-title">Table Actions</h4>
+</div>
+
+<div class="modal-body">
+
+    <span class="heading divider"><i class="fa fa-plus-square"></i> aggregate results</span>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Choose column</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Column 1">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Choose function</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Aggregate">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+
+
+    <span class="heading divider"><i class="fa fa-filter"></i> filter results</span>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Choose column</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Column 1">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Choose condition</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Equal closed">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Date range</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="All time">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Custom date</label>
+                <div class="calendar-input">
+                    <i class="fa fa-calendar"></i>
+                    <input type="text" class="form-control card-builder-date" placeholder="Select date">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <span class="heading divider"><i class="fa fa-th-large"></i> group results</span>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Choose column</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Column 1">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label>Group by</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Customer country">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-footer text-center">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-second btn-lg btn-block">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-first btn-lg btn-block">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<ul class="nav nav-tabs">
+    <li ng-class="{active: ml.tabs.is('metrics')}">
+        <a href ng-click="ml.showAllMetrics()">All Metrics</a>
+    </li>
+    <li ng-class="{active: ml.tabs.is('personal')}">
+        <a href ng-click="ml.showMyMetrics()">My Metrics</a>
+    </li>
+    <div class="dropdown pull-right folder-dropdown">
+        <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <i class="fa fa-cog"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#" ng-click="ml.sort('asc')"><i class="fa fa-sort-alpha-asc"></i> Sort Ascending</a></li>
+            <li><a href="#" ng-click="ml.sort('desc')"><i class="fa fa-sort-alpha-desc"></i> Sort Descending</a></li>
+            <li><a href="#" ng-click="ml.refreshMetricList()"><i class="fa fa-refresh"></i> Refresh Metric List</a></li>
+        </ul>
+    </div>
+</ul>
+
+
+<div class="metric-list">
+    <loader ctrl-check="!ml.loaded"></loader>
+
+    <div ng-if="ml.loaded && !hidden" class="form-group">
+        <div class="metric-filter left-inner-addon">
+            <i class="fa fa-search"></i>
+            <input type="text" class="form-control"
+                   ng-model="ml.filterMetrics" ng-change="ml.filter()" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                   placeholder="Filter metrics">
+        </div>
+    </div>
+
+    <div class="available-metrics">
+        <!-- metric folder wrapper -->
+        <div ng-if="ml.loaded" class="panel-group">
+            <div class="panel panel-default single-folder" ng-if="!hidden || ml.isActiveSource(source)" ng-repeat="source in ml.sources track by $index">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a ng-class="{collapsed: isCollapsed(source), active: ml.isActiveSource(source)}" ng-click="toggle(source)">
+                            <i class="fa fa-folder-o"></i>
+                            <i class="fa fa-folder-open-o"></i>
+                            <span class="folder-name" ng-bind-html="source.name"></span>
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse" ng-class="{in: !isCollapsed(source)}">
+                    <div class="panel-body">
+                        <!-- nested metric -->
+                        <div class="single-metric" ng-repeat="metric in source.metrics track by $index" ng-class="{'active-metric': ml.isActiveMetric(metric)}">
+                            <div ng-attr-id="{{getItemCls(metric)}}">
+                                <a class="metric-name" title="{{metric.name}}" ng-click="ml.setSelectedMetric(metric)" ng-class="{'active': ml.isActiveMetric(metric)}">
+                                    <span ng-bind-html="metric.name"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- eof nested metric -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- eof metric folder wrapper -->
+
+        <div ng-if="ml.loaded && !ml.metrics.length"> No metrics </div>
+    </div>
+</div>

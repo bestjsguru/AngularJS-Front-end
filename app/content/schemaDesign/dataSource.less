@@ -1,0 +1,134 @@
+#datasource {
+    .panel-body {
+        padding: 0;
+    }
+
+    .datasource-wrapper {
+        margin-bottom: 0;
+
+        .single-datasource {
+            border: 0;
+            border-radius: 0;
+            border-bottom: 1px solid @iron;
+            background: transparent;
+
+            .form-control {
+                height: 34px;
+            }
+
+            .panel-heading {
+                padding: 0;
+                min-height: 0;
+                background: transparent;
+
+                .panel-title {
+                    padding: 13px 100px 13px 30px;
+                    position: relative;
+                    border-radius: 0px;
+
+                    a {
+                        .datasource-name {
+                            font-size: 13px;
+                            text-transform: uppercase;
+                            font-weight: 500;
+                            width: 100%;
+                            display: block;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            cursor: pointer;
+                            text-decoration: none;
+
+                            .fa {
+                                left: 5px;
+                                font-size: 15px;
+                            }
+                        }
+
+                        .datasource-indicator-wrapper {
+                            position: absolute;
+                            right: 35px;
+                            z-index: 1;
+                            top: 13px;
+                            font-size: 14px;
+
+                            .datasource-indicator {
+                                float: right;
+                                margin-left: 10px;
+
+                                &:first-child {
+                                    font-weight: 500;
+                                }
+                            }
+                        }
+
+                        .fa {
+                            position: absolute;
+                            top: 13px;
+                            right: 5px;
+                            font-size: 19px;
+                        }
+
+                        &:focus, &:active:focus {
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            .panel-body {
+                padding: 0;
+                border: 0;
+
+                .list-group {
+                    border-radius: 0;
+                    margin-bottom: 0;
+                    max-height: calc(~"100vh - 310px");
+                    overflow: auto;
+
+                    .list-group-item {
+                        border-radius: 0;
+                        padding: 10px 0;
+                        border-left: 0;
+                        border-right: 0;
+                        cursor: pointer;
+                        background: transparent;
+                        display: flex;
+                        flex-wrap: nowrap;
+
+                        a {
+                            flex: 1 1 auto;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .icons {
+                            flex: 0 0 auto;
+                            margin-left: auto;
+                            display: none;
+
+                            .fa {
+                                opacity: .4;
+
+                                &:hover {
+                                    opacity: .6;
+                                }
+                            }
+                        }
+
+                        &:hover {
+                            .icons {
+                                display: block;
+                            }
+                        }
+
+                        &:last-child {
+                            border-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

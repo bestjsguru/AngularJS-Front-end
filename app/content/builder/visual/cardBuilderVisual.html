@@ -1,0 +1,59 @@
+<loader ctrl-check="$ctrl.isLoading()"></loader>
+
+<div ng-if="!$ctrl.card.isError()" class="visual-preview-body" ng-class="{loading: $ctrl.isLoading()}" ng-style="$ctrl.card.image.cssStyle()">
+
+    <div class="preview-area-wrapper" ng-if="$ctrl.card.autoReload.hasChanges">
+        <div class="preview-area">
+            <div ng-click="$ctrl.cardBuilder.reload()" class="preview-icon animated zoomIn">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </div>
+            <span class="preview-title">Data preview</span>
+            <span>Please click icon above in order to reload data</span>
+        </div>
+    </div>
+
+    <div class="preview-area-wrapper" ng-if="$ctrl.showNoMetricsOrImage()">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <span class="preview-title">Data preview</span>
+            <span>Please add metrics or background image</span>
+        </div>
+    </div>
+
+    <div class="preview-area-wrapper" ng-if="$ctrl.showNoVisibleMetricsOrImage()">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <span class="preview-title">Preview</span>
+            <span>Please enable metrics or background image</span>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.showErrorMessage()" class="card-error-message">
+        <i class="fa fa-2x fa-exclamation-triangle"></i>
+        <span class="card-error-title">Oops!</span>
+        <span ng-bind-html="$ctrl.card.metrics.errorMessage"></span>
+
+        <a ng-click="$ctrl.cardBuilder.reload()" class="btn btn-eighth">
+            <i class="fa fa-refresh"></i>
+        </a>
+    </div>
+
+    <div ng-if="!$ctrl.showErrorMessage() && $ctrl.showNoDataMessage()" class="no-data">
+        <span>No data</span>
+    </div>
+
+    <tu-card-totals ng-if="!$ctrl.showErrorMessage() && !$ctrl.showNoDataMessage() && ($ctrl.showChart() || $ctrl.showNumeric())" card="$ctrl.card"></tu-card-totals>
+
+    <app-highchart ng-if="!$ctrl.showErrorMessage() && !$ctrl.showNoDataMessage() && $ctrl.showChart()" card="$ctrl.card"></app-highchart>
+
+    <tu-numeric ng-if="!$ctrl.showErrorMessage() && !$ctrl.showNoDataMessage() && $ctrl.showNumeric()" card="$ctrl.card"></tu-numeric>
+
+    <tu-datatable ng-if="!$ctrl.showErrorMessage() && !$ctrl.showNoDataMessage() && $ctrl.showDatatable()"
+                  no-loader="true" card="$ctrl.card" loading="$ctrl.isLoading()"></tu-datatable>
+
+    <tu-geo-map ng-if="!$ctrl.showErrorMessage() && !$ctrl.showNoDataMessage() && $ctrl.showUkMap()" card="$ctrl.card"></tu-geo-map>
+</div>

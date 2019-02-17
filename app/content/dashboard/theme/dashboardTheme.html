@@ -1,0 +1,328 @@
+<div class="dashboard-theme">
+    <div class="dashboard-logo-wrapper">
+        <div class="dashboard-logo">
+            <div class="dashboard-logo-image">
+                <img ng-src="{{ $ctrl.currentDashboard.logo }}" id="prevImage" alt="Dashboard Logo">
+            </div>
+            <div class="dashboard-logo-desc">
+                <span class="help-block">
+                    * For best display, use transparent logo <br>
+                    100x30px (wider than tall) in size.
+                </span>
+            </div>
+        </div>
+        <div class="dashboard-logo-buttons">
+            <div class="btn-group" role="group">
+                <button ng-if="$ctrl.currentDashboard.hasLogo() || $ctrl.isFormPictureChanged()" ng-click="$ctrl.useDefaultLogo()" class="btn btn-fourth"><i class="fa fa-fw fa-times"></i> Remove Logo</button>
+                <button id="uploadImageButton" class="btn btn-fourth"><i class="fa fa-fw fa-upload"></i> Upload Logo</button>
+            </div>
+            <input class="hide" tu-picture-upload tu-image-preview="#prevImage" tu-file="$ctrl.currentDashboard.logoFile" tu-file-button="#uploadImageButton" type="file"/>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="theme-boxes">
+        <div class="theme-box custom" ng-class="{active: $ctrl.theme.useCustomTheme}" ng-click="$ctrl.theme.useCustomTheme = true">
+            <label class="theme-heading">Custom theme <i class="fa fa-edit fa-fw"></i></label>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.font}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.link.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.link.active}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.header.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.header.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.sidebar.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.sidebar.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.theme.colors.footer.background}"></div>
+        </div>
+        <div class="theme-box" ng-class="{active: !$ctrl.theme.useCustomTheme}" ng-click="$ctrl.theme.useCustomTheme = false">
+            <label class="theme-heading">Organisation theme</label>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.font}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.link.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.link.active}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.header.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.header.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.sidebar.background}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.sidebar.text}"></div>
+            <div class="color-box" ng-style="{background: $ctrl.organisationTheme.colors.footer.background}"></div>
+        </div>
+    </div>
+
+    <div ng-show="$ctrl.theme.useCustomTheme">
+        <span class="heading"> Dashboard Font </span>
+        <div class="row">
+            <div class="col-lg-3 col-sm-4">
+                <div class="form-group">
+                    <label>Choose application font</label>
+                    <ui-select class="w-100" on-select="" search-enabled="true" ng-model="$ctrl.fonts.selected" ng-change="$ctrl.onFontChange()">
+                        <ui-select-match placeholder="Select font">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.fonts | filter: {label: $select.search}" group-by="">
+                            <span ng-bind-html="item.label"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-lg-9 col-sm-8 font-preview">
+                <label>Font Preview</label>
+                <h4>A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</h4>
+                <h4>a b c d e f g h i j k l m n o p q r s t u v w x y z</h4>
+                <h4>0 1 2 3 4 5 6 7 8 9</h4>
+                <h4>! @ # $ % ^ & * ( )</h4>
+            </div>
+        </div>
+
+        <span class="heading"> Dashboard Colors </span>
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>General</label>
+                <span class="help-block">
+                This will affect the font colour across the whole application (Headings, Card Titles, Tables, Labels, Selectboxes etc.) and main background colour.
+            </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('font')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.font" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Font color</label>
+                    </div>
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('background')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.background" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Background color</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Links</label>
+                <span class="help-block">
+                Setting a new colour for links will change the colour of all application elements that can be clicked on in their static, hover and active states.
+            </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('link.text')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.link.text" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Link color</label>
+                    </div>
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('link.active')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.link.active" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Active link color</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Header</label>
+                <span class="help-block">
+                Main and modal headers will use the same background colour which can be changed here, as well as the header icon colours.
+            </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('header.background')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.header.background" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Header background</label>
+                    </div>
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('header.text')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.header.text" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Header text color</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Sidebar</label>
+                <span class="help-block">
+                These are the colours set for the sidebar background and icons. The expanding side menu will use lighter shade of the sidebar background. The expanding side menu links will use the same static, active and hover colours as the rest of the application links.
+            </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('sidebar.background')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.sidebar.background" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Sidebar background</label>
+                    </div>
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('sidebar.text')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.sidebar.text" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Sidebar text color</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Table Headers</label>
+                <span class="help-block">
+                    Setting a new background will change the background colour of all table headers while text color will affect table header text and icons color.
+                </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('table.header.background')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.table.header.background" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Table header background</label>
+                    </div>
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('table.header.text')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.table.header.text" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Table header text color</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Footer</label>
+                <span class="help-block">
+                Footer background can be changed independently and links inside the footer will use the same style as the rest of the application.
+            </span>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="color-picker-box-wrapper">
+                    <div class="color-picker-box">
+                        <div class="color-picker">
+
+                            <div class="color-picker-tooltip">
+                                <a class="btn btn-link" ng-click="$ctrl.resetColor('footer.background')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            </div>
+
+                            <spectrum-colorpicker ng-model="$ctrl.theme.colors.footer.background" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateTheme()"></spectrum-colorpicker>
+                        </div>
+                        <label>Footer background</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div class="col-lg-4 col-sm-5">
+                <label>Chart</label>
+                <span class="help-block">
+                    An array containing the default colors for the chart's series. When all colors are used, new colors are pulled from the start again.
+                </span>
+
+                <label class="checkbox" ng-click="$ctrl.toggleOrganisationChartColors()">
+                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.theme.colors.useOrganisationChartColors, 'fa-square-o': !$ctrl.theme.colors.useOrganisationChartColors}"></i>
+                    <span>Use organisation chart colors</span>
+                </label>
+            </div>
+            <div class="col-lg-8 col-sm-7">
+                <div class="chart-colors">
+                    <div class="color-picker" ng-class="{'disabled-colors': $ctrl.theme.colors.useOrganisationChartColors}" ng-repeat="color in $ctrl.theme.colors.chart track by $index">
+
+                        <div class="color-picker-tooltip">
+                            <a class="btn btn-link" ng-click="$ctrl.resetColor('chart[' + $index + ']')"><i class="fa fa-fw fa-repeat"></i> Reset color</a>
+                            <a class="btn btn-link" ng-click="$ctrl.removeChartColor($index)"><i class="fa fa-fw fa-times"></i> Delete color</a>
+                        </div>
+
+                        <spectrum-colorpicker ng-model="$ctrl.theme.colors.chart[$index]" options="$ctrl.ColorPickerConfig.get()"></spectrum-colorpicker>
+                    </div>
+                    <div ng-if="!$ctrl.theme.colors.useOrganisationChartColors" class="add-color" ng-click="$ctrl.addNewChartColor()">
+                        <i class="fa fa-fw fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-theme-footer">
+    <div class="row">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-lg btn-block btn-second text-uppercase" ng-disabled="$ctrl.loading" ng-click="$ctrl.reset()">Reset to defaults</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-lg btn-block btn-first text-uppercase" ng-disabled="$ctrl.loading" ng-click="$ctrl.save()">
+                {{$ctrl.loading ? 'Saving' : 'Save changes'}}
+            </button>
+        </div>
+    </div>
+</div>

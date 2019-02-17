@@ -1,0 +1,44 @@
+<div class="items" ng-form="$ctrl.form">
+    <div class="item form-group">
+        <label>Description:</label>
+        <input name="description" type="text" ng-model="$ctrl.card.description" placeholder="Enter Description" class="form-control">
+    </div>
+    <div class="item form-group">
+        <label>Limit the Results:</label>
+        <input name="size" type="number" ng-model="$ctrl.size" min="1" max="2000" ng-model-options="{debounce: 1000}"
+               placeholder="Enter Limit" class="form-control" />
+
+        <div class="error-messages" ng-messages="$ctrl.form.size.$error" ng-if="$ctrl.form.size.$dirty">
+            <div ng-message="min">Limit must be greater than zero</div>
+            <div ng-message="max">Limit must be less than or equal to 2000</div>
+        </div>
+    </div>
+    <div class="item form-group" ng-if="$ctrl.tableTotalsAreVisible()">
+        <app-card-builder-totals class="w-100"></app-card-builder-totals>
+    </div>
+    <div class="item form-group card-timezone-picker">
+        <label class="checkbox" ng-click="$ctrl.onUseTimezoneClick()">
+            <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.card.useTimezone, 'fa-square-o': !$ctrl.card.useTimezone}"></i>
+            <span>Use timezone</span>
+        </label>
+        <app-timezone-picker ng-if="$ctrl.card.timezone" is-disabled="!$ctrl.card.useTimezone" timezone="$ctrl.card.timezone"></app-timezone-picker>
+    </div>
+</div>
+
+<div class="items">
+    <div class="item form-group">
+        <div class="help-block" ng-bind-html="$ctrl.timezoneSentence()"></div>
+    </div>
+</div>
+
+<div class="items" ng-if="$ctrl.card.isCustomSQL()">
+    <div class="item form-group">
+        <label class="checkbox" ng-click="$ctrl.onNoSortClick()">
+            <i class="fa fa-fw" ng-class="{'fa-check-square-o': !$ctrl.card.noSort, 'fa-square-o': $ctrl.card.noSort}">&nbsp;</i>
+            <span>Sort by first column</span>
+
+            <div class="help-block">* Disable this option if your card is already sorted in the custom SQL metric</div>
+        </label>
+    </div>
+</div>
+

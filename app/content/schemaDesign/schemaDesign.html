@@ -1,0 +1,31 @@
+<div class="schema-design-wrapper">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Schema designer</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="schema-design">
+        <div class="schema-design-sidebar" ng-show="!$ctrl.fullscreen">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href>Local data sources</a>
+                </li>
+            </ul>
+            <a href="#" class="datasource-refresh" ng-click="$ctrl.refresh()" tu-popover tu-popover-html="Refresh list" tu-popover-placement="top">
+                <i class="fa fa-refresh"></i>
+            </a>
+            <div id="datasource" class="panel-collapse">
+                <div class="panel-body">
+                    <loader ctrl-check="!$ctrl.tables.length"></loader>
+                    <tu-data-source tables="$ctrl.tables"></tu-data-source>
+                </div>
+            </div>
+        </div>
+        <div class="schema-design-visual">
+            <tu-schema-viewer tables="$ctrl.tables"></tu-schema-viewer>
+        </div>
+    </div>
+</div>

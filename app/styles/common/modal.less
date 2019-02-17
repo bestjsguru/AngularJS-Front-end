@@ -1,0 +1,160 @@
+.nav-tabs {
+    &.nav-justified > li {
+        display: table-cell;
+        width: 1%;
+
+        a {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.modal-backdrop{
+    background-color: @silver-sand;
+    bottom: 0;
+
+    &.in {
+        opacity: 0.9;
+        filter: alpha(opacity=90);
+    }
+}
+
+.modal-content{
+    -webkit-box-shadow: 0 2px 5px rgba(105, 110, 110, .2) !important;
+    box-shadow: 0 2px 5px rgba(105, 110, 110, .2) !important;
+    border-radius: 3px;
+    border: none;
+
+    .modal-header{
+        border-bottom: 0;
+        padding: 20px;
+        background: @deep-blue;
+        border-radius: 3px 3px 0 0;
+
+        .modal-title{
+            color: @white;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35px;
+            height: 45px;
+            padding-top: 15px;
+            cursor: pointer;
+            color: @silver-sand;
+        }
+
+    }
+
+    .alert{
+        strong{
+            font-weight: 500;
+        }
+    }
+
+    .modal-body{
+        padding:30px;
+
+        .modal-tabs-wrapper{
+            margin: -30px -30px 30px -30px;
+            display: block;
+        }
+
+        &.confirm-modal{
+            padding: 20px 30px 20px 30px;
+            min-height: 50px;
+        }
+
+        .modal-heading{
+            padding-bottom: 15px;
+
+            .heading{
+                font-size: 15px;
+            }
+            .date-range{
+                color: @deep-blue;
+                font-size: 12px;
+            }
+        }
+
+        .heading{
+            margin-top:20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid @borderColorLight;
+
+            &.divider{
+                margin-bottom: 15px;
+            }
+
+            &.no-border{
+                border-bottom: 0;
+            }
+        }
+
+        .form-group{
+            .heading{
+                border-bottom: 0;
+            }
+        }
+
+        .refresh-cards{
+            span{
+                float: left;
+                margin-top: 10px;
+            }
+
+            .form-control{
+                float: left;
+                width: 95px;
+                margin: 0 13px;
+            }
+        }
+
+    }
+
+    .modal-footer{
+        padding: 30px;
+        text-align: center;
+
+        .btn {
+            text-transform: uppercase;
+        }
+    }
+
+}
+
+
+@media (min-width: 768px){
+    .modal-sm {
+        width: 350px;
+    }
+}
+
+.tab-pane-title{
+    color: @deep-blue;
+    padding: 20px 0 15px 0;
+    display: block;
+    font-size: 15px;
+}
+
+.btn-center {
+    display: inline-block;
+}
+
+.invite-area {
+    min-height: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+.dashboard-action-btns .btn {
+    min-width: 60px;
+}
+
+.subscribe-action-btns .btn {
+    min-width: 75px;
+}

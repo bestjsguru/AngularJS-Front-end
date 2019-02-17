@@ -1,0 +1,25 @@
+<div ng-class="{'schema-narrow': !$ctrl.isFullscreen(), 'schema-full': $ctrl.isFullscreen()}" class="data-source-preview-wrapper">
+    <ul class="nav nav-tabs">
+        <li>
+            <a href>Data Flow</a>
+        </li>
+            <a href class="btn btn-link schema-clear" ng-click="$ctrl.clearCanvas()">
+                <i class="fa fa-recycle"></i>
+            </a>
+            <a href class="btn btn-link schema-expand" ng-click="$ctrl.toggleFullscreen()">
+                <i ng-class="{'fa-chevron-left': !$ctrl.isFullscreen(), 'fa-chevron-right': $ctrl.isFullscreen()}" class="fa"></i>
+            </a>
+    </ul>
+
+    <div class="data-source-preview">
+        <loader ctrl-check="$ctrl.isConnectionLoading"></loader>
+        <div class="jtk-demo-canvas canvas-wide plumb-canvas jtk-surface jtk-surface-nopan" id="canvas"
+             ng-model="$ctrl.tables" dragula='"bag-one"' dragula-scope="$ctrl.parent" ng-class="{'dull-schema-canvas': $ctrl.isConnectionLoading}">
+            <div ng-if="!$ctrl.isLoading">
+                <tu-db-entity draw-handlers="$ctrl.data" table="table" connections="$ctrl.connections"
+                              ng-style="table.style" ng-repeat="table in $ctrl.tables | filter: {isSelected: true} track by table.id" class="window dragDropWindow">
+                </tu-db-entity>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,91 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add dashboard</h4>
+</div>
+<div class="modal-body">
+    <loader ctrl-check="adm.loading"></loader>
+
+    <div ng-show="!adm.loading">
+        <form name="adm.forms.dashboard_form" ng-submit="adm.create()">
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="form-group">
+                        <input id="name" type="text" class="form-control" name="name" ng-model-options="{ debounce: 200 }"
+                               ng-model="adm.dashboard.name" ng-minlength="3" required placeholder="Dashboard name"/>
+
+                        <div class="error-messages" ng-messages="adm.forms.dashboard_form.name.$error" ng-if="adm.dirty(adm.forms.dashboard_form.name)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="form-group">
+                        <ui-select ng-model="adm.dashboard.folder" ng-model-options="{ debounce: 200 }" ng-disabled="adm.disabled">
+                            <ui-select-match placeholder="Select workspace (optional)">{{$select.selected.title}}</ui-select-match>
+                            <ui-select-choices repeat="folder in ::adm.folders.items track by folder.id">
+                                <div>
+                                    {{folder.title}}
+                                    <small ng-if="folder.isOwnedByCurrentUser()" class="btn btn-xs btn-third dashboard-owner">Yours</small>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    <div class="form-group">
+                        <textarea id="description" type="text" class="form-control invite-area" name="description" ng-model="adm.dashboard.description" ng-minlength="3" placeholder="Description (optional)"></textarea>
+                        <div class="error-messages" ng-messages="adm.forms.dashboard_form.description.$error" ng-if="adm.dirty(adm.forms.dashboard_form.description)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <label class="checkbox" ng-click="adm.onUseTimezoneClick()">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o': adm.dashboard.useTimezone, 'fa-square-o': !adm.dashboard.useTimezone}"></i>
+                            <span>Use timezone</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-xs-8">
+
+                    <div class="form-group">
+                        <app-timezone-picker ng-if="adm.dashboard.timezone" is-disabled="!adm.dashboard.useTimezone" timezone="adm.dashboard.timezone"></app-timezone-picker>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="help-block" ng-bind-html="adm.timezoneSentence()"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$dismiss()">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-lg btn-block" ng-click="adm.create()" ng-disabled="adm.loading" ng-class="{'btn-fourth': adm.loading, 'btn-first': !adm.loading}">Create dashboard</button>
+        </div>
+    </div>
+</div>

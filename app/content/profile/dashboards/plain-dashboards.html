@@ -1,0 +1,23 @@
+<ul class="plain-dashboard-list dashboards-sortable-list" ui-sortable="$ctrl.dashboardSortableOptions" ng-model="$ctrl.dashboards" ng-if="$ctrl.dashboards">
+    <li class="dashboard-item" ng-if="!$ctrl.loading && !dashboard.inFolder" ng-repeat="dashboard in $ctrl.dashboards">
+        <div class="dashboard-name">
+            <span ng-bind-html="dashboard.name"></span>
+        </div>
+
+        <div class="dropdown pull-right">
+            <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#" ng-click="$ctrl.deleteDashboard(dashboard)">
+                        <i class="fa fa-fw fa-trash-o"></i> Delete Page
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li ng-if="!$ctrl.dashboards.length" class="text-center dashboard-item no-dashboards not-sortable">
+        <i class="fa fa-fw fa-info"></i> There are no dashboards outside of workspaces
+    </li>
+</ul>

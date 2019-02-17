@@ -1,0 +1,38 @@
+.social-connections {
+    .social-connection-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        border-top: solid 1px @borderColorLight;
+        padding-top: 10px;
+
+        &:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .social-connection-icon {
+
+        }
+
+        .social-connection-value {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+
+            .social-connection-name {
+                margin-right: 10px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        .social-connection-actions {
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+}

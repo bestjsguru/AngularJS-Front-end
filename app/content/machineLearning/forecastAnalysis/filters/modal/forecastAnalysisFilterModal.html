@@ -1,0 +1,58 @@
+<div class="forecast-analysis-filter-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Manage root cause filters</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.modalInstance.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <ui-select ng-model="$ctrl.tables.selected" ng-change="$ctrl.onTableSelect()" ng-disabled="$ctrl.filters.loading || $ctrl.tables.loading || !$ctrl.tables.items.length">
+                <ui-select-match allow-clear="true" placeholder="{{$ctrl.selectTablePlaceholder()}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="table in $ctrl.tables.items | searchByProperties : 'name' : $select.search track by $index">
+                    <div ng-bind="table.name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="panel panel-default searchable-list">
+            <div class="panel-body">
+                <loader ctrl-check="true" ng-if="$ctrl.tables.loading || $ctrl.filters.loading"></loader>
+
+                <div class="preview-area-wrapper" ng-if="!$ctrl.filters.loading && !$ctrl.tables.loading && !$ctrl.tables.selected && !$ctrl.filterTables.length">
+                    <div class="preview-area">
+                        <div class="preview-icon animated zoomIn">
+                            <i class="fa fa-table" aria-hidden="true"></i>
+                        </div>
+                        <span class="preview-title">No table selected</span>
+                        <span>You have to select table in order to manage filters</span>
+                    </div>
+                </div>
+
+                <table class="table" ng-if="!$ctrl.tables.loading && !$ctrl.filters.loading && !$ctrl.tables.selected && $ctrl.filterTables.length">
+                    <thead>
+                        <tr>
+                            <th>Table name</th>
+                            <th width="100">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="tableId in $ctrl.filterTables track by $index">
+                            <td>
+                                <span ng-bind="$ctrl.tableName(tableId)"></span>
+                                <br>
+                                <span class="applied-filter" ng-repeat="filter in $ctrl.getTableFilters(tableId)" ng-bind-html="$ctrl.convertFilter(filter)"></span>
+                            </td>
+                            <td class="text-right">
+                                <a ng-click="$ctrl.selectTable(tableId)">
+                                    <ng-pluralize count="$ctrl.getTableFilters(tableId).length" when="{'1': '1 Filter', 'other': '{} Filters'}"></ng-pluralize>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <app-forecast-analysis-filters ng-if="!$ctrl.filters.loading && $ctrl.tables.selected" existing-filters="$ctrl.tableFilters" table="$ctrl.tables.selected"></app-forecast-analysis-filters>
+            </div>
+        </div>
+
+    </div>
+</div>

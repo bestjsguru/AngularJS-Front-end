@@ -1,0 +1,28 @@
+.affected-cards-modal {
+    .cards-list {
+        max-height: 450px;
+        padding-right: 5px;
+        overflow-y: auto;
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &.no-cards {
+                font-weight: normal;
+                font-size: 12px;
+            }
+
+            .card-type-icon {
+                margin-right: 10px;
+                align-self: flex-start;
+            }
+
+            .card-name {
+                flex: 1;
+                white-space: normal;
+            }
+        }
+    }
+}

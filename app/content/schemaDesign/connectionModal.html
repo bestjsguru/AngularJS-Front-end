@@ -1,0 +1,161 @@
+<div class="modal-header">
+    <h3 class="modal-title">Entity Connection</h3>
+</div>
+<div class="modal-body">
+    <form name="conn.form" novalidate>
+        <div class="connection-modal-wrapper">
+        <!--<div class="row" ng-form="conn.connectionColumns">-->
+            <div class="row">
+                <div class="col-lg-7 col-md-7">
+                    <div class="form-group">
+                        <label>Join Type</label>
+                        <ui-select search-enabled="false" name="join" ng-model="conn.joinType" class="w-100" required>
+                            <ui-select-match placeholder="Select Join Type">{{$select.selected}}</ui-select-match>
+                            <ui-select-choices repeat="type in conn.availableJoinTypes">
+                                <div ng-bind-html="type"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-md-5 modal-row-align">
+                    <div class="form-group" ng-class="{'has-error': (conn.isDirty('source') || conn.submitted) && conn.form.source.$invalid}">
+                        <label ng-bind-html="::conn.sourceTable.name + ' Table'"></label>
+                        <!--with ng-model-options="{ debounce: 50 }" ui-select works instable-->
+                        <ui-select name="source" ng-model="conn.sourceColumn" class="w-100" required>
+                            <ui-select-match placeholder="Select Source Column">{{conn.sourceTable.name}}.{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="column in conn.sourceTable.columns | filter: {name: $select.search} track by column.id">
+                                <div ng-bind-html="column.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <div class="error-messages" ng-messages="conn.hasError('source')" ng-if="conn.submitted">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 modal-row-align">
+                    <div class="form-group">
+                        <input type="text" class="form-control text-center connection-row-align" disabled placeholder="Equal">
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 modal-row-align">
+                    <div class="form-group" ng-class="{'has-error': (conn.isDirty('target') || conn.submitted) && conn.form.target.$invalid}">
+                        <label ng-bind-html="::conn.targetTable.name + ' Table'"></label>
+                        <ui-select name="target" ng-model="conn.targetColumn" class="w-100" required>
+                            <ui-select-match placeholder="Select Target Column">{{conn.targetTable.name}}.{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="column in conn.targetTable.columns | filter: {name: $select.search} track by column.id">
+                                <div ng-bind-html="column.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                        <div class="error-messages" ng-messages="conn.hasError('source')" ng-if="conn.submitted">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div ng-if="conn.connection.relation">
+                <div class="divider"></div>
+
+                <div ng-if="conn.extraConditions.length">
+                    <div ng-repeat="extraCondition in conn.extraConditions track by $index">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1">
+                                <!-- JOIN LETTER -->
+                                <div ng-if="!conn.isExtraConditionLoading" class="btn btn-lg join-chain-letter" ng-bind-html="extraCondition.chainLetter"></div>
+                                <div ng-if="conn.isExtraConditionLoading" class="btn btn-lg join-chain-letter"><i class="fa fa-spinner fa-spin"></i></div>
+                            </div>
+
+                            <div class="col-lg-2 col-md-2">
+                                <button class="btn btn-lg bn-primary btn-block btn-second m-b-15" ng-click="conn.deleteExtraCondition(extraCondition, $index)">Delete</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-md-5">
+                                <div class="form-group">
+                                    <tu-column-selector columns="conn.sourceTable.columns" table="conn.sourceTable.name"
+                                                        model="extraCondition.firstColumn" placeholder="Select Source Column"
+                                                        name="sourceColumnExtraFunction_{{$index}}"></tu-column-selector>
+
+                                    <div class="error-messages" ng-messages="conn.hasError('sourceColumnExtraFunction_' + $index)" ng-if="conn.isDirty('sourceColumnExtraFunction_' + $index)">
+                                        <div ng-messages-include="error-messages"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <ui-select name="operator_{{$index}}" ng-model="extraCondition.operator" class="w-100" required>
+                                        <ui-select-match placeholder="Select Operator">{{$select.selected.label}}</ui-select-match>
+                                        <ui-select-choices repeat="item in conn.operators | filter: {label: $select.search} track by item.value">
+                                            <div ng-bind-html="item.label | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-messages" ng-messages="conn.hasError('operator_' + $index)" ng-if="conn.submitted">
+                                        <div ng-messages-include="error-messages"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-5 col-md-5">
+                                <div class="form-group">
+                                    <tu-column-selector columns="conn.targetTable.columns" table="conn.targetTable.name"
+                                                        model="extraCondition.secondColumn" placeholder="Select Target Column"
+                                                        name="targetColumnExtraFunction_{{$index}}"></tu-column-selector>
+
+                                    <div class="error-messages" ng-messages="conn.hasError('targetColumnExtraFunction_' + $index)" ng-if="conn.isDirty('targetColumnExtraFunction_' + $index)">
+                                        <div ng-messages-include="error-messages"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider"></div>
+                    </div>
+                </div>
+
+                 <div class="row">
+                    <div class="col-lg-7  col-md-7" >
+
+                        <div class="form-group">
+                            <label>Join rules:</label>
+                            <input type="text" name="joinRulesInput" class="form-control" placeholder="Example: A AND B OR C" tu-valid-logical-expression filters="conn.extraConditions"
+                                   ng-model="conn.joinRule" ng-required="conn.extraConditions.length">
+                            <div class="error-messages" ng-messages="conn.hasError('joinRulesInput')" ng-if="conn.submitted">
+                                <div ng-message="allVariablesPresent">Please list all available extra conditions</div>
+                                <div ng-message="logicalExpression">Logical expression error</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <button type="button" class="btn btn-third btn-lg connection-add-join" ng-click="conn.addAnotherCondition()"><i class="fa fa-plus"></i> Add another condition</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
+
+<div class="modal-footer">
+    <div class="row">
+        <loader ctrl-check="conn.loading"></loader>
+
+        <div ng-if="!conn.confirm && !conn.loading">
+            <div ng-class="{'col-lg-4 col-md-4 col-xs-4' : conn.connection.relation, 'col-lg-6 col-md-6 col-xs-6' : !conn.connection.relation}">
+                <button ng-click="conn.cancel()" class="btn btn-lg btn-second btn-block" ng-bind-html="conn.isDoAnyAction ? 'Close' : 'Cancel'"></button>
+            </div>
+            <div ng-if="conn.connection.relation" class="col-lg-4 col-md-4 col-xs-4">
+                <button class="btn btn-lg btn-first btn-block" ng-click="conn.detach()">Detach</button>
+            </div>
+            <div ng-class="{'col-lg-4 col-md-4 col-xs-4' : conn.connection.relation, 'col-lg-6 col-md-6 col-xs-6' : !conn.connection.relation}">
+                <button ng-class="{disabled: conn.form.$invalid}" ng-click="conn.connection.relation ? conn.update() : conn.connect()" class="btn btn-lg btn-first btn-block" ng-bind-html="conn.connection.relation ? 'Update' : 'Save'"></button>
+            </div>
+        </div>
+    </div>
+</div>

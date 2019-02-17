@@ -1,0 +1,41 @@
+@import "./exportRawData/exportRawData";
+
+@MAX_Z_INDEX: 99999;
+
+.schema-design-wrapper {
+    position: relative;
+    .full-height;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .schema-design {
+        min-height: calc(~"100vh - 153px");
+        display: block;
+        position: relative;
+
+        .schema-design-sidebar {
+            border-right: 1px solid @iron;
+            position: absolute;
+            height: 100%;
+            max-height: 100%;
+            width: 370px;
+            padding: 0 15px;
+            z-index: 1;
+            left: 0;
+            top: 0;
+
+            .datasource-refresh {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+            }
+        }
+
+        .schema-design-visual {
+            margin: 0 0 0 370px;
+            min-height: calc(~"100vh - 143px");
+            background: @white;
+            border-top: 1px solid @iron;
+        }
+    }
+}

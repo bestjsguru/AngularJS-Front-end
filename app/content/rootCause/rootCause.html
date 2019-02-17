@@ -1,0 +1,229 @@
+<div class="root-cause-wrapper">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Root Cause</span>
+            </div>
+        </div>
+        <div ng-if="false && $ctrl.$window.isDemo && $ctrl.showData()" class="item">
+            <div class="pull-right">
+                <div class="dashboard-actions">
+                    <div class="dropdown pull-right dashboard-options">
+                        <a class="btn btn-link dropdown-toggle" data-toggle="dropdown"
+                           tu-popover tu-popover-placement="left" tu-popover-html="Sharing Options">
+                            <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li>
+                                <a>
+                                    <i class="fa fa-fw fa-file-pdf-o" aria-hidden="true"></i> Export to PDF
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-fw fa-file-powerpoint-o" aria-hidden="true"></i> Export to PPT
+                                </a>
+                            </li>
+                            <li>
+                                <a>
+                                    <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> Export to CSV
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="root-cause" ng-class="{'collapsed': $ctrl.collapsed}">
+        <form name="$ctrl.form" class="root-cause-sidebar" ng-submit="$ctrl.calculate()">
+            <div class="sidebar-content">
+                <div class="form-group">
+                    <label>Goal</label>
+                    <ui-select class="w-100" search-enabled="true" ng-change="$ctrl.onRelationSelect()" ng-model="$ctrl.metrics.selected" name="metric" required ng-disabled="!$ctrl.hasMetrics()">
+                        <ui-select-match placeholder="Select relation">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.metrics">
+                            <span ng-bind-html="item.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+
+                    <div class="error-messages" ng-messages="$ctrl.form.metric.$error" ng-if="$ctrl.form.$submitted">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Filters</label>
+
+                    <app-root-cause-filter-button root-cause="$ctrl"></app-root-cause-filter-button>
+                </div>
+
+                <div class="form-group">
+                    <label>Current date range</label>
+                    <tu-date-picker
+                        refresh="$ctrl.updateCurrentDates(dates, range)"
+                        current-range="$ctrl.current.rangeName"
+                        from="$ctrl.current.fromDate"
+                        to="$ctrl.current.toDate"
+                        hide="$ctrl.hiddenLabels"
+                        ng-disabled="!$ctrl.hasMetrics()">
+                    </tu-date-picker>
+                    <span class="date-string" ng-bind-html="$ctrl.getCurrentDateString()"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Previous date range</label>
+                    <tu-date-picker
+                        refresh="$ctrl.updatePreviousDates(dates, range)"
+                        current-range="$ctrl.previous.rangeName"
+                        from="$ctrl.previous.fromDate"
+                        to="$ctrl.previous.toDate"
+                        hide="$ctrl.hiddenPreviousLabels"
+                        ng-disabled="!$ctrl.hasMetrics()">
+                    </tu-date-picker>
+                    <span class="date-string" ng-bind-html="$ctrl.getPreviousDateString()"></span>
+                </div>
+
+                <app-root-cause-dimensions dimension="$ctrl.dimension" ng-if="!$ctrl.$window.isDemo"></app-root-cause-dimensions>
+
+                <button type="submit" class="btn btn-first btn-block" ng-disabled="!$ctrl.hasMetrics() || $ctrl.loading">
+                    <i class="fa fa-fw fa-cogs"></i>
+                    {{$ctrl.loading ? 'Calculating...' : 'Calculate'}}
+                </button>
+            </div>
+
+            <div class="sidebar-content-collapsed">
+                <a class="btn goal-metric"
+                   tu-popover tu-popover-html="{{$ctrl.metrics.selected.name}}" tu-popover-placement="right">
+                    <i class="fa fa-bullseye"></i>
+                </a>
+                <a class="btn btn-default"
+                   tu-popover tu-popover-html="{{$ctrl.getCurrentDateString()}}" tu-popover-placement="right">
+                    <i class="fa fa-calendar-check-o"></i>
+                </a>
+                <a class="btn btn-default"
+                   tu-popover tu-popover-html="{{$ctrl.getPreviousDateString()}}" tu-popover-placement="right">
+                    <i class="fa fa-calendar-minus-o"></i>
+                </a>
+                <button type="submit" class="btn btn-first" ng-disabled="!$ctrl.hasMetrics() || $ctrl.loading || !$ctrl.metrics.selected">
+                    <i class="fa fa-fw fa-cog" ng-class="{'fa-spin': $ctrl.loading}"
+                       tu-popover tu-popover-html="Calculate" tu-popover-placement="right"></i>
+                </button>
+            </div>
+        </form>
+
+        <div class="root-cause-visual">
+            <a ng-click="$ctrl.toggleSidebar()" class="btn btn-link root-cause-sidebar-toggle">
+                <i class="fa fa-fw" ng-class="{'fa-chevron-right': $ctrl.collapsed, 'fa-chevron-left': !$ctrl.collapsed}"></i>
+            </a>
+
+            <div ng-if="$ctrl.loading" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon loading-icon animated zoomIn">
+                        <loader ctrl-check="$ctrl.loading"></loader>
+                    </div>
+                    <span class="preview-title">Calculating Root Cause</span>
+                    <span>Please be patient as this could take a few minutes</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showPreview()" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Preview</span>
+                    <span>Please select metric and range to calculate impact</span>
+                </div>
+            </div>
+
+            <div ng-if="!$ctrl.hasMetrics() && !$ctrl.metricsAreLoading" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Root Cause Analysis not available</span>
+                    <span>No relationships set up for your organisation</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showError()" class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-exclamation" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Something went wrong</span>
+                    <span>There is no data to display. </br> Make sure to check your filters and try again.</span>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showData() && !$ctrl.showDrill()" class="root-cause-combined-data">
+                <div class="root-cause-data">
+                    <div class="root-cause-heading">
+                        <div class="item">
+                            <span class="root-cause-name" ng-bind-html="$ctrl.metrics.selected.name"></span>
+                        </div>
+
+                        <div class="item">
+                            <div class="root-visual-picker">
+                                <a class="icon-wrapper" ng-class="{active: $ctrl.type === 'table'}" ng-click="$ctrl.setType('table')" tu-popover tu-popover-html="Table" tu-popover-placement="top">
+                                    <span class="card-type-icon table"></span>
+                                </a>
+                                <a class="icon-wrapper" ng-class="{active: $ctrl.type === 'waterfall'}" ng-click="$ctrl.setType('waterfall')" tu-popover tu-popover-html="Waterfall" tu-popover-placement="top">
+                                    <span class="card-type-icon bar"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-if="$ctrl.type === 'table'">
+                        <app-root-cause-table impacts="$ctrl.impacts"></app-root-cause-table>
+                    </div>
+                    <div ng-if="$ctrl.type === 'waterfall'">
+                        <div class="chart-container root-cause-waterfall">
+                            <app-root-cause-waterfall impacts="$ctrl.impacts"></app-root-cause-waterfall>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="root-cause-digest-wrapper">
+                    <app-root-cause-digest root-cause="$ctrl" top-reasons="$ctrl.topReasons" impacts="$ctrl.impacts"></app-root-cause-digest>
+                </div>
+            </div>
+
+            <div ng-if="$ctrl.showDrill()" class="root-cause-data">
+                <div ng-if="$ctrl.showData()" class="root-cause-heading">
+                    <div class="item">
+                        <span class="root-cause-name" ng-bind-html="$ctrl.drill.impact.metric.name"></span>
+                    </div>
+
+                    <div class="item">
+                        <button ng-click="$ctrl.drillUp()" class="btn btn-eighth btn-sm">
+                            Exit drill
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="item">
+                        <div class="root-visual-picker">
+                            <a class="icon-wrapper" ng-class="{active: $ctrl.type === 'table'}" ng-click="$ctrl.setType('table')" tu-popover tu-popover-html="Table" tu-popover-placement="top">
+                                <span class="card-type-icon table"></span>
+                            </a>
+                            <a class="icon-wrapper" ng-class="{active: $ctrl.type === 'waterfall'}"
+                               ng-click="$ctrl.setType('waterfall')" tu-popover tu-popover-html="Bars" tu-popover-placement="top">
+                                <span class="card-type-icon horizontal"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="$ctrl.type === 'table'">
+                    <app-root-cause-drill-table impacts="$ctrl.impacts" drill="$ctrl.drill" scroller="false"></app-root-cause-drill-table>
+                </div>
+                <div ng-if="$ctrl.type === 'waterfall'">
+                    <app-root-cause-drill-table impacts="$ctrl.impacts" drill="$ctrl.drill" scroller="true"></app-root-cause-drill-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

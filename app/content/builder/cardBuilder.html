@@ -1,0 +1,68 @@
+<div class="card-builder-wrapper">
+
+    <loader ctrl-check="!cb.card"></loader>
+
+    <div ng-if="cb.card">
+
+        <div class="sub-header">
+            <div class="item">
+                <div class="breadcrumbs">
+                    <span>Card Builder</span>
+                </div>
+            </div>
+            <!--<div class="item">-->
+                <!--<button ng-disabled="cb.loading" class="btn btn-second" ng-click="cb.card.autoReload.toggle()">-->
+                    <!--<i class="fa fa-fw" ng-class="{'fa-check-square-o': cb.card.autoReload.enabled, 'fa-square-o': !cb.card.autoReload.enabled}">&nbsp;</i>-->
+                    <!--Auto Reload?-->
+                <!--</button>-->
+            <!--</div>-->
+            <div class="item">
+                <button ng-disabled="!cb.isExitEnabled()" ng-click="cb.exit()" class="btn btn-second">Cancel</button>
+                <button ng-disabled="!cb.isSaveEnabled()" ng-click="cb.save()" class="btn btn-first">{{cb.saving ? 'Saving' : 'Save'}}</button>
+                <button ng-disabled="!cb.isSaveEnabled()" ng-click="cb.saveAndExit()" class="btn btn-first">Save And Exit</button>
+            </div>
+        </div>
+
+        <div class="card-builder">
+
+            <div class="card-builder-sidebar">
+
+                <app-card-builder-metrics ng-if="cb.cardInfoFullyLoaded" card="cb.card"></app-card-builder-metrics>
+                <!--<app-compare-list ng-if="cb.card.metrics.length" card="cb.card" card-builder="cb"></app-compare-list>-->
+
+                <app-card-builder-dimensions></app-card-builder-dimensions>
+
+            </div>
+
+            <div class="card-builder-visual">
+
+                <app-card-builder-settings></app-card-builder-settings>
+
+                <app-card-builder-filters></app-card-builder-filters>
+
+                <app-card-builder-groupings></app-card-builder-groupings>
+
+                <div class="visual-preview-wrapper">
+
+                    <div class="visual-preview-header">
+                        <div class="item">
+                            <span class="card-name" title="{{cb.card.getName() || 'Untitled'}}" ng-bind-html="cb.card.getName() || 'Untitled'"></span>
+                            <span class="card-range" ng-bind-html="cb.card.getDateRangeStringWithFrequencyAndTimezone(true)"></span>
+                        </div>
+                        <div class="item">
+                            <app-card-builder-actions></app-card-builder-actions>
+                        </div>
+                    </div>
+
+                    <app-card-builder-visual></app-card-builder-visual>
+
+                </div>
+
+                <app-card-builder-sql ng-if="cb.card.showSql"></app-card-builder-sql>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,144 @@
+<loader ctrl-check="$ctrl.showLoader()"></loader>
+
+<div class="tab-wrapper">
+    <div class="sub-header" ng-if="$ctrl.showSubHeader()">
+
+        <div ng-if="$ctrl.export.inProgress" class="export-loader small-loader">
+            <loader class="pull-left" ctrl-check="true"></loader>
+            <span class="export-loader-txt" ng-bind-html="$ctrl.export.message"></span>
+        </div>
+
+        <div class="item">
+
+            <div ng-if="$ctrl.dashboard.hasLogo()" class="custom-dashboard-logo">
+                <img ng-src="{{ $ctrl.dashboard.logo }}">
+            </div>
+
+            <div class="breadcrumbs">
+                <span ng-if="$ctrl.hasFolderName" ng-bind-html="$ctrl.folder.title"></span>
+                <span class="dashboard-breadcrumbs">
+                    {{$ctrl.dashboard.name}}
+
+                    <a ng-if="$ctrl.dashboard.timezoneString()" tu-popover tu-popover-placement="right" tu-popover-html="{{$ctrl.dashboard.timezoneString()}}">
+                        <i class="fa fa-fw fa-globe" aria-hidden="true"></i>
+                    </a>
+
+                    <a ng-if="$ctrl.dashboard.startDayOfWeekName()" tu-popover tu-popover-placement="right" tu-popover-html="Week starts on {{$ctrl.dashboard.startDayOfWeekName()}}">
+                        <i class="fa fa-fw fa-calendar" aria-hidden="true"></i>
+                    </a>
+
+                    <span ng-if="!$ctrl.hasFolderName || !$ctrl.folder.isOrganisationFolder()" class="personal">Personal</span>
+                </span>
+            </div>
+        </div>
+
+        <div class="item" ng-if="!$ctrl.isExport">
+            <div class="pull-right">
+                <div class="dashboard-actions">
+                    <div class="btn-group new-card-dropdown" app-access permission="cards" ng-if="$ctrl.showNewCardButton()">
+                        <button type="button" class="btn btn-first dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            New Card <i class="fa fa-fw fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li>
+                                <a ui-sref="cardBuilder({dashboardId: $ctrl.dashboard.id})"><i class="fa fa-fw fa-area-chart"></i> Data Card</a>
+                            </li>
+                            <li>
+                                <a ui-sref="newTextCard({dashboardId: $ctrl.dashboard.id})"><i class="fa fa-fw fa-font"></i> Text Card</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown pull-right">
+                        <a href="#" class="btn btn-eighth pull-right dropdown-toggle" data-toggle="dropdown"
+                           tu-popover tu-popover-placement="top" tu-popover-html="Dashboard Options">
+                            <i class="fa fa-fw fa-sliders" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li ng-if="$ctrl.owner">
+                                <div class="dashboard-owner-wrapper">
+                                    <div class="dashboard-owner-image">
+                                        <img ng-src="{{$ctrl.owner.photo}}">
+                                    </div>
+                                    <div class="dashboard-owner-name">
+                                        <span>Dashboard Owner</span>
+                                        <span ng-bind="$ctrl.owner.email"></span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li ng-if="!$ctrl.dashboard.isLocked() && !$ctrl.dashboard.isFavourite" app-access level="user">
+                                <a ui-sref="dashboardSlideshow({dashboardId: $ctrl.dashboard.id})">
+                                    <i class="fa fa-fw fa-film" aria-hidden="true"></i> Slideshow
+                                </a>
+                            </li>
+                            <li ng-if="$ctrl.showEditDashboardButton()" app-access permission="dashboards">
+                                <a tu-customise-dashboard ng-click="customise.openModal()">
+                                    <i class="fa fa-fw fa-edit" aria-hidden="true"></i> Edit Dashboard
+                                </a>
+                            </li>
+                            <li ng-if="!$ctrl.dashboard.isFavourite" app-access permission="dashboards">
+                                <a tu-copy-dashboard ng-click="cd.openModal()">
+                                    <i class="fa fa-fw fa-clone" aria-hidden="true"></i> Copy Dashboard
+                                </a>
+                            </li>
+                            <li ng-if="!$ctrl.dashboard.isFavourite" app-access level="user">
+                                <a ng-class="{disabled: $ctrl.loading || $ctrl.availableDashboardFilters.loading}" ng-click="$ctrl.openAddDashboardFilterModal()">
+                                    <i class="fa fa-fw fa-filter" ng-class="{'active-filter': $ctrl.availableDashboardFilters.hasActiveDashboardFilters()}"></i> Manage Filters
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div ng-class="{disabled: $ctrl.isReportMenuDisabled()}" class="dropdown pull-right" app-access level="user">
+                        <a href="#" class="btn btn-eighth pull-right dropdown-toggle" data-toggle="dropdown"
+                           tu-popover tu-popover-placement="top" tu-popover-html="Sharing Options">
+                            <i class="fa fa-fw fa-share-alt" aria-hidden="true"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu animated fadeIn">
+                            <li app-access permission="exporting-dashboards" ng-if="!$ctrl.dashboard.isFavourite">
+                                <a title="Share dashboard with external user" href="#" ng-click="$ctrl.openShareDashboardDialog()">
+                                    <i class="fa fa-fw fa-share-square-o" aria-hidden="true"></i> Share Dashboard
+                                </a>
+                            </li>
+                            <li app-access permission="exporting-dashboards">
+                                <a target="_blank" ng-href="dashboard/{{$ctrl.dashboard.id}}?export=html">
+                                    <i class="fa fa-fw fa-file-code-o" aria-hidden="true"></i> Publish Preview
+                                </a>
+                            </li>
+                            <li app-access permission="exporting-dashboards">
+                                <a ng-click="$ctrl.exportDashboard()">
+                                    <i class="fa fa-fw fa-download" aria-hidden="true"></i> Export Dashboard
+                                </a>
+                            </li>
+                            <li app-access permission="email-reports exporting-dashboards" class="divider" role="separator"></li>
+                            <li app-access permission="email-reports">
+                                <a tu-email-report ng-click="er.openModal($ctrl.dashboard)">
+                                    <i class="fa fa-fw fa-envelope-o" aria-hidden="true"></i> Email Report
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="btn btn-eighth pull-right" ng-class="{disabled: $ctrl.loading}"
+                         tu-popover tu-popover-placement="top" tu-popover-html="Refresh Dashboard">
+                        <span ng-click="$ctrl.refreshCards()">
+                            <i class="fa fa-fw fa-refresh" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.isExport" ng-show="$ctrl.availableDashboardFilters.hasActiveDashboardFilters()" tu-available-dashboard-filters class="row"></div>
+
+    <div class="m-t-2" ng-class="{'print-mode': $ctrl.isPrintable, 'ppt-email-mode': $ctrl.isPPT}">
+        <div>
+            <div ng-repeat="dash in $ctrl.dashboards">
+                <div ng-if="$ctrl.isCurrentDashboard(dash)" ng-style="$ctrl.getDashboardStyle(dash)">
+                    <tu-dashboard dashboard="dash" permissions="$ctrl.pagePermissions" active="$ctrl.isCurrentDashboard(dash)"></tu-dashboard>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

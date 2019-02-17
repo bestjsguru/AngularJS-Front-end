@@ -1,0 +1,25 @@
+<div ng-if="$ctrl.card" class="w-100 relative">
+    <app-drill-breadcrumbs card="$ctrl.card" ng-show="!$ctrl.card.drill.isRecords"></app-drill-breadcrumbs>
+    <app-drill-records-header card="$ctrl.card"></app-drill-records-header>
+
+    <app-drill-actions card="$ctrl.card"></app-drill-actions>
+
+    <div class="drill-wrapper">
+        <app-drill-dropdown card="$ctrl.card"></app-drill-dropdown>
+        <app-drill-columns card="$ctrl.card"></app-drill-columns>
+        <app-drill-presets card="$ctrl.card"></app-drill-presets>
+        <app-drill-records-columns card="$ctrl.card"></app-drill-records-columns>
+
+        <div class="drill-card">
+            <tu-visual
+                card="$ctrl.card"
+                reload="$ctrl.reload()"
+                ng-style="$ctrl.card.image.cssStyle()"
+                error="$ctrl.isError()"
+                type="$ctrl.getType()">
+            </tu-visual>
+        </div>
+
+        <app-drill-type card="$ctrl.card" ng-if="$ctrl.card.drill.isActive() && !$ctrl.card.drill.isRecords"></app-drill-type>
+    </div>
+</div>

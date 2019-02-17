@@ -1,0 +1,229 @@
+.members-area{
+    .left-inner-addon {
+        position: relative;
+
+        .fa {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+        }
+    }
+
+    .member-filters {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        .checkbox-inline:first-child {
+            padding-left: 0;
+        }
+    }
+
+    .organisation-user {
+
+        & > div {
+            display: flex;
+            padding: 15px 0;
+            width: 100%;
+            border-top: 1px solid @borderColorLight;
+
+            .user-permissions{
+                display: none;
+                float: left;
+
+                .dropdown-menu{
+                    border-top-right-radius: 4px;
+
+                    &:after, &:before {
+                        bottom: 100%;
+                        left: 13px;
+                        border: solid transparent;
+                        content: " ";
+                        height: 0;
+                        width: 0;
+                        position: absolute;
+                        pointer-events: none;
+                    }
+
+                    &:after {
+                        border-color: rgba(255, 255, 255, 0);
+                        border-bottom-color: @white;
+                        border-width: 7px;
+                        margin-left: -7px;
+                    }
+
+                    &:before {
+                        border-color: rgba(204, 204, 204, 0);
+                        border-bottom-color: @borderColorLight;
+                        border-width: 8px;
+                        margin-left: -8px;
+                    }
+
+                    li{
+                        a{
+                            .fa{
+                                opacity: 0;
+                                margin-left: 5px;
+                            }
+
+                            &.active{
+                                .fa{
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &.open{
+                    display: block;
+                }
+            }
+
+            &:hover{
+                .user-permissions{
+                    display: block;
+                }
+            }
+        }
+
+        &:last-child{
+            border-bottom: 1px solid @borderColorLight;
+        }
+
+        img {
+            margin: 0 10px 0 10px;
+            border: 1px solid @borderColorLight;
+        }
+
+        .user-groups {
+            flex: 1;
+            margin: 0 50px 0 5px;
+
+            .user-groups-list {
+                display: flex;
+                font-size: 15px;
+                line-height: 17px;
+                margin-top: 20px;
+
+                div {
+                    flex: 1;
+                    margin-left: 5px;
+
+                    span {
+                        & + span:before {
+                            content: ",";
+                            margin-right: 5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .user-info {
+            margin: 0 0 0 5px;
+            word-break: break-all;
+            min-width: 400px;
+
+            .member-name {
+                position: relative;
+                float: left;
+
+                .user-permissions {
+                    position: absolute;
+                    right: -27px;
+                    top: -4px;
+
+                    .dropdown-toggle {
+                        padding: 3px 6px;
+                    }
+                }
+
+                span {
+                    font-size: 17px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    float: left;
+                }
+            }
+
+            .fa {
+                .fa-lock {
+                    font-size: 16px;
+                }
+            }
+
+            a {
+                float: left;
+                font-size: 15px;
+                line-height: 17px;
+
+                &.mail {
+                    color: inherit;
+                    opacity: .7;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            .user-level {
+                margin-top: 10px;
+                margin-right: 10px;
+            }
+
+            .expiration-date {
+                margin-top: 13px;
+                font-size: 11px;
+                font-weight: normal;
+            }
+        }
+
+        .remove-member {
+            cursor: pointer;
+            margin: 20px 10px 0 0;
+            color: @td-deep-blue;
+
+            .fa-times{
+                color: @brand-danger;
+            }
+
+            &:hover{
+                color: @brand-danger;
+            }
+        }
+
+        .resend-invite{
+            cursor: pointer;
+            margin: 20px 10px 0 0;
+
+            .fa-refresh{
+                color: @td-turquoise;
+            }
+        }
+
+        &.pending-invite{
+            > div{
+                background: -webkit-repeating-linear-gradient(-45deg, #fcfcfc, #fcfcfc 10px, #fff 10px, #fff 20px);
+                background: repeating-linear-gradient(-45deg, #fcfcfc, #fcfcfc 10px, #fff 10px, #fff 20px);
+            }
+        }
+    }
+
+    .add-members{
+        border-radius: 3px 0 0 3px !important;
+        border-right: 0;
+    }
+
+    .add-member-btn{
+        padding: 10px 15px;
+        border-radius: 0 3px 3px 0 !important;
+    }
+
+    .member-name, .app-name{
+        font-weight: 500;
+    }
+}
+
+@import "./permissions/permissions";
+@import "filters/user/userFilterButton";

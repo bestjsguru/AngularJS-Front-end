@@ -1,0 +1,62 @@
+.title {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-bottom: 1px solid @iron;
+    padding: 0 0 10px 0;
+}
+
+.explain-card-sql {
+    position: relative;
+    min-height: 300px;
+    max-height: 450px;
+    overflow: auto;
+    margin-bottom: 30px;
+    
+    .sql-editor {
+        position: relative;
+
+        .gutter-helper {
+            border-right: 1px solid #ddd;
+            background-color: #f7f7f7;
+            width: 40px;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 0;
+        }
+
+        .CodeMirror {
+            border-radius: 0;
+            padding: 15px 10px;
+
+            pre {
+                padding: 0 4px 0 14px;
+            }
+
+            // in case we use material theme again
+            &.cm-s-material {
+                background: @madison;
+
+                .CodeMirror-gutters {
+                    background: @ebony-clay;
+                }
+
+                .CodeMirror-linenumber {
+                    color: @hoki;
+                }
+            }
+        }
+    }
+
+}
+
+.modal-body {
+    .explain-card-sql {
+        .preview-area-wrapper .preview-area {
+            margin: 100px auto 70px auto;
+        }
+    }
+}

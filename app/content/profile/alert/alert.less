@@ -1,0 +1,58 @@
+/* alert page */
+
+.profile-alert {
+
+    .user-image {
+
+        .img-rounded{
+            float: left;
+            border-radius: @border-radius-small;
+            width: 20px;
+            height: 20px;
+        }
+
+        span {
+            float: left;
+            margin: 3px 0 0 8px;
+            font-size: 12px;
+        }
+
+        .alert-no{
+            float: left;
+            width: 20px;
+            height: 20px;
+            margin-left: 3px;
+
+            span {
+                background: rgba(0, 0, 0, 0.7);
+                color: @white;
+                position: absolute;
+                z-index: 2;
+                margin: 0;
+                width: 20px;
+                height: 20px;
+                padding-top: 3px;
+                border-radius: @border-radius-small;
+                text-align: center;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .item-list {
+        min-height: 100px;
+    }
+
+    .sortable-headers {
+        th {
+            cursor: pointer;
+            .fa{
+                opacity: 0.5;
+            }
+            &:hover .fa{
+                opacity: 1;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,41 @@
+tu-drill-breadcrumbs {
+    display: inline-block;
+
+    .breadcrumb {
+        float: left;
+        padding: 0px;
+        margin-top: 0;
+        margin-bottom: 0px;
+        background-color: @white;
+        margin-right: 20px;
+
+        li {
+            a {
+                color: @deep-blue;
+            }
+
+            &.active {
+                a {
+                    color: @brand-danger;
+                    cursor: default;
+                    pointer-events: none;
+                }
+            }
+
+            &.disabled {
+                pointer-events: none;
+            }
+        }
+
+    }
+
+    .up, .reset {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .reset {
+        color: @brand-danger;
+    }
+
+}

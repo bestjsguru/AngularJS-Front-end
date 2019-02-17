@@ -1,0 +1,66 @@
+<div class="card-content chart-loading" ng-class="::{'is-no-export' : !$ctrl.isExport}" ng-if="!$ctrl.showDatatable()">
+    <loader ctrl-check="$ctrl.loading"></loader>
+
+    <div ng-if="$ctrl.isError && !$ctrl.loading" class="card-error-message" ng-class="{loading22: $ctrl.loading}">
+        <i class="fa fa-2x fa-exclamation-triangle"></i>
+        <span class="card-error-title">Oops!</span>
+        <span ng-bind-html="$ctrl.card.metrics.errorMessage"></span>
+
+        <a ng-click="$ctrl.reload()" class="btn btn-eighth">
+            <i class="fa fa-refresh"></i>
+        </a>
+    </div>
+
+    <div ng-if="$ctrl.card.isDraft() && !$ctrl.isError && !$ctrl.loading" class="card-error-message" ng-class="{loading22: $ctrl.loading}">
+        <i class="fa fa-2x fa-pencil"></i>
+        <span class="card-error-title">Draft</span>
+        <span>This card has no metrics or background image</span>
+
+        <div class="clearfix"></div>
+
+        <a ng-if="$ctrl.card.userCanEdit() || $ctrl.card.isOwnedByCurrentUser()" ui-sref="cardBuilder({cardId: $ctrl.card.id})" class="btn btn-sm btn-first m-t-15">
+            Continue setup
+        </a>
+    </div>
+
+    <div class="chart-container" ng-if="$ctrl.showHighchart()"
+         ng-class="{loading22: $ctrl.loading, 'with-card-totals': $ctrl.card.selectedTotals.length}">
+
+        <tu-card-totals card="$ctrl.card" ng-if="$ctrl.card.hasData()"></tu-card-totals>
+
+        <!-- Type Highchart -->
+        <app-highchart card="$ctrl.card" ng-if="$ctrl.card.hasData()"></app-highchart>
+
+        <div ng-if="!$ctrl.loading && !$ctrl.card.hasData()" class="no-data">
+            <span>No data</span>
+        </div>
+        <!-- End Type Highchart -->
+    </div>
+
+    <div ng-if="$ctrl.showNumeric()" ng-class="{loading22: $ctrl.loading, 'with-card-totals': $ctrl.card.selectedTotals.length}" class="numeric-wrapper">
+
+        <tu-card-totals card="$ctrl.card" ng-if="$ctrl.card.hasData()"></tu-card-totals>
+
+        <!-- Type Numeric -->
+        <tu-numeric card="$ctrl.card" ng-if="$ctrl.card.hasData()"></tu-numeric>
+
+        <div ng-if="!$ctrl.loading && !$ctrl.card.hasData()" class="no-data">
+            <span>No data</span>
+        </div>
+        <!-- EndType Numeric -->
+    </div>
+
+    <div ng-if="$ctrl.card.isText()" class="text-card-wrapper">
+        <tu-text card="$ctrl.card"></tu-text>
+    </div>
+
+    <div class="chart-container" ng-class="{loading22: $ctrl.loading}" ng-if="$ctrl.showUkMap()">
+        <!-- Type Map -->
+        <tu-geo-map card="$ctrl.card"></tu-geo-map>
+        <!-- EndType Map -->
+    </div>
+</div>
+
+<!-- Type Table -->
+<tu-datatable card="$ctrl.card" loading="$ctrl.loading" class="box-content table-content" ng-if="$ctrl.showDatatable()"></tu-datatable>
+<!-- EndType Table -->

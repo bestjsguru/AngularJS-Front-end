@@ -1,0 +1,65 @@
+<div class="slideshow-mode">
+    <div class="explore-mode">
+        <div class="card-dimensions">
+            <loader ctrl-check="!$ctrl.dashboard.cards.getActive().length"></loader>
+
+            <div uib-carousel active="$ctrl.activeSlide" interval="none" no-wrap="false">
+                <div uib-slide ng-if="!$ctrl.loading && $ctrl.dashboard.cards.getActive().length" ng-repeat="card in $ctrl.dashboard.cards.getActive() track by $index"
+                     index="$index" class="card-wrapper-explore" ng-class="{'card-error': $ctrl.isError() }">
+
+                    <!-- Slide title -->
+                    <div class="sub-header border card-title">
+                        <div class="item" ng-if="!card.inEditMode">
+                            <span class="card-title-text" ng-class="{'small-title': !$ctrl.getCardTitle(card)}"
+                                  ng-click="card.inEditMode = true" ng-bind="$ctrl.getCardTitle(card) || 'Click here to add card title...'"></span>
+                        </div>
+                        <div class="item" ng-if="!card.inEditMode">
+                            <a class="btn btn-eighth pull-right" ui-sref="dashboard({dashboardId: $ctrl.dashboard.id})">
+                                <i class="fa fa-compress"></i>
+                            </a>
+                        </div>
+                        <div class="item" ng-if="card.inEditMode">
+                            <div class="card-title-edit" tu-autofocus-fields>
+                                <textarea name="title" class="form-control" ng-model="card.slideshowTitle" ng-bind="$ctrl.getCardTitle(card)"></textarea>
+                                <div class="pull-right m-t-10">
+                                    <span class="btn btn-second btn-sm" ng-click="$ctrl.cancel(card)">Cancel</span>
+                                    <span class="btn btn-first btn-sm" ng-click="$ctrl.saveCardTitle(card, $event)">Save</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sub Header -->
+                    <div class="sub-header card-navigation white-background">
+                        <div class="item">
+                            <a class="btn btn-eighth pull-right" ng-click="$ctrl.previousSlide()">
+                                <i class="fa fa-2x fa-angle-left"></i>
+                            </a>
+                        </div>
+                        <div class="item">
+                            <div class="slideshow-card-header">
+                                <span class="card-name" title="{{::card.getName()}}" ng-bind-html="::card.getName()"></span>
+                                <span class="card-range" ng-if="!card.isImageOrDraft() && !card.isText()" ng-bind-html="card.getDateRangeStringWithFrequencyAndTimezone(true)"></span>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a class="btn btn-eighth pull-right" ng-click="$ctrl.nextSlide()">
+                                <i class="fa fa-2x fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Visual -->
+                    <div class="row border-bottom">
+                        <div class="col-lg-12">
+                            <tu-visual card="card" reload="$ctrl.reload(card)" ng-style="card.image.cssStyle()"
+                                       loading="$ctrl.isLoading()" error="$ctrl.isError(card)" type="$ctrl.getType()">
+                            </tu-visual>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

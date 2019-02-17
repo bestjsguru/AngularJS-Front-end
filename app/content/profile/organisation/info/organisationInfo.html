@@ -1,0 +1,76 @@
+<div class="organisation-info">
+    <form name="$ctrl.form">
+        <div class="organisation-logo-big">
+            <div class="org-info">
+                <div class="fiscal-year" ng-if="$ctrl.organisation.fiscalYearStart != null">Fiscal year starts on <span>{{$ctrl.organisation.fiscalYearStarting}}</span></div>
+                <div class="week-start">Week starts on <span ng-bind="$ctrl.organisation.startDayName"></span></div>
+            </div>
+            <div class="company-logo">
+                <img ng-src="{{ $ctrl.organisation.logo }}" id="prevImage" alt="Company Logo" class="clearfix">
+            </div>
+            <div class="action-buttons" app-access level="admin">
+                <button ng-if="$ctrl.organisation.hasLogo()" ng-click="$ctrl.useDefaultLogo()" class="btn btn-fourth btn-md">Use default logo</button>
+                <button id="uploadImageButton" class="btn btn-fourth btn-md">Change logo</button>
+                <input class="hide" tu-picture-upload tu-image-preview="#prevImage" tu-file="$ctrl.organisation.logoFile" tu-file-button="#uploadImageButton" type="file"/>
+            </div>
+            <span class="help-block company-logo-help">* For best display, use transparent logo, 120x40px (wider than tall) in size.</span>
+        </div>
+        <span class="heading">About your company</span>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" placeholder="Company name" class="form-control" ng-class="{disabled: !$ctrl.userCanEdit()}" name="name" ng-model="$ctrl.organisation.name" required>
+                        <div class="error-messages" ng-messages="$ctrl.form.name.$error" ng-if="$ctrl.dirty($ctrl.form.name)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Location:</label>
+                        <input type="text" placeholder="Company location" class="form-control" ng-class="{disabled: !$ctrl.userCanEdit()}" name="location" ng-model="$ctrl.organisation.location">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Domain:</label>
+                        <input type="text" placeholder="Email domain" class="form-control" app-valid-email-domain ng-class="{disabled: !$ctrl.userCanEdit()}" name="domain" ng-model="$ctrl.organisation.domain">
+                        <div class="error-messages" ng-messages="$ctrl.form.domain.$error" ng-if="$ctrl.dirty($ctrl.form.domain)">
+                            <div ng-message="validEmailDomain">Invalid email domain</div>
+                        </div>
+                        <span class="help-block">Your company email domain (i.e. example.com). This will be used to differentiate organisation users from outside associates.</span>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Start day of the week:</label>
+                        <ui-select search-enabled="false" ng-change="$ctrl.onStartDayChange()" ng-model="$ctrl.days.selected">
+                            <ui-select-match placeholder="Start day">{{$select.selected.label}}</ui-select-match>
+                            <ui-select-choices repeat="day in $ctrl.days | filter: {label: $select.search}">
+                                <span ng-bind-html="day.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="form-group">
+                        <label>Number of decimal places:</label>
+                        <ui-select search-enabled="false" ng-change="$ctrl.onDecimalsChange()" ng-model="$ctrl.decimals.selected">
+                            <ui-select-match placeholder="Number of decimals">{{$select.selected.label}}</ui-select-match>
+                            <ui-select-choices repeat="decimal in $ctrl.decimals | filter: {label: $select.search}">
+                                <span ng-bind-html="decimal.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-xs-12 organisation-box-footer" app-access level="admin">
+                    <button type="button" class="btn btn-first btn-lg text-uppercase col-lg-6 col-lg-offset-3"
+                            ng-disabled="$ctrl.submitting" ng-click="$ctrl.save()"
+                            ng-class="{'btn-fourth': $ctrl.submitting, 'btn-first': !$ctrl.submitting}">save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

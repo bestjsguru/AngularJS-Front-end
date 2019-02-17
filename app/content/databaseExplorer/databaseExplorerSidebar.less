@@ -1,0 +1,150 @@
+.database-explorer-sidebar {
+    border-right: 1px solid @iron;
+    position: absolute;
+    height: 100%;
+    max-height: 100%;
+    width: 370px;
+    padding: 0 15px;
+    z-index: 1;
+    left: 0;
+    top: 0;
+
+    .form-control {
+        height: 34px;
+    }
+
+    .table-search {
+        .form-control-feedback {
+            line-height: 34px;
+        }
+    }
+
+    .table-search-wrapper {
+        position: relative;
+        width: 100%;
+        display: block;
+        height: auto;
+    }
+
+    .metrics-folder-wrapper {
+        max-height: calc(~"100% - 50px");
+        overflow-y: auto;
+
+        .metrics-source {
+            border-bottom: 1px solid rgba(218,223,225,0.5);
+            position: relative;
+            min-height: 34px;
+            position: relative;
+            display: block;
+            z-index: 1;
+
+            .source-name {
+                width: 100%;
+                display: block;
+                padding: 7px 30px 7px 22px;
+                position: relative;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+
+                .fa {
+                    position: absolute;
+                    left: 1px;
+                    top: 11px;
+                    font-size: 14px;
+                }
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+
+                &.active {
+                    font-weight: 500;
+                }
+
+            }
+
+            .tables-list {
+                margin: 2px 0px 10px 10px;
+
+                .metrics-folder {
+                    border-bottom: 1px solid rgba(218,223,225,0.5);
+                    position: relative;
+                    min-height: 34px;
+                    position: relative;
+                    z-index: 1;
+
+                    &:last-child {
+                        border-bottom: none !important;
+                    }
+
+                    .folder-name {
+                        width: 100%;
+                        display: block;
+                        padding: 7px 30px 7px 22px;
+                        position: relative;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        cursor: pointer;
+
+                        .fa {
+                            position: absolute;
+                            left: 1px;
+                            top: 11px;
+                            font-size: 14px;
+                        }
+
+                        &:hover, &:focus {
+                            text-decoration: none;
+                        }
+
+                        &.active {
+                            font-weight: 500;
+                        }
+
+                    }
+
+                    .folder-list {
+                        margin: 2px 0px 10px 22px;
+                        max-height: 260px;
+                        overflow-y: auto;
+
+                        li {
+                            display: block;
+
+                            a {
+                                padding: 3px 0px 3px 0px;
+                                display: block;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                position: relative;
+                                cursor: default;
+
+                                span {
+                                    font-size: 11px;
+                                    display: block;
+                                    position: absolute;
+                                    right: 0;
+                                    top: 4px;
+                                    background: @porcelain;
+                                    padding: 3px 5px;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .no-tables {
+            text-align: center;
+            padding-top: 20px;
+            color: #b7b7b7;
+        }
+    }
+}

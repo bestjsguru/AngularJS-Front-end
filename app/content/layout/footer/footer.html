@@ -1,0 +1,16 @@
+<footer class="footer" ng-class="{'no-margins': !indexCtrl.isVisible()}">
+    <div class="pull-left">
+        <img class="powered-by" src="styles/images/powered-by.png" width="70">
+    </div>
+    <div class="pull-right">
+        <a href="https://avora.com/terms/" target="_blank">
+            Terms & Conditions <i class="fa fa-angle-right"></i>
+        </a>
+        <a href="https://avora.com/privacy/" target="_blank">
+            Privacy Policy <i class="fa fa-angle-right"></i>
+        </a>
+        <a ng-if="indexCtrl.isVisible()" ng-click="openCheatSheet()" class="keyboard-shortcuts-link" title="Show available keyboard shortcuts">
+            Keyboard Shortcuts <i class="fa fa-angle-right"></i>
+        </a>
+    </div>
+</footer>

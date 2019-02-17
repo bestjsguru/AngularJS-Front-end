@@ -1,0 +1,66 @@
+<div class="drill-save">
+    <div class="modal-header">
+        <h4 class="modal-title">Save as Card</h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="tab-pane">
+            <div class="form-group">
+                <label>Card name:</label>
+                <input ng-model="$ctrl.name" class="form-control" type="text" placeholder="Card name">
+            </div>
+            <div class="form-group">
+                <label>Select which dashboard you want the card saved to:</label>
+                <div class="input-group">
+                    <input ng-model="$ctrl.query" class="form-control" type="text" placeholder="Search">
+                    <span class="input-group-btn">
+                        <button ng-click="$ctrl.query = ''" class="btn btn-lg btn-fourth">
+                            Clear <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                        </button>
+                   </span>
+                </div>
+
+            </div>
+            <div class="dashboard-list-wrapper">
+                <ul>
+                    <li ng-repeat="dashboard in $ctrl.dashboards | searchByProperties: 'name, folderName' : $ctrl.query as filteredDashboards track by dashboard.id" ng-click="$ctrl.select(dashboard)">
+                        <div>
+                            <div class="dashboard-data">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.isSelected(dashboard), 'fa-square-o': !$ctrl.isSelected(dashboard)}"></i>
+                                <div ng-bind-html="dashboard.name | highlight: $ctrl.query"></div>
+                                <span ng-if="dashboard.reachedCardsLimit" class="pull-right reached-cards-limit">Cards limit reached</span>
+                            </div>
+                            <div class="dashboard-folder" ng-bind-html="dashboard.folderName | highlight: $ctrl.query"></div>
+                        </div>
+                    </li>
+                    <li ng-if="!filteredDashboards.length">
+                        <div class="no-dashboard-data text-center">
+                            <div>There are no items. Please refine your search query.</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="$ctrl.dashboard" class="help-block m-t-15">
+                Card will be saved to <kbd ng-bind="$ctrl.dashboard.name"></kbd>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-second btn-block" ng-disabled="$ctrl.loading || $ctrl.saving" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-first btn-block" ng-disabled="$ctrl.loading || $ctrl.saving" ng-click="$ctrl.save()">
+                    {{$ctrl.saving ? 'Saving...' : 'Save'}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

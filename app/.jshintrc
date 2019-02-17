@@ -1,0 +1,27 @@
+{
+    "bitwise": true,
+    "esversion": 6,
+    "freeze": true,
+    "futurehostile": true,
+    "latedef": true,
+    "maxcomplexity": 10,
+    "maxdepth": 3,
+    "noarg": true,
+    "nocomma": true,
+    "nonew": true,
+    "predef": [
+        "angular", "truedashApp", "d3", "moment", "isFunction", "_",
+        "jsPlumb", "CodeMirror", "angularDragula"
+    ],
+    "singleGroups": true,
+    "strict": "global",
+    "undef": true,
+    "eqnull": true,
+    "lastsemic": true,
+    "browser": true,
+    "devel": "console",
+    "jquery": true,
+    "node": true,
+    "expr": true,
+    "laxbreak": true
+}

@@ -1,0 +1,49 @@
+<div class="dropdown pull-right metric-dropdown">
+    <a href class="btn" ng-if="$ctrl.metric.isHidden()" ng-click="$ctrl.toggleMetricVisibility()"
+       tu-popover tu-popover-html="Show metric" tu-popover-placement="top">
+        <i class="fa fa-eye-slash"></i>
+    </a>
+    <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown" ng-class="{disabled: $ctrl.cardBuilder.loading}">
+        <i class="fa fa-bars"></i>
+    </button>
+
+    <ul class="dropdown-menu">
+        <li>
+            <a ng-class="{disabled: $ctrl.cardBuilder.loading}"
+               ng-click="$ctrl.removeMetric(metric)" class="metric-option-btn delete-metric">
+                <i class="fa fa-trash-o fa-fw"></i>
+                Remove metric
+            </a>
+        </li>
+        <li>
+            <a ng-class="{disabled: $ctrl.cardBuilder.loading}"
+               ng-click="$ctrl.toggleMetricVisibility()" class="metric-option-btn">
+                <i class="fa fa-fw" ng-class="{'fa-eye': $ctrl.metric.isHidden(), 'fa-eye-slash': !$ctrl.metric.isHidden()}"></i>
+                {{ $ctrl.metric.isHidden() ? 'Show metric' : 'Hide metric'}}
+            </a>
+        </li>
+        <li>
+            <a ng-class="{disabled: $ctrl.cardBuilder.loading}" class="metric-option-btn"
+               ng-click="$ctrl.editMetric()">
+                <i class="fa fa-pencil-square-o fa-fw"></i>
+                Edit metric
+            </a>
+        </li>
+        <li>
+            <a ng-if="$ctrl.couldBeCumulative()"
+               ng-class="{disabled: $ctrl.cardBuilder.loading, 'is-cumulative': $ctrl.isCumulative() }" class="metric-option-btn"
+               ng-click="$ctrl.updateCumulativeStatus()">
+                <i class="fa fa-line-chart"></i>
+                Cumulative function
+            </a>
+        </li>
+        <li>
+            <a ng-if="$ctrl.couldBeCumulative()"
+               ng-class="{ disabled: $ctrl.cardBuilder.loading }" class="metric-option-btn"
+               ng-click="$ctrl.updateColoring()">
+                <i class="fa fa-paint-brush"></i>
+                {{ $ctrl.metric.isColoring ? 'Remove table colors' : 'Add table colors'}}
+            </a>
+        </li>
+    </ul>
+</div>

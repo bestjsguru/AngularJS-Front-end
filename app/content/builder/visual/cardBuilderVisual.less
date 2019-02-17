@@ -1,0 +1,197 @@
+@import "../settings/general/cardBuilderGeneral";
+@import "../settings/style/cardBuilderStyle";
+@import "../groupings/cardBuilderGroupings";
+@import "../filters/cardBuilderFilters";
+@import "../compares/cardBuilderCompares";
+@import "../drill/cardBuilderDrill";
+@import "../formulas/cardBuilderFormulas";
+
+@import "../sql/cardBuilderSql";
+
+.card-builder-visual {
+    margin: 0 0 0 370px;
+    min-height: calc(~"100vh - 143px");
+    background: @white;
+    border-top: 1px solid @iron;
+
+    .nav {
+        &.nav-tabs {
+            margin-bottom: 0;
+        }
+    }
+
+    .items {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px 7px 7px 7px;
+        width: 100%;
+
+        .item {
+            flex: 1 1 200px;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+
+            &.card-timezone-picker {
+                flex: 1 1 400px;
+
+                .dropdown-toggle {
+                    padding-top: 6px;
+                }
+
+                .dropdown-menu {
+                    top: 30px;
+                }
+            }
+
+            &.form-group{
+                margin: 0;
+                padding: 0px 7px 7px 7px;
+
+                &.card-builder-date-picker-wrapper {
+                    margin-bottom: -7px;
+                }
+            }
+
+            .radio, .checkbox {
+                margin: 0 0 5px 0;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+
+            > .dropdown {
+                width: 100%;
+                display: block;
+            }
+
+            .totals-dropdown {
+                display: block;
+                width: 100%;
+
+                .btn {
+                    text-align: left;
+
+                    .fa {
+                        position: absolute;
+                        top: 11px;
+                        right: 11px;
+                        z-index: 1;
+                    }
+                }
+
+                .dropdown-menu {
+                    min-width: 100%;
+                }
+
+            }
+
+
+        }
+    }
+
+    .select2-results {
+        max-height: 290px;
+
+        .select2-result-label {
+            padding: 2px 12px 2px;
+        }
+    }
+
+    /* Visual preview area */
+
+    .visual-preview-wrapper {
+        border: 1px solid transparent;
+        position: relative;
+        height: 100%;
+
+        .visual-preview-header {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            min-height: 53px;
+
+            .item {
+                flex: 1 1 auto;
+                padding: 14px;
+
+                .card-name {
+                    font-weight: 500;
+                    font-size: 17px;
+                    line-height: 22px;
+                    width: 100%;
+                    display: block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                .card-range {
+                    font-weight: normal;
+                    font-size: 11px;
+                    line-height: 12px;
+                    width: 100%;
+                    display: block;
+                }
+
+
+                .btn-group {
+                    &.card-actions {
+                        margin: 0;
+
+                        .btn-fourth {
+                            &.active {
+                                background-color: @white;
+                                color: @brand-danger;
+                            }
+                        }
+                    }
+                }
+
+                & + .item {
+                    flex: 0 0 auto;
+                }
+            }
+        }
+
+        .visual-preview-body {
+            padding: 0 5px 5px 5px;
+            min-height: 430px;
+            position: relative;
+
+            tu-numeric, .card-numeric {
+                min-height: 200px;
+            }
+
+            tu-datatable {
+                .ps-scrollbar-y-rail {
+                    opacity: 0;
+                    display: none;
+                }
+
+                .table > tbody > tr > th, .table > thead > tr > th {
+                    position: static;
+                }
+
+                .card-pagination {
+                    width: 100%;
+                    padding-top: 0px;
+                    position: absolute;
+                    margin: 0px;
+                    left: 0;
+                    bottom: 10px;
+                    display: block;
+
+                    .card-pagination-wrapper {
+                        text-align: center;
+
+                        .pagination-buttons {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,85 @@
+<div class="annotations">
+    <div ng-if="$ctrl.user.hasAnyPermission('annotations annotations-management')">
+        <loader ctrl-check="$ctrl.loading"></loader>
+
+        <table class="annotations-table table table-bordered table-hover" ng-if="!$ctrl.loading">
+            <thead ng-if="$ctrl.card.annotations.items.length">
+                <tr>
+                    <th width="120">Category</th>
+                    <th width="250">Owner</th>
+                    <th>Content</th>
+                </tr>
+            </thead>
+            <tbody ng-mouseleave="$ctrl.hideChartTooltip()">
+                <tr ng-mouseover="$ctrl.showChartTooltip(item)" ng-repeat="item in $ctrl.card.annotations.items"
+                    ng-class="{hover: $ctrl.isHighlighted(item), info: item.selected}">
+                    <td ng-bind-html="$ctrl.formattedCategory(item.category)"></td>
+                    <td>
+                        <div class="annotation-owner">
+                            <img ng-src="{{item.owner.photo}}" width="20" height="20" class="img-rounded">
+                            <span ng-bind-html="item.owner.fullName"></span>
+                            <span class="grey-text" title="{{item.dateTitle}}">
+                            <i class="fa fa-clock-o"></i>
+                            {{item.dateFromNow}}
+                        </span>
+                        </div>
+                    </td>
+                    <td>
+                        <form>
+                            <div class="input-group" ng-if="item.isNew() || item.isInEditMode">
+                                <input type="text" class="form-control" ng-disabled="item.loading" placeholder="Enter annotation text..." ng-model="item.title">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success" ng-disabled="item.loading" type="submit" ng-click="$ctrl.save(item)">
+                                        <span ng-if="item.loading"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i></span>
+                                        <span ng-if="!item.loading">Save</span>
+                                    </button>
+                                    <a class="btn btn-link" ng-disabled="item.loading" type="button" ng-click="$ctrl.remove(item)">
+                                        <span>Cancel</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="annotation-data" ng-if="!item.isNew() && !item.isInEditMode">
+                            <span class="annotation-title" ng-bind="item.title" ng-click="$ctrl.toggle(item)"></span>
+
+                            <div class="annotation-edit-buttons" app-access permission="annotations-management" ng-if="item.isOwnedByCurrentUser()">
+                                <a class="delete-annotation" ng-click="$ctrl.remove(item)">
+                                    <span ng-if="item.loading"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i></span>
+                                    <span ng-if="!item.loading"><i class="fa fa-fw fa-trash"></i></span>
+                                </a>
+                                <a class="edit-annotation" ng-click="$ctrl.update(item)">
+                                    <i class="fa fa-fw fa-pencil"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ng-if="!$ctrl.card.annotations.items.length">
+            <div class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-comment-o"></i>
+                    </div>
+                    <span class="preview-title">There are no annotations yet</span>
+                    <span app-access permission="annotations-management">Click on chart to add one</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.user.hasAnyPermission('annotations annotations-management')">
+        <div class="preview-area-wrapper">
+            <div class="preview-area">
+                <div class="preview-icon animated zoomIn">
+                    <i class="fa fa-comment-o"></i>
+                </div>
+                <span class="preview-title">You do not have a permission to view annotations</span>
+                <span>Please contact organisation administrator</span>
+            </div>
+        </div>
+    </div>
+</div>

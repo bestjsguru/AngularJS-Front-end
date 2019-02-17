@@ -1,0 +1,26 @@
+<div class="api-token">
+    <span class="heading">Api Token</span>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="api-token-item">
+                    <div class="api-token-icon">
+                        <i class="fa fa-fw fa-key fa-3x"></i>
+                    </div>
+                    <div class="api-token-value">
+                        <span ng-if="!$ctrl.apiToken && !$ctrl.loading" class="text-danger api-token-status">No API Token Currently Available</span>
+                        <span ng-if="!$ctrl.apiToken && !$ctrl.loading">You do not yet have an API token - please click "Generate" to create one</span>
+                        <span ng-if="$ctrl.apiToken">
+                            <pre class="m-b-0" ng-bind="$ctrl.apiToken"></pre>
+                            <span class="help-block">* This token will be used for interfacing with external services</span>
+                        </span>
+                    </div>
+                    <div class="api-token-actions">
+                        <span ng-if="$ctrl.loading || $ctrl.generating" class="btn btn-fourth" disabled>Loading</span>
+                        <span ng-if="!$ctrl.apiToken && !$ctrl.loading && !$ctrl.generating" class="btn btn-fourth" ng-click="$ctrl.generate()">Generate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

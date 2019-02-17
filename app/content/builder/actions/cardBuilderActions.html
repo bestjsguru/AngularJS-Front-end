@@ -1,0 +1,65 @@
+<div class="btn-group card-actions" role="group">
+
+    <!-- Reorder Columns -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showReorderColumns()"
+            ng-click="$ctrl.openReorderColumns()"
+            ng-disabled="$ctrl.card.metrics.loading">
+        Reorder Columns
+    </button>
+
+    <!-- Goal -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showGoal()"
+            ng-click="$ctrl.openGoal()"
+            ng-disabled="$ctrl.card.metrics.loading"
+            ng-class="{'active': $ctrl.card.hasGoal()}">
+        Goal
+    </button>
+
+    <!-- Show SQL under card visual -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showChartSettings()"
+            ng-click="$ctrl.openChartSettings()"
+            ng-disabled="$ctrl.card.metrics.loading">
+        Chart Settings
+    </button>
+
+    <!-- Show SQL under card visual -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showSql()"
+            ng-click="$ctrl.toggleSql()"
+            ng-disabled="$ctrl.card.metrics.loading"
+            ng-class="{'active': $ctrl.card.showSql}">
+        SQL
+    </button>
+
+    <!-- Option for Trend Line ( line, spline, mixed, symbol, bar ) -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showTrendLine()"
+            ng-click="$ctrl.openTrendLine()"
+            ng-disabled="$ctrl.card.metrics.loading"
+            ng-class="{'active': $ctrl.card.showTrendLine}">
+        Trend Line
+    </button>
+
+    <!-- Table totals will only show for table type -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showTotals()"
+            ng-click="$ctrl.onShowTableTotalsClick()"
+            ng-disabled="$ctrl.card.metrics.loading"
+            ng-class="{'active': $ctrl.card.showTableTotals}">
+        Table Totals
+    </button>
+
+    <!-- Transpose table will only show for table type -->
+    <button type="button" class="btn btn-sm btn-fourth"
+            ng-if="$ctrl.showTranspose()"
+            ng-click="$ctrl.onTransposeTableClick()"
+            ng-disabled="$ctrl.card.metrics.loading"
+            ng-class="{'active': $ctrl.card.isTransposeTable}">
+        Transpose
+    </button>
+
+</div>
+

@@ -1,0 +1,55 @@
+<div class="export-data">
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <h3>
+                    Export [preview]
+                </h3>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <a class="btn btn-eighth pull-right" href ng-click="export.close()" title="Close">
+                    <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <loader ctrl-check="export.loading"></loader>
+
+        <div class="row" ng-if="!export.loading">
+            <p class="text-right">
+                Download CSV:
+                <button type="button" class="btn btn-eighth" ng-csv="export.table.data" csv-header="export.table.columns" filename="exported_data.csv">
+                    <i class="fa fa-file-text" aria-hidden="true" title="csv"></i>
+                </button>
+            </p>
+
+            <div class="data">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th ng-repeat="column in ::export.table.columns track by $index">
+                            {{:: column}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="row in ::export.table.data">
+                        <td ng-repeat="data in row track by $index">
+                            <div class="container-t">
+                                {{:: data}}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="!export.table.data.length">
+                        <td ng-attr-colspan="{{ export.table.columns.length || 1 }}" class="text-center">
+                            empty
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

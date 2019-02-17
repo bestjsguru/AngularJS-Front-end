@@ -1,0 +1,59 @@
+<div class="explain-card-info">
+
+    <div class="card-info-row">
+        <div class="card-info-column double">
+            <span class="title">Metrics</span>
+            <div class="card-info-content">
+                <div class="card-info-metric" ng-repeat="letter in $ctrl.letters">
+                    <a class="btn" ng-bind-html="letter[0]"></a>
+                    <span ng-bind-html="letter[1]"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-info-column" ng-if="$ctrl.card.filters.length">
+            <span class="title">Filters</span>
+            <div class="card-info-content">
+                <div class="filters-list" ng-repeat="filter in $ctrl.card.filters.items">
+                    <div ng-bind-html="$ctrl.convertFilter.toText(filter)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-info-row">
+        <div class="card-info-column" ng-if="$ctrl.card.groupings.length">
+            <span class="title">Groupings</span>
+            <div class="card-info-content">
+                <div class="groupings-list" ng-repeat="grouping in $ctrl.card.groupings.items">
+                    <div ng-bind-html="$ctrl.convertGrouping.toText(grouping)"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-info-column" ng-if="$ctrl.card.formulas.length">
+            <span class="title">Formulas</span>
+            <div class="card-info-content">
+                <div class="formulas-list" ng-repeat="formula in $ctrl.card.formulas.items">
+                    <div ng-bind-html="$ctrl.convertFormula.toText(formula)"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-info-column" ng-if="$ctrl.card.columnSorting.sortOrder.length">
+            <span class="title">Sorting</span>
+            <div class="card-info-content">
+                <div class="card-info-sorting" ng-repeat="sort in $ctrl.card.columnSorting.sortOrder track by $index">
+                    <span class="sort text-capitalize">
+                        ({{$index + 1}}) {{sort.text}}
+                    </span>
+                    <div class="sorting-txt" ng-class="{'text-success': sort.direction == 'asc', 'text-danger': sort.direction == 'desc'}">
+                        <div>{{sort.direction}}</div>
+                        <i class="fa fa-fw" ng-class="{'fa-arrow-up': sort.direction == 'asc', 'fa-arrow-down': sort.direction == 'desc'}"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

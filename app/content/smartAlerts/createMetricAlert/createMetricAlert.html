@@ -1,0 +1,96 @@
+<loader ctrl-check="$ctrl.loading.alert"></loader>
+<div class="metric-alerts-wrapper" ng-if="!$ctrl.loading.alert">
+
+    <div class="sub-header border">
+        <div class="item">
+            <div class="metric-alerts-header">
+                <span class="card-name" ng-bind-html="$ctrl.viewMode === 'create' ? 'Create Smart Alert' : 'Update Smart Alert'"></span>
+            </div>
+        </div>
+
+        <div class="item">
+            <a class="btn btn-second" ui-sref="smartAlerts({ layout: 'table' })">Cancel</a>
+            <a class="btn btn-first" ng-click="$ctrl.save()" ng-disabled="$ctrl.smartAlertForm.$invalid" ng-bind-html="$ctrl.viewMode === 'create' ? 'Create' : 'Update'"></a>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="$ctrl.smartAlertForm" ng-submit="$ctrl.save()" novalidate>
+                    <div class="metric-edit-form">
+                        <div class="item form-group" ng-class="{ 'has-error' : $ctrl.form.alertMetric.$invalid && !$ctrl.form.alertMetric.$pristine }">
+                            <label>Metric:</label>
+                            <ui-select search-enabled="true" name="alertMetric" ng-model="$ctrl.form.metric" on-select="$ctrl.onMetricSelect()" ng-disabled="$ctrl.loading.metrics" required>
+                                <ui-select-match placeholder="Select metric">{{$select.selected.label || $ctrl.metricPlaceholder()}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.metrics | customSearch: 'label,source': $select.search" group-by="'source'">
+                                    <span ng-bind-html="item.label | highlight: $select.search"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item form-group" ng-class="{ 'has-error' : $ctrl.form.name.$invalid && !$ctrl.smartAlertForm.alertName.$pristine }">
+                            <label>Alert Name:</label>
+                            <input type="text" name="alertName" ng-model="$ctrl.form.name" class="form-control" placeholder="Alert name" required>
+                        </div>
+
+                        <div class="item form-group" ng-class="{ 'has-error' : $ctrl.form.alertDescription.$invalid && !$ctrl.smartAlertForm.alertDescription.$pristine }">
+                            <label>Alert Description:</label>
+                            <input type="text" name="alertDescription" ng-model="$ctrl.form.description" class="form-control" placeholder="Alert description" required>
+                        </div>
+                    </div>
+
+                    <div class="metric-edit-form">
+                        <div class="item form-group">
+                            <label>Frequency:</label>
+                            <ui-select ng-model="$ctrl.form.frequency">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.alertFrequencies | filter: {label: $select.search}">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item form-group">
+                            <label>Alert Level:</label>
+                            <ui-select ng-model="$ctrl.form.alert_level">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.alertLevels | filter: {label: $select.search}">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item form-group" ng-class="{ 'has-error' : $ctrl.form.sendTo.$invalid && !$ctrl.form.sendTo.$pristine }">
+                            <label>Send Alerts to:</label>
+                            <app-multiselect-dropdown
+                                required
+                                name="sendTo"
+                                multiple="true"
+                                value-label="label"
+                                value-subtitle="email"
+                                options="$ctrl.organisationUsers"
+                                ng-model="$ctrl.form.users"
+                                search-enabled="true"
+                                placeholder="Select users">
+                            </app-multiselect-dropdown>
+                        </div>
+                    </div>
+                </form>
+
+                <hr>
+
+                <app-smart-alert-metric-filters
+                    metric="$ctrl.form.metric"
+                    existing-filters="$ctrl.form.filters"
+                    rule="$ctrl.form.filtersRule"
+                    on-apply-filter="$ctrl.applyFilter($event)"
+                    on-remove-filter="$ctrl.removeFilter($event)"
+                    on-update-filter="$ctrl.updateFilter($event)"
+                    on-apply-rule="$ctrl.applyRule($event)"
+                    view-mode="$ctrl.viewMode">
+                </app-smart-alert-metric-filters>
+            </div>
+        </div>
+    </div>
+</div>

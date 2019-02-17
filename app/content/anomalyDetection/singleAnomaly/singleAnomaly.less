@@ -1,0 +1,106 @@
+.single-anomaly {
+    .next-anomaly {
+        position: absolute;
+        right: 0;
+        top: 75px;
+        cursor: pointer;
+        width: 50px;
+
+        i {
+            width: 50px;
+        }
+    }
+    .previous-anomaly {
+        position: absolute;
+        left: 0;
+        top: 75px;
+        cursor: pointer;
+        width: 50px;
+
+        i {
+            width: 50px;
+        }
+    }
+
+    .disabled-button {
+        opacity: 0.2;
+    }
+
+    .anomaly-detection-details {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        color: @madison;
+        padding: 0 40px;
+
+        .success {
+            color: @td-turquoise;
+        }
+
+        .danger {
+            color: @td-red;
+        }
+
+        .actual-value-wrapper {
+            flex: 0 1 130px;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+            padding: 0 25px 0 0;
+
+            .actual-value {
+                font-size: 30px;
+                font-weight: 700;
+                margin-bottom: 13px;
+            }
+
+        }
+
+        .more-details {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            align-self: flex-start;
+
+            .anomaly-metric-name {
+                color: @madison;
+                font-size: 17px;
+                line-height: 22px;
+                font-weight: 500;
+                width: 100%;
+                display: block;
+
+                .fa-circle {
+                    font-size: 16px;
+                }
+            }
+
+            .table {
+                margin-top: 15px;
+
+                tr {
+                    th {
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+
+    .explore-dropdown {
+        display: inline-block;
+
+        .dropdown-menu {
+            border-radius: 3px;
+            font-size: 12px;
+
+            a {
+                color: @madison;
+
+                &:hover {
+                    background-color: @porcelain;
+                }
+            }
+        }
+    }
+}

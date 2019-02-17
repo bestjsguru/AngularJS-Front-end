@@ -1,0 +1,39 @@
+<table class="uib-timepicker">
+    <tbody>
+        <tr class="text-center">
+            <td class="uib-increment hours">
+                <a ng-click="$ctrl.incrementHours()" class="btn btn-link" tabindex="-1">
+                    <span class="fa fa-fw fa-chevron-up"></span>
+                </a>
+            </td>
+            <td>&nbsp;</td>
+            <td class="uib-increment minutes">
+                <a ng-click="$ctrl.incrementMinutes()" class="btn btn-link" tabindex="-1">
+                    <span class="fa fa-fw fa-chevron-up"></span>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group uib-time hours">
+              <input type="text" placeholder="HH" ng-model="$ctrl.hours" class="form-control text-center" maxlength="2" ng-blur="$ctrl.updateHours()">
+            </td>
+            <td class="uib-separator">:</td>
+            <td class="form-group uib-time minutes">
+              <input type="text" placeholder="MM" ng-model="$ctrl.minutes" class="form-control text-center" maxlength="2" ng-blur="$ctrl.updateMinutes()">
+            </td>
+        </tr>
+        <tr class="text-center">
+            <td class="uib-decrement hours">
+                <a ng-click="$ctrl.decrementHours()" class="btn btn-link" tabindex="-1">
+                    <span class="fa fa-fw fa-chevron-down"></span>
+                </a>
+            </td>
+            <td>&nbsp;</td>
+            <td class="uib-decrement minutes">
+                <a ng-click="$ctrl.decrementMinutes()" class="btn btn-link" tabindex="-1">
+                    <span class="fa fa-fw fa-chevron-down"></span>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

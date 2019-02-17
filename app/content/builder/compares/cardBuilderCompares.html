@@ -1,0 +1,90 @@
+<div class="card-builder-compares">
+
+    <div ng-if="!$ctrl.compares.length" class="preview-area-wrapper">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-circle-thin"></i><i class="fa fa-circle-thin"></i>
+            </div>
+            <span class="preview-title">No added compares at the moment</span>
+            <span><a href="#" ng-click="$ctrl.addNew()">Click here</a> to add compare to your card</span>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.compares.length">
+
+        <div ng-repeat="compare in $ctrl.compares track by $index">
+            <div class="single-compare" ng-class="{highlight: !compare.added}" ng-form="$ctrl.forms.compare_{{$index}}_form">
+                <div class="compare-option compare-visibility"
+                     ng-click="$ctrl.toggleVisibility(compare)">
+                    <a href="#" class="btn btn-fourth" tu-popover tu-popover-html="{{compare.info.hidden ? 'Show Compare' : 'Hide Compare'}}" tu-popover-placement="top">
+                        <i class="fa fa-eye fa-fw" ng-class="{'fa-eye-slash': compare.info.hidden}"></i>
+                    </a>
+                </div>
+                <div class="compare-option">
+                    <div ng-if="compare.added" class="compare-alias">
+                        <a class="btn">
+                            <span class="compare-icon">
+                                <i class="fa fa-circle-thin"></i><i class="fa fa-circle-thin"></i>
+                            </span>
+                        </a>
+                        <span class="dimension-name" ng-bind-html="compare.metric.label"></span>
+                    </div>
+                    <ui-select ng-if="!compare.added" search-enabled="false" name="metric"
+                               ng-model="compare.metric" theme="select2" class="w-100" required>
+                        <ui-select-match class="form-control" placeholder="Select Metric">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.metrics">
+                            <div ng-bind-html="item.label"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="compare-option">
+                    <input type="text" ng-model="compare.label" placeholder="Compare label" class="form-control">
+                </div>
+                <div class="compare-option">
+                    <tu-date-picker refresh="$ctrl.updateRange(dates, range, $index)"
+                                    from="compare.range.startDate"
+                                    to="compare.range.endDate"
+                                    current-range="compare.range.name"
+                                    show="['prevYearByExactDate', 'prevYearByWeekDate']"
+                                    hide="$ctrl.hiddenLabels"
+                                    class="compare-range-selector"
+                                    starting-day="$ctrl.card.dashboard.usedStartDayOfWeek">
+                    </tu-date-picker>
+                </div>
+                <div class="compare-option compare-color-picker">
+                    <div class="color-picker">
+                        <spectrum-colorpicker ng-model="compare.color" options="$ctrl.ColorPickerConfig.get()"></spectrum-colorpicker>
+                        <i class="fa fa-times remove-cross" ng-click="$ctrl.removeColor($index)"></i>
+                    </div>
+                </div>
+                <div class="compare-option compare-buttons">
+                    <div ng-if="!compare.checkDelete && !compare.deleting">
+                        <button ng-disabled="$ctrl.loading" class="btn btn-second" ng-click="compare.checkDelete = true">Delete</button>
+                        <button ng-disabled="$ctrl.loading" class="btn btn-first" ng-click="$ctrl.update($index)" type="button" ng-if="compare.added">Update</button>
+                        <button ng-disabled="$ctrl.loading" class="btn btn-first" ng-click="$ctrl.add($index)" type="button" ng-if="!compare.added">Add</button>
+                    </div>
+                    <div ng-if="compare.checkDelete && !compare.deleting">
+                        <button class="btn btn-fourth" ng-click="compare.checkDelete = false">No</button>
+                        <button class="btn btn-first" ng-click="$ctrl.remove($index)">Yes</button>
+                    </div>
+                    <div ng-if="compare.deleting">
+                        <button class="btn btn-block btn-fourth"><i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Deleting</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-compare new-compare">
+            <div class="compare-option">
+                <label class="checkbox text-left" ng-disabled="$ctrl.loading" ng-click="$ctrl.onShowCompareStatsClick()">
+                    <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.card.showCompareStats, 'fa-square-o': !$ctrl.card.showCompareStats}">&nbsp;</i>
+                    <span>Show compare stats</span>
+                </label>
+            </div>
+            <div class="compare-option compare-buttons">
+                <button type="button" class="btn btn-third btn-block" ng-click="$ctrl.addNew()"><i class="fa fa-plus fa-fw"></i> New compare</button>
+            </div>
+        </div>
+    </div>
+
+</div>

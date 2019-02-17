@@ -1,0 +1,183 @@
+<div class="modal-header">
+    <h4 class="modal-title">Customise this dashboard</h4>
+</div>
+<div class="modal-body">
+    <div class="modal-tabs-wrapper">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li ng-class="{'active': modal.tab == 'details'}">
+                <a ng-click="modal.tab = 'details'">details</a>
+            </li>
+            <li ng-class="{'active': modal.tab == 'cards'}">
+                <a ng-click="modal.tab = 'cards'">cards</a>
+            </li>
+            <li ng-class="{'active': modal.tab == 'theme'}" ng-if="modal.currentDashboard.isOwner()">
+                <a ng-click="modal.tab = 'theme'">theme</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane" ng-class="{'active': modal.tab == 'details'}">
+            <loader ctrl-check="modal.loading.details"></loader>
+            <form name="modal.form" ng-show="!modal.loading.details">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <input id="name" type="text" class="form-control" name="name" ng-model="modal.dashboard.name"
+                                   ng-minlength="3" required placeholder="Dashboard name"/>
+                            <div class="error-messages" ng-messages="modal.form.name.$error" ng-if="modal.dirty(modal.form.name)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <textarea id="description" type="text" class="form-control invite-area" name="description" ng-model="modal.dashboard.description" ng-minlength="3" required placeholder="Description (optional)"></textarea>
+                            <div class="error-messages" ng-messages="modal.form.description.$error" ng-if="modal.dirty(modal.form.description)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-b-15 row">
+                    <div class="col-xs-12" ng-class="{ 'has-error' : modal.form.dashboardOwner.$invalid && !modal.form.dashboardOwner.$pristine }">
+                        <label>Dashboard owner</label>
+                        <a class="pull-right"
+                               ng-if="modal.canChangeOwner() && !modal.loading.administrators && !modal.currentDashboard.isOwner()"
+                               ng-click="modal.takeOwnership()">
+                            <i class="fa fa-fw fa-key" aria-hidden="true"></i> Take Ownership
+                        </a>
+                        <ui-select ng-model="modal.dashboardOwner" ng-disabled="!modal.canChangeOwner() || modal.loading.administrators" on-select="modal.changeOwner($item)" name="dashboardOwner" required>
+                            <ui-select-match>
+                                <span ng-bind="!modal.loading.administrators ? modal.dashboardOwner.fullName : 'Loading'"></span>
+                            </ui-select-match>
+                            <ui-select-choices repeat="admin in modal.administrators">
+                                <span ng-bind-html="admin.fullName"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="checkbox" ng-click="modal.onUseStartDayOfWeekClick()">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': modal.dashboard.useStartDayOfWeek, 'fa-square-o': !modal.dashboard.useStartDayOfWeek}"></i>
+                                <span>Custom week start</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-8">
+                        <div class="form-group">
+                            <ui-select ng-disabled="!modal.dashboard.useStartDayOfWeek" search-enabled="false" ng-change="modal.onStartDayChange()" ng-model="modal.days.selected">
+                                <ui-select-match placeholder="Start day">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="day in modal.days | filter: {label: $select.search}">
+                                    <span ng-bind-html="day.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="form-group">
+                            <label class="checkbox" ng-click="modal.onUseTimezoneClick()">
+                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': modal.dashboard.useTimezone, 'fa-square-o': !modal.dashboard.useTimezone}"></i>
+                                <span>Use timezone</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-8">
+                        <div class="form-group">
+                            <app-timezone-picker ng-if="modal.dashboard.timezone" is-disabled="!modal.dashboard.useTimezone" timezone="modal.dashboard.timezone"></app-timezone-picker>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="help-block" ng-bind-html="modal.timezoneSentence()"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane" ng-class="{'active': modal.tab == 'cards'}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th width="60">Type</th>
+                    <th>Name</th>
+                    <th width="70" class="text-center">Visible</th>
+                    <th width="145" class="text-right" ng-if="modal.canModifyCards()"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="card in modal.currentDashboard.cards.items">
+                    <td>
+                        <span class="card-type-icon {{card.types.subType}}"></span>
+                    </td>
+                    <td ng-bind-html="card.getName()"></td>
+                    <td class="text-center" ng-click="modal.toggleCard(card)" ng-disabled="card.loading">
+                        <span class="btn btn-sm btn-second">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o': card.active, 'fa-square-o': !card.active}"></i>
+                        </span>
+                    </td>
+                    <td class="text-right dashboard-action-btns" ng-if="modal.canModifyCards()">
+                        <div ng-if="!card.confirmDelete && !card.deleting">
+                            <button class="btn btn-sm btn-second" ng-click="card.confirmDelete = true">Delete</button>
+                            <a class="btn btn-sm btn-first" ng-if="card.userCanEdit()" ui-sref="cardBuilder({cardId: {{card.id}} })" ng-click="modal.close()">Edit</a>
+                        </div>
+                        <div ng-if="card.confirmDelete && !card.deleting">
+                            <button class="btn btn-sm btn-second" ng-click="card.confirmDelete = false">No</button>
+                            <button class="btn btn-sm btn-first" ng-click="modal.deleteCard(card)">Yes</button>
+                        </div>
+                        <div ng-if="card.deleting">
+                            <button class="btn btn-sm btn-fourth"><i class="fa fa-spinner fa-spin"></i> Deleting</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="!modal.currentDashboard.cards.length">
+                    <td class="text-center" colspan="4">
+                        There are no cards on this dashboard yet
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane active" ng-if="modal.tab == 'theme' && modal.currentDashboard.isOwner()">
+            <app-dashboard-theme dashboard="modal.dashboard" close="modal.close()"></app-dashboard-theme>
+        </div>
+    </div>
+</div>
+<div class="modal-footer text-center" ng-if="modal.tab !== 'theme'">
+    <div ng-if="modal.tab == 'details'">
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-show="!modal.removeConfirm" class="btn btn-second btn-lg btn-block" ng-click="modal.removeConfirm = true" ng-disabled="modal.loading.details">Delete</button>
+
+                <div ng-show="modal.removeConfirm" class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-second btn-lg btn-block" ng-click="modal.removeConfirm = false" ng-disabled="modal.loading.details">No</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-lg btn-block" ng-click="modal.remove()" ng-disabled="modal.loading.details"
+                                ng-class="{'btn-fourth': modal.loading.details, 'btn-first': !modal.loading.details}">Yes</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-block" ng-click="modal.update()" ng-disabled="modal.loading.details"
+                        ng-class="{'btn-fourth': modal.loading.details, 'btn-first': !modal.loading.details}">Update dashboard</button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="modal.tab == 'cards'">
+        <a class="btn btn-first btn-lg col-md-12" ng-click="modal.close()">Close</a>
+    </div>
+</div>

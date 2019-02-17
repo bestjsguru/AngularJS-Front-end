@@ -1,0 +1,129 @@
+.organisation-theme, .dashboard-theme {
+    .select2-container {
+        .select2-choice {
+            height: 34px;
+            line-height: 32px;
+        }
+    }
+
+    h4 {
+        margin: 0 0 10px 0;
+    }
+
+    .color-picker-box-wrapper {
+        display: flex;
+        padding-top: 15px;
+
+        .color-picker-box {
+            display: flex;
+            flex: 0 1 250px;
+            margin: 0 0 5px 0;
+
+            label {
+                flex: 1 1 auto;
+                margin: 12px 0 0 7px;
+            }
+
+            .color-picker {
+                flex: 0 0 34px;
+            }
+        }
+    }
+
+    .color-picker {
+        padding: 5px;
+
+        .color-picker-tooltip {
+            display: none;
+            background: @white;
+            padding: 5px;
+            border: 1px solid @iron;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 45px;
+            left: -45px;
+            width: 132px;
+            z-index: 8;
+
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                bottom: -5px;
+                left: 62px;
+                width: 8px;
+                height: 8px;
+                background: @white;
+                border-right:1px solid @iron;
+                border-bottom:1px solid @iron;
+                -moz-transform:rotate(45deg);
+                -webkit-transform:rotate(45deg);
+            }
+
+            .btn {
+                padding: 3px 5px;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        &.disabled-colors {
+            pointer-events: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+
+            .sp-replacer {
+                .sp-preview {
+                    .disabled;
+
+                    .sp-preview-inner {
+                        .disabled;
+                    }
+                }
+            }
+        }
+
+        .sp-replacer {
+            .sp-preview {
+                border-radius: 100%;
+
+                .sp-preview-inner {
+                    border-radius: 100%;
+                }
+            }
+        }
+
+        &:hover {
+            .color-picker-tooltip {
+                display: block;
+            }
+        }
+    }
+
+    .chart-colors {
+        padding: 0 25px 15px 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        .color-picker {
+            margin: 5px 5px 0 0;
+            flex: 0 0 34px;
+        }
+
+        .add-color {
+            flex: 0 0 34px;
+            height: 34px;
+            border: 1px solid #ccc;
+            border-radius: 100%;
+            margin: 10px 10px 0 5px;
+            padding: 6px;
+            text-align: center;
+
+            &:hover {
+                color: @td-turquoise;
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+.forecast-analysis-drill-table {
+    .drill-filter {
+        padding: 15px;
+    }
+
+    .table {
+        th {
+            cursor: pointer;
+            position: relative;
+            white-space: normal;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            .fa {
+                position: absolute;
+                top: 13px;
+                right: 8px;
+                color: @hoki;
+            }
+
+            &:hover {
+                .fa {
+                    color: @madison;
+                }
+            }
+        }
+        td, th {
+            padding: 10px 20px 10px 14px;
+        }
+        tr {
+            td {
+                .drill-table-metric {
+                    display: flex;
+                    flex-wrap: wrap;
+                    min-width: 120px;
+
+                    .drill-table-danger, .drill-table-success {
+                        flex: 0 1 50%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-self: flex-start;
+
+                        .drill-table-value {
+                            width: 100%;
+                            display: block;
+                        }
+                    }
+
+                    .progress {
+                        width: 100%;
+                        display: block;
+                        margin-top: 1px;
+
+                        .progress-bar {
+                            min-width: 5%;
+                        }
+                    }
+
+                }
+
+                &:first-child {
+                    padding-left: 14px;
+                }
+            }
+        }
+    }
+}

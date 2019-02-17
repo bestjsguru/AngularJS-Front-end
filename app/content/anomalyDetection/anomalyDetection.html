@@ -1,0 +1,174 @@
+<div class="anomaly-detection">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>{{$ctrl.$window.isDemo ? 'Smart Alerts' : 'Anomaly Detection'}}</span>
+            </div>
+        </div>
+
+
+        <div class="item" ng-if="!$ctrl.isExport">
+            <div class="pull-right">
+                <div class="dashboard-actions">
+                    <div class="btn btn-eighth pull-right" tu-popover tu-popover-placement="top" tu-popover-html="Show List">
+                        <span ng-click="$ctrl.layout = 'list'">
+                            <i class="fa fa-fw fa-bars" ng-class="{red: $ctrl.layout == 'list'}" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="btn btn-eighth pull-right" tu-popover tu-popover-placement="top" tu-popover-html="Show 2 Columns">
+                        <span ng-click="$ctrl.layout = '2columns'">
+                            <i class="fa fa-fw fa-th-large" ng-class="{red: $ctrl.layout == '2columns'}" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <div class="btn btn-eighth pull-right" tu-popover tu-popover-placement="top" tu-popover-html="Show 3 Columns">
+                        <span ng-click="$ctrl.layout = '3columns'">
+                            <i class="fa fa-fw fa-th" ng-class="{red: $ctrl.layout == '3columns'}" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <form ng-submit="$ctrl.filter()" class="anomaly-form">
+                    <div class="item">
+                        <div class="form-group">
+                            <input ng-model="$ctrl.form.metric" type="text" class="form-control" placeholder="Metric Name" ng-disabled="$ctrl.loading"/>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="form-group">
+                            <ui-select ng-model="$ctrl.form.alertLevel" class="min-w-150" title="Alert Level" ng-disabled="$ctrl.loading">
+                                <ui-select-match allow-clear="true" placeholder="Alert Level">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.levels">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="form-group">
+                            <ui-select ng-model="$ctrl.form.frequency" class="min-w-150" title="Frequency" ng-disabled="$ctrl.loading">
+                                <ui-select-match allow-clear="true" placeholder="Frequency">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.frequencies">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="form-group">
+                            <ui-select ng-model="$ctrl.form.isGood" class="min-w-150" title="Good/Bad" ng-disabled="$ctrl.loading">
+                                <ui-select-match allow-clear="true" placeholder="Good/Bad">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.isGood">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="form-group">
+                            <ui-select ng-model="$ctrl.form.showNoData" class="min-w-150" title="Show Anomalies Only" ng-disabled="$ctrl.loading">
+                                <ui-select-match allow-clear="true" placeholder="Show Anomalies Only">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.showNoData">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="btn-group" role="group">
+                            <button ng-disabled="$ctrl.loading" type="button" class="btn btn-fourth" ng-click="$ctrl.reset()">Reset Filters</button>
+                            <button ng-disabled="$ctrl.loading" type="submit" class="btn btn-third">
+                                <i class="fa fa-check fa-fw" aria-hidden="true"></i> Apply Filters
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <loader ctrl-check="$ctrl.loading"></loader>
+            <div ng-if="!$ctrl.loading && $ctrl.cards.length">
+                <div gridster>
+                    <div gridster-item="$ctrl.gridsterItemOptions($index)" ng-repeat="card in $ctrl.cards track by $index">
+                        <div class="anomaly-wrapper">
+
+                            <div class="anomaly">
+                                <div class="anomaly-header">
+                                    <div class="card-name-holder">
+                                        <div class="anomaly-name-wrapper">
+                                            <div class="anomaly-name">
+                                                <span ng-bind-html="card.metrics.get(0).getName()"></span>
+                                            </div>
+                                        </div>
+                                        <div class="anomaly-details">
+                                            <span ng-bind-html="card.metrics.get(0).getDescription()"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-buttons-holder">
+                                        <div class="dropdown pull-right download-dropdown">
+                                            <a class="dropdown-toggle btn hover" data-toggle="dropdown" href="#">
+                                                <i class="fa fa-download"></i>
+                                            </a>
+                                            <ul class="dropdown-menu arrow-menu animated fadeIn">
+                                                <li>
+                                                    <a ng-click="$ctrl.download(card.id, 'png', card.metrics.get(0).getName())">
+                                                        <i class="fa fa-picture-o fa-fw"></i>
+                                                        <span>Download PNG</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ng-click="$ctrl.download(card.id, 'svg', card.metrics.get(0).getName())">
+                                                        <i class="fa fa-area-chart fa-fw"></i>
+                                                        <span>Download SVG</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a ng-click="$ctrl.download(card.id, 'pdf', card.metrics.get(0).getName())">
+                                                        <i class="fa fa-file-pdf-o fa-fw"></i>
+                                                        <span>Download PDF</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="anomaly-content">
+                                    <app-highchart ng-if="card.hasData() && !card.metrics.error" card="card"></app-highchart>
+
+                                    <div ng-if="!card.hasData() && !card.metrics.error" class="no-data">
+                                        <span>No data</span>
+                                    </div>
+
+                                    <div ng-if="card.metrics.error" class="card-error-message">
+                                        <i class="fa fa-2x fa-exclamation-triangle"></i>
+                                        <span class="card-error-title">Oops!</span>
+                                        <span ng-bind-html="card.metrics.errorMessage"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center no-metrics-message" ng-if="!$ctrl.loading && !$ctrl.cards.length">
+                <h5>
+                    <i class="fa fa-exclamation-triangle fa-fw"></i>
+                    There are no metrics to display at the moment
+                </h5>
+            </div>
+        </div>
+        <div class="row" ng-if="!$ctrl.loading && $ctrl.cards.length">
+            <div class="col-md-12 text-center">
+                <div uib-pagination items-per-page="$ctrl.pagination.perPage" max-size="10" boundary-link-numbers="true"
+                     total-items="$ctrl.pagination.total" ng-model="$ctrl.pagination.currentPage" ng-change="$ctrl.getAnomalies()"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="multiselect-dropdown" ng-class="{ 'has-error' : $ctrl.hasError }">
+    <div uib-dropdown auto-close="{{$ctrl.multiple ? 'outsideClick' : 'always'}}" is-open="$ctrl.isOpen">
+        <a uib-dropdown-toggle class="dropdown-toggle form-control" ng-disabled="$ctrl.isDisabled || $ctrl.loading">
+            {{$ctrl.placeholderText()}}
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul uib-dropdown-menu class="dropdown-menu arrow-menu animated fadeIn">
+            <li ng-if="$ctrl.searchEnabled" class="search-box" ng-click="$ctrl.preventClose($event)">
+                <input type="text" class="form-control" ng-model="$ctrl.query">
+            </li>
+            <li ng-if="$ctrl.multiple && $ctrl.showSelectActions" class="select-actions" ng-click="$ctrl.preventClose($event)">
+                <a ng-click="$ctrl.selectAll()">Select all</a>
+                <a ng-click="$ctrl.unselectAll()">Unselect all</a>
+            </li>
+            <li ng-repeat="option in $ctrl.options | searchByProperties: $ctrl.filterProperties : $ctrl.query" ng-class="{active: $ctrl.isSelected(option)}">
+                <a ng-click="$ctrl.toggle(option)">
+                    <span>{{::option[$ctrl.valueLabel]}}</span>
+                    <small ng-if="$ctrl.valueSubtitle">{{::option[$ctrl.valueSubtitle]}}</small>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

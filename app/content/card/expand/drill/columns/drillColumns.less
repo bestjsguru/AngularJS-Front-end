@@ -1,0 +1,160 @@
+.drill-columns {
+    display: none;
+    position: absolute;
+    min-width: 400px;
+    z-index: 10;
+    padding: 10px 12px;
+    background: @white;
+    border: solid 1px @iron;
+    border-radius: 3px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+
+    .drill-columns-title {
+        display: block;
+        margin: -10px -12px 5px -12px;
+        padding: 10px 12px 8px 12px;
+        font-size: 15px;
+        border-bottom: 1px solid @iron;
+        background: @porcelain;
+
+        .fa {
+            float: left;
+            margin: 1px 10px 0 0;
+            -webkit-text-stroke: 2px @porcelain;
+            font-size: 18px;
+        }
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    .drill-search {
+        position: relative;
+        margin: 0 0 5px 0;
+
+        .form-control {
+            height: 34px;
+            line-height: 32px;
+            padding-right: 30px;
+            padding-left: 0;
+            border-width: 0 0 1px 0;
+            border-radius: 0;
+        }
+
+        .fa-search {
+            position: absolute;
+            z-index: 4;
+            top: 8px;
+            right: 4px;
+            font-size: 14px;
+        }
+    }
+
+    .drill-columns-wrapper {
+        position: relative;
+        min-height: 300px;
+        max-height: 300px;
+        overflow-y: auto;
+
+        ul {
+            margin: 0;
+            padding: 0 10px 0 0;
+
+            li {
+                padding: 3px 0;
+                margin-top: 2px;
+
+                .drill-column-table {
+
+                    .drill-column-table-name {
+                        flex: 1 1 auto;
+                        line-height: 20px;
+                        display: block;
+                        position: relative;
+                        padding-left: 20px;
+
+                        .fa {
+                            position: absolute;
+                            top: 2px;
+                            left: -4px;
+                            font-size: 17px;
+                            -webkit-text-stroke: 2px @white;
+                        }
+                    }
+
+                    ul {
+                        overflow-y: unset;
+                        margin: 6px 0 0 20px;
+                        padding: 3px 0 0;
+                        border-top: solid 1px @iron;
+                        border-radius: 0;
+
+                        li {
+                            padding: 3px 0;
+                            margin-top: 2px;
+
+                            .drill-table-columns {
+                                display: flex;
+                                flex-wrap: nowrap;
+
+                                .drill-column-name {
+                                    flex: 1 1 auto;
+                                    line-height: 16px;
+                                    position: relative;
+                                    padding-right: 70px;
+
+                                    span:not(.drill-position) {
+                                        font-size: 10px;
+                                        line-height: 11px;
+                                        display: block;
+                                        position: absolute;
+                                        right: 0;
+                                        top: 0;
+                                        background: @porcelain;
+                                        padding: 1px 5px;
+                                    }
+
+                                    span {
+                                        &.drill-position {
+                                            i {
+                                                font-size: 10px;
+                                                line-height: 11px;
+                                                display: inline;
+                                                background: @porcelain;
+                                                padding: 1px 5px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.drill-active {
+                                &:hover {
+                                    cursor: not-allowed;
+
+                                    .drill-columns {
+                                        pointer-events: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .drill-error {
+        word-break: keep-all;
+
+        .fa {
+            color: @brand-danger;
+            font-size: 18px;
+        }
+
+        span {
+            opacity: .6;
+        }
+    }
+}

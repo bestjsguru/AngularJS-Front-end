@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h4 class="modal-title">Sentence builder</h4>
+</div>
+<div class="modal-body sentence-builder">
+    <div class="row">
+        <loader ctrl-check="!$ctrl.entries.length"></loader>
+
+        <form ng-submit="$ctrl.create()" ng-if="$ctrl.entries.length">
+            <div class="m-b-40">
+                Bellow you can enter any kind of meaningful sentence to get metric data and start building your card.
+                You have to use full metric name and you can filter by time period. <br><br>
+
+                <div ng-if="$ctrl.examples.length">
+                    Take a look at these examples and use them if you like: <br>
+
+                    <ul class="m-t-15 help-block">
+                        <li ng-repeat="example in $ctrl.examples track by $index" ng-click="$ctrl.sentence = example.text">
+                            <i class="fa fa-fw fa-pencil"></i>
+                            <span ng-bind-html="example.html"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="m-t-15" ng-class="{'has-error': $ctrl.error}">
+                <label>Make it happen</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-fw fa-pencil"></i></div>
+                    <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+                              ng-model="$ctrl.sentence" type="text" class="form-control"
+                              placeholder="Say something...">
+                    </textarea>
+                </div>
+            </div>
+            <span class="help-block">Type <u>Ctrl + Space</u> to see available metrics</span>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <a class="btn btn-first btn-lg btn-block" ng-click="$ctrl.create()" ng-disabled="!$ctrl.metrics.length || !$ctrl.sentence">
+                {{!$ctrl.metrics.length ? 'Loading metrics...' : 'Let\'s build a card'}}
+            </a>
+        </div>
+    </div>
+</div>

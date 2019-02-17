@@ -1,0 +1,61 @@
+.select2-results .select2-disabled {
+    .reached-cards-limit {
+        font-size: 9px;
+        color: #e94951;
+        text-transform: uppercase;
+        border: 1px solid #e94951;
+        padding: 0 3px;
+        font-weight: 400;
+        line-height: 13px;
+        border-radius: 2px;
+    }
+}
+.card-builder-date-picker-wrapper {
+    .card-builder-date-picker {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 100%;
+
+        .metric-date-picker {
+            flex: 1 1 200px;
+            margin-bottom: 7px;
+            align-self: flex-start;
+
+            .date-dropdown {
+                float: none !important;
+
+                &:after, &:before {
+                    display: none;
+                }
+
+                .dropdown-toggle {
+                    display: block;
+                    text-align: left;
+                    height: 34px;
+                    padding: 6px 12px;
+
+                    span {
+                        font-size: 14px;
+                    }
+
+                    .fa {
+                        position: absolute;
+                        font-size: 13px;
+                        right: 10px;
+                        top: 11px;
+                        z-index: 1;
+                    }
+                }
+
+            }
+
+            .calendar-holder {
+                right: 0px;
+                top: 34px;
+            }
+
+        }
+    }
+}
+

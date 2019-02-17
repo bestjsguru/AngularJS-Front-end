@@ -1,0 +1,42 @@
+<div class="dataset">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Data sources</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <loader ctrl-check="$ctrl.loading"></loader>
+
+        <div ng-if="$ctrl.error && !$ctrl.loading">
+            <div class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div ng-click="$ctrl.loadSources()" class="preview-icon animated zoomIn">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Something went wrong!</span>
+                    <span>Please click icon above in order to reload list of data sources</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-group">
+            <div ng-repeat="item in $ctrl.dataSources" class="panel single-item">
+                <div class="panel-heading">
+                    <div class="item-name">
+                        <i class="fa fa-fw fa-2x fa-database"></i>
+                        {{::item.name}}
+                    </div>
+                    <div class="icons pull-right">
+                        <span class="btn btn-xs btn-link" ng-click="$ctrl.manage($event, item)">
+                            <i class="fa fa-fw fa-cog"></i> Manage insights
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

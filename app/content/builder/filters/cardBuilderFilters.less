@@ -1,0 +1,211 @@
+.card-builder-filters {
+    display: block;
+    width: 100%;
+    border-top: 1px solid @porcelain;
+    border-bottom: 1px solid @porcelain;
+    background: @td-gray-pale;
+    margin-top: -1px;
+
+    .filters-preview {
+        padding: 10px 15px 10px 130px;
+        height: 40px;
+        display: block;
+        position: relative;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .filters-toggle {
+            position: absolute;
+            top: 10px;
+            left: 7px;
+            z-index: 1;
+            font-size: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: @madison;
+
+            .fa {
+                color: @hoki;
+            }
+
+            &:hover {
+                color: @brand-danger;
+            }
+
+            &:focus {
+                text-decoration: none;
+            }
+
+        }
+
+        .applied-filter {
+            margin:0px 8px 0 0px;
+
+            .filter {
+                font-weight: 500;
+            }
+
+            + .applied-filter:before {
+                content: "/";
+                margin-right: 10px;
+                color: @hoki;
+            }
+
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .filters-edit-area {
+
+        .single-filter {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            padding: 7px;
+            border-bottom: 1px solid @porcelain;
+
+            .filter-option {
+                flex: 1 1 200px;
+                margin: 0px 7px;
+                padding: 7px 0;
+                position: relative;
+
+                .ui-select-container {
+                    &.select2.direction-up {
+                        .ui-select-match {
+                            border-radius: 4px 4px 0 0;
+                        }
+
+                        .ui-select-dropdown {
+                            top: 100% !important;
+                            box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+                            border-top: none;
+                            border-radius: 0 0 4px 4px;
+                        }
+                    }
+                }
+
+                .checkbox {
+                    margin-top: 4px;
+                    margin-bottom: 0;
+                    display: inline-block;
+
+                    input[type="checkbox"] {
+                        position: static;
+                        margin: 0;
+                    }
+                }
+
+                &.filter-buttons {
+                    flex: 0 0 172px;
+                    margin-left: auto;
+                    padding-left: 7px;
+
+                    .btn {
+                        min-width: 80px;
+                    }
+                }
+
+                .filter-alias {
+                    display: block;
+                    width: 100%;
+                    background: @porcelain;
+                    border-radius: 3px;
+                    position: relative;
+                    padding: 7px 7px 7px 44px;
+                    height: 34px;
+
+                    a {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        z-index: 1;
+                        color: @white;
+                        padding: 6px 0px;
+                        width: 34px;
+                        height: 34px;
+                        background: @td-deep-blue;
+                        border-radius: 3px 0 0 3px;
+                        cursor: default;
+                    }
+
+                    .dimension-name {
+                        text-transform: capitalize;
+                    }
+
+                }
+
+                .multi-select-spinner {
+                    position: absolute;
+                    top: 14px;
+                    right: 10px;
+                    z-index: 1;
+                }
+
+                .filter-date-wrapper {
+                    .input-group {
+                        width: 100%;
+
+                        .input-group-btn {
+                            .date-trigger {
+                                padding: 6px 9px;
+                            }
+                        }
+
+                        .date-picker {
+                            float: none !important;
+
+                            .date-dropdown {
+                                float: none !important;
+
+                                &:after, &:before {
+                                    display: none;
+                                }
+
+                                .dropdown-toggle {
+                                    width: 100%;
+                                    text-align: left;
+                                    height: 34px;
+                                    padding: 6px 12px;
+
+                                    span {
+                                        font-size: 14px;
+                                    }
+
+                                    .fa {
+                                        position: absolute;
+                                        font-size: 13px;
+                                        right: 10px;
+                                        top: 11px;
+                                        z-index: 1;
+                                    }
+                                }
+                            }
+
+                            .calendar-holder {
+                                right: 0px;
+                                top: 42px;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            &:last-child {
+                border: 0;
+            }
+
+        }
+
+        .filter-rules {
+            display: block;
+            padding: 14px;
+        }
+
+    }
+
+}

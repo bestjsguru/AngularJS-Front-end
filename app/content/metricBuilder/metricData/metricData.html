@@ -1,0 +1,216 @@
+<div class="metric-data">
+    <div class="panel-group" ng-if="!md.hidden">
+        <loader ng-if="md.loading" ctrl-check="true"></loader>
+
+        <div ng-if="!md.loading">
+            <form name="md.form" novalidate>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label>Metric name</label>
+                            <input type="text" class="form-control" name="name" ng-model="md.data.name" required ng-minlength="3">
+
+                            <div class="error-messages" ng-messages="md.form.name.$error"
+                                 ng-if="md.dirty(md.form.name)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label>Metric description</label>
+                            <input type="text" class="form-control" name="description" ng-model="md.data.description" required ng-minlength="3">
+
+                            <div class="error-messages" ng-messages="md.form.description.$error"
+                                 ng-if="md.dirty(md.form.description)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-class="{'col-xs-6 col-sm-12 col-md-6': !md.data.isSqlBased(), 'col-xs-12': md.data.isSqlBased()}">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <ui-select name="complexity" ng-model="md.data.complexity" search-enabled="false" class="w-100" required>
+                                <ui-select-match placeholder="Select type">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item in md.complexities track by item.value">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <div class="error-messages" ng-messages="md.form.complexity.$error"
+                                 ng-if="md.dirty(md.form.complexity)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-12 col-md-6" ng-if="!md.data.isSqlBased()">
+                        <div class="form-group">
+                            <label>Metric source</label>
+                            <ui-select name="source" ng-model="md.data.source" search-enabled="false" class="w-100" ng-required="!md.data.isSqlBased()" ng-disabled="md.data.isSqlBased()">
+                                <ui-select-match placeholder="{{ md.metricSourcesPlaceholder() }}">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item in md.metricSources.items track by item.id">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <div class="error-messages" ng-messages="md.form.source.$error"
+                                 ng-if="md.dirty(md.form.source)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12" ng-if="md.isNormal()">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Table</label>
+                                    <input ng-if="!md.metricTables.items.length" type="text" class="form-control" disabled placeholder="{{ md.metricTablesPlaceholder() }}">
+                                    <ui-select name="table" ng-if="md.metricTables.items.length" ng-model="md.data.table" ng-change="md.onTableChange()"
+                                               search-enabled="true" class="w-100" required >
+                                        <ui-select-match placeholder="{{ md.metricTablesPlaceholder() }}">{{$select.selected.label}}</ui-select-match>
+                                        <ui-select-choices repeat="item in md.metricTables.items | filter: {name: $select.search} track by item.id">
+                                            <div ng-bind-html="item.label | highlight:$select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-messages" ng-messages="md.form.table.$error"
+                                         ng-if="md.dirty(md.form.table)">
+                                        <div ng-messages-include="error-messages"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Date Column</label>
+                                    <input ng-if="!md.dateColumns.items.length" type="text" class="form-control" disabled placeholder="{{ md.dateColumnsPlaceholder() }}">
+                                    <ui-select name="dateColumn" ng-show="md.dateColumns.items.length" ng-model="md.data.dateColumn" search-enabled="true" class="w-100" required>
+                                        <ui-select-match placeholder="{{ md.dateColumnsPlaceholder() }}">{{$select.selected.tableName + '.' + $select.selected.label}}</ui-select-match>
+                                        <ui-select-choices repeat="item in md.dateColumns.items | customSearch: 'label, name': $select.search track by item.id">
+                                            <div>
+                                                <span ng-bind-html="item.getLabel() | highlight:$select.search"></span>
+                                                <span class="additional-list-item" ng-if="item.tableName" ng-bind-html="item.tableName"></span>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-messages" ng-messages="md.form.dateColumn.$error"
+                                         ng-if="md.dirty(md.form.dateColumn)">
+                                        <div ng-message="required">It is not allowed to create metrics with an empty date column</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <tu-query-sql ng-if="!md.isNormal()" data="md.data"></tu-query-sql>
+                            <tu-query-statement ng-if="md.isNormal()" data="md.data" columns="md.availableColumns"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- xAxis options -->
+                <div class="row" ng-if="0">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>xAxis Label</label>
+                            <input name="xAxisLabel" ng-model="md.data.xAxis.label" type="text" class="form-control" required>
+
+                            <div class="error-messages" ng-messages="md.form.xAxisLabel.$error"
+                                 ng-if="md.dirty(md.form.xAxisLabel)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label>xAxis Type</label>
+                            <ui-select name="xAxisType" ng-model="md.data.xAxis.type" search-enabled="false" class="w-100" required>
+                                <ui-select-match placeholder="Select type">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item in md.xAxis.types">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <div class="error-messages" ng-messages="md.form.xAxisType.$error"
+                                 ng-if="md.dirty(md.form.xAxisType)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- yAxis options -->
+                <div class="row">
+                    <div class="col-xs-4" ng-if="0">
+                        <div class="form-group">
+                            <label>yAxis Label</label>
+                            <input name="yAxisLabel" ng-model="md.data.yAxis.label" type="text" class="form-control" required>
+
+                            <div class="error-messages" ng-messages="md.form.yAxisLabel.$error"
+                                 ng-if="md.dirty(md.form.yAxisLabel)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-class="{'col-xs-6': md.isSymbolVisible(), 'col-xs-12': !md.isSymbolVisible()}" ng-if="md.isNormal()">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <ui-select name="yAxisType" ng-model="md.data.yAxis.type" ng-change="md.onYAxisTypeChange()" search-enabled="false" class="w-100" required>
+                                <ui-select-match placeholder="Select type">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item in md.yAxis.types">
+                                    <div ng-bind-html="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                            <div class="error-messages" ng-messages="md.form.yAxisType.$error"
+                                 ng-if="md.dirty(md.form.yAxisType)">
+                                <div ng-messages-include="error-messages"></div>
+                            </div>
+
+                            <span ng-if="md.data.yAxis.symbol === 'time'" class="help-block">Metric should return values as number of seconds in order to be converted to time format HH:MM:SS</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6" ng-if="md.isSymbolVisible() && md.isNormal()">
+                        <div class="form-group">
+                            <label>Symbol</label>
+                            <input ng-model="md.data.yAxis.symbol" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6" ng-if="!md.data.isSqlBased()">
+                        <div class="form-group">
+                            <label>Number of decimal places</label>
+                            <ui-select search-enabled="false" ng-change="md.onDecimalsChange()" ng-model="md.data.numberOfDecimals">
+                                <ui-select-match placeholder="Number of decimals">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="decimal in md.decimals | filter: {label: $select.search}">
+                                    <span ng-bind-html="decimal.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6" ng-if="!md.data.isSqlBased()">
+                        <div class="form-group">
+                            <label>Table Color Mapping</label>
+                            <ui-select name="isIncrease" ng-model="md.data.isIncrease" search-enabled="false" class="w-100" required
+                                       ng-class="{ 'good': md.data.isIncrease.value, 'bad': !md.data.isIncrease.value }">
+                                <ui-select-match>Increase = {{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="item in md.isIncrease">
+                                    <div ng-bind="item.name"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row form-action-buttons">
+                <button ng-click="md.metricBuilder.closeForm()" ng-if="!md.data.id" class="btn btn-second">Cancel</button>
+                <button ng-click="md.save()" ng-disabled="md.form.$pending" class="btn btn-first" ng-bind-html="md.data.id ? 'Update metric' : 'Create metric'"></button>
+            </div>
+        </div>
+    </div>
+</div>

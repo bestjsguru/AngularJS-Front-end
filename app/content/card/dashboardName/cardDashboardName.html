@@ -1,0 +1,13 @@
+<div ng-if="$ctrl.dashboard">
+    <span ng-click="$ctrl.goToDashboard()" tu-popover
+       tu-popover-html="{{ $ctrl.getPopoverHtml() }}"
+       tu-popover-placement="top">
+        <i class="fa fa-desktop"></i>
+    </span>
+</div>
+
+<div ng-if="!$ctrl.dashboard">
+    <span>
+        <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+    </span>
+</div>

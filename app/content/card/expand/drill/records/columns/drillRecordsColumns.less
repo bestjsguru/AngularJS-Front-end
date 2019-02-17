@@ -1,0 +1,240 @@
+.drill-records-columns {
+    display: none;
+    position: absolute;
+    min-width: 400px;
+    z-index: 10;
+    padding: 10px 12px;
+    background: @white;
+    border: solid 1px @iron;
+    border-radius: 3px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+
+    .drill-columns-title {
+        display: block;
+        margin: -10px -12px 5px -12px;
+        padding: 10px 12px 8px 12px;
+        font-size: 15px;
+        border-bottom: 1px solid @iron;
+        background: @porcelain;
+
+        .fa {
+            float: left;
+            margin: 1px 10px 0 0;
+            -webkit-text-stroke: 2px @porcelain;
+            font-size: 18px;
+        }
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    .drill-footer {
+        display: block;
+        margin: 0px -12px -10px -12px;
+        padding: 10px 10px 10px 10px;
+        border-top: solid 1px #DADFE1;
+
+        .help-block {
+            margin-top: 7px;
+            margin-bottom: 5px;
+        }
+
+        .column-limit {
+            display: block;
+            margin-bottom: 10px;
+            border-bottom: solid 1px #DADFE1;
+
+            .help-block {
+                max-width: 370px;
+                color: @brand-danger;
+                margin-top: 0;
+            }
+        }
+    }
+
+    .drill-search {
+        position: relative;
+        margin: 0 0 5px 0;
+
+        .form-control {
+            height: 34px;
+            line-height: 32px;
+            padding-right: 30px;
+            padding-left: 0;
+            border-width: 0 0 1px 0;
+            border-radius: 0;
+        }
+
+        .fa-search {
+            position: absolute;
+            z-index: 4;
+            top: 8px;
+            right: 4px;
+            font-size: 14px;
+        }
+    }
+
+    .drill-columns-wrapper {
+        position: relative;
+        min-height: 300px;
+        max-height: 300px;
+        overflow-y: auto;
+
+        ul {
+            margin: 0;
+            padding: 0 10px 0 0;
+
+            li {
+                padding: 3px 0;
+                margin-top: 2px;
+
+                &.select-actions {
+                    text-align: right;
+                    text-transform: uppercase;
+                    font-size: 12px;
+
+                    a {
+                        display: inline-block;
+                        padding: 0;
+
+                        &:first-child {
+                            padding-right: 10px;
+                            margin-right: 5px;
+                            border-right: solid 1px @iron;
+                        }
+                    }
+                }
+
+                .drill-column-table {
+
+                    .drill-column-table-name {
+                        flex: 1 1 auto;
+                        line-height: 20px;
+                        display: block;
+                        position: relative;
+                        padding-left: 20px;
+                        padding-right: 20px;
+
+                        > .fa {
+                            position: absolute;
+                            top: 3px;
+                            left: 0;
+                            font-size: 15px;
+                        }
+
+                        .table-title {
+                            margin-left: 5px;
+                            margin-right: 5px;
+                            flex: 1 1 auto;
+
+                            .column-count {
+                                color: @hoki;
+                                font-weight: normal;
+                                padding-left: 5px;
+                                font-size: 11px;
+                            }
+
+                            .ui-select-highlight {
+                                font-weight: 500;
+                                color: @deep-blue;
+                                background: @iron;
+                            }
+                        }
+
+                        .table-collapse {
+                            position: absolute;
+                            top: 1px;
+                            right: 0;
+                            font-size: 15px;
+                        }
+                    }
+
+                    ul {
+                        overflow-y: unset;
+                        margin: 6px 0 0 20px;
+                        padding: 3px 0 0;
+                        border-top: solid 1px @iron;
+                        border-radius: 0;
+
+                        li {
+                            padding: 3px 0;
+                            margin-top: 2px;
+
+                            &[disabled] {
+                                opacity: 0.6;
+                                filter: grayscale(100%);
+                                background-image: none !important;
+                            }
+
+                            .drill-table-columns {
+                                display: flex;
+                                flex-wrap: nowrap;
+
+                                .drill-column-name {
+                                    flex: 1 1 auto;
+                                    line-height: 16px;
+                                    position: relative;
+                                    padding-right: 70px;
+
+                                    .column-type {
+                                        font-size: 10px;
+                                        line-height: 11px;
+                                        display: block;
+                                        position: absolute;
+                                        right: 0;
+                                        top: 0;
+                                        background: @porcelain;
+                                        padding: 1px 5px;
+                                    }
+
+                                    span {
+
+                                        .ui-select-highlight {
+                                            font-weight: 500;
+                                            color: @deep-blue;
+                                            background: @iron;
+                                        }
+
+                                        &.drill-position {
+                                            i {
+                                                font-size: 10px;
+                                                line-height: 11px;
+                                                display: inline;
+                                                background: @porcelain;
+                                                padding: 1px 5px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            &.drill-active {
+                                &:hover {
+                                    cursor: not-allowed;
+
+                                    .drill-columns {
+                                        pointer-events: none;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .drill-error {
+        word-break: keep-all;
+
+        .fa {
+            color: @brand-danger;
+            font-size: 18px;
+        }
+
+        span {
+            opacity: .6;
+        }
+    }
+}

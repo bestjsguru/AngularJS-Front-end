@@ -1,0 +1,44 @@
+<div class="root-cause-drill-table">
+    <div class="drill-filter" ng-if="$ctrl.hasFilter()">
+        Filter: <strong>{{$ctrl.drill.filterColumn}}</strong> equals <strong>{{$ctrl.drill.filterValue}}</strong>
+
+        <button ng-click="$ctrl.clearFilter()" class="btn btn-eighth btn-sm pull-right">
+            Reset filter
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th ng-repeat="header in $ctrl.headers track by $index" ng-click="$ctrl.orderBy($index)">
+                    <span>{{header.name}}</span>
+                    <i ng-if="!$ctrl.orderedBy($index)" class="fa fa-sort"></i>
+                    <i ng-if="$ctrl.orderedBy($index)" class="fa" ng-class="{'fa-caret-down': !$ctrl.reverse, 'fa-caret-up': $ctrl.reverse}"></i>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in $ctrl.pagination.rows track by $index">
+                <td ng-repeat="item in row">
+
+                    <div ng-if="!item.isMetric">
+                        <!-- Hide title for first column because that is LFL column -->
+                        <div title="{{$index > 0 ? item.value : ''}}" class="root-cause-value" ng-bind-html="item.value"></div>
+                    </div>
+
+                    <div class="root-cause-metric-value-wrapper" ng-if="item.isMetric">
+                        <app-root-cause-metric-value impacts="$ctrl.impacts" item="item" scroller="$ctrl.scroller"></app-root-cause-metric-value>
+                    </div>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="text-center" ng-if="$ctrl.showPagination()">
+        <ul uib-pagination direction-links="true" boundary-link-numbers="true" rotate="true" force-ellipses="true" max-size="10"
+            total-items="$ctrl.pagination.totalItems" ng-model="$ctrl.pagination.currentPage"
+            items-per-page="$ctrl.pagination.itemsPerPage" ng-change="$ctrl.paginate()"></ul>
+    </div>
+
+</div>

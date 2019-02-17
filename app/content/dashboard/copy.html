@@ -1,0 +1,71 @@
+<div class="modal-header">
+    <h4 class="modal-title">Copy this dashboard</h4>
+</div>
+<div class="modal-body">
+    <form name="cdm.form" action="" ng-submit="" novalidate role="form" class="">
+
+        <div class="form-group" ng-class="{'has-error': cdm.form.name.$dirty && cdm.form.name.$invalid}">
+            <input id="name" type="text" class="form-control" name="name" ng-model="cdm.dashboard.name" ng-minlength="3"
+                   required placeholder="Dashboard name" ng-disabled="cdm.loading" />
+            <div class="error-wrapper">
+                <div class="container-fluid error" ng-if="cdm.form.name.$dirty && cdm.form.name.$invalid">
+                    <div class="row">
+                        <div class="col-md-12" ng-show="cdm.form.name.$error.required" >
+                            <small>Dashboard name is required.</small>
+                        </div>
+                        <div class="col-md-12" ng-show="cdm.form.name.$error.minlength" >
+                            <small>Dashboard name is required to be at least 3 characters.</small>
+                        </div>
+                        <div class="col-md-12" ng-show="cdm.form.name.$error.unique">
+                            <small>{{cdm.form.name.$error.unique}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Select which folder you want the dashboard cloned to </label>
+
+            <ui-select name="filter" ng-model-options="{ debounce: 200 }" ng-model="cdm.folder" search-enabled="true"
+                       class="min-w-100 text-left" ng-disabled="cdm.loading">
+                <ui-select-match placeholder="Select folder (optional)">{{$select.selected.title}}</ui-select-match>
+                <ui-select-choices repeat="item in cdm.folders.items | filter: {title:  $select.search} track by item.id">
+                    <div>
+                        <span ng-bind="::item.title"></span>
+                        <small ng-if="::item.isOwnedByCurrentUser()" class="btn btn-xs btn-third dashboard-owner">Yours</small>
+                    </div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': cdm.form.description.$dirty && cdm.form.description.$invalid}">
+            <textarea id="description" type="text" class="form-control invite-area" name="description" ng-model="cdm.dashboard.description"
+                      ng-minlength="3" required placeholder="Description (optional)" ng-disabled="cdm.loading"></textarea>
+            <div class="error-wrapper">
+                <div class="container-fluid error" ng-if="cdm.form.description.$dirty && cdm.form.description.$invalid">
+                    <div class="row">
+                        <div class="col-md-12" ng-show="cdm.form.description.$error.required" >
+                            <small>Dashboard description is required.</small>
+                        </div>
+                        <div class="col-md-12" ng-show="cdm.form.description.$error.minlength" >
+                            <small>Dashboard description is required to be at least 3 characters.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-6">
+            <button class="btn btn-lg btn-second btn-block" ng-disabled="cdm.loading" ng-click="$dismiss()">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-first btn-lg col-md-12" ng-disabled="cdm.loading" ng-click="cdm.copy()">
+                {{cdm.loading ? 'Copying...' : 'Copy dashboard'}}
+            </button>
+        </div>
+    </div>
+</div>

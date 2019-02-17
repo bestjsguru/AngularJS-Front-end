@@ -1,0 +1,25 @@
+<div>
+    <div class="col-lg-12">
+        <div class="home-heading">
+            Favourites
+            <a ng-click="$ctrl.refreshCards()" class="btn btn-link pull-right" ng-class="{disabled: $ctrl.loading}"
+               tu-popover tu-popover-placement="top" tu-popover-html="Refresh Cards" ng-if="!$ctrl.isExport && $ctrl.hasCards()">
+                <i class="fa fa-fw fa-refresh" ng-class="{'fa-spin': $ctrl.loading}" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="favourite-cards-holder">
+        <tu-dashboard ng-if="$ctrl.hasCards()" dashboard="$ctrl.dashboard" permissions="$ctrl.dashboardPermissions" active="true"></tu-dashboard>
+
+        <div class="no-favourites" ng-if="!$ctrl.loading && !$ctrl.hasCards()">
+            <span>No Favourites</span>
+            <span>You can favourite a card by hovering over and choosing the heart</span>
+            <img src="/styles/images/favourite-card.png" alt="Favourite card">
+        </div>
+
+        <loader ctrl-check="$ctrl.loading && !$ctrl.hasCards()"></loader>
+    </div>
+</div>

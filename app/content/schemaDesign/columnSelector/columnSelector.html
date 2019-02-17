@@ -1,0 +1,10 @@
+<div ng-if="!$ctrl.columns.length">
+    <input placeholder="No Columns" type="text" class="form-control" disabled>
+</div>
+<div ng-if="$ctrl.columns.length">
+    <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+              name="{{$ctrl.name}}" ng-model="$ctrl.model" type="text" class="form-control"
+              placeholder="{{$ctrl.placeholder}}" required>
+    </textarea>
+</div>
+<span class="help-block">Click Ctrl + Space to see available columns</span>

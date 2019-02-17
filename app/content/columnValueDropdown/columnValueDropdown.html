@@ -1,0 +1,20 @@
+<div class="multiselect-dropdown" ng-class="{ 'has-error' : $ctrl.hasError }">
+    <div uib-dropdown auto-close="{{$ctrl.multiple ? 'outsideClick' : 'always'}}" is-open="$ctrl.isOpen">
+        <a uib-dropdown-toggle class="dropdown-toggle form-control" ng-disabled="$ctrl.isDisabled || $ctrl.loading">
+            {{$ctrl.placeholderText()}}
+            <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </a>
+        <ul uib-dropdown-menu class="dropdown-menu arrow-menu animated fadeIn">
+            <li ng-repeat="value in $ctrl.values" ng-class="{active: $ctrl.isSelected(value)}">
+                <a ng-click="$ctrl.toggle(value)">
+                    <span>{{::value}}</span>
+                </a>
+            </li>
+            <li class="show-more">
+                <a ng-click="$ctrl.showMore()">
+                    <span>show more...</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

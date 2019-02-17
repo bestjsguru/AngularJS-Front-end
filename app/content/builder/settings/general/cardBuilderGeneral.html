@@ -1,0 +1,68 @@
+<div class="items" ng-form="$ctrl.form">
+    <div class="item">
+        <div class="item form-group" ng-class="{'has-error': $ctrl.form.name.$dirty && $ctrl.form.name.$invalid}">
+            <label>Card Name:</label>
+            <input required name="name" type="text" ng-model="$ctrl.card.name" placeholder="Enter Card Name" class="form-control">
+        </div>
+        <div class="item form-group">
+            <label>Dashboard:</label>
+            <app-multiselect-dropdown
+                required
+                name="dashboard"
+                value-label="name"
+                value-subtitle="folderName"
+                options="$ctrl.userDashboards"
+                ng-if="$ctrl.userDashboards.length"
+                ng-model="$ctrl.selectedDashboard"
+                search-enabled="true"
+                placeholder="Select Dashboard">
+            </app-multiselect-dropdown>
+
+            <div class="help-block" ng-if="$ctrl.card.dashboard.timezoneString()">
+                <i class="fa fa-fw fa-globe" aria-hidden="true"></i> {{$ctrl.card.dashboard.timezoneString()}}
+            </div>
+            <button class="btn btn-block btn-link" ng-click="$ctrl.createDashboard()" ng-if="!$ctrl.cardBuilder.userDashboards.length">
+                Create your first dashboard
+            </button>
+        </div>
+    </div>
+    <div class="item">
+        <div class="item form-group" ng-if="!$ctrl.card.metrics.isCohort()" ng-disabled="$ctrl.card.metrics.loading">
+            <label>Frequency:</label>
+            <ui-select on-select="$ctrl.cardBuilder.setFrequency($model)"
+                       ng-model-options="{getterSetter: true, debounce: 100}" ng-model="$ctrl.getSetFrequency"
+                       ng-disabled="!$ctrl.cardBuilder.availableFrequencies.length">
+                <ui-select-match placeholder="Select Frequency">{{$select.selected.capitalizeFirstLetter() || 'Select Frequency'}}</ui-select-match>
+                <ui-select-choices repeat="frequency in $ctrl.cardBuilder.availableFrequencies">
+                    <div ng-bind-html="frequency.capitalizeFirstLetter()"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="item form-group card-builder-date-picker-wrapper">
+
+            <div class="card-builder-date-picker" ng-disabled="$ctrl.card.metrics.loading">
+                <div class="metric-date-picker">
+                    <label>Date Range:</label>
+                    <div class="dropdown">
+                        <!--maybe here is missing ngIf for check for notCohort?-->
+                        <tu-date-picker refresh="$ctrl.cardBuilder.updateDates(dates, range)"
+                                        from="$ctrl.card.fromDate" to="$ctrl.card.toDate"
+                                        current-range="$ctrl.card.rangeName"
+                                        current-number="$ctrl.card.customDateMap"
+                                        refresh-moving="$ctrl.cardBuilder.updateMoving(moving)"
+                                        show-moving="true"
+                                        moving="$ctrl.card.moving"
+                                        show="['customDate']"
+                                        hide="['cardDateRange']"
+                                        starting-day="$ctrl.card.dashboard.usedStartDayOfWeek"
+                                        delay="900"></tu-date-picker>
+                    </div>
+                    <span class="help-block">
+                        <i class="fa fa-fw fa-calendar"></i>
+                        {{$ctrl.card.getDateString()}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

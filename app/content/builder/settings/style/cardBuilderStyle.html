@@ -1,0 +1,85 @@
+<div class="card-visual-picker">
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('numeric', 'numeric')" ng-class="{active: $ctrl.currentType == 'numeric'}"
+            tu-popover tu-popover-html="Numeric" tu-popover-placement="top">
+        <span class="card-type-icon numeric"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('table', 'table')" ng-class="{active: $ctrl.currentType == 'table'}"
+            tu-popover tu-popover-html="Table" tu-popover-placement="top">
+        <span class="card-type-icon table"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('map', 'heat')" ng-class="{active: $ctrl.currentType == 'heat'}"
+            tu-popover tu-popover-html="UK Heat Map" tu-popover-placement="top">
+        <span class="card-type-icon map"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('line', 'line')" ng-class="{active: $ctrl.currentType == 'line'}"
+            tu-popover tu-popover-html="Line" tu-popover-placement="top">
+        <span class="card-type-icon line"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('line', 'symbol')" ng-class="{active: $ctrl.currentType == 'symbol'}"
+            tu-popover tu-popover-html="Symbol" tu-popover-placement="top">
+        <span class="card-type-icon symbol"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('line', 'spline')" ng-class="{active: $ctrl.currentType == 'spline'}"
+            tu-popover tu-popover-html="Spline" tu-popover-placement="top">
+        <span class="card-type-icon spline"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('line', 'mixed')" ng-class="{active: $ctrl.currentType == 'mixed'}"
+            tu-popover tu-popover-html="Mixed Line" tu-popover-placement="top">
+        <span class="card-type-icon mixed"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('scatter', 'scatter')" ng-class="{active: $ctrl.currentType == 'scatter'}"
+            tu-popover tu-popover-html="Scatter Plot" tu-popover-placement="top">
+        <span class="card-type-icon scatter"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('bubble', 'bubble')" ng-class="{active: $ctrl.currentType == 'bubble'}"
+            tu-popover tu-popover-html="Bubble chart" tu-popover-placement="top">
+        <span class="card-type-icon bubble"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('sankey', 'sankey')" ng-class="{active: $ctrl.currentType == 'sankey'}"
+            tu-popover tu-popover-html="Sankey Diagram" tu-popover-placement="top">
+        <span class="card-type-icon sankey"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('bar', 'bar')" ng-class="{active: $ctrl.currentType == 'bar'}"
+            tu-popover tu-popover-html="Bar" tu-popover-placement="top">
+        <span class="card-type-icon bar"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('bar', 'horizontal')" ng-class="{active: $ctrl.currentType == 'horizontal'}"
+            tu-popover tu-popover-html="Horizontal Bar" tu-popover-placement="top">
+        <span class="card-type-icon horizontal"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('gauge', 'gauge')" ng-class="{active: $ctrl.currentType == 'gauge'}"
+            tu-popover tu-popover-html="Gauge" tu-popover-placement="top">
+        <span class="card-type-icon gauge"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('pie', 'pie')" ng-class="{active: $ctrl.currentType == 'pie'}"
+            tu-popover tu-popover-html="Pie" tu-popover-placement="top">
+        <span class="card-type-icon pie"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('donut', 'donut')" ng-class="{active: $ctrl.currentType == 'donut'}"
+            tu-popover tu-popover-html="Donut" tu-popover-placement="top">
+        <span class="card-type-icon donut"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('funnel', 'funnel')" ng-class="{active: $ctrl.currentType == 'funnel'}"
+            tu-popover tu-popover-html="Funnel" tu-popover-placement="top">
+        <span class="card-type-icon funnel"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('sunburst', 'sunburst')" ng-class="{active: $ctrl.currentType == 'sunburst'}"
+            tu-popover tu-popover-html="Sunburst" tu-popover-placement="top">
+        <span class="card-type-icon sunburst"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('treemap', 'treemap')" ng-class="{active: $ctrl.currentType == 'treemap'}"
+            tu-popover tu-popover-html="Treemap" tu-popover-placement="top">
+        <span class="card-type-icon treemap"></span>
+    </a>
+    <a href class="icon-wrapper" ng-click="$ctrl.changeType('bullet', 'bullet')" ng-class="{active: $ctrl.currentType == 'bullet'}"
+            tu-popover tu-popover-html="Bullet" tu-popover-placement="top">
+        <span class="card-type-icon bullet"></span>
+    </a>
+</div>
+
+<app-scatter-settings ng-if="$ctrl.currentType == 'scatter'"></app-scatter-settings>
+<app-bubble-settings ng-if="$ctrl.currentType == 'bubble'"></app-bubble-settings>
+<app-sankey-settings ng-if="$ctrl.currentType == 'sankey'"></app-sankey-settings>
+<app-bullet-settings ng-if="$ctrl.currentType == 'bullet'"></app-bullet-settings>
+<app-mixed-settings ng-if="$ctrl.currentType == 'mixed'"></app-mixed-settings>
+<app-treemap-settings ng-if="$ctrl.currentType == 'treemap'"></app-treemap-settings>

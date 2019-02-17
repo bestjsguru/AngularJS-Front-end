@@ -1,0 +1,116 @@
+@import (reference) "../../bower_components/bootstrap/less/mixins";
+
+.color-picker {
+    display: inline-block;
+    position: relative;
+
+    .sp-replacer {
+        border: none;
+        background: none;
+        padding: 0;
+
+        .sp-preview {
+            width: 34px;
+            height: 34px;
+            border-radius: 3px;
+            border-color: @borderColor;
+            margin-right: 0;
+
+            .sp-preview-inner {
+                border-radius: 3px;
+
+                &.sp-clear-display {
+                    background-color: @white !important;
+                    background-image: none;
+                }
+            }
+        }
+
+        .sp-dd {
+            display: none;
+        }
+    }
+
+    .remove-cross {
+        vertical-align: top;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        border-left: 1px solid @borderColorLight;
+        border-bottom: 1px solid @borderColorLight;
+        border-bottom-left-radius: 3px;
+        border-top-right-radius: 3px;
+        padding: 1px 2px;
+        background-color: @white;
+        font-size: 11px;
+        cursor: pointer;
+        color: @td-gray;
+        &:hover{
+            color: @brand-danger;
+        }
+    }
+}
+
+.sp-container {
+    border-color: @borderColor;
+    background-color: @porcelain;
+
+    &.sp-clear-enabled {
+        .sp-picker-container {
+            .sp-clear {
+                display: none;
+            }
+
+            .sp-hue {
+                top: 0;
+                height: 100%;
+            }
+        }
+    }
+
+    .sp-picker-container {
+        .sp-color, .sp-hue, .sp-clear {
+            border-color: @borderColor;
+        }
+
+        .sp-button-container {
+            margin-top: 10px;
+
+            .sp-choose {
+                &:active, &:focus {
+                    outline: none;
+                    color: inherit;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    .sp-input-container {
+        .sp-input {
+            padding: 4px 5px;
+            border-radius: 0;
+            border: 1px solid @borderColor;
+            background-color: @white;
+            color: @deep-blue;
+            text-transform: uppercase;
+
+            &:active, &:focus {
+                outline: none;
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .sp-palette-container {
+
+        .sp-palette {
+            max-width: 105px;
+        }
+    }
+
+    .sp-initial {
+        border-color: @borderColor;
+    }
+}

@@ -1,0 +1,62 @@
+<div class="date-picker" ng-class="{'moving-enabled': dp.showMoving}">
+    <div class="dropdown date-dropdown pull-right">
+        <a class="dropdown-toggle btn btn-fourth btn-lg" data-toggle="dropdown">
+            <span class="date-dropdown-txt" ng-bind-html="dp.getRangeLabel()"></span>
+            <i class="fa fa-sort"></i>
+        </a>
+        <ul class="dropdown-menu arrow-menu periods animated fadeIn">
+            <li class="moving-selector dropdown-header" ng-if="!dp.currentRangeObject.rolling">
+                Moving date
+            </li>
+            <li class="moving-selector" ng-if="!dp.currentRangeObject.rolling">
+                <div class="moving-options" ng-if="dp.showMovingOptions">
+                    <span class="date-dropdown-txt moving-title">
+                        <input ng-model="dp.moving.from" type="checkbox" class="js-switch tiny"
+                                ui-switch="{color: 'rgb(25, 169, 219)', secondaryColor: '#f1f1f1'}"
+                                ng-change="dp.onMovingChange()"/> From
+                    </span>
+                    <span class="date-dropdown-txt moving-title">
+                        <input ng-model="dp.moving.to" type="checkbox" class="js-switch tiny"
+                                ui-switch="{color: 'rgb(25, 169, 219)', secondaryColor: '#f1f1f1'}"
+                                ng-change="dp.onMovingChange()"/> To
+                    </span>
+                </div>
+            </li>
+            <li data="{{::item.label }}" ng-disabled="item.header" ng-repeat="item in dp.items | filter : dp.notCustomDate"
+                ng-class="{'dropdown-header': item.header, custom: item.custom}" ng-click="dp.changeRange(item)"
+                class="date-range-label">
+
+                <span ng-if="item.header">{{:: item.label }}</span>
+
+                <a role="menuitem" ng-if="!item.header" tabindex="-1" ng-class="{selected: dp.currentRange == item.value}">
+                    <i class="fa fa-check"></i> {{::item.label }}
+
+                    <i ng-if="item.help" class="fa fa-fw fa-question-circle-o date-range-help"
+                       tu-popover tu-popover-html="{{:: item.help }}" tu-popover-placement="top"></i>
+                </a>
+            </li>
+
+            <!--lastXdays value-->
+            <li ng-repeat="item in dp.items | filter : dp.isCustomDate" ng-if="dp.isAvailableCustom()"  ng-click="dp.changeRange(item)">
+                <a role="menuitem" tabindex="-1" class="last-x-item" ng-class="{selected: dp.currentRange == item.value}">
+                    <i class="fa fa-check"></i>
+                    From
+                    <input min="0" type="number" ng-model="item.numbers.from" ng-class="{'has-error': dp.isCustomDateFromInputError}"
+                           ng-change="dp.changeRange(item)" class="last-x-input">
+                    days ago to
+                    <input min="0" type="number" ng-model="item.numbers.to" ng-class="{'has-error': dp.isCustomDateToInputError}"
+                           ng-change="dp.changeRange(item)" class="last-x-input">
+                    days ago
+                </a>
+            </li>
+        </ul>
+    </div>
+    <tu-calendar ng-if="dp.isCalendarShown"
+                 apply-function="dp.setCustomRange(range)"
+                 close-function="dp.onCalendarClose()"
+                 double="{{dp.doubleCalendar}}"
+                 date-range="dp.dateRange"
+                 starting-day="dp.startingDay"
+                 week-picker-mode="{{dp.weekPickerMode}}"
+    ></tu-calendar>
+</div>

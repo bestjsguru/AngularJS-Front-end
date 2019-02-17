@@ -1,0 +1,131 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.isEditMode() ? $ctrl.metric.label : 'Create New Metric'}}</h4>
+</div>
+<div class="modal-body">
+    <div class="metric-data">
+        <div class="panel-group" ng-if="!$ctrl.hidden">
+            <loader ng-if="$ctrl.loading" ctrl-check="true"></loader>
+
+            <div ng-if="!$ctrl.loading">
+                <form name="$ctrl.form" novalidate>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Metric name</label>
+                                <input type="text" class="form-control" name="name" ng-model="$ctrl.data.name" required ng-minlength="3">
+
+                                <div class="error-messages" ng-messages="$ctrl.form.name.$error"
+                                     ng-if="$ctrl.dirty($ctrl.form.name)">
+                                    <div ng-messages-include="error-messages"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="row">
+
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label>Date Column</label>
+                                        <input ng-if="!$ctrl.dateColumns.items.length" type="text" class="form-control" disabled placeholder="{{ $ctrl.dateColumnsPlaceholder() }}">
+                                        <ui-select name="dateColumn" ng-show="$ctrl.dateColumns.items.length" ng-model="$ctrl.data.dateColumn" search-enabled="true" class="w-100" required>
+                                            <ui-select-match placeholder="{{ $ctrl.dateColumnsPlaceholder() }}">{{$select.selected.tableName + '.' + $select.selected.label}}</ui-select-match>
+                                            <ui-select-choices repeat="item in $ctrl.dateColumns.items | customSearch: 'label, name': $select.search track by item.id">
+                                                <div>
+                                                    <span ng-bind-html="item.getLabel() | highlight:$select.search"></span>
+                                                    <span class="additional-list-item" ng-if="item.tableName" ng-bind-html="item.tableName"></span>
+                                                </div>
+                                            </ui-select-choices>
+                                        </ui-select>
+
+                                        <div class="error-messages" ng-messages="$ctrl.form.dateColumn.$error"
+                                             ng-if="$ctrl.dirty($ctrl.form.dateColumn)">
+                                            <div ng-message="required">It is not allowed to create metrics with an empty date column</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <tu-query-statement data="$ctrl.data" columns="$ctrl.availableColumns"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div ng-class="{'col-xs-6': $ctrl.isSymbolVisible(), 'col-xs-12': !$ctrl.isSymbolVisible()}">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <ui-select name="yAxisType" ng-model="$ctrl.data.yAxis.type" ng-change="$ctrl.onYAxisTypeChange()" search-enabled="false" class="w-100" required>
+                                    <ui-select-match placeholder="Select type">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.yAxis.types">
+                                        <div ng-bind-html="item.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                                <div class="error-messages" ng-messages="$ctrl.form.yAxisType.$error"
+                                     ng-if="$ctrl.dirty($ctrl.form.yAxisType)">
+                                    <div ng-messages-include="error-messages"></div>
+                                </div>
+
+                                <span ng-if="$ctrl.data.yAxis.symbol === 'time'" class="help-block">Metric should return values as number of seconds in order to be converted to time format HH:MM:SS</span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6" ng-if="$ctrl.isSymbolVisible()">
+                            <div class="form-group">
+                                <label>Symbol</label>
+                                <input ng-model="$ctrl.data.yAxis.symbol" type="text" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Number of decimal places</label>
+                                <ui-select search-enabled="false" ng-model="$ctrl.data.numberOfDecimals">
+                                    <ui-select-match placeholder="Number of decimals">{{$select.selected.label}}</ui-select-match>
+                                    <ui-select-choices repeat="decimal in $ctrl.decimals | filter: {label: $select.search}">
+                                        <span ng-bind-html="decimal.label"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Table Color Mapping</label>
+                                <ui-select name="isIncrease" ng-model="$ctrl.data.isIncrease" search-enabled="false" class="w-100" required
+                                           ng-class="{ 'good': $ctrl.data.isIncrease.value, 'bad': !$ctrl.data.isIncrease.value }">
+                                    <ui-select-match>Increase = {{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="item in $ctrl.isIncrease">
+                                        <div ng-bind="item.name"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()">Save</button>
+        </div>
+    </div>
+</div>

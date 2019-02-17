@@ -1,0 +1,60 @@
+<div class="kpi-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">Metric Selection</h4>
+    </div>
+    <div class="modal-body">
+        <div class="metric-selection-wrapper">
+
+            <loader ctrl-check="$ctrl.loading"></loader>
+
+            <div class="metric-selection-column" ng-if="!$ctrl.loading">
+                <span class="metric-selection-heading">All metrics</span>
+
+                <div class="kpi-metric-search">
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" ng-model="$ctrl.query" placeholder="Search Metrics">
+                        <i class="fa fa-search form-control-feedback"></i>
+                    </div>
+                </div>
+
+                <ul class="kpi-metric-list">
+                    <li ng-repeat="metric in $ctrl.metrics | filter : {name: $ctrl.query} track by $index">
+                        <div class="kpi-single-metric" ng-class="{selected: $ctrl.isSelected(metric)}">
+                            <span class="kpi-single-metric-name" ng-bind-html="metric.name"></span>
+                            <a href="#" class="btn btn-link btn-sm" ng-click="$ctrl.select(metric)">
+                                <i class="fa fa-plus fa-fw"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="metric-selection-column" ng-if="!$ctrl.loading">
+                <span class="metric-selection-heading">Selected metrics</span>
+
+                <ul class="kpi-metric-list">
+                    <li ng-repeat="metric in $ctrl.selectedMetrics track by $index">
+                        <div class="kpi-single-metric">
+                            <span class="kpi-single-metric-name" ng-bind-html="metric.name"></span>
+                            <a href="#" class="btn btn-link btn-sm" ng-click="$ctrl.remove(metric)">
+                                <i class="fa fa-times fa-fw"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

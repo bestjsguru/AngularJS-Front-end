@@ -1,0 +1,86 @@
+<div class="card-builder-drill">
+
+    <loader ctrl-check="$ctrl.loading" class="small-loader"></loader>
+
+    <div ng-if="!$ctrl.loading && !$ctrl.drills.length" class="preview-area-wrapper">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-level-down"></i>
+            </div>
+            <span ng-if="$ctrl.columns.length" class="preview-title">There are no drill levels defined at the moment</span>
+            <span ng-if="$ctrl.columns.length"><a href="#" ng-click="$ctrl.addNew()">Click here</a> to add drill level to your card</span>
+
+            <span ng-if="!$ctrl.columns.length" class="preview-title">There are no common columns</span>
+            <span ng-if="!$ctrl.columns.length">In order to add new drill level card must contain common columns <br>across all metrics. You can try with removing some metrics.</span>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.loading && $ctrl.drills.length">
+
+        <div ng-repeat="drill in $ctrl.drills track by $index">
+            <div class="single-drill" ng-class="{highlight: !drill.added, 'disabled': $ctrl.isDisabled(drill)}" ng-form="$ctrl.forms.drill_{{$index}}_form">
+                <div class="drill-option" ng-class="{'drill-new': !drill.added}">
+                    <div class="drill-alias">
+                        <a class="btn">
+                            <i class="fa fa-level-down" ng-if="$index < $ctrl.drills.length-1"></i>
+                            {{$index + 1}}
+                        </a>
+                        <span ng-if="drill.added">
+                            (<span ng-bind-html="drill.chartType"></span> -
+                            <span ng-bind-html="drill.operation"></span>
+                            <span ng-bind-html=" ' - ' + drill.column.label" ng-if="drill.column"></span>)
+                            <span ng-if="$ctrl.isDisabled(drill)" class="disabled-msg">(Disabled with multiple metrics)</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-if="!drill.added" class="drill-option">
+                    <ui-select ng-model="drill.chartType" class="w-100" required
+                               ng-disabled="drill.operation.type != 'groupby' || !$ctrl.canAddLevel()">
+                        <ui-select-match placeholder="Select chart type">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.chartTypes | filter: {label: $select.search}">
+                            <div ng-bind-html="item.label | highlight:$select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div ng-if="!drill.added" class="drill-option">
+                    <ui-select ng-model="drill.column" search-enabled="true" class="w-100"
+                               ng-disabled="drill.operation.type != 'groupby' || !$ctrl.canAddLevel()"
+                               ng-required="drill.operation.type == 'groupby'">
+                        <ui-select-match placeholder="Select column">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.columns | filter: {name: $select.search}">
+                            <div ng-bind-html="item.name | highlight:$select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div ng-if="!drill.added" class="drill-option">
+                    <ui-select ng-model="drill.operation" class="w-100"
+                               required on-select="$ctrl.onOperationSelect($index)" ng-disabled="!$ctrl.canAddLevel()">
+                        <ui-select-match placeholder="Select operation">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in $ctrl.operations | filter: {label: $select.search}">
+                            <div ng-bind-html="item.label | highlight:$select.search"></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+                <div class="drill-option drill-buttons" ng-class="{'drill-button': drill.added && !drill.checkDelete}">
+                    <div ng-if="!drill.checkDelete">
+                        <button ng-disabled="$ctrl.loading" class="btn btn-second" ng-click="drill.checkDelete = true">Delete</button>
+                        <button ng-disabled="$ctrl.loading" class="btn btn-first" ng-click="$ctrl.add($index)" type="button" ng-if="!drill.added">Add</button>
+                    </div>
+                    <div ng-if="drill.checkDelete">
+                        <button class="btn btn-fourth" ng-click="drill.checkDelete = false">No</button>
+                        <button class="btn btn-first" ng-click="$ctrl.remove($index)">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-drill">
+            <div class="drill-option drill-buttons">
+                <button type="button" class="btn btn-third btn-block" ng-click="$ctrl.addNew()" ng-disabled="!$ctrl.columns.length"><i class="fa fa-plus fa-fw"></i> New level</button>
+            </div>
+        </div>
+    </div>
+
+</div>

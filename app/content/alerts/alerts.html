@@ -1,0 +1,60 @@
+<div class="fullscreen-show col-md-12 clearfix" ng-if="$ctrl.card">
+    <div class="row">
+        <div class="col-xs-12 alert-header">
+            <h1>Alerts</h1>
+            <button class="btn btn-fourth btn-lg pull-right" ng-click="$ctrl.loadAlerts()" tu-popover tu-popover-html="Refresh alerts list" tu-popover-placement="left">
+                <i class="fa fa-refresh" ng-class="{'fa-spin': $ctrl.loading}"></i>
+            </button>
+            <button class="btn btn-first btn-lg pull-right" ng-click="$ctrl.openModal()">Create an alert</button>
+        </div>
+        <div class="col-xs-12" ng-if="$ctrl.card.alerts.length">
+            <div class="row alert-list"  ng-repeat="alert in $ctrl.card.alerts.items">
+                <div class="col-lg-12">
+                    <div class="alert-list-item">
+                        <i class="fa fa-exclamation-triangle fa-fw"></i>
+
+                        <span class="alert-message">
+                            <span class="first-line" ng-bind="alert.formatAlertHeading()"></span>
+                            <span class="second-line" ng-bind-html="alert.getFrequencySentence()"></span>
+                        </span>
+                        <div class="pull-right">
+                            <a app-alert-subscribers ng-click="alertSubscribers.openModal(alert.subscribedUsers())">
+                                <img ng-src="{{alert.user.photo}}" class="img-rounded alert-list-avar" ng-if="alert.alertSubscription.length" width="40" height="40"/>
+                                <div class="alert-no" ng-if="alert.alertSubscription.length>1">
+                                    <span ng-bind="'+'+(alert.alertSubscription.length-1)"></span>
+                                </div>
+                            </a>
+
+                            <button class="btn btn-fourth btn-lg" ng-class="{'btn-first': !alert.subscription.getMySubscription()}"
+                                    ng-click="alert.subscription.toggle()" ng-bind-html="'Subscribe'+(alert.subscription.getMySubscription()?'d':'')">
+                            </button>
+
+                            <button class="btn btn-fourth btn-first btn-lg" ng-if="alert.isOwnAlert()"
+                                    ng-click="$ctrl.openModal(alert)">
+                                Edit
+                            </button>
+
+                            <a class="alert-delete" ng-show="alert.isOwnAlert()" ng-click="$ctrl.deleteAlert(alert)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="!$ctrl.card.alerts.length">
+        <div class="col-lg-12">
+            <div class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div class="preview-icon animated zoomIn">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
+                    <span class="preview-title">There are no alerts yet</span>
+                    <span>Click create an alert button to add one</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

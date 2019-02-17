@@ -1,0 +1,41 @@
+app-drill-type {
+    flex: 0 0 70px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-left: 1px solid @porcelain;
+    background: @td-gray-pale;
+    margin: 0;
+    border-bottom-right-radius: 3px;
+
+    .drill-visual-picker {
+        ul {
+            padding: 0;
+            margin: 0 0 0 -1px;
+
+            li {
+                width: 100%;
+                display: inline-block;
+                text-align: center;
+
+                a {
+                    padding: 10px 0 5px 0;
+                    width: 100%;
+                    display: inline-block;
+                    border-left: 1px solid transparent;
+
+                    &:hover, &.active {
+                        border-left: 1px solid @brand-danger;
+                        background: @white;
+                    }
+                }
+            }
+        }
+
+        &[disabled] {
+            opacity: 0.6;
+            filter: grayscale(100%);
+            background-image: none !important;
+        }
+    }
+}

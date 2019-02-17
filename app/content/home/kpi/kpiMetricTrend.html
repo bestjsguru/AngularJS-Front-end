@@ -1,0 +1,16 @@
+<div class="kpi-info" ng-class="$ctrl.colorClass" ng-if="$ctrl.hasData()">
+
+    <span class="kpi-value trend-value" ng-if="!$ctrl.loading">{{$ctrl.trendValue}}</span>
+    <span class="kpi-trend" ng-if="!$ctrl.loading">
+        <app-sparkline values="$ctrl.data.trend" color="$ctrl.trendColor"></app-sparkline>
+    </span>
+</div>
+
+<div class="kpi-info" ng-if="!$ctrl.hasData()">
+    <span class="loader" ng-if="$ctrl.loading">
+        <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+    </span>
+
+    <span class="kpi-value bold" ng-if="!$ctrl.loading">-</span>
+
+</div>

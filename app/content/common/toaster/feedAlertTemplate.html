@@ -1,0 +1,51 @@
+<div class="cg-notify-message smart-alert-notification" ng-class="[$classes,
+    $position === 'center' ? 'cg-notify-message-center' : '',
+    $position === 'left' ? 'cg-notify-message-left' : '',
+    $position === 'right' ? 'cg-notify-message-right' : '']"
+     ng-style="{'margin-left': $centerMargin}" ng-click="$message.closeOnClick && $close()">
+
+    <div class="notification-icon">
+        <i class="fa fa-fw"></i>
+    </div>
+    <div class="content" ng-class="{'without-close-btn': !$message.showCloseButton}">
+        <h5 class="title" ng-bind-html="$message.title" ng-if="$message.title"></h5>
+
+        <div class="message" ng-class="{'without-title': !$message.title}">
+            <table class="table table-condensed table-hover">
+                <tbody>
+                    <tr>
+                        <td><strong>Connector</strong></td>
+                        <td>{{$message.data.data.error_object.connector}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feed name</strong></td>
+                        <td>{{$message.data.data.error_object.feedname}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Triggered at</strong></td>
+                        <td>{{$message.data.data.error_object.triggered_at}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error message</strong></td>
+                        <td>{{$message.data.data.error_object.error_message}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Target table</strong></td>
+                        <td>{{$message.data.data.error_object.target_table}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a ng-if="$message.buttons" class="btn btn-eighth btn-sm pull-right" ng-class="[button.classes]" ng-repeat="button in $message.buttons"
+           ng-click="button.action(); $close();">
+            {{button.text}}
+        </a>
+    </div>
+
+    <button type="button" class="cg-notify-close" ng-if="$message.showCloseButton" ng-click="$close()">
+        <span aria-hidden="true">&times;</span>
+        <span class="cg-notify-sr-only">Close</span>
+    </button>
+
+</div>

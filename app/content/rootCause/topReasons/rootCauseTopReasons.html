@@ -1,0 +1,28 @@
+<div class="root-cause-top-reasons">
+    <table class="table table-hover">
+        <thead class="bold">
+            <tr class="active">
+                <td colspan="3">Top {{$ctrl.topReasons.length}} Contributors</td>
+            </tr>
+            <tr class="active">
+                <th>Dimension</th>
+                <th>Value</th>
+                <th>Contribution to Goal Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in $ctrl.topReasons">
+                <td ng-bind-html="item.dimension"></td>
+                <td>
+                    <button class="btn btn-xs btn-eighth" ng-click="$ctrl.drillDown(item)">
+                        {{item.value}}
+                    </button>
+                </td>
+                <td>
+                    <span class="actual-value" ng-bind-html="item.difference"></span>
+                    <span class="variance-value">({{item.variance}})</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

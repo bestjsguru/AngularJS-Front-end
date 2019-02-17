@@ -1,0 +1,22 @@
+<div class="home-wrapper" ng-if="$ctrl.hasHomePage">
+
+    <div class="sub-header" ng-if="!$ctrl.isExport">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span ng-bind="$ctrl.pageSubtitle"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-content">
+        <div class="home-main-content">
+
+            <app-kpi app-access permission="kpi-box" ng-if="!$ctrl.isExport"></app-kpi>
+
+            <div class="favourite-cards-wrapper">
+                <app-favourite-cards></app-favourite-cards>
+            </div>
+        </div>
+    </div>
+
+</div>

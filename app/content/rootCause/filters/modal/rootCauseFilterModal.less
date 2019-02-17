@@ -1,0 +1,51 @@
+.root-cause-filter-modal {
+
+    .modal-body {
+
+        .select2-container {
+            .select2-choice {
+                abbr {
+                    right: 30px;
+                    top: 15px;
+                }
+            }
+        }
+
+        .panel {
+
+            .panel-heading {
+                border-radius: 4px;
+            }
+
+            .panel-body {
+                padding: 0;
+                border-radius: 4px;
+                max-height: unset;
+                overflow-y: visible;
+
+                .applied-filter {
+                    margin:0 3px 0 0;
+                    font-size: 11px;
+                    font-style: italic;
+                    color: @silver-sand;
+
+                    .filter {
+                        font-weight: 500;
+                    }
+
+                    + .applied-filter:before {
+                        content: "/";
+                        margin-right: 3px;
+                        color: @hoki;
+                    }
+
+                    &:first-child {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@import '../rootCauseFilters';

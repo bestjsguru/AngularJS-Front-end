@@ -1,0 +1,79 @@
+.drill-dropdown {
+    display: none;
+    position: absolute;
+    min-width: 250px;
+    z-index: 10;
+    padding: 10px 12px;
+    background: @white;
+    border: solid 1px @iron;
+    border-radius: 3px;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+
+    .drill-dropdown-group {
+        display: block;
+        margin: -10px -12px 5px -12px;
+        padding: 10px 12px 8px 12px;
+        border-bottom: 1px solid @iron;
+
+        .drill-dropdown-title {
+            display: block;
+            position: relative;
+            font-size: 15px;
+
+            span {
+                font-weight: 500;
+            }
+
+            .manage-presets {
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 1;
+            }
+        }
+
+        .drill-options {
+            margin: 5px 0 0 0;
+
+            .drill-option {
+                display: block;
+
+                .fa {
+                    font-size: 13px;
+
+                    &.fa-angle-right {
+                        font-size: 16px;
+                        margin-left: -2px;
+                    }
+                }
+            }
+
+            .no-preset {
+                opacity: 0.5;
+            }
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        &.drill-header {
+            background: @porcelain;
+        }
+    }
+
+    .drill-error {
+        word-break: keep-all;
+
+        .fa {
+            color: @brand-danger;
+            font-size: 18px;
+        }
+
+        span {
+            opacity: .6;
+        }
+    }
+}

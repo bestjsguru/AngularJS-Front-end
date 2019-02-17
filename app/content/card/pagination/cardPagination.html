@@ -1,0 +1,9 @@
+<div class="card-pagination-wrapper" ng-if="$ctrl.showPagination() || $ctrl.tuExplore">
+    <div class="card-pagination">
+        <div class="pagination-buttons" ng-if="$ctrl.showPagination()">
+            <div uib-pagination force-ellipses="true" boundary-link-numbers="true" items-per-page="$ctrl.perPage" max-size="3"
+                 total-items="$ctrl.total" ng-model="$ctrl.table.currentPage" ng-change="$ctrl.table.onPageChanged()"></div>
+        </div>
+        <div class="pagination-suffix" ng-if="$ctrl.showPagination() && $ctrl.owner && $ctrl.tuExplore">&nbsp;</div>
+    </div>
+</div>

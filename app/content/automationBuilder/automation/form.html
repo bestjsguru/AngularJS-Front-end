@@ -1,0 +1,64 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" ng-bind-html="abm.title"></h4>
+        </div>
+
+        <div class="modal-body" ng-form="abm.form">
+            <div class="row">
+                <div class="form-group col-lg-12">
+                    <label>Automation Name</label>
+                    <input ng-model="abm.data.name" type="text" class="form-control" placeholder="Automation Name">
+                </div>
+                <div class="form-group col-lg-6">
+                    <label>Choose Folder</label>
+                    <ui-select ng-model="abm.data.folders.selected" search-enabled="true" class="w-100" ng-change="abm.onFolderChange()">
+                        <ui-select-match placeholder="{{abm.foldersPlaceholder()}}">{{$select.selected.title}}</ui-select-match>
+                        <ui-select-choices repeat="item in abm.data.folders | filter: {title: $select.search}">
+                            <div ng-bind-html="item.title | highlight:$select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label>Choose Dashboard</label>
+                    <ui-select ng-model="abm.data.dashboards.selected" search-enabled="true" class="w-100" required ng-change="abm.onDashboardChange()">
+                        <ui-select-match placeholder="{{abm.dashboardsPlaceholder()}}">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in abm.data.dashboards | filter: {name: $select.search}">
+                            <div ng-bind-html="item.name | highlight:$select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label>Choose Card</label>
+                    <ui-select ng-model="abm.data.cards.selected" search-enabled="true" class="w-100" required>
+                        <ui-select-match placeholder="{{abm.cardsPlaceholder()}}">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="item in abm.data.cards | filter: {name: $select.search}">
+                            <div ng-bind-html="item.name | highlight:$select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label>Where</label>
+                    <ui-select ng-model="abm.data.protocols.selected" search-enabled="true" class="w-100" required>
+                        <ui-select-match placeholder="Select protocol">{{$select.selected.label}}</ui-select-match>
+                        <ui-select-choices repeat="item in abm.data.protocols | filter: {label: $select.search}">
+                            <div ng-bind-html="item.label | highlight:$select.search "></div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <tu-subscribe-timetable subscribe-data="abm.selected" sentence-start="Trigger automation"></tu-subscribe-timetable>
+        </div>
+
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-second btn-block" ng-click="$dismiss()">Cancel</button>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-lg btn-first w-100 pull-right" ng-click="abm.save()">Save Automation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

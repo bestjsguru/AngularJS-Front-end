@@ -1,0 +1,27 @@
+.database-explorer-preview {
+    // min-height: 300px;
+    padding: 10px;
+
+    .card-error-message {
+        margin: 100px auto;
+        position: relative;
+        height: auto;
+        float: left;
+        border: none;
+
+        .card-error-title {
+            margin-bottom: 10px;
+        }
+    }
+
+    .preview-area-wrapper {
+        border: none;
+    }
+
+    > div {
+        border: 1px solid @porcelain;
+        max-height: calc(~"100vh - 255px");
+        overflow-x: scroll;
+        overflow-y: scroll;
+    }
+}

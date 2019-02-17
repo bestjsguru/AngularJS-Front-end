@@ -1,0 +1,30 @@
+<div class="reorder-columns">
+    <div class="modal-header">
+        <h4 class="modal-title">Reorder Columns</h4>
+    </div>
+    <div class="modal-body">
+        <div class="reorder-list" ui-sortable="$ctrl.reorderOptions" ng-model="$ctrl.card.columnPosition.items">
+            <div class="reorder-item" ng-repeat="item in $ctrl.card.columnPosition.items" ng-class="{'hidden-item': item.hidden}">
+                <i class="fa fa-fw fa-bars reorder-icon"></i>
+                <div class="reorder-name">
+                    <span ng-if="item.dimensionName" ng-bind="item.dimensionName"></span>
+                    <span ng-bind="item.label"></span>
+                </div>
+                <div class="reorder-type" ng-bind="item.type"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="help-block m-t-15">* You can drag and drop columns above to reorder them.</div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()">Save</button>
+            </div>
+        </div>
+    </div>
+
+</div>

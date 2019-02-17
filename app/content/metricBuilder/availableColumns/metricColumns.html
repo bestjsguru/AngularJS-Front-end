@@ -1,0 +1,115 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ac.metric.label}}</h4>
+</div>
+
+<div class="modal-body available-columns">
+    <div class="modal-tabs-wrapper">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li ng-class="{'active': ac.tab == 'availableColumns'}">
+                <a ng-click="ac.tab = 'availableColumns'">available columns</a>
+            </li>
+            <li ng-class="{'active': ac.tab == 'addColumns'}">
+                <a ng-click="ac.tab = 'addColumns'">add columns</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content">
+
+        <div class="form-group">
+            <ui-select ng-model="ac.tables.selected" required ng-disabled="ac.tables.loading || !ac.tables.items.length">
+                <ui-select-match placeholder="{{ac.tables.items.length ? 'Select related table' : 'There are no related tables'}}">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="table in ac.tables.items | searchByProperties : 'name' : $select.search track by $index">
+                    <div ng-bind="table.name"></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div ng-disabled="ac.showLoader" class="tab-pane active" ng-class="{'active': ac.tab == 'availableColumns'}">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <table class="table table-condensed table-fixed vertical-align-center">
+                        <thead>
+                            <tr>
+                                <th class="col-md-6">Column name</th>
+                                <th class="col-md-2 text-center">Groupable</th>
+                                <th class="col-md-2 text-center">Filterable</th>
+                                <th class="col-md-2 text-center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="col-md-12" ng-if="!ac.availableColumns.loading && ac.getSelectedColumns().length" ng-repeat="column in ac.getSelectedColumns()">
+                                <td class="col-md-6" ng-bind-html="column.label"></td>
+                                <td class="col-md-2 action-td" ng-click="ac.toggleColumnProperty('groupable', column)">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o' : column.groupable, 'fa-square-o': !column.groupable}"></i>
+                                </td>
+                                <td class="col-md-2 action-td" ng-click="ac.toggleColumnProperty('filterable', column)">
+                                    <i class="fa fa-fw" ng-class="{'fa-check-square-o' : column.filterable, 'fa-square-o': !column.filterable}"></i>
+                                </td>
+                                <td class="col-md-2 action-td" ng-click="ac.toggleColumnProperty('selected', column)">
+                                    <i class="fa fa-fw fa-trash-o"></i>
+                                </td>
+                            </tr>
+                            <tr class="col-md-12" ng-if="!ac.availableColumns.loading && !ac.showLoader && !ac.getSelectedColumns().length">
+                                <td class="col-md-12 text-center" colspan="4">
+
+                                    <div class="preview-area-wrapper small">
+                                        <div class="preview-area">
+                                            <div class="preview-icon animated zoomIn">
+                                                <i class="fa fa-list" aria-hidden="true"></i>
+                                            </div>
+                                            <span class="preview-title">No Columns</span>
+                                            <span>Click <a ng-click="ac.tab = 'addColumns'">here</a> to add available columns</span>
+                                        </div>
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="!ac.availableColumns.loading" class="tab-pane" ng-class="{'active': ac.tab == 'addColumns'}">
+
+            <div class="panel panel-default searchable-list">
+                <div class="panel-heading">
+                    <div class="left-inner-addon">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="form-control" ng-model="ac.filterColumns" ng-change="ac.filter()" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" placeholder="Search columns">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-click="ac.toggleColumnProperty('selected', column)" ng-repeat="column in ac.filteredColumns">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o' : column.selected, 'fa-square-o': !column.selected}"></i> {{column.label}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 text-left"><a ng-click="ac.selectAll()" class="btn btn-eighth btn-sm text-uppercase">Select All</a></div>
+                <div class="col-sm-6 text-right"><a ng-click="ac.selectNone()" class="btn btn-eighth btn-sm text-uppercase">Select None</a></div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div class="modal-footer text-center">
+    <div class="row">
+        <div class="col-md-6">
+            <button ng-disabled="ac.showLoader" ng-click="$dismiss()" class="btn btn-second btn-lg btn-block">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <button ng-disabled="ac.showLoader" ng-click="ac.save()" class="btn btn-first btn-lg btn-block">Save</button>
+        </div>
+    </div>
+</div>
+<loader ng-if="ac.showLoader" ctrl-check="true"></loader>

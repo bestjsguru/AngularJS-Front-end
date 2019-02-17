@@ -1,0 +1,56 @@
+<div class="multifactor-authentication">
+    <span class="heading">Multi Factor Authentication</span>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="mfa-enrollment-item">
+                    <div class="mfa-enrollment-icon">
+                        <i class="fa fa-fw fa-3x" ng-class="{'fa-unlock-alt': !$ctrl.mfaToken, 'fa-lock': $ctrl.mfaToken}"></i>
+                    </div>
+                    <div class="mfa-enrollment-value">
+                        <span class="mfa-enrollment-status" ng-class="{'text-danger': !$ctrl.mfaToken, 'text-success': $ctrl.mfaToken}">
+                            {{$ctrl.mfaToken ? 'Enabled' : 'Disabled'}}
+                        </span>
+                        <span>Multi factor authentication is currently {{$ctrl.mfaToken ? 'enabled' : 'disabled'}}</span>
+                    </div>
+                    <div class="mfa-enrollment-actions">
+                        <span ng-if="$ctrl.loading" class="btn btn-fourth" disabled>Loading</span>
+                        <span ng-if="!$ctrl.loading" class="btn btn-fourth" ng-click="$ctrl.toggleMfa()">
+                            {{$ctrl.mfaToken ? 'Disable' : 'Enable'}}
+                        </span>
+                    </div>
+                </div>
+
+                <div ng-if="!$ctrl.loading" class="mfa-enrollment-item" ng-repeat="item in $ctrl.enrollments">
+                    <div class="mfa-enrollment-icon">
+                        <i class="fa fa-fw fa-3x fa-mobile"></i>
+                    </div>
+                    <div class="mfa-enrollment-value">
+                        <span class="mfa-enrollment-status" ng-class="{'text-warning': item.status === 'pending', 'text-success': item.status === 'completed'}">
+                            {{item.status.capitalizeFirstLetter()}}
+                        </span>
+                        <span>{{item.type.capitalizeFirstLetter()}}</span>
+                    </div>
+                    <div class="mfa-enrollment-actions">
+                        <span class="text-danger" ng-click="$ctrl.remove(item)">Remove</span>
+                    </div>
+                </div>
+
+                <div ng-if="!$ctrl.loading && !$ctrl.enrollments.length && $ctrl.mfaToken" class="mfa-enrollment-item">
+                    <div class="mfa-enrollment-icon">
+                        <i class="fa fa-fw fa-3x fa-mobile"></i>
+                    </div>
+                    <div class="mfa-enrollment-value">
+                        <span class="mfa-enrollment-status text-warning">Pending</span>
+                        <span>You will be asked to complete the setup upon next login</span>
+                    </div>
+                    <div class="mfa-enrollment-actions">
+                        <span class="btn btn-success" ng-click="$ctrl.logout()">Sign out and complete setup now</span>
+                        <span class="btn btn-fourth" ng-click="$ctrl.toggleMfa()">Cancel</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

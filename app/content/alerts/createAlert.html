@@ -1,0 +1,69 @@
+<div class="modal-header">
+    <h4 class="modal-title" ng-bind-html="$ctrl.title"></h4>
+</div>
+<div class="modal-body">
+    <form name="$ctrl.form" novalidate>
+        <div class="modal-tabs-wrapper">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+                <li ng-class="{active: $ctrl.selectedTab=='type'}" ng-click="$ctrl.selectedTab='type'"><a>Type</a></li>
+                <li ng-class="{active: $ctrl.selectedTab=='when'}"><a ng-click="$ctrl.selectedTab='when'" ng-class="{disabled: $ctrl.disabledTab.when}">When</a></li>
+            </ul>
+        </div>
+
+        <div class="tab-content">
+
+                <div class="tab-pane" ng-class="{active: $ctrl.selectedTab=='type'}">
+
+                    <div class="form-group select" ng-class="{'has-error': ($ctrl.form.metrics.$dirty || $ctrl.submitted) && $ctrl.form.metrics.$invalid}" ng-tag-input>
+                        <label>Please send me an alert if:</label>
+                        <ui-select name="metrics" ng-model="$ctrl.selected.metric" search-enabled="false" class="w-100" required>
+                            <ui-select-match placeholder="Select metric">{{$select.selected.label}}</ui-select-match>
+                            <ui-select-choices repeat="metric in $ctrl.metricsWithoutComparable()">
+                                <div ng-bind="metric.label"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="form-group select" ng-class="{'has-error': ($ctrl.form.alertType.$dirty || $ctrl.submitted) && $ctrl.form.alertType.$invalid}">
+                        <ui-select name="alertType" ng-model="$ctrl.selected.alertType" search-enabled="false" class="w-100" required>
+                            <ui-select-match placeholder="Select operator">{{$select.selected.label}}</ui-select-match>
+                            <ui-select-choices repeat="condition in $ctrl.conditions">
+                                <div ng-bind="condition.label"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="form-group" ng-if="$ctrl.selected.alertType.isPercentage">
+                        <input required class="form-control" ng-class="{'has-error': ($ctrl.form.thresholdValue.$dirty || $ctrl.submitted) && $ctrl.form.thresholdValue.$invalid}"
+                               ng-model="$ctrl.selected.thresholdValue" name="thresholdValue" type="number" placeholder="Threshold value" required>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': ($ctrl.form.thresholdLimit.$dirty || $ctrl.submitted) && $ctrl.form.thresholdLimit.$invalid}">
+                        <input class="form-control" name="thresholdLimit" ng-model="$ctrl.selected.thresholdLimit"
+                               type="number" placeholder="{{$ctrl.selected.alertType.isPercentage ? 'Threshold limit' : 'Type value'}}" required min="1">
+                    </div>
+
+                </div>
+                <div class="tab-pane" ng-class="{active: $ctrl.selectedTab == 'when'}">
+
+                    <tu-subscribe-timetable subscribe-data="$ctrl.selected" ></tu-subscribe-timetable>
+
+                </div>
+
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <a ng-if="$ctrl.selectedTab == 'type'" class="btn btn-first btn-lg btn-block" ng-class="{disabled: $ctrl.serverLoading}" ng-click="$ctrl.nextStep()">Next Step</a>
+            <a class="btn btn-first btn-lg btn-block" ng-if="$ctrl.selectedTab == 'when'" ng-click="$ctrl.save()" ng-bind-html="$ctrl.selectedAlert ? 'Update' : 'Create'"></a>
+        </div>
+    </div>
+</div>
+
+

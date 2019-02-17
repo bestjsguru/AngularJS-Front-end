@@ -1,0 +1,32 @@
+<div class="card-numeric" ng-if="!$ctrl.loading && $ctrl.metric"
+     app-cell-format
+     value="$ctrl.originalValue"
+     results="$ctrl.formattingOptions.results"
+     columns="$ctrl.formattingOptions.columns"
+     card="$ctrl.card"
+     row-index="$ctrl.formattingOptions.rowIndex"
+     column-index="$ctrl.formattingOptions.columnIndex">
+
+    <div class="numeric-entry"
+         app-cell-format
+         value="$ctrl.originalValue"
+         results="$ctrl.formattingOptions.results"
+         columns="$ctrl.formattingOptions.columns"
+         card="$ctrl.card"
+         row-index="$ctrl.formattingOptions.rowIndex"
+         column-index="$ctrl.formattingOptions.columnIndex">
+
+        <span data-fittext data-fittext-max="100" class="numeric-data" ng-bind="$ctrl.value"></span>
+
+        <div ng-if="$ctrl.card.hasGoal()" class="numeric-goal">
+            <div class="goal-wrapper">
+                <span class="goal"><i class="fa fa-fw fa-bullseye"></i><span>GOAL</span> {{$ctrl.goal}}</span>
+                <span class="progress-sentence text-{{$ctrl.progressClass()}}">
+                    <i class="fa fa-arrow-down"></i>
+                    <i class="fa fa-arrow-up"></i>
+                    {{$ctrl.progressSentence()}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

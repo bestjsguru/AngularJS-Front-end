@@ -1,0 +1,101 @@
+.cg-notify-message {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    text-align: left;
+    padding: 0;
+    border: none;
+    min-width: 400px;
+
+    &.info {
+        .type-style(@td-blue-dark, "\f129");
+    }
+
+    &.error {
+        .type-style(@td-red-dark, "\f071");
+    }
+
+    &.success {
+        .type-style(@td-green-dark, "\f00c");
+    }
+
+    &.warning {
+        .type-style(@td-yellow-dark, "\f12a");
+    }
+
+    .cg-notify-close {
+        top: 10px;
+        right: 10px;
+    }
+
+    .title {
+        width: 100%;
+        display: block;
+        margin: 0;
+        border-bottom: 1px solid @iron;
+        padding: 10px 40px 5px 10px;
+    }
+
+    .message {
+        width: 100%;
+        display: block;
+        padding: 10px 10px 10px 10px;
+        display: flex;
+        flex-direction: row;
+
+        &.without-title {
+            padding-right: 40px;
+        }
+
+        .profile-photo {
+            padding-right: 10px;
+            align-self: center;
+        }
+
+        a.btn {
+            margin-top: 10px;
+        }
+    }
+
+    .content {
+        &.without-close-btn {
+            .message {
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+.type-style(@color, @icon) {
+    background-color: @color;
+
+    .notification-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+
+        i {
+            width: 30px;
+
+            &:before {
+                content: @icon;
+                font-family: FontAwesome;
+                font-size: 18px;
+            }
+        }
+    }
+
+    .content {
+        flex: 1;
+        background-color: lighten(@color, 50%);
+    }
+
+    &.white {
+        .content {
+            background-color: white;
+        }
+    }
+}
+
+@import './smartAlertsTemplate';

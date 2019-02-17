@@ -1,0 +1,27 @@
+<div class="database-explorer-table">
+    <table class="table table-condensed">
+        <thead class="bold">
+            <tr class="active">
+                <th ng-repeat="column in $ctrl.table.columns track by $index" ng-bind-html="column.toLowerCase()"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in $ctrl.table.data track by $index">
+                <td ng-repeat="value in row track by $index" ng-bind-html="value"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-condensed sql-additional-info">
+        <tbody>
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o fa-fw"></i> Execution time: {{$ctrl.executionTime}}
+                </td>
+                <td class="text-right">
+                    Limited to {{$ctrl.limit}} results
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,258 @@
+<div class="sub-header">
+    <div class="item">
+        <div class="breadcrumbs">
+            <span>Customer churn cohort</span>
+        </div>
+    </div>
+    <div class="item">
+        <ui-select ng-model="items.selected" search-enabled="true" style="width: 200px" required>
+            <ui-select-match placeholder="Number of months">{{$select.selected.label}}</ui-select-match>
+            <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                <div ng-bind-html="item.label | highlight:$select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+        <ui-select ng-model="items.selected" search-enabled="true" style="width: 200px" required>
+            <ui-select-match placeholder="Show rate (%)">{{$select.selected.label}}</ui-select-match>
+            <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                <div ng-bind-html="item.label | highlight:$select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+        <ui-select ng-model="items.selected" search-enabled="true" style="width: 200px" required>
+            <ui-select-match placeholder="Starting month">{{$select.selected.label}}</ui-select-match>
+            <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                <div ng-bind-html="item.label | highlight:$select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+
+            <table class="table table-bordered table-condensed cohort-table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Cohort value</th>
+                    <th>0</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Feb 2014</td>
+                    <td>152</td>
+                    <td class="cohort-20">0.66%</td>
+                    <td class="cohort-40">12.50%</td>
+                    <td class="cohort-40">15.79%</td>
+                    <td class="cohort-60">20.39%</td>
+                    <td class="cohort-60">31.58%</td>
+                    <td class="cohort-60">35.53%</td>
+                    <td class="cohort-60">36.16%</td>
+                    <td class="cohort-80">40.13%</td>
+                    <td class="cohort-80">43.42%</td>
+                    <td class="cohort-80">47.37%</td>
+                    <td class="cohort-100">50%</td>
+                </tr>
+                <tr>
+                    <td>Mar 2014</td>
+                    <td>164</td>
+                    <td class="cohort-20">1.83%</td>
+                    <td class="cohort-20">7.96%</td>
+                    <td class="cohort-40">10.98%</td>
+                    <td class="cohort-40">12.80%</td>
+                    <td class="cohort-40">15.24%</td>
+                    <td class="cohort-40">17.07%</td>
+                    <td class="cohort-40">19.51%</td>
+                    <td class="cohort-60">23.17%</td>
+                    <td class="cohort-60">24.40%</td>
+                    <td class="cohort-60">24.50%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Apr 2014</td>
+                    <td>222</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-40">12.16%</td>
+                    <td class="cohort-60">22.52%</td>
+                    <td class="cohort-60">29.28%</td>
+                    <td class="cohort-60">35.88%</td>
+                    <td class="cohort-60">37.39%</td>
+                    <td class="cohort-80">40.99%</td>
+                    <td class="cohort-80">42.34%</td>
+                    <td class="cohort-80">42.34%</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>May 2014</td>
+                    <td>222</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">7.14%</td>
+                    <td class="cohort-40">12.09%</td>
+                    <td class="cohort-40">18.13%</td>
+                    <td class="cohort-60">25.27%</td>
+                    <td class="cohort-60">28.02%</td>
+                    <td class="cohort-80">31.87%</td>
+                    <td class="cohort-80">31.87%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Jun 2014</td>
+                    <td>180</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">6.14%</td>
+                    <td class="cohort-40">11.09%</td>
+                    <td class="cohort-40">16.13%</td>
+                    <td class="cohort-60">22.27%</td>
+                    <td class="cohort-60">23.02%</td>
+                    <td class="cohort-60">24.87%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Jul 2014</td>
+                    <td>178</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">8.14%</td>
+                    <td class="cohort-40">14.09%</td>
+                    <td class="cohort-60">24.13%</td>
+                    <td class="cohort-60">26.27%</td>
+                    <td class="cohort-80">30.02%</td>
+                    <td class="cohort-80">32.87%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Aug 2014</td>
+                    <td>156</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">6.14%</td>
+                    <td class="cohort-40">10.09%</td>
+                    <td class="cohort-60">20.13%</td>
+                    <td class="cohort-60">22.27%</td>
+                    <td class="cohort-60">25.02%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Sep 2014</td>
+                    <td>158</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">5.14%</td>
+                    <td class="cohort-20">8.09%</td>
+                    <td class="cohort-40">10.13%</td>
+                    <td class="cohort-40">12.27%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Oct 2014</td>
+                    <td>200</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">4.14%</td>
+                    <td class="cohort-20">8.09%</td>
+                    <td class="cohort-40">11.13%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nov 2014</td>
+                    <td>204</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">3.14%</td>
+                    <td class="cohort-20">5.09%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dec 2014</td>
+                    <td>201</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td class="cohort-20">1.14%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dec 2014</td>
+                    <td>201</td>
+                    <td class="cohort-20">0.00%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Average</td>
+                    <td>150</td>
+                    <td class="cohort-20">0.78%</td>
+                    <td class="cohort-20">8.26%</td>
+                    <td class="cohort-40">12.42%</td>
+                    <td class="cohort-40">17.58%</td>
+                    <td class="cohort-60">22.87%</td>
+                    <td class="cohort-60">26.66%</td>
+                    <td class="cohort-80">30.71%</td>
+                    <td class="cohort-80">32.56%</td>
+                    <td class="cohort-80">34.50%</td>
+                    <td class="cohort-80">38.50%</td>
+                    <td class="cohort-100">48.60%</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+</div>

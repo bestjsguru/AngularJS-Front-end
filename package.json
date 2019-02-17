@@ -1,0 +1,73 @@
+{
+  "name": "Avora",
+  "repository": "ssh://git@gitlab.truedash.com:2222/truedash-projects/truedash.git",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "bugsnag-js": "^4.7.3",
+    "expr-eval": "^1.2.0",
+    "highcharts": "^6.2.0",
+    "highcharts-custom-events": "^2.1.9",
+    "lz-string": "^1.4.4",
+    "mobile-detect": "^1.3.7",
+    "npm": "^5.7.1",
+    "pretty-ms": "^2.1.0",
+    "pusher": "^1.5.0",
+    "pusher-js": "^4.2.2",
+    "simple-statistics": "^2.5.0",
+    "sudo": "^1.0.3",
+    "visibilityjs": "^1.2.5"
+  },
+  "//": "If we dont want to install 'devDependencies', for example on staging or production, we can use 'npm install --production' command",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.5.0",
+    "colors": "^1.0.3",
+    "del": "^2.2.2",
+    "express": "^4.16.2",
+    "git-rev-sync": "^1.4.0",
+    "gulp": "^3.8.10",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-cached": "^1.0.2",
+    "gulp-clean": "^0.3.1",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-concat": "^2.4.2",
+    "gulp-debug": "^3.1.0",
+    "gulp-less": "^3.3.2",
+    "gulp-make-css-url-version": "0.0.13",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-ng-annotate": "^2.0.0",
+    "gulp-ng-html2js": "^0.2.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-remember": "^0.3.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-rev": "^7.1.2",
+    "gulp-sourcemaps": "2.4.1",
+    "gulp-uglify": "2.0.1",
+    "gulp-usemin": "^0.3.8",
+    "http-proxy": "^1.16.2",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "1.1.0",
+    "watchify": "^3.9.0"
+  },
+  "scripts": {
+    "app": "sudo BACKEND_URL='https://app.avora.com/' CURRENT_SERVER='app' PORT='80' gulp dev",
+    "uat": "sudo BACKEND_URL='https://uat.avora.com/' CURRENT_SERVER='uat' PORT='80' gulp dev",
+    "dev": "BACKEND_URL='https://dev.avora.com/' CURRENT_SERVER='dev' PORT='80' gulp dev",
+    "vue": "BACKEND_URL='https://dev.avora.com/' gulp dev-noproxy",
+    "local": "sudo BACKEND_URL='http://localhost:8080/' CURRENT_SERVER='local' PORT='80' gulp dev",
+    "bump-version": "node -e 'require(\"./events/bump-version.js\")'",
+    "dev-minify": "sudo BACKEND_URL='https://dev.avora.com/' CURRENT_SERVER='dev' PORT='80' gulp default-with-proxy",
+    "dev-clean": "git checkout HEAD -- app/index.html && git clean -di"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}

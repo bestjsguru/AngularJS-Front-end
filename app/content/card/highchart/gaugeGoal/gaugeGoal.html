@@ -1,0 +1,8 @@
+<div ng-if="$ctrl.card.hasGoal()" class="gauge-goal">
+    <span class="goal"><i class="fa fa-fw fa-bullseye"></i><span>GOAL</span> {{$ctrl.goal}}</span>
+    <span class="progress-sentence text-{{$ctrl.progressClass()}}">
+        <i class="fa fa-arrow-down"></i>
+        <i class="fa fa-arrow-up"></i>
+        {{$ctrl.progressSentence()}}
+    </span>
+</div>

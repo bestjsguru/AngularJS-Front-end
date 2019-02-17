@@ -1,0 +1,127 @@
+.card-builder-formulas {
+    display: block;
+    width: 100%;
+    background: @td-gray-pale;
+    margin: 0px;
+
+    .preview-area-wrapper {
+        .preview-area {
+            margin: 20px auto;
+        }
+    }
+
+    .available-metric-formulas {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 7px 7px 0px 7px;
+        width: 100%;
+
+        .formula-alias {
+            flex: 0 0 auto;
+            background: @porcelain;
+            border-radius: 3px;
+            position: relative;
+            padding: 7px 10px 7px 44px;
+            height: 34px;
+            margin: 7px;
+            cursor: pointer;
+
+            a {
+                position: absolute;
+                left: 0;
+                top: 0;
+                z-index: 1;
+                color: @white;
+                padding: 6px 0px;
+                width: 34px;
+                height: 34px;
+                background: @td-deep-blue;
+                border-radius: 3px 0 0 3px;
+            }
+
+            .dimension-name {
+                text-transform: capitalize;
+            }
+
+            &:hover {
+                a {
+                    background: @hoki;
+                }
+            }
+        }
+    }
+
+    .single-formula {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 0 7px;
+        border-bottom: 1px solid @porcelain;
+
+        .formula-option {
+            flex: 1 1 200px;
+            margin: 0px 7px;
+            padding: 7px 0;
+            position: relative;
+
+            .help-block {
+                margin-bottom: 0;
+                margin-top: 3px;
+                font-size: 13px;
+            }
+
+            .checkbox {
+                margin-top: 4px;
+                margin-bottom: 0;
+                display: inline-block;
+
+                input[type="checkbox"] {
+                    position: static;
+                    margin: 0;
+                }
+            }
+
+            .input-group-btn {
+                .btn {
+                    color: @deep-blue;
+                    .fa {
+                        position: relative;
+                        top: -3px;
+                    }
+                }
+
+                .formula-symbol {
+                    width: 40px;
+                    text-align: center;
+                    background: @gray-pale;
+                    display: inline-block;
+                    border-radius: 3px;
+                    margin-right: 5px;
+                    padding: 3px;
+                }
+            }
+
+            &.formula-buttons {
+                flex: 0 0 172px;
+                text-align: right;
+                margin-left: auto;
+                padding-left: 7px;
+
+                .btn {
+                    min-width: 80px;
+                }
+            }
+
+            &.formula-color-picker {
+                flex: 0 0 34px;
+            }
+
+        }
+
+        &.new-formula {
+            border-bottom: 0;
+        }
+    }
+}

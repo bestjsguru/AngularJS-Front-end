@@ -1,0 +1,21 @@
+<div class="dashboard-folders-wrapper">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span ng-bind-html="$ctrl.title"></span>
+                <span>Workspaces</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="dashboard-actions">
+                <button class="btn btn-eighth" ng-click="$ctrl.initiateFolders(false)" tu-popover tu-popover-html="Refresh list" tu-popover-placement="left">
+                    <i class="fa fa-refresh" ng-class="{'fa-spin': $ctrl.loading}"></i>
+                </button>
+                <button ng-if="!$ctrl.loading" class="btn btn-first" tu-add-dashboard ng-click="ad.openModal()">Create dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- here we decide what template to include based on user permissions -->
+    <ng-include src="'content/profile/dashboards/' + $ctrl.template + '.html'"> </ng-include>
+</div>

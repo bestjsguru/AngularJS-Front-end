@@ -1,0 +1,99 @@
+<div class="modal-header">
+    <h4 class="modal-title">Permissions</h4>
+</div>
+<div class="modal-body">
+    <div class="modal-tabs-wrapper">
+        <ul class="nav nav-tabs nav-justified" role="tablist">
+            <li class="active"><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
+            <li><a href="#people" role="tab" data-toggle="tab">People</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+
+        <div class="tab-pane active" id="settings">
+            <div class="form-group">
+                <label>Who can see:</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Select something">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+            <div class="form-group">
+                <label>Who can edit:</label>
+                <ui-select ng-model="items.selected" search-enabled="true" class="w-100" required>
+                    <ui-select-match placeholder="Select something">{{$select.selected.label}}</ui-select-match>
+                    <ui-select-choices repeat="item in items | filter: {label: $select.search}">
+                        <div ng-bind-html="item.label | highlight:$select.search"></div>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="people">
+            <div class="user-list-wrapper">
+                <ul>
+                    <li class="selected">
+                        <div>
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span>John Doe</span>
+                                <a href="#">john.doe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span>John Doe</span>
+                                <a href="#">john.doe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span>John Doe</span>
+                                <a href="#">john.doe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span>John Doe</span>
+                                <a href="#">john.doe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="user-image">
+                                <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                            </div>
+                            <div class="user-data">
+                                <span>John Doe</span>
+                                <a href="#">john.doe@gmail.com</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <a class="btn btn-first btn-lg col-md-12" role="tab" data-toggle="tab">Done</a>
+</div>

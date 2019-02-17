@@ -1,0 +1,61 @@
+.connection-modal-wrapper {
+
+    .divider {
+        height: 1px;
+        width: 100%;
+        display: block; /* for use on default inline elements like span */
+        margin: 9px 3px;
+        overflow: hidden;
+        background-color: #e5e5e5;
+        clear: both;
+    }
+    .join-chain-letter {
+        background-color: @deep-blue;
+        color: @white;
+        border-color: @deep-blue;
+        cursor: default;
+        padding: 10px 0;
+        margin-bottom: 5px;
+        width: 100%;
+
+    }
+    .connection-row-align {
+        margin: 25px 0 0 0;
+
+    }
+    .connection-add-join {
+        margin: 25px 0 0 0;
+        min-width: 183px;
+    }
+
+    .mentions-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    @media (min-width: 1000px) {
+        .mentions-position-left {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            min-width: 300px;
+        }
+
+        .mentions-position-right {
+            position: absolute;
+            right: -30px;
+            top: 10px;
+            min-width: 300px;
+        }
+
+    }
+}
+
+.connection-modal-window {
+    @media (min-width: 1200px) {
+
+        .modal-lg {
+            width: 1150px;
+        }
+    }
+}

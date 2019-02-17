@@ -1,0 +1,28 @@
+<div class="explain-card-definition">
+
+    <span class="title">Metric Definition</span>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Table</th>
+                <th>Statement</th>
+                <th>Filters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="metric in $ctrl.metrics">
+                <td ng-bind-html="metric.id"></td>
+                <td ng-bind-html="metric.name"></td>
+                <td ng-bind-html="metric.table"></td>
+                <td class="statement" ng-bind-html="metric.statement"></td>
+                <td>
+                    <div class="metric-filter" ng-repeat="filter in metric.filters track by $index" ng-bind-html="$ctrl.convertToText(filter)"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

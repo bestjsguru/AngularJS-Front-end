@@ -1,0 +1,14 @@
+<div class="database-explorer-sql-history" ng-if="$ctrl.hasHistory()">
+    <div class="dropdown">
+        <button class="btn btn-fourth btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Query history
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li ng-repeat="query in $ctrl.history track by $index">
+                <a href ng-click="$ctrl.select(query)" ng-bind-html="$ctrl.limitQueryLength(query)"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+

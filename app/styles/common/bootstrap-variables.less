@@ -1,0 +1,149 @@
+@import (reference) "../../bower_components/bootstrap/less/variables";
+@import (reference) "custom-variables";
+
+//Put here any customisation on bootstrap variables
+//see http://getbootstrap.com/customize/#less-variables
+// and bootstrap/less/variables.less
+//which can't be defined by variables, should be defined in bootstrap-theme.less
+
+//example: uncomment to have all dropdowns get red background
+//@dropdown-bg: #F00;
+
+@icon-font-path: "../fonts/";
+
+@text-color: @gray-light;
+
+
+/* popover */
+@popover-arrow-width: 6px;
+
+/* dropdown */
+
+//** Background for the dropdown menu.
+@dropdown-bg:                    @white;
+//** Dropdown menu `border-color`.
+@dropdown-border:                @borderColor;
+//** Dropdown menu `border-color` **for IE8**.
+@dropdown-fallback-border:       @borderColor;
+//** Divider color for between dropdown items.
+@dropdown-divider-bg:            #fff;
+
+//** Dropdown link text color.
+@dropdown-link-color:            @gray-light;
+//** Hover color for dropdown links.
+@dropdown-link-hover-color:      @white;
+//** Hover background for dropdown links.
+@dropdown-link-hover-bg:         @brand-danger;
+
+//** Active dropdown menu item text color.
+@dropdown-link-active-color:     @brand-danger;
+//** Active dropdown menu item background color.
+@dropdown-link-active-bg:        @brand-danger;
+
+//** Disabled dropdown menu item background color.
+@dropdown-link-disabled-color:   @gray-light;
+
+//** Text color for headers within dropdown menus.
+@dropdown-header-color:          @gray-light;
+
+//** Deprecated `@dropdown-caret-color` as of v3.1.0
+@dropdown-caret-color:           #000;
+
+
+/* pagination */
+
+@pagination-color:                     @gray-light;
+@pagination-bg:                        @white;
+@pagination-border:                    @borderColor;
+
+@pagination-hover-color:               @deep-blue;
+@pagination-hover-bg:                  @gray-lighter;
+@pagination-hover-border:              @borderColor;
+
+@pagination-active-color:              @deep-blue;
+@pagination-active-bg:                 @gray-lighter;
+@pagination-active-border:             @borderColor;
+
+@pagination-disabled-color:            @gray-light;
+@pagination-disabled-bg:               @white;
+@pagination-disabled-border:           @borderColor;
+
+
+/* colours */
+
+@brand-primary:         #14b1e7;
+@brand-success:         #2ab3ab;
+@brand-info:            lighten(@brand-primary, 20%);
+@brand-warning:         #FAC800;
+@brand-danger:          @td-red-dark;
+
+
+/* buttons */
+
+@btn-default-color:              @gray-light;
+@btn-default-bg:                 @white;
+@btn-default-border:             @borderColor;
+
+@btn-primary-color:              @white;
+@btn-primary-bg:                 @blue;
+@btn-primary-border:             @blue;
+
+@btn-success-color:              @white;
+@btn-success-bg:                 #2ab3ab;
+@btn-success-border:             #2ab3ab;
+
+@btn-info-color:                 @white;
+@btn-info-bg:                    #40c2ee;
+@btn-info-border:                #40c2ee;
+
+@btn-warning-color:              @white;
+@btn-warning-bg:                 #FAC800;
+@btn-warning-border:             #FAC800;
+
+@btn-danger-color:               @white;
+@btn-danger-bg:                  @td-red-dark;
+@btn-danger-border:              @td-red-dark;
+
+@btn-link-disabled-color:        @gray-light;
+
+
+/* form elements */
+
+@table-cell-padding:            13px;
+
+@input-color-placeholder: #aaa;
+
+@input-color: @gray-light;
+
+
+
+// Inverted navbar
+// Reset inverted navbar basics
+@navbar-inverse-color:                      #6d6e72;
+@navbar-inverse-bg:                         #333b46;
+@navbar-inverse-border:                     0;
+
+// Inverted navbar links
+@navbar-inverse-link-color:                 #878787;
+@navbar-inverse-link-hover-color:           #fff;
+@navbar-inverse-link-hover-bg:              transparent;
+@navbar-inverse-link-active-color:          #fff;
+@navbar-inverse-link-active-bg:             none;
+@navbar-inverse-link-disabled-color:        none;
+@navbar-inverse-link-disabled-bg:           none;
+
+// Inverted navbar brand label
+@navbar-inverse-brand-color:                none;
+@navbar-inverse-brand-hover-color:          none;
+@navbar-inverse-brand-hover-bg:             transparent;
+
+// Inverted navbar toggle
+@navbar-inverse-toggle-hover-bg:            #333b46;
+@navbar-inverse-toggle-icon-bar-bg:         #fff;
+@navbar-inverse-toggle-border-color:        #333;
+
+
+@state-success-text: @td-turquoise;
+@state-info-text: #40c2ee;
+@state-warning-text: #FAC800;
+@state-danger-text: @brand-danger;

@@ -1,0 +1,38 @@
+.api-token {
+    .api-token-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        border-top: solid 1px @borderColorLight;
+        padding-top: 10px;
+
+        &:first-child {
+            border-top: none;
+            margin-top: 0;
+        }
+
+        .api-token-icon {
+            align-self: flex-start;
+        }
+
+        .api-token-value {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+
+            .api-token-status {
+                margin-right: 10px;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+
+        .api-token-actions {
+            span {
+                margin-right: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,228 @@
+<div class="insight">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span><a ui-sref="dataset">Data sources</a></span>
+                <span>
+                    Insights
+                    {{$ctrl.source.name ? '(' + $ctrl.source.name + ')' : ''}}
+                </span>
+            </div>
+        </div>
+        <div app-access permission="derived-tables" class="item">
+            <button ng-click="$ctrl.createTable()" class="btn btn-third btn-sm btn-add pull-right">
+                <i class="fa fa-plus"></i> Create Table
+            </button>
+        </div>
+    </div>
+
+    <div class="container-fluid insight-search-wrapper">
+        <div class="insight-search">
+            <i class="fa fa-search"></i>
+            <input type="text" class="form-control" ng-model="$ctrl.query" ng-minlength="2" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 500 }" placeholder="Search metrics and columns">
+            <i ng-disabled="$ctrl.tables.loading" ng-click="$ctrl.clear()" class="fa fa-fw fa-times"></i>
+        </div>
+
+        <button class="btn btn-link expand-insights" ng-if="!$ctrl.tables.loading" ng-click="$ctrl.toggleAllTables()">
+            <i class="fa fa-fw fa-expand"></i> {{$ctrl.allTablesCollapsed() ? 'Expand All' : 'Collapse All'}}
+        </button>
+
+        <div class="checkbox insights-search-checkbox" ng-repeat="status in $ctrl.statuses track by $index" ng-click="$ctrl.filterByStatus(status)">
+            <i class="fa fa-fw" ng-class="{'fa-check-square-o': status.checked, 'fa-square-o': !status.checked}"></i>
+            <span ng-bind="status.label"></span>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <loader ctrl-check="$ctrl.tables.loading"></loader>
+
+        <div class="panel-group">
+            <div ng-repeat="table in $ctrl.tables.items track by $index" ng-if="!table.hidden" class="panel single-item">
+                <div class="panel-heading" ng-click="$ctrl.toggle(table)">
+                    <span class="item-edit pull-left">
+                        <i class="fa" ng-class="{'fa-chevron-up': table.isOpen, 'fa-chevron-down': !table.isOpen}"></i>
+                    </span>
+                    <div class="item-name">
+                        <i class="fa fa-fw fa-2x fa-table"></i>
+                        {{table.name}}
+                        <div>
+                            <span class="columns" ng-if="$ctrl.countTableColumns(table)" ng-bind="$ctrl.countTableColumns(table)"></span>
+                            <span class="metrics" ng-if="$ctrl.countTableMetrics(table)" ng-bind="$ctrl.countTableMetrics(table)"></span>
+                        </div>
+                    </div>
+                    <div class="icons pull-right">
+                        <span ng-if="$ctrl.loading">
+                            <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+                        </span>
+                        <span ng-if="table.isDerived" app-access permission="derived-tables" class="btn btn-xs btn-link" ng-click="$ctrl.edit($event, table)">
+                            <i class="fa fa-fw fa-pencil"></i> Edit
+                        </span>
+                        <span class="btn btn-xs btn-link" ng-click="$ctrl.createMetric($event, table)">
+                            <i class="fa fa-fw fa-plus"></i> Create Metric
+                        </span>
+                    </div>
+                    <div class="pull-right m-r-20" ng-disabled="table.loading" ng-if="$ctrl.getSelectedColumns(table).length">
+                        <span class="btn btn-xs btn-link" ng-if="table.loading">
+                            <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+                        </span>
+                        <span class="btn btn-xs btn-link" ng-click="$ctrl.toggleColumnsAvailableStatus($event, true, table)">
+                            Mark Available
+                        </span>
+                        <span class="btn btn-xs btn-link" ng-click="$ctrl.toggleColumnsAvailableStatus($event, false, table)">
+                            Mark Unavailable
+                        </span>
+                    </div>
+                </div>
+
+                <div class="panel-collapse collapse in" ng-if="table.isOpen">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="50" class="text-center" ng-click="$ctrl.toggleColumnSelect(null, table)">
+                                        <i class="fa fa-fw"  ng-if="$ctrl.countTableColumns(table)"
+                                           ng-class="{'fa-check-square-o': $ctrl.allColumnsSelected(table), 'fa-square-o': !$ctrl.allColumnsSelected(table)}">&nbsp;</i>
+                                    </th>
+                                    <th width="100" class="table-sort" ng-click="$ctrl.orderBy('type', table)">
+                                        Type
+                                        <i ng-if="!$ctrl.orderedBy('type', table)" class="fa fa-sort"></i>
+                                        <i ng-if="$ctrl.orderedBy('type', table)" class="fa"
+                                           ng-class="{'fa-caret-down': !$ctrl.isReverse(table), 'fa-caret-up': $ctrl.isReverse(table)}"></i>
+                                    </th>
+                                    <th class="table-sort" ng-click="$ctrl.orderBy('name', table)">
+                                        Name
+                                        <i ng-if="!$ctrl.orderedBy('name', table)" class="fa fa-sort"></i>
+                                        <i ng-if="$ctrl.orderedBy('name', table)" class="fa"
+                                           ng-class="{'fa-caret-down': !$ctrl.isReverse(table), 'fa-caret-up': $ctrl.isReverse(table)}"></i>
+                                    </th>
+                                    <th width="110">Data type</th>
+                                    <th></th>
+                                    <th width="120"></th>
+                                    <th width="100"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in table.items track by $index" ng-if="!item.hidden" ng-class="{highlight: item.highlight}">
+                                    <td class="text-center" ng-click="$ctrl.toggleColumnSelect(item)">
+                                        <i class="fa fa-fw" ng-if="item.type === 'column'"
+                                           ng-class="{'fa-check-square-o': item.selected, 'fa-square-o': !item.selected}">&nbsp;</i>
+                                    </td>
+                                    <td ng-class="{'available-column': item.isDimension}">
+                                        {{item.type}}
+                                        <span>{{item.isDimension ? '(available)' : ''}}</span>
+                                    </td>
+                                    <td>
+                                        <!-- Metric name -->
+                                        <span class="color-background success" ng-if="item.type === 'metric'">
+                                            {{item.name}}
+
+                                            <div class="dropdown pull-right m-l-10" ng-class="{disabled: $ctrl.loading || item.loading}">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-fw" ng-class="{'fa-circle-o-notch fa-spin': item.loading, 'fa-bars': !item.loading}" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu arrow-menu animated fadeIn">
+                                                    <li>
+                                                        <a title="Edit metric" ng-click="$ctrl.editMetric(item, table)">
+                                                            <i class="fa fa-fw fa-pencil" aria-hidden="true"></i> Edit metric
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Preview data" ng-click="$ctrl.preview(item)">
+                                                            <i class="fa fa-fw fa-table" aria-hidden="true"></i> Preview data
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Available columns" ng-click="$ctrl.availableColumns(item, table)">
+                                                            <tu-available-columns ng-click="ac.open(item.value, table)">
+                                                                <i class="fa fa-fw fa-list" aria-hidden="true"></i> Available columns
+                                                            </tu-available-columns>
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Filters" ng-click="$ctrl.filters(item)">
+                                                            <i class="fa fa-fw fa-filter" aria-hidden="true"></i> Filters
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Clone metric" ng-click="$ctrl.cloneMetric(item, table)">
+                                                            <i class="fa fa-fw fa-clone" aria-hidden="true"></i> Clone metric
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a title="Delete metric" ng-click="$ctrl.deleteMetric(item.value)">
+                                                            <i class="fa fa-fw fa-times" aria-hidden="true"></i> Delete metric
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <a class="pull-right" ng-class="{disabled: $ctrl.loading || item.loading}" ng-click="$ctrl.toggleMetricVisibility(item)"
+                                               tu-popover tu-popover-html="{{ item.active ? 'Deactivate metric' : 'Activate metric'}}" tu-popover-placement="top">
+                                                <i class="fa" ng-class="{'fa-eye': item.active, 'fa-eye-slash': !item.active}"></i>
+                                            </a>
+                                        </span>
+
+                                        <!-- Column name -->
+                                        <span class="color-background" ng-class="{info: item.isDimension}" ng-if="item.type === 'column'">
+                                            {{item.displayName || item.name}}
+
+                                            <div class="dropdown pull-right" ng-class="{disabled: $ctrl.loading || item.loading}">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-fw dropdown-toggle" ng-class="{'fa-circle-o-notch fa-spin': item.loading, 'fa-bars': !item.loading}" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu arrow-menu animated fadeIn">
+                                                    <li>
+                                                        <a title="Set Display Name" ng-click="$ctrl.editColumn(item)">
+                                                            <i class="fa fa-fw fa-pencil" aria-hidden="true"></i> Rename
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <span ng-if="item.displayName" class="grey-text" ng-bind="item.name"></span>
+                                        </span>
+
+                                    </td>
+
+                                    <!-- Data type -->
+                                    <td ng-if="item.type === 'metric'">
+                                        {{$ctrl.getMetricType(item.value)}}
+                                        <span class="grey-text">{{$ctrl.getMetricSymbol(item.value)}}</span>
+                                    </td>
+                                    <td ng-if="item.type === 'column'">{{item.value.type.capitalizeFirstLetter()}}</td>
+
+                                    <!-- Date column -->
+                                    <td ng-if="item.type === 'metric'">
+                                        <div ng-if="!$ctrl.data[item.value.getId()].dateColumn">
+                                            <i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+                                        </div>
+                                        <div ng-if="$ctrl.data[item.value.getId()].dateColumn">
+                                            <i class="fa fa-fw fa-calendar"></i>
+                                            {{$ctrl.data[item.value.getId()].dateColumn.displayName || $ctrl.data[item.value.getId()].dateColumn.name}}
+                                            <span class="grey-text">{{$ctrl.data[item.value.getId()].dateColumn.tableName}}</span>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.type === 'column'"></td>
+
+                                    <!-- Available cards -->
+                                    <td>
+                                        <app-affected-cards ng-if="item.type === 'metric' && table.isOpen" metric="item.value"></app-affected-cards>
+                                    </td>
+
+                                    <!-- Increase -->
+                                    <td>
+                                        <span ng-if="item.type === 'metric'" class="color-background" ng-class="{'success': item.value.isIncrease, 'danger': !item.value.isIncrease}"
+                                              tu-popover tu-popover-html="Increase is {{item.value.isIncrease ? 'good' : 'bad'}}" tu-popover-placement="top">
+                                            <i class="fa fa-fw fa-arrow-up" ng-class="{'text-success': item.value.isIncrease, 'text-danger': !item.value.isIncrease}"></i>
+                                            {{item.value.isIncrease ? 'Good' : 'Bad'}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

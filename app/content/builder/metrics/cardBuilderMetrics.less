@@ -1,0 +1,172 @@
+@import "editMetric/editMetric";
+
+.metric-search {
+    position: relative;
+
+    .fa {
+        position: absolute;
+        z-index: 1;
+        top: 14px;
+        left: 12px;
+        font-size: 15px;
+        color: @td-gray-dark;
+    }
+
+    .form-control {
+        padding-left: 35px;
+    }
+}
+
+.metric-helper-message {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 10px 0;
+
+    .arrow {
+        flex: 0 0 32px;
+        img {
+            width: 32px;
+            height: 35px;
+        }
+    }
+
+    span {
+        flex: 1;
+        margin: -1px 0 0 12px;
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 19px;
+        opacity: .8;
+    }
+}
+
+.card-builder-metrics {
+    margin: 15px 0 15px 0;
+
+    li {
+        .single-card-metric {
+            border-bottom: 1px solid rgba(218,223,225,0.5);
+            position: relative;
+            min-height: 34px;
+
+            .metric-color {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                height: 34px;
+                width: 2px;
+                z-index: 1;
+            }
+
+            .metric-name {
+                width: 100%;
+                display: block;
+                padding: 7px 30px 7px 7px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+
+                &:hover, &:focus {
+                    text-decoration: none;
+                }
+            }
+
+            .metric-dropdown {
+                position: absolute;
+                right: -1px;
+                top: 0px;
+
+                .btn {
+                    opacity: 0.5;
+                    font-size: 14px;
+                    padding: 6px;
+
+                    &:hover {
+                        opacity: 1;
+                        color: @td-deep-blue;
+                    }
+                }
+
+                &.open {
+                    .btn{
+                        opacity: 1;
+                        color: @td-deep-blue;
+                    }
+                }
+
+                .dropdown-menu {
+                    a {
+                        &.is-cumulative {
+                            color: @brand-danger;
+                        }
+
+                        &.hidden-metric {
+                            color: @brand-danger;
+                        }
+
+                        &.hidden-metric:hover {
+                            color: @deep-blue;
+                        }
+
+                        &.delete-metric{
+                            padding-right: 8px;
+                        }
+
+                        .fa{
+                            margin-right: 6px;
+                        }
+                    }
+
+                    &:after, &:before {
+                        bottom: 100%;
+                        right: 13px;
+                        border: solid transparent;
+                        content: " ";
+                        height: 0;
+                        width: 0;
+                        position: absolute;
+                        pointer-events: none;
+                    }
+
+                    &:after {
+                        border-color: rgba(255, 255, 255, 0);
+                        border-bottom-color: @white;
+                        border-width: 6px;
+                        margin-right: -6px;
+                    }
+                    &:before {
+                        border-color: rgba(170, 170, 170, 0);
+                        border-bottom-color: #aaa;
+                        border-width: 7px;
+                        margin-right: -7px;
+                    }
+                }
+
+            }
+
+            &:hover {
+                .metric-dropdown {
+                    .btn {
+                        opacity: 1;
+                    }
+                }
+            }
+
+            &.active {
+                font-weight: 500;
+            }
+
+        }
+
+        &.hidden-metric {
+            .single-card-metric {
+                .metric-name{
+                    padding: 7px 58px 7px 7px;
+                    opacity: 0.6;
+                }
+            }
+        }
+    }
+}

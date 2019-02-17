@@ -1,0 +1,109 @@
+<div class="sub-header border">
+    <div class="item flex-0">
+        <div class="dropdown pull-left">
+            <a class="dropdown-toggle btn btn-fourth btn-lg" data-toggle="dropdown" href="#">
+                <span class="date-dropdown-txt" ng-bind-html="reports.show.all ? 'All' : 'Created by you'"></span>
+                <i class="fa fa-sort"></i>
+            </a>
+            <ul class="dropdown-menu alerts-dropdown animated fadeIn">
+                <li ng-click="reports.show.setTo('all')"><a>All</a></li>
+                <li ng-click="reports.show.setTo('my')"><a>Created by you</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="item flex-1 m-l-10 m-r-10">
+        <input type="text" class="form-control" ng-model="reports.searchQuery" placeholder="Search reports"/>
+    </div>
+    <div class="item flex-0">
+        <button class="btn btn-third btn-lg pull-left" ng-click="reports.refreshList()" tu-popover tu-popover-html="Refresh reports list" tu-popover-placement="left">
+            <i class="fa fa-refresh" ng-class="{'fa-spin': reports.listLoading}"></i>
+        </button>
+    </div>
+</div>
+
+<div class="organisation-edit-area profile-report">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="item-list col-lg-12">
+                <loader ctrl-check="reports.loading"></loader>
+
+                <table class="table table-striped vertical-align-center" ng-if="!reports.loading">
+                    <thead>
+                        <tr>
+                            <th>Dashboard</th>
+                            <th>Data/Time</th>
+                            <th>Type</th>
+                            <th class="creator-th">Creator</th>
+                            <th class="people-th">People</th>
+                            <th class="report-action-th">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-if="report.dashboard && report.owner.email" ng-repeat="report in reports.reports | reportFilter : reports.searchQuery">
+                            <td ng-if="report.dashboard">
+                                <a ui-sref="dashboard({dashboardId: report.dashboard.id})" ng-bind-html="::report.dashboard.name"></a>
+                            </td>
+                            <td ng-if="!report.dashboard">Undefined</td>
+
+                            <td ng-bind-html="reports.getFrequencySentence(report)"></td>
+                            <td ng-bind-html="report.reportType"></td>
+
+                            <!-- Owner -->
+                            <td>
+                                <div class="user-wrapper">
+                                    <div class="user-image">
+                                        <img ng-src="{{ report.owner.photo }}" alt="" class="img-rounded">
+                                    </div>
+                                    <div class="user-name" ng-bind-html="report.owner.getFullName(true, true)"></div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <a class="user-wrapper" app-alert-subscribers ng-click="alertSubscribers.openModal(report.users, 'People following this report')">
+                                    <div class="user-image">
+                                        <img ng-src="{{ report.owner.photo }}" ng-if="report.users.length" alt="" class="img-rounded"/>
+                                    </div>
+                                    <div class="alert-no" ng-if="report.users.length > 1">
+                                        <span ng-bind="'+' + (report.users.length - 1)"></span>
+                                    </div>
+                                </a>
+                            </td>
+
+                            <td>
+                                <div class="report-action-buttons">
+                                    <div class="single-button" ng-if="!reports.isOwn(report) && report.subscribed !== undefined">
+                                        <button ng-click="reports.toggleFollow(report)" class="btn btn-xs btn-third subscribe-btn"
+                                                ng-class="{'active': report.subscribed}">
+                                            {{report.subscribed ? 'Subscribed' : 'Subscribe'}}
+                                        </button>
+                                    </div>
+                                    <div class="single-button" ng-if="reports.canEdit(report)">
+                                        <div ng-if="!report.deleteConfirmation">
+                                            <button class="btn btn-xs btn-first" tu-email-report ng-click="er.openModal(report.dashboard, report)">Edit</button>
+                                        </div>
+                                        <div ng-if="report.deleteConfirmation">
+                                            <button ng-click="reports.removeReport(report)" class="btn btn-xs btn-first">Yes</button>
+                                        </div>
+                                    </div>
+                                    <div class="single-button" ng-if="reports.canEdit(report)">
+                                        <div ng-if="!report.deleteConfirmation">
+                                            <button ng-click="report.deleteConfirmation = true" class="btn btn-xs btn-second">Delete</button>
+                                        </div>
+                                        <div ng-if="report.deleteConfirmation">
+                                            <button ng-click="report.deleteConfirmation = false" class="btn btn-xs btn-second">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!(reports.reports | reportFilter:reports.searchQuery).length">
+                            <td colspan="6" class="text-center">There are no reports at the moment</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>

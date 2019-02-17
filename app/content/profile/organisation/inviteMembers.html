@@ -1,0 +1,42 @@
+<div class="col-lg-6 col-md-6 col-sm-12 invite-member-form">
+    <form name="forms.members_form" action="" ng-submit="$event.preventDefault()" novalidate role="form">
+        <label>
+            Add Members to your team
+            <a ng-click="inviteMembers.showHidePersonalMessageInput()">Include a personal message?</a>
+        </label>
+        <div class="input-group" ng-class="{'has-error': forms.members_form.emails.$dirty && forms.members_form.emails.$invalid}">
+            <input class="form-control add-members" type="text" name="emails" ng-model="inviteMembers.members.emails" tu-multiple-emails required placeholder="Add email address ( separate by comma )">
+            <span class="input-group-btn">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-third add-member-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="glyphicon glyphicon-plus"></i> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li ng-if="inviteMembers.isShown(role)" ng-repeat="role in inviteMembers.roles" ng-click="inviteMembers.add(role)">
+                            <a href="#">
+                                {{:: role.title}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </span>
+
+        </div>
+        <div class="error-wrapper m-b-15">
+            <div class="error" ng-if="forms.members_form.emails.$dirty && forms.members_form.emails.$invalid">
+                <div class="row">
+                    <div class="col-md-12" ng-show="forms.members_form.emails.$error.required" >
+                        <small>Please add at least one email address</small>
+                    </div>
+                    <div class="col-md-12" ng-show="forms.members_form.emails.$error.tuMultipleEmails" >
+                        <small>Only valid emails separated by comma</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group m-t-15" ng-show="inviteMembers.personalMessage">
+            <textarea class="form-control" ng-model="inviteMembers.members.message" placeholder="Type a personal message to new invites" rows="5"></textarea>
+        </div>
+    </form>
+</div>

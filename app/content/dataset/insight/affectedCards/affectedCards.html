@@ -1,0 +1,10 @@
+<div class="affected-cards">
+    <div ng-if="$ctrl.loading">
+        <i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+    </div>
+
+    <a ng-if="!$ctrl.loading" ng-click="$ctrl.showCards()"
+       tu-popover tu-popover-html="Affected cards" tu-popover-placement="top">
+        <ng-pluralize count="$ctrl.cards.length" when="{'0': '', '1': '1 Card', 'other': '{} Cards'}"></ng-pluralize>
+    </a>
+</div>

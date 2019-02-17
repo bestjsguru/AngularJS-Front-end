@@ -1,0 +1,49 @@
+<div ng-form="timetableForm">
+
+    <div class="row">
+        <div class="form-group col-md-12 select frequency-select">
+            <label>Export options</label>
+            <ui-select on-select="$ctrl.updateFrequency($item)" ng-model="$ctrl.subscribeData.alertFrequency" search-enabled="true" class="w-100" required>
+                <ui-select-match class="alert-frequency-item" placeholder="Choose option">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices repeat="frequency in $ctrl.subscribeData.frequencies | filter: {label: $select.search}">
+                    <div class="alert-frequency-item" ng-bind-html=" frequency.label | highlight:$select.search "></div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-12">Select date</label>
+            <tu-date-time-picker date-time="$ctrl.subscribeData.dateTime"></tu-date-time-picker>
+        </div>
+    </div>
+
+    <div class="row" ng-if="$ctrl.showCustom">
+
+        <div class="col-lg-6 form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Every</span>
+                <input type="number" class="form-control" ng-model="$ctrl.subscribeData.customInterval" required min="1" maxlength="2">
+            </div>
+        </div>
+
+        <div class="col-lg-6 form-group select frequency-select">
+            <ui-select ng-model="$ctrl.subscribeData.customAlertFrequency" search-enabled="true" required>
+                <ui-select-match class="alert-frequency-item" placeholder="Select frequency">{{$ctrl.convertFrequencyToSentenceString($select.selected.verb, $ctrl.subscribeData.customInterval)}}</ui-select-match>
+                <ui-select-choices repeat="frequency in $ctrl.subscribeData.customFrequencies | filter: {verb: $select.search} ">
+                    <div class="alert-frequency-item">{{$ctrl.convertFrequencyToSentenceString(frequency.verb, $ctrl.subscribeData.customInterval) | highlight:$select.search}}</div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <hr>
+            <span ng-bind-html="$ctrl.getFrequencySentence()"></span>
+        </div>
+    </div>
+</div>
+

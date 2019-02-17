@@ -1,0 +1,48 @@
+<div class="metric-overview-details">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            Metric overview
+            <button type="button" class="close" ng-click="$ctrl.dismiss()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h4>
+    </div>
+    <div class="modal-body">
+        <table class="table text-left">
+            <tr>
+                <th></th>
+                <th>Metric Name</th>
+                <th class="text-right">Impact on goal</th>
+                <th>Metric Change</th>
+                <th>Current date</th>
+                <th>Previous date</th>
+            </tr>
+            <tr ng-class="{'goal-metric-tr': item.goal, 'active': $ctrl.isActive(item)}" ng-repeat="item in $ctrl.impacts track by $index">
+                <td>
+                    <div ng-class="{'goal-metric': item.goal, 'driver-metric': !item.goal}">
+                        <i ng-if="item.goal" class="fa fa-bullseye"></i>
+
+                        {{$ctrl.getLetter($index - 1)}}
+                    </div>
+                </td>
+                <td>{{item.metric.name}}</td>
+                <td class="text-right" ng-class="$ctrl.getImpactClass(item)">
+                    {{item.data.formattedValue}}
+                </td>
+                <td class="no-wrap">
+                    <span>{{item.data.formattedValue}}</span>
+                    <span class="pad-l-10" ng-class="$ctrl.getImpactClass(item)">
+                        <i class="fa fa-fw" ng-class="$ctrl.getImpactPercentClass(item)"></i>
+                        {{item.data.percent}}%
+                    </span>
+                </td>
+                <td>
+                    {{item.data.formattedAfter}}
+                </td>
+                <td>
+                    {{item.data.formattedBefore}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

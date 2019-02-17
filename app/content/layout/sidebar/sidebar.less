@@ -1,0 +1,361 @@
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 60px;
+
+    #sidebar-wrapper {
+        position: fixed;
+        z-index: 7;
+        left: 0;
+        top: 0;
+        padding-top: 50px;
+        width: 60px;
+        height: 100%;
+        background: @silver-sand;
+
+        .sidebar-nav {
+            display: block;
+            width: 60px;
+            padding: 0 0 55px 0;
+            list-style: none;
+            background: inherit;
+
+            li {
+                display: block;
+                position: relative;
+                background: inherit;
+
+                a {
+                    text-decoration: none;
+                    padding: 12px 19px 11px 18px;
+                    display: block;
+                    font-size: 13px;
+
+                    .fa {
+                        font-size: 16px;
+                    }
+
+                    &:hover {
+                        text-decoration: none;
+                        background: rgba(0, 0, 0, .2);
+                    }
+
+                    &:active, &:focus {
+                        text-decoration: none;
+                    }
+
+                    &.active {
+                        background: rgba(0, 0, 0, .2);
+                    }
+
+                }
+
+                /* Workspace */
+
+                &.workspace-dropdown {
+                    app-sidebar-user-menu, app-sidebar-dashboards {
+                        background: inherit;
+
+                        > div {
+                            background: inherit;
+                        }
+                    }
+
+                    .workspace-action-icons {
+                        font-size: 11px;
+                        position: absolute;
+                        top: 11px;
+                        right: 7px;
+                        z-index: 1;
+                        pointer-events: none;
+
+                        .fa {
+                            color: @white;
+                        }
+                    }
+
+                    .workspace-toggle {
+                        .fa-exclamation-circle {
+                            position: absolute;
+                            left: 15px;
+                            top: 5px;
+                            font-size: 12px;
+                            color: red;
+                            background: white;
+                            border-radius: 50%;
+                            border: solid 1px white;
+                        }
+
+                        &.user-area {
+                            padding-left: 15px;
+                            padding-right: 15px;
+
+                            .badge {
+                                position: absolute;
+                                top: 5px;
+                                right: 5px;
+                                background: @brand-danger;
+                                color: @white;
+                                font-size: 13px;
+                                padding: 3px 5px 2px 5px;
+                                font-weight: normal;
+                            }
+
+                            img {
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 2px;
+                            }
+                        }
+                    }
+
+                    .workspace-menu-wrapper {
+                        position: fixed;
+                        top: 50px;
+                        left: 60px;
+                        min-width: 400px;
+                        height: 100%;
+                        background: inherit;
+                        transition-duration: 0s;
+                        border-right: 1px solid @iron;
+                        padding-top: 45px;
+
+                        .workspace-title {
+                            display: block;
+                            width: 100%;
+                            font-size: 14px;
+                            text-transform: uppercase;
+                            font-weight: 500;
+                            padding: 13px 13px 11px 13px;
+                            height: 45px;
+                            border-bottom: 1px solid #ddd;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+
+                            &.user-area {
+                                padding: 5px 13px 5px 13px;
+                                text-transform: none;
+
+                                .user-email {
+                                    font-size: 11px;
+                                    line-height: 15px;
+                                    width: 90%;
+                                    display: block;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    text-transform: lowercase;
+                                    font-weight: normal;
+                                }
+                            }
+
+                            a {
+                                position: absolute;
+                                top: 5px;
+                                right: 5px;
+                                background: transparent;
+                                cursor: pointer;
+                                padding: 9px;
+
+                                .fa {
+                                    color: inherit;
+                                    font-size: 16px;
+                                }
+
+                                &:hover {
+                                    .fa {
+                                        opacity: 0.8;
+                                    }
+                                }
+                            }
+                        }
+
+                        .carousel {
+                            height: 100%;
+                            overflow: hidden;
+
+                            .carousel-inner {
+                                max-height: calc(~"100vh - 100px");
+                                height: 100%;
+                                overflow-y: auto;
+
+                                .item {
+                                    height: 100%;
+                                    transition-duration: 0.1s;
+
+                                    .list-group {
+                                        margin: 0;
+
+                                        .list-group-single-item {
+                                            border-radius: 0;
+                                            font-weight: 500;
+                                            background: transparent;
+                                            border-left: 0;
+                                            border-right: 0;
+                                            border-top: 0;
+                                            border-bottom: 0;
+                                            padding: 7px 13px 7px 13px;
+                                            position: relative;
+                                            cursor: pointer;
+                                            display: flex;
+
+                                            .personal {
+                                                border: 1px solid @brand-danger;
+                                                color: @brand-danger;
+                                                display: inline-block;
+                                                border-radius: 2px;
+                                                padding: 1px 2px 0px 2px;
+                                                height: 13px;
+                                                font-size: 9px;
+                                                line-height: 10px;
+                                                text-transform: uppercase;
+                                                margin: 0 0 0 4px;
+                                            }
+
+                                            .badge {
+                                                background: @brand-danger;
+                                                color: @white;
+                                                font-size: 13px;
+                                                padding: 3px 5px 2px 5px;
+                                                font-weight: normal;
+                                                margin-left: 5px;
+                                            }
+
+                                            .fa {
+                                                display: none;
+                                                flex: 0 0 auto;
+
+                                                &.item-icon {
+                                                    display: flex;
+                                                    font-size: 14px;
+                                                    align-self: center;
+                                                    color: inherit;
+                                                }
+                                            }
+
+                                            .folder-title {
+                                                flex: 1 1 auto;
+                                                margin-right: 30px;
+
+                                                span {
+                                                    display: inline-block;
+                                                }
+                                            }
+
+                                            &.back {
+                                                border-bottom: 1px solid #ddd;
+                                                padding: 11px 13px 11px 13px;
+                                                text-transform: uppercase;
+                                                margin-bottom: 1px;
+
+                                                .fa {
+                                                    color: inherit;
+                                                }
+                                            }
+
+                                            &.active {
+                                                .fa {
+                                                    color: inherit;
+                                                }
+
+                                                &:hover {
+                                                    .fa {
+                                                        display: flex;
+                                                    }
+                                                }
+                                            }
+
+                                            &:hover {
+                                                .fa {
+                                                    display: flex;
+                                                    color: inherit;
+
+                                                    &.fa-arrow-right {
+                                                        position: absolute;
+                                                        right: 13px;
+                                                    }
+                                                }
+                                            }
+
+                                            &.back {
+                                                .fa {
+                                                    display: flex;
+                                                }
+                                            }
+
+                                            &.dashboard-link {
+                                                .personal {
+                                                    margin-top: 4px;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    &:first-child {
+                                        .list-group {
+                                            .list-group-single-item {
+                                                padding: 7px 13px 7px 13px;
+
+                                                .fa {
+                                                    margin-left: auto;
+                                                    padding-left: 10px;
+
+                                                    &.item-icon {
+                                                        display: flex;
+                                                        margin-left: 0;
+                                                        padding: 0 0 0 0;
+                                                        font-size: 14px;
+                                                        align-self: center;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &:after {
+                            content: '';
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(255, 255, 255, 0.4);
+                            display: block;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            z-index: -1;
+                        }
+                    }
+
+                    &:hover {
+                        .workspace-toggle {
+                            background: rgba(0, 0, 0, .2);
+                            color: @white;
+                        }
+
+                        .workspace-action-icons {
+                            color: @white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #page-content-wrapper {
+        width: 100%;
+        padding-left: 0;
+        position: relative;
+        .full-height;
+    }
+
+    &.no-margins {
+        padding-left: 0;
+
+        #page-content-wrapper {
+            padding-left: 0;
+        }
+    }
+}

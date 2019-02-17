@@ -1,0 +1,172 @@
+<div class="data-feeds">
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Data Feeds</span>
+            </div>
+        </div>
+        <div class="item">
+            <div class="pull-right">
+                <div class="btn btn-eighth pull-right" ng-class="{disabled: $ctrl.loading}"
+                     tu-popover tu-popover-placement="left" tu-popover-html="Refresh Feed List">
+                        <span ng-click="$ctrl.loadFeeds(false)">
+                            <i class="fa fa-fw fa-refresh" ng-class="{'fa-spin': $ctrl.loading}" aria-hidden="true"></i>
+                        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!$ctrl.loading" class="container-fluid feeds-search-wrapper">
+        <div class="feeds-search">
+            <i class="fa fa-search"></i>
+            <input type="text" class="form-control" ng-model="$ctrl.query" ng-minlength="2" ng-change="$ctrl.filter()" ng-model-options="{ debounce: 500 }" placeholder="Search feeds">
+            <i ng-click="$ctrl.clear()" class="fa fa-fw fa-times"></i>
+        </div>
+
+        <button class="btn btn-link expand-feeds" ng-click="$ctrl.toggleAllFeeds()">
+            <i class="fa fa-fw fa-expand"></i> {{$ctrl.allFeedsCollapsed() ? 'Expand All' : 'Collapse All'}}
+        </button>
+
+        <div class="checkbox feeds-search-checkbox" ng-repeat="status in $ctrl.statuses track by $index" ng-click="$ctrl.filterByStatus(status)">
+            <i class="fa fa-fw" ng-class="{'fa-check-square-o': status.checked, 'fa-square-o': !status.checked}"></i>
+            <span ng-bind="status.name"></span>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <loader ctrl-check="$ctrl.loading"></loader>
+
+        <div ng-if="$ctrl.error && !$ctrl.loading">
+            <div class="preview-area-wrapper">
+                <div class="preview-area">
+                    <div ng-click="$ctrl.loadFeeds()" class="preview-icon animated zoomIn">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </div>
+                    <span class="preview-title">Something went wrong!</span>
+                    <span>Please click icon above in order to reload list of feeds</span>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!$ctrl.loading" class="panel-group">
+            <div ng-repeat="item in $ctrl.feeds" class="panel single-item">
+                <div class="panel-heading" ng-click="item.isOpen = !item.isOpen">
+                    <div class="item-name">
+                        <i class="fa fa-fw fa-2x fa-database"></i>
+                        {{::item.name}}
+                        <div>
+                            <span ng-if="::item.feeds.length" ng-bind="$ctrl.countFeeds(item)"></span>
+                        </div>
+                    </div>
+                    <span class="item-edit pull-left">
+                        <i class="fa" ng-class="{'fa-chevron-up': item.isOpen, 'fa-chevron-down': !item.isOpen}"></i>
+                    </span>
+                    <div ng-if="item.feeds.length" class="beta-wrapper">
+                        <div class="beta">beta</div>
+                    </div>
+                    <div ng-if="item.feeds.length" class="icons subscriptions pull-right">
+                        <div class="checkbox" ng-disabled="item.loading" ng-click="$ctrl.subscribeAll(item, 'email', $event)">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.allSubscribed(item, 'email'), 'fa-plus-square-o': $ctrl.partiallySubscribed(item, 'email'), 'fa-square-o': $ctrl.noneSubscribed(item, 'email')}"></i>
+                            <span>Email</span>
+                        </div>
+                        <div class="checkbox" ng-disabled="item.loading" ng-click="$ctrl.subscribeAll(item, 'app', $event)">
+                            <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.allSubscribed(item, 'app'), 'fa-plus-square-o': $ctrl.partiallySubscribed(item, 'app'), 'fa-square-o': $ctrl.noneSubscribed(item, 'app')}"></i>
+                            <span>In-App</span>
+                        </div>
+                        <span ng-if="item.loading" class="grey-text text-success">
+                            <i class="fa fa-fw fa-circle-o-notch fa-spin"></i>
+                            Saving...
+                        </span>
+                        <span ng-if="item.error" class="grey-text text-danger">
+                            <i class="fa fa-fw fa-exclamation"></i>
+                            Couldn't subscribe
+                        </span>
+                    </div>
+                    <div class="icons subscriptions pull-right">
+                        <span class="text-danger" ng-if="$ctrl.countErrorFeeds(item)">
+                            <ng-pluralize count="$ctrl.countErrorFeeds(item)" when="{'1': '1 Alert', 'other': '{} Alerts'}"></ng-pluralize>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="panel-collapse collapse in" ng-if="item.isOpen">
+                    <div class="panel-body">
+                        <div ng-if="item.unknown" class="help-block border-bottom pad-b-20">
+                            These are supporting feeds. They are commonly used to enrich data, ingest data by account (e.g. Google Analytics, Adwords and Facebook) and merge similar datasets in to a combined dataset. The tables directly behind these feeds are usually not visible to you in the AVORA app. Instead, you will have access to the individual tables that represent the combined datasets.
+                        </div>
+
+                        <table class="table feeds-table">
+                            <thead>
+                                <tr>
+                                    <th>Feed</th>
+                                    <th>Last Run Time</th>
+                                    <th>Last Run Duration</th>
+                                    <th>Frequency</th>
+                                    <th>Status</th>
+                                    <th width="150" class="text-left info">
+                                        Subscribe to Notifications
+                                        <div class="beta">beta</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="feed in item.feeds" ng-class="::{danger: feed.isError}">
+                                    <td>
+                                        {{::feed.name}}
+                                        <span class="grey-text">
+                                            <i class="fa fa-table"></i>
+                                            {{::feed.tableName}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{::feed.lastRunTime}}
+                                        <span class="grey-text">
+                                            <i class="fa fa-clock-o"></i>
+                                            {{::feed.lastRunTimeFromNow}}
+                                        </span>
+                                    </td>
+                                    <td>{{::feed.lastRunDuration}}</td>
+                                    <td>{{::feed.frequency}}</td>
+                                    <td>
+                                        <span ng-if="::!feed.isError" class="text-{{::feed.statusClass()}}">
+                                            {{::feed.lastRunStatus}}
+                                        </span>
+                                        <span ng-if="::feed.isError" ng-click="$ctrl.showLog(feed)" class="text-{{::feed.statusClass()}}">
+                                            {{::feed.lastRunStatus}}
+                                            <i class="fa fa-fw fa-file-text-o"></i>
+                                        </span>
+                                    </td>
+                                    <td class="text-left info">
+                                        <div class="subscriptions">
+                                            <div class="checkbox" ng-disabled="item.loading || feed.loading" ng-click="$ctrl.subscribe(feed, 'email')">
+                                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.subscribed(feed, 'email'), 'fa-square-o': !$ctrl.subscribed(feed, 'email')}"></i>
+                                                <span>Email</span>
+                                            </div>
+                                            <div class="checkbox" ng-disabled="item.loading || feed.loading" ng-click="$ctrl.subscribe(feed, 'app')">
+                                                <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.subscribed(feed, 'app'), 'fa-square-o': !$ctrl.subscribed(feed, 'app')}"></i>
+                                                <span>In-App</span>
+                                            </div>
+                                            <span ng-if="feed.loading" class="grey-text text-success text-left">
+                                                <i class="fa fa-fw fa-circle-o-notch fa-spin"></i> Saving...
+                                            </span>
+                                            <span ng-if="feed.error" class="grey-text text-danger">
+                                                <i class="fa fa-fw fa-exclamation"></i>
+                                                Couldn't subscribe
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr ng-if="$ctrl.hasMore(item)">
+                                    <td ng-click="$ctrl.showMore(item)" class="text-center active" colspan="6">Show more...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

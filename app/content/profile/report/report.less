@@ -1,0 +1,85 @@
+.profile-report {
+    .creator-th {
+        min-width: 120px;
+    }
+
+    .people-th {
+        min-width: 65px;
+    }
+
+    .report-action-th {
+        width: 1px;
+        white-space: nowrap;
+    }
+
+    .user-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .user-image {
+            flex: 0 0 20px;
+            margin: 0 8px 0 0;
+
+            .img-rounded{
+                border-radius: 2px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .user-name {
+            flex: 1 1 auto;
+            font-size: 12px;
+            line-height: 13px;
+        }
+
+        .alert-no{
+            flex: 1 1 auto;
+
+            span {
+                background: rgba(0, 0, 0, 0.7);
+                color: @white;
+                display: block;
+                min-width: 20px;
+                height: 20px;
+                padding: 2px;
+                font-size: 12px;
+                border-radius: @border-radius-small;
+                text-align: center;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    .report-action-buttons {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .single-button {
+            flex: 0 1 75px;
+
+            .btn {
+                min-width: 75px;
+
+                &.subscribe-btn {
+                    margin: 0 8px 0 0;
+
+                    &:focus {
+                        background: @btn-success-bg;
+                        color: #fff;
+                    }
+
+                    &.active {
+                        &:focus {
+                            background: none;
+                            color: @btn-success-bg;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

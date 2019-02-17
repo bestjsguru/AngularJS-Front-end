@@ -1,0 +1,55 @@
+svg {
+  position: relative;
+}
+
+.counter-map {
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+
+    &.country {
+        font-size: 1em;
+        font-weight: normal;
+        position: absolute;
+        top: 4em;
+        right: 1em;
+        z-index: 100;
+        padding: .2em .5em;
+        line-height: 1.1em;
+        text-align: center;
+    }
+}
+
+.legend {
+    padding: 6px 8px;
+    font: 0.825em Arial, Helvetica, sans-serif;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #555;
+    width: 130px;
+}
+
+.legend i {
+    clear: both;
+    width: 16px;
+    height: 16px;
+    float: left;
+    opacity: 0.7;
+    margin-right: 8px;
+}
+
+.angular-leaflet-map {
+    z-index: 1;
+
+    .leaflet-top {
+        z-index: 1001;
+    }
+
+    .leaflet-bottom {
+        margin-bottom: 30px !important;
+    }
+}
+

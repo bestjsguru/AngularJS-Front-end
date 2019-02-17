@@ -1,0 +1,74 @@
+.metric-overview-details {
+    .modal-header {
+        .close {
+            margin: 0;
+            opacity: .6;
+            color: @white;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    .modal-body {
+        max-height: calc(~"100vh - 230px");
+        overflow-y: auto;
+
+        .table {
+            margin: 0;
+            padding: 0;
+            border: 0;
+
+            tr {
+                th {
+                    border-top: 0;
+                }
+
+                td {
+                    border-top: 1px solid @porcelain;
+                    cursor: default;
+                    vertical-align: middle;
+
+                    .goal-metric {
+                        width: 22px;
+                        height: 22px;
+                        display: inline-block;
+                        background: @hoki;
+                        color: @white;
+                        text-align: center;
+                        line-height: 22px;
+                        border-radius: 2px;
+                    }
+
+                    .driver-metric {
+                        width: 22px;
+                        height: 22px;
+                        display: inline-block;
+                        background: @white;
+                        color: @hoki;
+                        border: 1px solid @hoki;
+                        text-align: center;
+                        line-height: 20px;
+                        border-radius: 2px;
+                    }
+
+                    &:first-child {
+                        width: 1%;
+                        padding-right: 0;
+                    }
+                }
+
+                &.goal-metric-tr {
+                    td {
+                        font-weight: 600;
+                    }
+                }
+
+                &.active {
+                    background: @porcelain;
+                }
+            }
+        }
+    }
+}

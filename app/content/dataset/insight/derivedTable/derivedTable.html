@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.table ? 'Edit table' : 'Create New Table'}}</h4>
+</div>
+<div class="modal-body">
+    <form name="$ctrl.form" novalidate>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Table name</label>
+                    <input type="text" class="form-control" name="name" ng-model="$ctrl.name" required ng-minlength="3">
+
+                    <div class="error-messages" ng-messages="$ctrl.form.name.$error" ng-if="$ctrl.dirty($ctrl.form.name)">
+                        <div ng-messages-include="error-messages"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label>Query statement</label>
+                    <div ng-if="!$ctrl.tables.length">
+                        <input name="statement" placeholder="Loading tables..." type="text" class="form-control" disabled>
+                    </div>
+
+                    <div ng-if="$ctrl.tables.length">
+                        <div class="panel panel-default">
+                            <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()" ui-refresh="true"
+                                      name="query" ng-model-options="{ debounce: 400 }" required app-valid-sql
+                                      ng-model="$ctrl.query" placeholder="Put SQL statement here">
+                            </textarea>
+                        </div>
+
+                        <div class="error-messages" ng-messages="$ctrl.form.query.$error" ng-if="$ctrl.dirty($ctrl.form.query)">
+                            <div ng-messages-include="error-messages"></div>
+
+                            <div ng-message="validSql">Invalid Sql query</div>
+                        </div>
+
+                        <span class="help-block">Type Ctrl + Space to see available columns and functions</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()" ng-disabled="$ctrl.loading">Save</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="dexi-card" ng-if="$ctrl.card">
+    <div class="dexi-card-header">
+        <span class="dexi-card-name" ng-bind-html="$ctrl.card.getName()"></span>
+        <div class="dexi-card-range" ng-if="!$ctrl.card.isImageOrDraft() && !$ctrl.card.isText()">
+            <span ng-bind-html="$ctrl.card.getDateRangeStringWithFrequencyAndTimezone()"></span>
+        </div>
+        <a class="modal-close" ng-click="$ctrl.collapse()"><i class="fa fa-times"></i></a>
+    </div>
+
+    <div class="dexi-card-body">
+        <ul class="nav nav-tabs" role="tablist">
+            <li ng-class="{active: $ctrl.tabs.is('link')}"><a ng-click="$ctrl.tabs.activate('link')">Configuration</a></li>
+            <li ng-class="{active: $ctrl.tabs.is('table')}" ng-disabled="!$ctrl.link"><a ng-click="$ctrl.tabs.activate('table')">Process Data</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" ng-show="$ctrl.tabs.is('link')">
+                <app-dexi-link original-card="$ctrl.card" link="$ctrl.link"></app-dexi-link>
+            </div>
+            <div class="tab-pane active" ng-show="$ctrl.tabs.is('table')">
+                <app-dexi-table original-card="$ctrl.card" link="$ctrl.link"></app-dexi-table>
+            </div>
+        </div>
+    </div>
+</div>

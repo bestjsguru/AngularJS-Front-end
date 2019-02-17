@@ -1,0 +1,66 @@
+.reorder-columns {
+    .modal-body {
+        padding-bottom: 0;
+
+        .reorder-item {
+            width: 100%;
+            padding: 0 10px;
+            border: solid 1px @iron;
+            border-radius: 5px;
+            background: @porcelain;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &.ui-sortable-placeholder {
+                background: @td-gray-pale;
+                border: solid 1px @iron;
+            }
+
+            &.hidden-item {
+                background: @td-gray-pale;
+                color: @iron;
+            }
+
+            .reorder-icon {
+                padding: 10px 10px 0 0;
+                margin-right: 10px;
+                border-right: solid 1px #DADFE1;
+                width: 25px;
+                flex: 0;
+                margin-top: 3px;
+            }
+
+            .reorder-name {
+                flex: 1;
+                padding: 0;
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    align-self: flex-start;
+
+                    & + span {
+                        font-size: 10px;
+                        color: @silver-sand;
+                    }
+                }
+            }
+
+            .reorder-type {
+                text-transform: capitalize;
+                font-size: 10px;
+                color: @silver-sand;
+                flex: 0;
+                margin-top: 3px;
+                padding: 10px 0 10px 10px;
+            }
+        }
+    }
+}

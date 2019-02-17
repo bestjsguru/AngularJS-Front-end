@@ -1,0 +1,130 @@
+app-multiselect-dropdown {
+    display: block;
+    width: 100%;
+
+    &.input-md {
+        .multiselect-dropdown {
+            .dropdown {
+                .dropdown-toggle {
+                    padding-top: 10px;
+                }
+
+                .dropdown-menu {
+                    top: 39px;
+                }
+            }
+        }
+    }
+}
+
+.multiselect-dropdown {
+    .dropdown {
+        min-height: 35px;
+
+        &.open {
+            .dropdown-toggle {
+                border-color: @hoki;
+
+                .fa-caret-down {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .dropdown-toggle {
+            padding-top: 7px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+
+            .fa-caret-down {
+                float: right;
+                margin-top: 3px;
+                margin-left: 8px;
+            }
+        }
+
+        .dropdown-menu {
+            right: 0;
+            border-color: @hoki;
+            top: 31px;
+            border-top: none;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            max-height: 325px;
+            min-width: 100%;
+            overflow: hidden;
+            overflow-y: auto;
+
+            li {
+                &.search-box {
+                    padding: 10px;
+
+                    &:after {
+                        content: "\f002";
+                        font-family: FontAwesome;
+                        font-size: 13px;
+                        position: absolute;
+                        right: 20px;
+                        top: 18px;
+                    }
+
+                    .form-control {
+                        border-color: @borderColor;
+                    }
+                }
+
+                &.select-actions {
+                    padding: 0 10px;
+                    text-align: right;
+                    text-transform: uppercase;
+                    font-size: 12px;
+
+                    a {
+                        display: inline-block;
+                        padding: 0;
+
+                        &:first-child {
+                            padding-right: 10px;
+                            margin-right: 5px;
+                            border-right: solid 1px @iron;
+                        }
+                    }
+                }
+
+                &.active {
+                    a, a:hover {
+                        background: none;
+                        padding-right: 30px;
+
+                        &:after {
+                            content: "\f00c";
+                            font-family: FontAwesome;
+                            font-size: 13px;
+                            position: absolute;
+                            right: 9px;
+                            top: 10px;
+                        }
+                    }
+                }
+
+                a {
+                    position: relative;
+
+                    span {
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        width: 100%;
+                        display: block;
+                    }
+
+                    &:hover {
+                        background: none;
+                    }
+                }
+            }
+        }
+    }
+}

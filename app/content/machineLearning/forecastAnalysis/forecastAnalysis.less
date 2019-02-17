@@ -1,0 +1,346 @@
+.forecast-analysis-wrapper {
+    position: relative;
+    .full-height;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .forecast-analysis {
+        min-height: calc(~"100vh - 143px");
+        display: block;
+        position: relative;
+
+        .forecast-analysis-sidebar {
+            border-right: 1px solid @iron;
+            position: absolute;
+            height: 100%;
+            max-height: 100%;
+            width: 370px;
+            padding: 0 15px;
+            z-index: 1;
+            left: 0;
+            top: 0;
+
+            .date-string {
+                margin: 5px 2px 2px 2px;
+                display: block;
+                font-size: 12px;
+                opacity: .7;
+            }
+
+            .form-control {
+                height: 34px;
+            }
+
+            .form-group {
+                .date-picker, .date-dropdown{
+                    width: 100%;
+                    display: block;
+                    position: relative;
+                    float: none !important;
+
+                    .dropdown-toggle {
+                        display: block;
+                        width: 100%;
+                        padding: 6px 12px;
+                        text-align: left;
+
+                        .date-dropdown-txt {
+                            color: @madison;
+                            font-size: 14px;
+                        }
+
+                        .fa-sort {
+                            position: absolute;
+                            right: 12px;
+                            top: 12px;
+                            font-size: 13px;
+                            color: @madison;
+                        }
+                    }
+
+                    ul.dropdown-menu.periods {
+                        width: 100%;
+                    }
+
+                    .calendar-holder {
+                        top: 33px;
+                        right: auto;
+                        left: 0;
+                        width: 100%;
+
+                        .calendar-to, .uib-datepicker {
+                            max-width: 100%;
+                            margin-right: 0;
+                        }
+
+                        &.single-calendar {
+                            border: 0;
+
+                            .calendar-title {
+                                display: none;
+                            }
+                        }
+
+                        &.double-calendar {
+                            width: 600px;
+
+                            .calendar-to, .uib-datepicker {
+                                max-width: 286px;
+                                margin-right: -1px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .select2-container {
+                .select2-choice {
+                    height: 34px;
+                    line-height: 32px;
+                }
+            }
+
+            .sidebar-content-collapsed {
+                display: none;
+
+                .btn {
+                    width: 30px;
+                    height: 30px;
+                    line-height: 22px;
+                    padding: 3px 0px;
+                    margin: 0 0 10px 0;
+                    color: @hoki;
+                    border: 1px solid @hoki;
+                    border-radius: 2px;
+
+                    &.goal-metric {
+                        background: @hoki;
+                        color: @white;
+
+                        &:hover {
+                            background: @hoki;
+                        }
+                    }
+
+                    &:hover {
+                        background: inherit;
+                        opacity: 0.8;
+                    }
+                }
+
+            }
+
+        }
+
+        .forecast-analysis-visual {
+            margin: 0 0 0 370px;
+            min-height: calc(~"100vh - 143px");
+            background: @white;
+            border-top: 1px solid @iron;
+            position: relative;
+
+            .forecast-analysis-sidebar-toggle {
+                position: absolute;
+                z-index: 2;
+                top: 0px;
+                left: 0px;
+                color: @hoki;
+                font-size: 17px;
+                padding: 6px 5px 5px 7px;
+
+                .fa {
+                    -webkit-text-stroke: 1px @white;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                    background: inherit;
+                    color: @madison;
+                }
+
+                &:focus {
+                    text-decoration: none;
+                    background: inherit;
+                }
+            }
+
+            .preview-icon.loading-icon {
+                position: relative;
+                border: none;
+            }
+
+            .card-error-message {
+                margin: 100px auto;
+                position: relative;
+                height: auto;
+                float: left;
+
+                .card-error-title {
+                    margin-bottom: 10px;
+                }
+            }
+
+            .forecast-analysis-heading{
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                position: relative;
+                min-height: 38px;
+                border-bottom: 1px solid @iron;
+                padding: 0 15px 0 50px;
+
+                &:after {
+                    content: '';
+                    width: 1px;
+                    height: 100%;
+                    background: @iron;
+                    position: absolute;
+                    top: 0;
+                    left: 38px;
+                }
+
+                .item {
+                    flex: 1 1 auto;
+                    align-self: center;
+
+                    .forecast-analysis-name {
+                        color: @madison;
+                        font-size: 17px;
+                        line-height: 22px;
+                        font-weight: 500;
+                        width: 100%;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .root-visual-picker {
+                        display: flex;
+                        flex-wrap: wrap;
+                        flex-direction: row;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+
+                        .icon-wrapper {
+                            flex: 0 0 37px;
+                            padding: 6px;
+                            cursor: pointer;
+
+                            &:hover {
+                                background: @td-gray-pale;
+                                border-bottom: 1px solid @brand-danger;
+                                margin-bottom: -1px;
+                            }
+
+                            &.active {
+                                border-bottom: 1px solid @brand-danger;
+                                margin-bottom: -1px;
+                            }
+                        }
+                    }
+
+                    & + .item {
+                        flex: 0 0 auto;
+                    }
+                }
+
+            }
+
+            .forecast-analysis-data {
+
+                .total-variance-wrapper {
+                    width: 100%;
+                    min-height: 200px;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+
+                    .total-variance-box {
+                        display: block;
+                        align-self: center;
+
+                        .total-variance-title {
+                            display: block;
+                            text-align: left;
+                        }
+
+                        .total-variance {
+                            text-align: left;
+                            font-size: 60px;
+                            font-weight: 600;
+                        }
+
+                        .total-variance-footer {
+
+                            .total-variance-value {
+                                margin-left: 20px;
+                                font-size: 14px;
+
+                                span {
+                                    display: block;
+                                    text-align: right;
+                                }
+
+                                span:last-child {
+                                    font-weight: 600;
+                                }
+                            }
+
+                            .total-variance-percentage {
+                                font-size: 20px;
+                            }
+
+                            .btn {
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /* Collapse sidebar styles */
+
+        &.collapsed {
+            .forecast-analysis-sidebar {
+                width: 60px;
+                overflow: hidden;
+
+                .sidebar-content {
+                    display: none;
+                }
+
+                .sidebar-content-collapsed {
+                    display: block;
+                }
+            }
+
+            .forecast-analysis-visual {
+                margin: 0 0 0 60px;
+            }
+        }
+    }
+
+    @import (multiple) '../../relationshipBuilder/relationshipBuilderTable';
+    @import './drill/table/forecastAnalysisDrillTable';
+    @import './topReasons/forecastAnalysisTopReasons';
+    @import './dimensions/forecastAnalysisDimensions';
+
+    .table {
+        tr {
+            td {
+                .metric-btn {
+                    top: 50%;
+                    margin-top: -14px;
+                }
+
+                .btn-block + .btn-block {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
+
+@import './filters/button/forecastAnalysisFilterButton';

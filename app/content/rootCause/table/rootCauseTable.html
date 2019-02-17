@@ -1,0 +1,38 @@
+<table class="table">
+    <thead class="bold">
+        <tr class="active">
+            <th>Driver metric</th>
+            <th>Current date</th>
+            <th>Previous date</th>
+            <th>Difference</th>
+            <th>Impact on goal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in $ctrl.impacts.items">
+            <td class="bold" ng-class="{'goal-metric-row': item.goal}">
+                <a ng-if="item.goal" ng-click="$ctrl.drillDown(item)" href="#" class="btn metric-btn goal-metric"
+                   tu-popover tu-popover-html="Drill into {{item.metric.name}}" tu-popover-placement="right">
+                    <i class="fa fa-bullseye"></i>
+                </a>
+                <a ng-if="!item.goal" ng-click="$ctrl.drillDown(item)" href="#" class="btn metric-btn"
+                   tu-popover tu-popover-html="Drill into {{item.metric.name}}" tu-popover-placement="right">
+                    {{item.letter}}
+                </a>
+                <span class="metric-name" ng-bind-html="item.metric.name"></span>
+            </td>
+            <td class="no-wrap" ng-bind-html="item.current"></td>
+            <td class="no-wrap" ng-bind-html="item.previous"></td>
+            <td class="no-wrap">
+                <span class="btn-block" ng-bind-html="item.difference"></span>
+                <span class="btn-block" ng-class="$ctrl.getImpactClass(item)">
+                    <i class="fa fa-fw" ng-class="$ctrl.getImpactPercentClass(item)"></i>
+                    {{item.percent}}
+                </span>
+            </td>
+            <td class="no-wrap">
+                <span ng-bind-html="item.impact" ng-class="$ctrl.getImpactClass(item)"> </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

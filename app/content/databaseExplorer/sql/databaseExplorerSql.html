@@ -1,0 +1,31 @@
+<div class="database-explorer-sql">
+    <div class="sql-editor">
+        <form name="$ctrl.form" ng-submit="$ctrl.executeSql()">
+            <textarea ui-codemirror ui-codemirror-opts="$ctrl.codemirrorConfig.get()"
+                      ui-refresh="true" ng-model="$ctrl.query" name="query" app-valid-sql></textarea>
+            <div class="gutter-helper"></div>
+
+        </form>
+        <span class="help-block">Type Ctrl + Space to see available columns and functions</span>
+
+        <span class="help-block validation-error" ng-if="$ctrl.form.$dirty && $ctrl.form.$invalid">
+            <i class="fa fa-exclamation-triangle"></i>
+            Invalid SQL query
+        </span>
+    </div>
+
+    <div class="action-panel">
+
+        <app-database-explorer-sql-history></app-database-explorer-sql-history>
+
+        <button class="execute-btn btn btn-xs" ng-class="{'btn-fourth': !$ctrl.query.length, 'btn-third': $ctrl.query.length}"
+                ng-disabled="$ctrl.loading || !$ctrl.query.length" ng-click="$ctrl.executeSql()">
+            <i class="fa" ng-class="{'fa-cogs': !$ctrl.loading, 'fa-circle-o-notch fa-spin': $ctrl.loading}"></i>
+            {{$ctrl.loading ? 'Loading...' : 'Run query' }}
+        </button>
+
+    </div>
+
+    <app-database-explorer-sql-data data="$ctrl.data"></app-database-explorer-sql-data>
+</div>
+

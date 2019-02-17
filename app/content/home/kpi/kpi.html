@@ -1,0 +1,60 @@
+<div class="col-lg-12">
+    <span class="home-heading">
+        kpi
+        <a href="#" class="btn btn-link" ng-click="$ctrl.selectMetrics()"><i class="fa fa-pencil-square-o fa-fw"></i></a>
+
+        <a ng-click="$ctrl.refresh()" class="btn btn-link pull-right" ng-class="{disabled: $ctrl.loading}"
+           tu-popover tu-popover-placement="top" tu-popover-html="Refresh Cards">
+            <i class="fa fa-fw fa-refresh" ng-class="{'fa-spin': $ctrl.loading}" aria-hidden="true"></i>
+        </a>
+    </span>
+</div>
+
+<div class="kpi-table">
+    <table class="table" ng-class="{disabled: !$ctrl.metrics.length && !$ctrl.loading, 'table-striped table-hover': $ctrl.metrics.length}">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Trend</th>
+                <th>Today</th>
+                <th>Yesterday</th>
+                <th>This week</th>
+                <th>This month</th>
+                <th>This year</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="metric in $ctrl.metrics track by $index">
+                <td ng-bind-html="metric.name"></td>
+                <td>
+                    <app-kpi-metric-trend metric="metric"></app-kpi-metric-trend>
+                </td>
+                <td>
+                    <app-kpi-metric-data metric="metric" period="today"></app-kpi-metric-data>
+                </td>
+                <td>
+                    <app-kpi-metric-data metric="metric" period="yesterday"></app-kpi-metric-data>
+                </td>
+                <td>
+                    <app-kpi-metric-data metric="metric" period="weekTY"></app-kpi-metric-data>
+                </td>
+                <td>
+                    <app-kpi-metric-data metric="metric" period="monthTY"></app-kpi-metric-data>
+                </td>
+                <td>
+                    <app-kpi-metric-data metric="metric" period="yearTY"></app-kpi-metric-data>
+                </td>
+            </tr>
+
+            <tr ng-if="!$ctrl.metrics.length">
+                <td class="loading-row" colspan="7">
+                    <loader ctrl-check="$ctrl.loading"></loader>
+                    <span ng-if="!$ctrl.loading">
+                        Please select metrics by clicking on <i class="fa fa-pencil-square-o fa-fw"></i> icon above
+                    </span>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

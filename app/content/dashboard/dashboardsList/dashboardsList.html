@@ -1,0 +1,82 @@
+<div class="loading-dashboards" ng-if="$ctrl.loading">
+    <i class="fa fa-fw fa-circle-o-notch fa-spin" aria-hidden="true"></i>
+</div>
+
+<div class="menu">
+    <a href ng-if="$ctrl.error" ng-click="$ctrl.reload()" class="error-loading-dashboards">
+        <i class="fa fa-fw fa-refresh"></i>
+        Something went wrong while loading dashboards. Click here to try again.
+    </a>
+
+    <ul ng-if="!$ctrl.error && !$ctrl.loading" class="dashboard-menu" id="menu">
+
+        <li class="dropdown menu-item" ng-class="{'active-tab': folder.hasDashboard($ctrl.dashboard.id)}"
+            ng-repeat="folder in $ctrl.folders" ng-if="$ctrl.isFolderVisible($index)">
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-lock fa-fw" ng-if="folder.isLocked()"></i>
+                <span ng-bind-html="folder.title"></span>
+                <i class="fa menu-caret fa-fw"></i>
+            </a>
+
+            <ul class="dropdown-menu" role="menu">
+
+                <li ui-sref-active="active-tab" ng-repeat="dashboard in folder.getActiveDashboards()">
+                    <a ui-sref="dashboard({dashboardId: dashboard.id})">
+                        <i class="fa fa-lock fa-fw" ng-if="dashboard.isLocked()"></i>
+                        <span ng-bind-html="dashboard.name"></span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="menu-item" ui-sref-active="active-tab" ng-repeat="dashboard in $ctrl.getMenuDashboards()" ng-if="$ctrl.isDashboardVisible($index)">
+            <a ui-sref="dashboard({dashboardId: dashboard.id})" ng-bind-html="dashboard.name"></a>
+        </li>
+
+        <li class="dropdown" ng-if="$ctrl.numberOfVisibleItems < $ctrl.totalMenuItems">
+
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-caret-down fa-fw"></i>
+                <span>More</span>
+            </a>
+
+            <ul class="dropdown-menu more-menu" role="menu">
+
+                <li class="dropdown menu-item" ng-class="{'active-tab': folder.hasDashboard($ctrl.dashboard.id)}" ng-repeat="folder in $ctrl.folders" ng-if="!$ctrl.isFolderVisible($index)">
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-caret-left fa-fw"></i>
+                        <i class="fa fa-lock fa-fw" ng-if="folder.isLocked()"></i>
+                        <span ng-bind-html="folder.title"></span>
+                    </a>
+
+                    <ul class="dropdown-menu sub-menu" role="menu">
+                        <li ui-sref-active="active-tab" ng-repeat="dashboard in folder.getActiveDashboards()">
+                            <a ui-sref="dashboard({dashboardId: dashboard.id})">
+                                <i class="fa fa-lock fa-fw" ng-if="dashboard.isLocked()"></i>
+                                <span ng-bind-html="dashboard.name"></span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                <li class="menu-item" ui-sref-active="active-tab" ng-repeat="dashboard in $ctrl.getMenuDashboards()" ng-if="!$ctrl.isDashboardVisible($index)">
+                    <a ui-sref="dashboard({dashboardId: dashboard.id})" ng-bind-html="dashboard.name"></a>
+                </li>
+
+            </ul>
+
+        </li>
+
+    </ul>
+</div>
+
+<button ng-if="$ctrl.isPhone() && $ctrl.numberOfVisibleItems" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu" aria-expanded="false" aria-controls="navbar">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+</button>

@@ -1,0 +1,84 @@
+.dataset {
+    @img_size: 50px;
+
+    .single-item {
+        border: none;
+
+        .panel-heading {
+            padding: 18px 15px;
+            background: @white;
+            border: 1px solid @iron;
+            border-radius: 3px;
+
+            .logo {
+                width: @img_size;
+                height: @img_size;
+            }
+
+            .item-name {
+                display: inline-block;
+                font-size: 16px;
+
+                div {
+                    display: inline-block;
+                }
+
+                span {
+                    font-size: 10px;
+                    display: inline-block;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    background: darken(@state-info-bg, 10%);
+
+                    &:first-child {
+                        margin-left: 10px;
+                    }
+                }
+            }
+
+            .item-edit {
+                i {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 45px;
+                    height: 51px;
+                    text-align: center;
+                    padding-top: 22px;
+                }
+            }
+
+            .icons {
+                display: block;
+
+                .text-danger {
+                    font-size: 12px;
+
+                    &:hover {
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        .table {
+            margin-bottom: 20px;
+
+            > thead > tr > th {
+                font-weight: 500;
+            }
+
+            > tbody > tr > td {
+                .text-danger:hover {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        &.error {
+            .panel-heading {
+                background: @brand-danger;
+            }
+        }
+    }
+}

@@ -1,0 +1,123 @@
+.metric-dimensions {
+
+    .metric-dimensions-search {
+        position: relative;
+
+        .form-control {
+            padding-right: 30px;
+        }
+
+        .fa-search {
+            position: absolute;
+            z-index: 4;
+            top: 8px;
+            right: 10px;
+            font-size: 16px;
+        }
+    }
+
+    > ul {
+        > li {
+            margin-bottom: 10px;
+
+            > span {
+                font-weight: 500;
+            }
+
+            > ul {
+                margin-left: 10px;
+                margin-top: 5px;
+
+                > li {
+                    position: relative;
+
+                    a {
+                        padding: 4px 60px 4px 7px;
+                        display: block;
+                        cursor: default;
+                        line-height: 16px;
+                        text-transform: capitalize;
+                        word-break: break-word;
+                        opacity: .7;
+
+                        &:focus {
+                            text-decoration: none;
+                        }
+
+                        small {
+                            display: none;
+                        }
+
+                        &:first-child {
+                            &:before {
+                                content: "-";
+                                position: absolute;
+                                left: 0;
+                                top: 3px;
+                                z-index: 1;
+                            }
+                        }
+
+                    }
+
+                    .filter-icon {
+                        position: absolute;
+                        z-index: 1;
+                        right: 0;
+                        top: 0;
+                        font-size: 13px;
+                        padding: 4px 7px;
+                        cursor: pointer;
+                        display: none;
+
+                        &.active {
+                            display: block;
+                        }
+
+                        .fa {
+                            font-size: 16px;
+                        }
+                    }
+
+                    .grouping-icon {
+                        position: absolute;
+                        z-index: 1;
+                        right: 31px;
+                        top: 0;
+                        font-size: 13px;
+                        padding: 4px;
+                        cursor: pointer;
+                        display: none;
+
+                        &.active {
+                            display: block;
+                        }
+
+                        .fa {
+                            font-size: 15px;
+                        }
+                    }
+
+                    &:hover {
+                        .filter-icon, .grouping-icon {
+                            display: block;
+                            opacity: 0.7;
+                        }
+
+                        a {
+                            opacity: 1;
+
+                            small {
+                                display: block;
+                                text-transform: lowercase;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .dimensions-message {
+    }
+}

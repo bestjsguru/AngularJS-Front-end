@@ -1,0 +1,31 @@
+<div class="database-explorer-preview">
+    <loader ctrl-check="$ctrl.loading"></loader>
+
+    <div ng-if="$ctrl.showPreview()" class="preview-area-wrapper">
+        <div class="preview-area">
+            <div class="preview-icon animated zoomIn">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </div>
+            <span class="preview-title">Table preview</span>
+            <span>Please select table in order to display preview</span>
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.showError()" class="card-error-message">
+        <div class="animated zoomIn">
+            <i class="fa fa-2x fa-exclamation-triangle"></i>
+        </div>
+        <span class="card-error-title">Oops!</span>
+        <div>
+            Something went wrong. There is no data to display.
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.showData()">
+
+        <app-database-explorer-table table="$ctrl.data" limit="20" execution-time="$ctrl.executionTime"></app-database-explorer-table>
+
+    </div>
+
+    <div class="clearfix"></div>
+</div>

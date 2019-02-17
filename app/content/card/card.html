@@ -1,0 +1,129 @@
+<div class="card-holder" ng-class="{'card-error': c.isError() }" ng-style="c.cardHolderStyle()"
+     ng-mouseenter="c.bringToFront(true)" ng-mouseleave="c.bringToFront(false)">
+
+    <div class="card-header">
+        <div class="card-info">
+            <span class="card-name-wrapper">
+                <div class="card-name">
+                    <span ng-bind-html="c.card.getName()"
+                          tu-popover tu-popover-title="{{ c.card.getName()}}"
+                          tu-popover-html="{{ (c.popoverHtmlMessage()) }}"
+                          tu-popover-placement="top"></span>
+                </div>
+            </span>
+            <span class="card-range" ng-if="!c.card.isImageOrDraft() && !c.card.isText()">
+                <span ng-bind-html="c.card.getDateRangeStringWithFrequencyAndTimezone()"></span>
+            </span>
+        </div>
+
+        <div class="card-controls" ng-if="!c.isExport">
+            <div class="dropdown pull-right card-dropdown">
+                <a class="dropdown-toggle card-dropdown-toggle" data-toggle="dropdown" href>
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="dropdown-menu arrow-menu animated fadeIn">
+                    <li app-access permission="cards" ng-if="!c.isError() && !c.isOnFavouriteDashboard()">
+                        <a tu-clone-card card="c.card" ng-click="$ctrl.openCloneDialog()">
+                            <i class="fa fa-clone fa-fw"></i>
+                            <span>Clone Card</span>
+                        </a>
+                    </li>
+                    <li app-access permission="cards" ng-if="c.permissions.canEditCard">
+                        <a ng-click="c.editCard()">
+                            <i class="fa fa-pencil-square-o fa-fw"></i>
+                            <span>Edit Card</span>
+                        </a>
+                    </li>
+                    <li app-access permission="cards" ng-if="c.permissions.canHideCard && !c.isError() && !c.isOnFavouriteDashboard()">
+                        <a ng-click="c.hide()">
+                            <i class="fa fa-eye-slash fa-fw"></i>
+                            <span>Hide Card</span>
+                        </a>
+                    </li>
+                    <li app-access permission="cards" ng-if="c.permissions.canDeleteCard">
+                        <a ng-click="c.delete()">
+                            <i class="fa fa-trash-o fa-fw"></i>
+                            <span>Delete Card</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="dropdown pull-right download-dropdown" app-access permission="exporting-cards" ng-if="!c.isError() && c.card.hasData()">
+                <a class="dropdown-toggle download-dropdown-toggle" data-toggle="dropdown" href>
+                    <i class="fa fa-fw fa-share-alt"></i>
+                </a>
+
+                <ul class="dropdown-menu arrow-menu animated fadeIn" role="menu">
+                    <li ng-if="!c.isError()">
+                        <a ng-click="c.exportCard('csv')">
+                            <i class="fa fa-file-text-o fa-fw"></i>
+                            <span>Download CSV</span>
+                        </a>
+                        <div ng-if="c.isCardExportProcessing" class="card-export-loader card-small-loader">
+                            <loader ctrl-check="true"></loader>
+                        </div>
+                    </li>
+                    <li ng-if="!c.isError()">
+                        <a ng-click="c.exportCard('excel')">
+                            <i class="fa fa-file-excel-o fa-fw"></i>
+                            <span>Download Excel</span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError() && c.card.isHighchart()">
+                        <a ng-click="c.download('png')">
+                            <i class="fa fa-picture-o fa-fw"></i>
+                            <span>Download PNG</span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError() && c.card.isHighchart()">
+                        <a ng-click="c.download('svg')">
+                            <i class="fa fa-area-chart fa-fw"></i>
+                            <span>Download SVG</span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError() && c.card.isHighchart()">
+                        <a ng-click="c.download('pdf')">
+                            <i class="fa fa-file-pdf-o fa-fw"></i>
+                            <span>Download PDF</span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError() && c.card.exportableToDexi()" class="divider" role="separator"></li>
+                    <li ng-if="!c.isError()" ng-repeat="info in c.card.exportLinks.dexi">
+                        <a ng-click="c.processData(info)">
+                            <i class="fa fa-cogs fa-fw"></i>
+                            <span ng-bind="info.displayName"></span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError() && c.card.exportableToDexi()">
+                        <a ng-click="c.processData()">
+                            <i class="fa fa-external-link fa-fw"></i>
+                            <span>Export to Dexi</span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError()" class="divider" role="separator"></li>
+                    <li ng-if="!c.isError()" ng-repeat="info in c.card.exportLinks.zapier">
+                        <a ng-click="c.exportZap(info)">
+                            <i class="fa fa-cogs fa-fw"></i>
+                            <span ng-bind="info.displayName"></span>
+                        </a>
+                    </li>
+                    <li ng-if="!c.isError()">
+                        <a target="_blank" ng-href="{{c.configureZapierLink}}">
+                            <i class="fa fa-asterisk fa-fw"></i>
+                            <span>Configure Zapier</span>
+                            <i class="fa fa-external-link fa-fw pull-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <a app-access permission="drill" ng-click="c.expand()" ng-if="!c.isError() && !c.isSQLBased() && c.card.isDrillable()" class="drill-btn pull-right">
+                <i class="fa fa-fw fa-search"></i>
+            </a>
+        </div>
+    </div>
+
+    <tu-visual card="c.card" reload="c.restoreOriginalCardDatesAndReloadData()" error="c.isError()" type="c.getType()"></tu-visual>
+    <app-card-footer card="c.card"></app-card-footer>
+</div>

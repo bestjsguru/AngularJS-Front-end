@@ -1,0 +1,45 @@
+.explain-card-definition {
+    .title {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: uppercase;
+        border-bottom: 1px solid @iron;
+        padding: 0 0 10px 0;
+    }
+
+    .table {
+        margin: 0 0 30px 0;
+
+        thead {
+            tr {
+                th {
+                    font-size: 14px;
+                    font-weight: 500;
+                    border-bottom: 1px solid @iron;
+                    cursor: default;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    border-top: 1px solid @porcelain;
+
+                    &.statement {
+                        word-break: break-all;
+                    }
+
+                    .metric-filter {
+                        display: block;
+
+                        .filter {
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

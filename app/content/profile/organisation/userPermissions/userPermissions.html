@@ -1,0 +1,13 @@
+<div class="dropdown user-permissions" tu-user-permissions>
+    <button class="btn btn-eighth dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <i class="fa fa-cog" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li ng-if="$ctrl.isShown(role)" ng-repeat="role in $ctrl.roles">
+            <a href="#"  ng-click="$ctrl.changeRole(role)" ng-class="{active: $ctrl.isActive(role)}">
+                {{:: role.title }}
+                <i class="fa fa-check fa-fw" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>

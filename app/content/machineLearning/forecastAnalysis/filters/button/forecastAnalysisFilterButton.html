@@ -1,0 +1,4 @@
+<span class="form-control forecast-analysis-filters-button" ng-click="$ctrl.openModal()" ng-disabled="!$ctrl.actualMetric || !$ctrl.forecastMetric">
+    <ng-pluralize count="$ctrl.filters.length" when="{'0': 'Manage Filters','1': '1 Filter', 'other': '{} Filters'}"></ng-pluralize>
+    <i class="fa fa-filter fa-fw" aria-hidden="true"></i>
+</span>

@@ -1,0 +1,19 @@
+<table class="comparable-table" ng-if="$ctrl.card.showCompareStats">
+    <tbody>
+        <tr>
+            <td>
+                <div class="comparable-first-value" ng-bind-html="$ctrl.dataComparableFormatted()"></div>
+            </td>
+            <td>
+                <div class="comparable-second-value">
+                    <div class="comparable-value" ng-bind-html="$ctrl.dataDifference()"></div>
+                    <div class="comparable-percentage" ng-if="$ctrl.data.percentage !== false" ng-class="$ctrl.data.type" ng-bind-html="$ctrl.data.percentage"></div>
+                    <i ng-if="$ctrl.dataComparableValue()" class="fa fa-fw"
+                       ng-class="{'higher fa-angle-up': $ctrl.data.type === 'higher', 'lower fa-angle-down': $ctrl.data.type === 'lower'}">
+                    </i>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<span ng-if="!$ctrl.card.showCompareStats" ng-bind-html="$ctrl.dataComparableFormatted()"></span>

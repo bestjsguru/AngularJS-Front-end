@@ -1,0 +1,61 @@
+<div class="organisation-info">
+    <form name="$ctrl.form">
+        <div class="organisation-logo-big">
+            <div class="org-info">
+                <div class="fiscal-year" ng-if="$ctrl.organisation.fiscalYearStart != null">Fiscal year starts on <span>{{$ctrl.organisation.fiscalYearStarting}}</span></div>
+                <div class="week-start">Week starts on <span ng-bind="$ctrl.organisation.startDayName"></span></div>
+            </div>
+            <div class="company-logo">
+                <img ng-src="{{ $ctrl.organisation.logo }}" id="prevImage" alt="Company Logo" class="clearfix">
+            </div>
+        </div>
+        <span class="heading">Single Sign-On (SSO) Embedding</span>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label>Embed Status:</label>
+
+                        <ui-select ng-model="$ctrl.enabled.selected" class="w-100" required>
+                            <ui-select-match placeholder="Embed Authentication">
+                                {{$select.selected.label}}
+                            </ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.enabled">
+                                <div ng-bind-html="item.label"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group" ng-class="{'has-error': $ctrl.dirty($ctrl.form.secret) && $ctrl.form.secret.$invalid}">
+                        <label>Embed Secret:</label>
+
+                        <input type="text" name="secret" ng-model="$ctrl.organisation.embeddingSecret" class="form-control"
+                               placeholder="{{$ctrl.organisation.embeddingSecretIsSet ? '************' : 'Enter your secret'}}"
+                               ng-required="$ctrl.enabled.selected.value && !$ctrl.organisation.embeddingSecretIsSet">
+
+                        <div class="error-messages" ng-messages="$ctrl.form.secret.$error" ng-if="$ctrl.dirty($ctrl.form.secret)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-md-offset-0 col-sm-offset-4">
+                    <label>&nbsp;</label>
+                    <button type="button" class="btn btn-lg btn-block text-uppercase"
+                            ng-click="$ctrl.save()" ng-disabled="$ctrl.submitting"
+                            ng-class="{'btn-fourth': $ctrl.submitting, 'btn-first': !$ctrl.submitting}">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid border-top m-t-20 padding-20">
+            <span class="help-block">
+                * Be sure to copy embed secret to a secure location,
+                because you will not be able to retrieve it from Avora again without resetting it.
+                Resetting the key will break any embeds using the old key.
+            </span>
+        </div>
+    </form>
+</div>

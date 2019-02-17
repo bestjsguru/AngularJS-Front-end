@@ -1,0 +1,140 @@
+.available-dashboard-filters{
+    margin: 0px 15px 0px 15px;
+
+    .filters-wrapper{
+        float: left;
+    }
+
+    &.fix-height-for-html-export {
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .single-filter {
+        float: left;
+        margin: 0 20px 10px 0;
+
+        &.hide-date-dropdown-label {
+
+            .filters-date-picker {
+                .date-dropdown-txt {
+                    display: none;
+                }
+
+                .dropdown-toggle:before  {
+                    content: 'Select Date Range...';
+                }
+            }
+        }
+
+        .filter-option {
+            float: left;
+
+            .multiselect-dropdown {
+                min-width: 200px;
+
+                .form-control {
+                    height: 34px;
+                }
+            }
+        }
+
+        .filter-name-wrapper{
+            float: left;
+            margin: 4px 10px 0 0;
+        }
+
+        .filter-name{
+            float: left;
+            padding: 3px 0px 3px 0px;
+            margin: 0 0 0 0;
+            text-transform: capitalize;
+        }
+
+        a.filter-name{
+            cursor: pointer;
+        }
+
+        .filters-date-picker{
+            float: left;
+            position: relative;
+
+            .dropdown-toggle{
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+            .pull-right > .dropdown-menu{
+                left: 0;
+                right: auto;
+            }
+            .calendar-holder{
+                right: auto;
+                top: 33px;
+            }
+        }
+
+        .filter-multiselect {
+            float: left;
+            width: auto;
+            min-width: 220px;
+
+            .select2-choices {
+                min-height: 34px;
+                max-height: 34px;
+
+                .select2-search-field input {
+                    padding: 6px 12px;
+                }
+            }
+        }
+
+        span {
+            &:not(.sr-only) {
+                position: relative;
+            }
+
+            .fa-times-circle {
+                position: absolute;
+                right: -5px;
+                bottom: -7px;
+                cursor: pointer;
+                color: @brand-danger;
+            }
+
+            .fa-lock {
+                position: absolute;
+                right: -8px;
+                bottom: -7px;
+            }
+
+            .fa-circle-o-notch {
+                position: absolute;
+                right: 5px;
+                bottom: -25px;
+            }
+        }
+    }
+
+    .field-filter-wrapper{
+        float: left;
+        margin: 0 20px 0 0;
+
+        .single-filter{
+            margin-right: 0;
+        }
+    }
+
+    .apply-filter-btn{
+        float: left;
+    }
+
+    .reset-filter-btn{
+        float: left;
+        margin: 0 7px 0 0;
+    }
+
+    .beta{
+        float: left;
+        margin: 6px 10px 0px 0px;
+    }
+}

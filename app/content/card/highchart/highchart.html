@@ -1,0 +1,13 @@
+<div class="highchart" ng-show="!$ctrl.chart.options.error"></div>
+
+<app-gauge-goal ng-if="$ctrl.type === 'gauge' && !$ctrl.chart.options.error" card="$ctrl.card"></app-gauge-goal>
+
+<div class="preview-area-wrapper" ng-if="$ctrl.chart.options.error">
+    <div class="preview-area">
+        <div class="preview-icon animated zoomIn">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+        </div>
+        <span class="preview-title">Can't render chart</span>
+        <span ng-bind="$ctrl.chart.options.error"></span>
+    </div>
+</div>

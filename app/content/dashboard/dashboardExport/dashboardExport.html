@@ -1,0 +1,76 @@
+<div class="export-dashboard">
+    <div class="modal-header">
+        <h4 class="modal-title">Export dashboard</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Export as:</label>
+                    <div class="clearfix"></div>
+
+                    <div class="btn-group btn-group-justified report-buttons" role="group">
+                        <a ng-click="$ctrl.changeType('pdf')" ng-class="{active: $ctrl.type == 'pdf'}" class="btn btn-lg btn-fourth">
+                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF
+                        </a>
+                        <a ng-click="$ctrl.changeType('ppt')" ng-class="{active: $ctrl.type == 'ppt'}" class="btn btn-lg btn-fourth">
+                            <i class="fa fa-fw fa-file-powerpoint-o" aria-hidden="true"></i> PPT
+                        </a>
+                        <a ng-click="$ctrl.changeType('csv')" ng-class="{active: $ctrl.type == 'csv'}" class="btn btn-lg btn-fourth">
+                            <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i> CSV
+                        </a>
+                        <a ng-click="$ctrl.changeType('excel')" ng-class="{active: $ctrl.type == 'excel'}" class="btn btn-lg btn-fourth">
+                            <i class="fa fa-fw fa-file-excel-o" aria-hidden="true"></i> EXCEL
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12 select">
+                <label ng-if="$ctrl.canUseSnapshot()" class="form-radio" ng-click="$ctrl.setSnapshot(true)">
+                    <input type="radio" ng-model="$ctrl.snapshot" ng-value="true">
+                    <span>All cards on dashboard (preserving current layout)</span>
+                </label>
+
+                <label ng-if="$ctrl.canUseSnapshot() && $ctrl.canSelectCards()" class="form-radio m-b-10" ng-click="$ctrl.setSnapshot(false)">
+                    <input type="radio" ng-model="$ctrl.snapshot" ng-value="false">
+                    <span>Selection of cards (each card will be exported on a separate page)</span>
+                </label>
+
+                <label ng-if="!$ctrl.canUseSnapshot() && $ctrl.canSelectCards()">
+                    Selected cards for export:
+                </label>
+
+                <app-multiselect-dropdown class="input-md"
+                                          ng-if="$ctrl.canSelectCards()"
+                                          is-disabled="$ctrl.snapshot"
+                                          required
+                                          name="cards"
+                                          multiple="true"
+                                          value-label="name"
+                                          options="$ctrl.cards"
+                                          ng-model="$ctrl.selectedCards"
+                                          display-count="2"
+                                          search-enabled="true"
+                                          show-select-actions="true"
+                                          placeholder="Select cards to export">
+                </app-multiselect-dropdown>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-lg btn-first w-100 pull-right" ng-disabled="!$ctrl.getSelectedCards().length" ng-click="$ctrl.submit()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

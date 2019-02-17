@@ -1,0 +1,37 @@
+<div class="metric-visual">
+    <loader ng-if="mv.showLoader()" ctrl-check="true"></loader>
+
+    <div ng-if="!mv.showPreview() && !mv.showLoader()" class="ps-container" ng-class="{'long-table': mv.metricData.longTable}">
+        <perfect-scrollbar class="scroller-x" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                           always-visible="true" suppress-scroll-y="true">
+
+            <table class="datatable-header table table-condensed">
+                <col ng-repeat="column in mv.metricData.columns track by $index"></col>
+                <thead>
+                    <tr>
+                        <th ng-repeat="column in mv.metricData.columns track by $index" title="{{ ::column }}">
+                            <span ng-bind-html="column"></span>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <perfect-scrollbar class="scroller-y" wheel-propagation="true" wheel-speed="5" min-scrollbar-length="20"
+                               always-visible="true" suppress-scroll-x="true"
+                               scroll-parent=".card-content" >
+                <div class="datatable-container">
+                    <table class="table table-condensed table-hover datatable-body">
+                        <col ng-repeat="column in mv.metricData.columns track by $index"></col>
+                        <tbody>
+                            <tr ng-repeat="row in mv.metricData.results track by $index" total-items="::mv.metricData.total" current-page="mv.metricData.currentPage">
+                                <td ng-repeat="value in row track by $index" ng-bind-html="value" title="{{ value }}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="!mv.metricData.results.length" class="no-data">
+                        <span>No data</span>
+                    </div>
+                </div>
+            </perfect-scrollbar>
+        </perfect-scrollbar>
+    </div>
+</div>

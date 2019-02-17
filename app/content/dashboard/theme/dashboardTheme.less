@@ -1,0 +1,90 @@
+.dashboard-theme {
+    .heading {
+        margin-bottom: 10px;
+    }
+
+    .dashboard-logo-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+
+        .dashboard-logo {
+            flex: 1 1 auto;
+
+            .dashboard-logo-image {
+                width: auto;
+                height: 34px;
+                padding: 1px 15px 0 15px;
+                border: 1px dashed #cccccc;
+                border-radius: 4px;
+                float: left;
+
+                img {
+                    max-width: 100px;
+                    height: 30px;
+                }
+            }
+
+            .dashboard-logo-desc {
+                float: left;
+                margin: 0 0 0 15px;
+
+                .help-block {
+                    margin: 2px 0 0 0;
+                }
+            }
+        }
+
+        .dashboard-logo-buttons {
+            flex: 0 0 auto;
+        }
+    }
+
+    .theme-boxes {
+        display: flex;
+        flex-wrap: nowrap;
+        margin: 10px -15px 50px -15px;
+
+        .theme-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            flex: 1 1 auto;
+            margin: 15px;
+            border: solid 1px @iron;
+            border-radius: 4px;
+            padding: 6px 5px 5px 5px;
+            position: relative;
+
+            .color-box {
+                flex: 1 1 auto;
+                width: 30%;
+                height: 30px;
+                margin: 3px;
+                opacity: .7;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+            }
+
+            .theme-heading {
+                position: absolute;
+                background: @white;
+                top: -12px;
+                left: 6px;
+                padding: 0 5px;
+            }
+
+            &.active, &:hover {
+                border: solid 1px @brand-danger;
+
+                .color-box {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}
+
+.dashboard-theme-footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 25px;
+    margin: 30px -30px -30px -30px;
+}

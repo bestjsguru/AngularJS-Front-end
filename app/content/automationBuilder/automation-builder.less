@@ -1,0 +1,74 @@
+.automation-builder {
+
+    .table > thead > tr > th {
+        font-weight: 500;
+        font-size: 15px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+    }
+
+    .table > tbody > tr {
+
+        &.activated {
+            background: @td-green-light;
+
+            .activation {
+                .fa {
+                    &.fa-toggle-on {
+                        color: @td-turquoise;
+                    }
+                }
+
+                &:hover {
+                    color: @deep-blue;
+
+                    .fa {
+                        &.fa-toggle-on {
+                            color: @deep-blue;
+                        }
+                    }
+                }
+            }
+        }
+
+        > td {
+            font-size: 14px;
+            padding: 14px 10px;
+
+            &:first-child {
+                padding-left: 0;
+                font-weight: 500;
+            }
+
+            a {
+                color: @deep-blue;
+                cursor: pointer;
+                &:hover {
+                    color: @brand-danger;
+                }
+
+                &.activation {
+                    &:hover {
+                        color: @td-turquoise;
+                        .fa {
+                            &.fa-toggle-off {
+                                color: @td-turquoise;
+                            }
+                        }
+                    }
+                }
+
+                &.delete-report {
+                    &:hover{
+                        color: @brand-primary;
+                    }
+                }
+            }
+        }
+
+    }
+
+}
+

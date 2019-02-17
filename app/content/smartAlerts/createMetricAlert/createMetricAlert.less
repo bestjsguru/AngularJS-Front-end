@@ -1,0 +1,56 @@
+@import (multiple) '../metricFavourites/metricFavourites';
+@import '../metricFilters/metricFilters.less';
+@import '../metricAlerts/metricAlerts';
+
+.metric-edit-form {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px -7px 0 -7px;
+
+    .item {
+        flex: 1 1 200px;
+        display: flex;
+        flex-wrap: wrap;
+        align-self: flex-start;
+        padding: 0px 7px 7px 7px;
+        margin: 0;
+
+        .form-control {
+            height: 34px;
+        }
+
+        .select2-container {
+            .select2-choice {
+                height: 34px;
+                line-height: 32px;
+            }
+        }
+
+        .smart-alerts-notifications {
+            .btn {
+                &.active {
+                    background-color: @white;
+                    color: @brand-danger;
+                }
+            }
+
+            .select2-container {
+                .select2-choice {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
+        }
+    }
+
+    .form-buttons {
+        flex: 0 0 172px;
+        padding-left: 7px;
+        margin: 7px 7px 7px auto;
+        align-self: flex-end;
+
+        .btn {
+            min-width: 80px;
+        }
+    }
+}

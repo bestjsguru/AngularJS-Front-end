@@ -1,0 +1,274 @@
+<div class="metric-alerts-wrapper">
+    <div class="sub-header border">
+        <div class="item">
+            <div class="metric-alerts-header">
+                <span class="card-name">{{$ctrl.card.getName()}}</span>
+                <span class="card-description">{{$ctrl.card.description}}</span>
+            </div>
+        </div>
+
+        <div ng-if="!$ctrl.form.enabled" class="item">
+            <a class="btn btn-eighth pull-right" ng-click="$ctrl.exit()">
+                <i class="fa fa-fw fa-compress"></i>
+            </a>
+
+            <a app-access permission="smart-alerts-management" class="btn btn-eighth pull-right" ui-sref="updateMetricAlert({alertId: $ctrl.alert.id})">
+                <i class="fa fa-fw fa-pencil"></i>
+            </a>
+
+            <div class="dropdown pull-right" ng-if="$ctrl.hasValidCard()">
+                <a class="dropdown-toggle btn btn-eighth" data-toggle="dropdown" href="#">
+                    <i class="fa fa-fw fa-download"></i>
+                </a>
+                <ul class="dropdown-menu arrow-menu">
+                    <li>
+                        <a ng-click="$ctrl.download('png', $ctrl.card.metrics.get(0).getName())">
+                            <i class="fa fa-picture-o fa-fw"></i>
+                            <span>Download PNG</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.download('svg', $ctrl.card.metrics.get(0).getName())">
+                            <i class="fa fa-area-chart fa-fw"></i>
+                            <span>Download SVG</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a ng-click="$ctrl.download('pdf', $ctrl.card.metrics.get(0).getName())">
+                            <i class="fa fa-file-pdf-o fa-fw"></i>
+                            <span>Download PDF</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <a app-is-dev ng-if="$ctrl.hasValidCard()" class="btn btn-eighth pull-right" ng-click="$ctrl.toggleTrendline()"
+               tu-popover tu-popover-html="Toggle trend line" tu-popover-placement="left">
+                <i class="fa fa-fw fa-line-chart" ng-class="{'text-danger': $ctrl.card.showMetricTrend}"></i>
+            </a>
+
+            <div class="pull-right">
+                <app-metric-favourites ng-if="$ctrl.hasValidCard()" card="$ctrl.card" heart-position="right"></app-metric-favourites>
+            </div>
+        </div>
+
+        <div ng-if="$ctrl.form.enabled" class="item">
+            <button class="btn btn-second" ng-click="$ctrl.form.enabled = false">Cancel</button>
+            <button class="btn btn-first" ng-click="$ctrl.save()">Save</button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div ng-if="!$ctrl.form.enabled" class="row">
+            <loader ctrl-check="$ctrl.loading"></loader>
+            <div ng-if="$ctrl.card">
+                <div class="smart-alert-wrapper">
+                    <div class="smart-alert-body">
+                        <app-highchart ng-if="$ctrl.card.hasData() && !$ctrl.card.metrics.error" card="$ctrl.card"></app-highchart>
+
+                        <div ng-if="!$ctrl.card.hasData() && !$ctrl.card.metrics.error" class="no-data">
+                            <span>No data</span>
+                        </div>
+
+                        <div ng-if="$ctrl.card.metrics.error" class="card-error-message">
+                            <i class="fa fa-2x fa-exclamation-triangle"></i>
+                            <span class="card-error-title">Oops!</span>
+                            <span ng-bind-html="$ctrl.card.metrics.errorMessage"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric Edit Area -->
+        <div ng-if="$ctrl.form.enabled" class="row">
+            <div class="col-lg-12">
+                <div class="metric-edit-form">
+
+                    <div class="item form-group">
+                        <label>Frequency:</label>
+                        <ui-select theme="select2" ng-model="$ctrl.form.frequencies">
+                            <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.frequencies | filter: {label: $select.search}" group-by="">
+                                <span ng-bind-html="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="item form-group">
+                        <label>Alert Level:</label>
+                        <ui-select theme="select2" ng-model="$ctrl.form.levels">
+                            <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.levels | filter: {label: $select.search}" group-by="">
+                                <span ng-bind-html="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="item form-group">
+                        <label>Send Alerts to:</label>
+                        <ui-select theme="select2" ng-model="$ctrl.form.sendTo">
+                            <ui-select-match placeholder="Select something">{{$select.selected.fullName || 'Select something'}}</ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.sendTo | filter: {fullName: $select.search}" group-by="">
+                                <span ng-bind-html="item.fullName"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="item form-group">
+                        <label>Alert via:</label>
+                        <ui-select theme="select2" ng-model="$ctrl.form.alertVia">
+                            <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                            <ui-select-choices repeat="item in $ctrl.alertVia | filter: {label: $select.search}" group-by="">
+                                <span ng-bind-html="item.label"></span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                    <div class="item form-group">
+                        <label>Snooze notifications for:</label>
+                        <div class="input-group smart-alerts-notifications">
+                            <ui-select theme="select2" ng-model="$ctrl.form.notifications">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.notifications | filter: {label: $select.search}" group-by="">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-fourth active">Days</button>
+                                <button type="button" class="btn btn-fourth">Weeks</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="metric-alert-filter-wrapper">
+                    <div class="metric-filters-title">
+                        <label>Metric Filters</label>
+                        <button class="btn btn-first pull-right"><i class="fa fa-plus"></i> Add Filter</button>
+                    </div>
+
+                    <div class="metric-alert-filter">
+                        <div class="metric-alert-alias">
+                            <a class="btn">A</a>
+                        </div>
+
+                        <div class="item form-group">
+                            <ui-select theme="select2" ng-model="$ctrl.form.blank">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.blank | filter: {label: $select.search}" group-by="">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item form-group">
+                            <ui-select theme="select2" ng-model="$ctrl.form.blank">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.blank | filter: {label: $select.search}" group-by="">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item form-group">
+                            <ui-select theme="select2" ng-model="$ctrl.form.blank">
+                                <ui-select-match placeholder="Select something">{{$select.selected.label || 'Select something'}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.blank | filter: {label: $select.search}" group-by="">
+                                    <span ng-bind-html="item.label"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="metric-alert-buttons">
+                            <button class="btn btn-second">Delete</button>
+                            <button class="btn btn-first">Update</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-rules">
+                        <label>Filter rules:</label>
+                        <form>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Example: A AND B OR C">
+                                <a class="btn btn-third input-group-addon">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- eof Metric Edit Area -->
+
+        <div class="row metric-table" ng-if="$ctrl.hasValidCard() && !$ctrl.form.enabled">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="metric-sort" ng-click="$ctrl.orderBy('anomaly.data')">
+                            Date
+                            <i ng-if="!$ctrl.orderedBy('anomaly.data')" class="fa fa-sort"></i>
+                            <i ng-if="$ctrl.orderedBy('anomaly.data')" class="fa"
+                               ng-class="{'fa-caret-down': !$ctrl.reverse, 'fa-caret-up': $ctrl.reverse}"></i>
+                        </th>
+                        <th class="metric-sort" ng-click="$ctrl.orderBy('anomaly.value')">
+                            Actual Value
+                            <i ng-if="!$ctrl.orderedBy('anomaly.value')" class="fa fa-sort"></i>
+                            <i ng-if="$ctrl.orderedBy('anomaly.value')" class="fa"
+                               ng-class="{'fa-caret-down': !$ctrl.reverse, 'fa-caret-up': $ctrl.reverse}"></i>
+                        </th>
+                        <th class="metric-sort" ng-click="$ctrl.orderBy('anomaly.variance')">
+                            Variance
+                            <i ng-if="!$ctrl.orderedBy('anomaly.variance')" class="fa fa-sort"></i>
+                            <i ng-if="$ctrl.orderedBy('anomaly.variance')" class="fa"
+                               ng-class="{'fa-caret-down': !$ctrl.reverse, 'fa-caret-up': $ctrl.reverse}"></i>
+                        </th>
+                        <th class="metric-sort" ng-click="$ctrl.orderBy('anomaly.expectedValue')">
+                            Expected Value
+                            <i ng-if="!$ctrl.orderedBy('anomaly.expectedValue')" class="fa fa-sort"></i>
+                            <i ng-if="$ctrl.orderedBy('anomaly.expectedValue')" class="fa"
+                               ng-class="{'fa-caret-down': !$ctrl.reverse, 'fa-caret-up': $ctrl.reverse}"></i>
+                        </th>
+                        <th>Expected Range</th>
+                        <th class="text-right">
+                            <a class="btn btn-xs btn-link" ng-if="$ctrl.card.anomalies.hasUnreads()" ng-click="$ctrl.readAllAlerts()">
+                                <span>Mark all alerts as read ({{$ctrl.card.anomalies.unreadCount()}})</span>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-mouseleave="$ctrl.hideChartTooltip()">
+                    <tr ng-mouseover="$ctrl.showChartTooltip(anomaly)" ng-repeat="anomaly in $ctrl.card.anomalies.items track by $index"
+                        ng-class="{high: anomaly.isGood, low: !anomaly.isGood, info: anomaly.alert.id === $ctrl.highlightedAnomaly.alert.id}">
+                        <td ng-click="$ctrl.showAnomalyPopup(anomaly)" class="metric-link" ng-class="{bold: !anomaly.alert.read}">
+                            {{anomaly.formatedDate}}
+                        </td>
+                        <td ng-click="$ctrl.showAnomalyPopup(anomaly)" ng-bind="anomaly.value" class="bold metric-link"></td>
+                        <td ng-click="$ctrl.showAnomalyPopup(anomaly)" class="variance metric-link">
+                            <i class="fa fa-fw" ng-class="{
+                               'fa-arrow-up': anomaly.isIncrease,
+                               'fa-arrow-down': !anomaly.isIncrease,
+                               'success': anomaly.isGood,
+                               'danger': !anomaly.isGood
+                            }"></i>
+                            {{anomaly.variance}}
+                        </td>
+                        <td ng-click="$ctrl.showAnomalyPopup(anomaly)" class="metric-link" ng-bind="anomaly.expectedValue"></td>
+                        <td ng-click="$ctrl.showAnomalyPopup(anomaly)" class="metric-link" ng-bind="anomaly.rangeString"></td>
+                        <td class="text-right">
+                            <div class="metric-actions">
+                                <a class="btn btn-xs btn-link" ng-click="$ctrl.toggleAlert(anomaly)" ng-class="{bold: !anomaly.alert.read, light: anomaly.alert.read}">
+                                    Mark as {{anomaly.alert.read ? 'unread' : 'read'}}
+                                    <i class="fa fa-fw" ng-class="{'fa-check text-success': !anomaly.alert.read, 'fa-times': anomaly.alert.read}"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="tab-pane" id="who">
+    <div class="form-group">
+        <label>Add people:</label>
+        <input ng-keypress="userSelector.toggleCurrentlyFilteredUser($event)" ng-model="userSelector.searchTerm" class="form-control" type="text" placeholder="Search">
+    </div>
+    <div class="user-list-wrapper">
+        <ul>
+            <li ng-repeat="user in userSelector.decoratedUsers | searchByProperties : 'fullName, username' : userSelector.searchTerm track by $index"
+                ng-class="{'selected': user.getActive()}" ng-click="user.toggleActive(); userSelector.refreshModel()">
+                <div>
+                    <div class="user-image">
+                        <img ng-src="{{user.photo}}" alt="" width="45" height="45" class="img-rounded">
+                    </div>
+                    <div class="user-data">
+                        <span ng-bind="user.fullName"></span>
+                        <a ng-bind="user.username"></a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

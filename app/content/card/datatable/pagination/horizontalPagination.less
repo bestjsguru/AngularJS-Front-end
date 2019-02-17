@@ -1,0 +1,79 @@
+.horizontal-pagination-left{
+    //display: none;
+    position: absolute;
+    z-index: 10;
+    top: 40%;
+    left: -20px;
+    opacity: 0;
+    height:40px;
+    width:20px;
+    border-radius: 0px 40px 40px 0;
+    -moz-border-radius: 0px 40px 40px 0;
+    -webkit-border-radius: 0px 40px 40px 0;
+    background:#34495e;
+    color: #fff;
+    line-height: 40px;
+    padding-left: 4px;
+
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    &:focus, &:active{
+        background:#34495e;
+        color: #fff;
+    }
+}
+
+.horizontal-pagination-right{
+    //display: none;
+    position: absolute;
+    z-index: 10;
+    top: 40%;
+    right: -20px;
+    opacity: 0;
+    height:40px;
+    width:20px;
+    border-radius: 40px 0px 0px 40px;
+    -moz-border-radius: 40px 0px 0px 40px;
+    -webkit-border-radius: 40px 0px 0px 40px;
+    background:#34495e;
+    color: #fff;
+    line-height: 40px;
+    padding-left: 7px;
+
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    &:focus, &:active{
+        background:#34495e;
+        color: #fff;
+    }
+}
+
+
+.card-content{
+    &:hover{
+        .horizontal-pagination-left{
+            opacity: 0.5;
+            left: 0;
+            &:hover{
+                opacity: 1;
+                .fa{
+                    color: #fff;
+                }
+            }
+        }
+        .horizontal-pagination-right{
+            opacity: 0.5;
+            right: 0;
+            &:hover{
+                opacity: 1;
+                .fa{
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

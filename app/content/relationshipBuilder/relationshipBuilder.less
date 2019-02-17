@@ -1,0 +1,95 @@
+.relationship-builder-wrapper {
+    position: relative;
+    .full-height;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .relationship-builder {
+        min-height: calc(~"100vh - 143px");
+        display: block;
+        position: relative;
+    }
+
+    .date-string {
+        margin: 5px 2px 2px 2px;
+        display: block;
+        font-size: 12px;
+        opacity: .7;
+    }
+
+    .form-control {
+        height: 34px;
+    }
+
+    .form-group {
+        .date-picker, .date-dropdown{
+            width: 100%;
+            display: block;
+            position: relative;
+            float: none !important;
+
+            .dropdown-toggle {
+                display: block;
+                width: 100%;
+                padding: 6px 12px;
+                text-align: left;
+
+                .date-dropdown-txt {
+                    font-size: 14px;
+                }
+
+                .fa-sort {
+                    position: absolute;
+                    right: 12px;
+                    top: 12px;
+                    font-size: 13px;
+                }
+            }
+
+            ul.dropdown-menu.periods {
+                width: 100%;
+            }
+
+            .calendar-holder {
+                top: 33px;
+                right: auto;
+                left: 0;
+                width: 100%;
+
+                .calendar-to, .uib-datepicker {
+                    max-width: 100%;
+                    margin-right: 0;
+                }
+
+                &.single-calendar {
+                    border: 0;
+
+                    .calendar-title {
+                        display: none;
+                    }
+                }
+
+                &.double-calendar {
+                    width: 600px;
+
+                    .calendar-to, .uib-datepicker {
+                        max-width: 286px;
+                        margin-right: -1px;
+                    }
+                }
+            }
+        }
+    }
+
+    .select2-container {
+        .select2-choice {
+            height: 34px;
+            line-height: 32px;
+        }
+    }
+
+}
+
+
+@import 'sidebar/relationshipBuilderSidebar';
+@import 'relationshipBuilderVisual';

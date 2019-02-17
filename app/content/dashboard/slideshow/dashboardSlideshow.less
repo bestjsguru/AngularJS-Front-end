@@ -1,0 +1,163 @@
+@import (reference) '../../../styles/common/mixins';
+
+.slideshow-mode {
+    .explore-mode {
+        .counter-map {
+            &.country {
+                top: 2.4em;
+            }
+        }
+
+        .card-pagination {
+            display: block;
+            opacity: 1;
+            bottom: 3px;
+            padding-top: 0;
+            z-index: 6;
+        }
+
+        .carousel-control {
+            display: none;
+        }
+
+        .card-wrapper-explore {
+            tu-visual {
+                height: 100%;
+                display: block;
+            }
+
+            .sub-header {
+                margin-bottom: 0;
+
+                &.card-title {
+                    font-size: 25px;
+
+                    .card-title-text {
+                        width: 100%;
+                        display: block;
+
+                        &.small-title {
+                            font-size: 15px;
+                            opacity: .5;
+                        }
+                    }
+
+                    .card-title-edit {
+                        width: 100%;
+                        max-width: 100%;
+                        min-width: 100%;
+
+                        textarea {
+                            width: 100%;
+                            max-width: 100%;
+                            min-width: 100%;
+                            height: auto;
+                        }
+                    }
+                }
+
+                &.card-navigation {
+                    .item {
+                        flex: 0;
+
+                        &:nth-child(2) {
+                            flex: 1;
+                        }
+                    }
+                }
+
+                .slideshow-card-header {
+                    display: block;
+                    width: 100%;
+
+                    .card-name {
+                        text-transform: none;
+                        font-size: 17px;
+                        line-height: 22px;
+                        font-weight: 500;
+                        width: 100%;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        text-align: center;
+                    }
+
+                    .card-range {
+                        font-size: 11px;
+                        line-height: 12px;
+                        width: 100%;
+                        display: block;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .card-content {
+                min-height: @cardContentMinHeight;
+
+                .chart-container {
+                    height: 100%;
+                    min-height: 430px;
+                    position: relative;
+                    padding-bottom: 0;
+                    width: 100%;
+                    min-width: 100%;
+
+                    tu-card-totals .card-totals {
+                        padding: 10px 15px;
+
+                        .total-value {
+                            font-size: 21px;
+                        }
+                    }
+
+                    &.loading {
+                        opacity: 0.2;
+                    }
+                }
+
+                .table > thead > tr > th, .table > tbody > tr > th {
+                    padding: 12px;
+                    position: relative;
+                }
+
+                .table tbody > tr > td {
+                    padding: 7px 12px;
+                }
+
+                .comparable-table tbody > tr > td {
+                    padding: 0px 5px 3px 5px;
+
+                    .higher {
+                        padding-right: 3px;
+                    }
+
+                    .lower {
+                        padding-right: 3px;
+                    }
+
+                    .comparable-first-value {
+                        padding-right: 3px;
+                    }
+                }
+            }
+        }
+
+        .card-refresh {
+            position: absolute;
+            top: -9px;
+            right: -2px;
+            z-index: 5;
+            border: 0;
+            background: @white;
+            padding: 15px 0px 13px 26px;
+            width: 80px;
+            height: 49px;
+
+            &:hover {
+                background-color: @white;
+            }
+        }
+    }
+}

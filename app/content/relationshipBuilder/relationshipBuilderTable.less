@@ -1,0 +1,65 @@
+.table {
+
+    tr {
+        &.goal-metric-row {
+            td {
+                background: @porcelain;
+            }
+        }
+
+        td, th {
+            padding: 12px 14px;
+        }
+
+        td {
+            vertical-align: middle;
+            position: relative;
+
+            .metric-btn {
+                width: 28px;
+                height: 28px;
+                background: @white;
+                border: 1px solid @hoki;
+                padding: 3px 0px;
+                margin: 0 7px 0 0;
+                color: @hoki;
+                border-radius: 2px;
+                position: absolute;
+                left: 14px;
+                top: 7px;
+                z-index: 1;
+
+                &.goal-metric {
+                    background: @hoki;
+                    border: 1px solid @hoki;
+                    color: @white;
+                }
+            }
+
+            .metric-name {
+                font-weight: 500;
+            }
+
+            .metric-remove {
+                position: absolute;
+                right: 4px;
+                top: 7px;
+                width: 28px;
+                height: 28px;
+                padding: 3px 0px;
+                background: transparent;
+
+                &:hover {
+                    color: @brand-danger;
+                }
+            }
+
+            &:first-child {
+                padding-left: 50px;
+            }
+
+        }
+
+    }
+
+}

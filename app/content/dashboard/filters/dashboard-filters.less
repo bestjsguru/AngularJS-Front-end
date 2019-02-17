@@ -1,0 +1,89 @@
+.modal-content {
+    .modal-body {
+        &.dashboard-filters-modal{
+            padding: 0;
+            display: flex;
+            flex-wrap: nowrap;
+
+            .filters-list{
+                flex: 0 0 250px;
+                max-width: 250px;
+                background: @gray-pale;
+
+                .new-filter-btn-wrapper{
+                    display: block;
+                    padding: 20px;
+                    background: @porcelain;
+                }
+
+                .filter-wrapper {
+                    padding: 10px 0;
+                    display: flex;
+                    flex-wrap: wrap;
+                    width: 100%;
+
+                    .filter{
+                        flex: 0 0 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-wrap: nowrap;
+                        align-items: center;
+                        padding: 4px 20px;
+                        position: relative;
+
+                        .filter-name{
+                            flex: 1 1 auto;
+                            text-decoration: none;
+                            text-transform: capitalize;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+
+                            &.active{
+                                color: @brand-danger;
+                            }
+                        }
+
+                        .filter-controls{
+                            flex: 0 0 auto;
+                            display: flex;
+                            flex-wrap: nowrap;
+
+                            .activation{
+                                text-align: center;
+                                flex: 1;
+                                cursor: pointer;
+                                padding: 2px;
+                            }
+
+                            .remove-filter{
+                                flex: 1;
+                                text-align: center;
+                                cursor: pointer;
+                                color: @deep-blue;
+                                padding: 2px;
+                                margin-right: 3px;
+
+                                .fa-times {
+                                    font-size: 16px;
+                                    color: @brand-danger;
+                                    -webkit-text-stroke: 1px @gray-pale;
+                                }
+                            }
+                        }
+
+                        &.active{
+                            background: @white;
+                        }
+                    }
+                }
+            }
+
+            .filters-settings{
+                flex: 1 1 auto;
+                padding: 20px 30px;
+                position: relative;
+            }
+        }
+    }
+}

@@ -1,0 +1,188 @@
+.anomaly-detection {
+    .full-height;
+    background: @td-gray-pale;
+
+    .gridster-item {
+        z-index: initial;
+        .gridster-item-resizable-handler {
+            display: none;
+        }
+    }
+
+    .anomaly-wrapper {
+        background: #fff;
+        border-radius: 3px;
+        position: relative;
+        height: 100%;
+
+        .anomaly {
+
+            background: #fff;
+            border: 1px solid #ecf0f1;
+            border-radius: 3px;
+            position: relative;
+            height: 100%;
+            padding-top: 48px;
+
+            .anomaly-header {
+
+                border-bottom: 1px solid #ecf0f1;
+                padding: 5px 5px 0 10px;
+                height: 48px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                cursor: default;
+
+                display: flex;
+                flex-wrap: wrap;
+
+                .card-name-holder {
+                    flex: 100;
+                    min-width: 200px;
+
+                    .anomaly-name-wrapper {
+                        text-transform: capitalize;
+                        color: #34495e;
+                        font-size: 15px;
+                        line-height: 22px;
+                        width: 100%;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-weight: 500;
+
+                        .anomaly-name {
+                            max-width: 100%;
+                            float: left;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                    }
+                    .anomaly-details {
+                        font-weight: normal;
+                        font-size: 11px;
+                        line-height: 12px;
+                        width: 100%;
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        color: #34495e;
+                    }
+                }
+
+                .card-buttons-holder {
+
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: flex-start;
+                    flex-grow: 1;
+                    justify-content: flex-end;
+
+                    .dropdown-toggle {
+                        color: @td-gray-dark;
+                        padding: 8px;
+
+                        &:hover {
+                            color: @brand-danger;
+                        }
+                    }
+
+                    .dropdown-menu {
+                        max-height: 185px;
+                        top: 42px;
+                    }
+
+                    > div, > a {
+                        margin-right: 10px;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+
+                    }
+
+                }
+
+            }
+            .anomaly-content {
+                height: 100%;
+                overflow: hidden;
+                position: relative;
+                display: block;
+            }
+        }
+
+    }
+
+    .no-metrics-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100px;
+        color: @hoki;
+        font-size: 15px;
+        font-weight: 300;
+        line-height: 19px;
+    }
+
+
+    /* Anomaly Form */
+
+    .anomaly-form {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .item {
+            flex: 0 1 200px;
+
+            .form-group {
+                margin: 0;
+                padding: 0px 10px 10px 0px;
+
+                .form-control {
+                    height: 34px;
+                }
+
+                .select2-container {
+                    .select2-choice {
+                        height: 34px;
+                        line-height: 32px;
+                    }
+                }
+
+                .select2-container .select2-choice abbr {
+                    right: 27px;
+                    top: 11px;
+                }
+
+            }
+
+            .btn-group {
+                margin: 0;
+            }
+
+            &:last-child {
+                flex: 0 0 auto;
+            }
+
+        }
+
+
+    }
+
+}
+
+
+/* Anomaly Detection Modal */
+@import './singleAnomaly/singleAnomaly';
+
+

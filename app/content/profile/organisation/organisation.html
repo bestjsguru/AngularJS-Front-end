@@ -1,0 +1,49 @@
+<div class="sub-header">
+    <div class="item">
+        <div class="breadcrumbs">
+            <span ng-bind-html="$ctrl.title"></span>
+            <span ng-bind-html="$ctrl.subTitle"></span>
+        </div>
+    </div>
+</div>
+
+<div class="organisation-edit-area">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-12">
+                <loader ctrl-check="!$ctrl.organisation"></loader>
+            </div>
+            <div class="col-lg-12" ng-if="$ctrl.organisation">
+                <div class="box organisation-box">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li ng-class="{active: $ctrl.tabs.is('info')}"><a ng-click="$ctrl.setTab('info')">Info</a></li>
+                        <li ng-class="{active: $ctrl.tabs.is('embed')}"><a ng-click="$ctrl.setTab('embed')">Embed</a></li>
+                        <li ng-class="{active: $ctrl.tabs.is('groups')}"><a ng-click="$ctrl.setTab('groups')">Groups</a></li>
+                        <li ng-class="{active: $ctrl.tabs.is('theme')}"><a ng-click="$ctrl.setTab('theme')">Theme</a></li>
+                        <li ng-class="{active: $ctrl.tabs.is('integrations')}"><a ng-click="$ctrl.setTab('integrations')">Integrations</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" ng-if="$ctrl.tabs.is('info')">
+                            <app-organisation-info></app-organisation-info>
+                        </div>
+                        <div class="tab-pane active" ng-if="$ctrl.tabs.is('embed')">
+                            <app-organisation-embed></app-organisation-embed>
+                        </div>
+                        <div class="tab-pane active" ng-if="$ctrl.tabs.is('groups')">
+                            <app-organisation-groups></app-organisation-groups>
+                        </div>
+                        <div class="tab-pane active" ng-if="$ctrl.tabs.is('theme')">
+                            <app-organisation-theme></app-organisation-theme>
+                        </div>
+                        <div class="tab-pane active" ng-if="$ctrl.tabs.is('integrations')">
+                            <app-integrations></app-integrations>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

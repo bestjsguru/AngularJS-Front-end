@@ -1,0 +1,24 @@
+<div class="mixed-settings" ng-if="$ctrl.settings">
+    <table class="table metric-table table-condensed table-hover">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th ng-if="$ctrl.card.types.isMixed()" width="70" class="text-center">Symbols</th>
+                <th ng-if="$ctrl.card.types.isMixed()" width="120">Select type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="metric in $ctrl.settings.metrics track by $index" ng-if="!metric.hidden">
+                <td ng-bind="metric.name"></td>
+                <td ng-if="$ctrl.card.types.isMixed()" class="text-center" ng-disabled="metric.chartType === 'bar'">
+                    <span class="card-type-icon symbol" ng-class="{selected: metric.useSymbols}" ng-click="$ctrl.toggleSymbol(metric)"></span>
+                </td>
+                <td ng-if="$ctrl.card.types.isMixed()">
+                    <span class="card-type-icon line" ng-class="{selected: metric.chartType === 'line'}" ng-click="$ctrl.changeType(metric, 'line')"></span>
+                    <span class="card-type-icon spline" ng-class="{selected: metric.chartType === 'spline'}" ng-click="$ctrl.changeType(metric, 'spline')"></span>
+                    <span class="card-type-icon bar" ng-class="{selected: metric.chartType === 'bar'}" ng-click="$ctrl.changeType(metric, 'bar')"></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

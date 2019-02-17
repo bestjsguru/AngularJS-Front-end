@@ -1,0 +1,16 @@
+<div class="col-xs-8 truedash-calendar modal-calendar">
+    <input type="text" class="form-control pull-left alert-date-picker-result"
+            datepicker-options="dtp.dateOptions" uib-datepicker-popup="{{dtp.datePickerPopupFormat}}"
+            ng-change="dtp.updated()" ng-model="dtp.date" ng-required="true" is-open="dtp.opened" />
+    <span class="alert-calendar">
+        <button type="button" class="btn btn-eighth btn-lg" ng-click="dtp.open($event)"><i class="fa fa-calendar"></i></button>
+    </span>
+</div>
+<div class="col-xs-1">
+    <label class="m-t-10">at</label>
+</div>
+<div class="col-xs-3">
+    <div class="alert-date-picker pull-right">
+        <app-timepicker hours="dtp.hours" minutes="dtp.minutes"></app-timepicker>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+.full-height {
+    min-height: calc(~"100vh - 90px");
+}
+
+.calc(@prop, @value) {
+    /* Firefox */
+    @{prop}: -moz-calc(@value);
+    /* WebKit */
+    @{prop}: -webkit-calc(@value);
+    /* Opera */
+    @{prop}: -o-calc(@value);
+    /* Standard */
+    @{prop}: calc(@value);
+}
+
+.shadow{
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+    -moz-box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+    -o-box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+    box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    background-image: repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.02) 5px, rgba(255, 255, 255, 0.04) 5px, rgba(255, 255, 255, 0.04) 10px) !important;
+}
+
+.transition (@prop: all, @time: 0.1s, @ease: linear) {
+    -webkit-transition: @prop @time @ease;
+    -moz-transition: @prop @time @ease;
+    -o-transition: @prop @time @ease;
+    -ms-transition: @prop @time @ease;
+    transition: @prop @time @ease;
+}
+
+.transition-ease (@prop: all, @time: 0.3s, @ease: ease) {
+    -webkit-transition: @prop @time @ease;
+    -moz-transition: @prop @time @ease;
+    -o-transition: @prop @time @ease;
+    -ms-transition: @prop @time @ease;
+    transition: @prop @time @ease;
+}
+
+.animate-ng-show (@prop, @showValue, @hideValue, @duration: 0.2s) {
+    &.ng-hide-add, &.ng-hide-remove {
+        transition: 0s linear all;
+    }
+
+    &.ng-hide-add-active,
+    &.ng-hide-remove-active {
+        transition: @duration linear all;
+    }
+
+    &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active {
+        @{prop}: @showValue;
+    }
+    &.ng-hide-add.ng-hide-add-active,
+    &.ng-hide-remove {
+        @{prop}: @hideValue;
+    }
+}

@@ -1,0 +1,105 @@
+@import './kpi/kpiModal';
+
+.home-wrapper {
+    @import './favouriteCards/favouriteCards';
+    .full-height;
+
+    .home-content {
+        .home-main-content {
+            .home-heading {
+                font-size: 17px;
+                line-height: 20px;
+                font-weight: 500;
+                text-transform: uppercase;
+                display: block;
+                min-height: 35px;
+
+                .fa {
+                    font-size: 16px;
+                }
+
+                a {
+                    &:hover {
+                        color: @brand-danger;
+                    }
+                }
+            }
+
+            .kpi-table {
+                margin: 0 15px 15px 15px;
+
+                .loading-row {
+                    position: relative;
+                    height: 150px;
+
+                    span {
+                        position: absolute;
+                        top: calc(~"50% - 10px");
+                        left: calc(~"50% - 175px");
+                    }
+                }
+
+                .table {
+                    background: @white;
+                    th {
+                        text-transform: uppercase;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    td {
+                        &:first-child {
+                            font-weight: 500;
+                        }
+
+                        .kpi-info {
+                            display: flex;
+                            flex-wrap: nowrap;
+                            flex-direction: row;
+
+                            .kpi-value {
+                                flex: 0 0 auto;
+                                padding: 0 10px 0 0;
+                                align-self: center;
+                                font-weight: normal;
+
+                                &.trend-value {
+                                    min-width: 95px;
+                                }
+                            }
+
+                            .kpi-percentage {
+                                flex: 0 0 auto;
+                                align-self: center;
+                                cursor: pointer;
+                            }
+
+                            .kpi-trend {
+                                flex: 0 0 auto;
+                                align-self: center;
+                            }
+
+                            .loader {
+                                flex: 1 1 auto;
+                                align-self: center;
+                                text-align: left;
+                            }
+
+                            &.high {
+                                .kpi-percentage {
+                                    color: @td-turquoise;
+                                }
+                            }
+
+                            &.low {
+                                .kpi-percentage {
+                                    color: @brand-danger;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.gauge-goal {
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 15px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    .goal {
+        flex: 0 1 auto;
+        padding: 0 10px 0 0;
+        line-height: 20px;
+
+        span {
+            font-weight: 500;
+        }
+    }
+
+    .progress-sentence {
+        flex: 0 1 auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 20px;
+
+        .fa {
+            display: none;
+            font-size: 14px;
+            -webkit-text-stroke: 1px @white;
+        }
+
+        &.text-danger {
+            .fa {
+                &.fa-arrow-down {
+                    display: inline-block;
+                }
+            }
+        }
+
+        &.text-success {
+            .fa {
+                &.fa-arrow-up {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}

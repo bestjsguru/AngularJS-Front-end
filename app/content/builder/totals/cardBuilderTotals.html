@@ -1,0 +1,14 @@
+<label>Totals:</label>
+<div class="dropdown totals-dropdown" ng-disabled="$ctrl.card.metrics.loading">
+    <button type="button" class="btn btn-fourth btn-block dropdown-toggle" data-toggle="dropdown">
+        {{$ctrl.getPlaceholder()}} <i class="fa fa-caret-down" aria-hidden="true"></i>
+    </button>
+    <ul class="dropdown-menu">
+        <li ng-repeat="metric in $ctrl.metrics track by metric.id" ng-click="$ctrl.toggleTotal(metric)">
+            <a href="#">
+                <i class="fa fa-fw" ng-class="{'fa-check-square-o': $ctrl.totals[$ctrl.getId(metric)], 'fa-square-o': !$ctrl.totals[$ctrl.getId(metric)]}"></i>
+                {{metric.label}}
+            </a>
+        </li>
+    </ul>
+</div>

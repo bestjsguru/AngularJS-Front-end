@@ -1,0 +1,50 @@
+<div class="panel panel-default db-entity">
+    <div class="panel-heading">
+        <h4 class="panel-title" tu-popover tu-popover-html="{{$ctrl.table.label}}" tu-popover-placement="top">
+            <i class="fa fa-table fa-fw"></i>
+            <span ng-bind-html="$ctrl.table.label"></span>
+            <a href="#" ng-click="$ctrl.openModal()" class="remove datasource-export">
+                <i class="fa fa-file-text"></i>
+            </a>
+            <a href="#" ng-click="$ctrl.deselectTable()" class="remove datasource-collapse">
+                <i class="fa fa-times"></i>
+            </a>
+        </h4>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li ng-attr-id="entity_{{::$ctrl.table.id}}_{{column.name}}" class="list-group-item connected" ng-class="{active: $ctrl.activeColumn == column.name}" ng-if="$ctrl.connectedColumnNames.length" ng-repeat="column in $ctrl.connectedColumnNames track by column.id">
+                <span class="column-name-wrapper">
+                    <span ng-bind-html="column.name" class="column-name"></span>
+                    <!-- <i class="fa fa-eye-slash"></i> -->
+                </span>
+            </li>
+
+            <!-- When showing all columns -->
+            <li ng-if="$ctrl.showAllColumns" ng-attr-id="entity_{{::$ctrl.table.id}}_{{column.name}}" class="list-group-item" ng-if="$ctrl.columnNames.length" ng-repeat="column in $ctrl.columnNames track by column.id">
+                <span class="column-name-wrapper">
+                    <span ng-bind-html="column.name" class="column-name"></span>
+                    <!-- <i class="fa fa-eye-slash"></i> -->
+                </span>
+            </li>
+
+            <li ng-if="$ctrl.showAllColumns" class="list-group-item columns-indicator">
+                <button ng-click="$ctrl.toggleShowAllColumns(false)" class="btn btn-eighth btn-block">Show Less</button>
+            </li>
+
+            <!-- When showing limited number of columns -->
+            <li ng-if="!$ctrl.showAllColumns" id="entity_{{::$ctrl.table.id}}_{{column.name}}" class="list-group-item" ng-if="$ctrl.columnNames.length" ng-repeat="column in $ctrl.columnNames | limitTo : $ctrl.maxColumnCount track by column.id">
+                <span class="column-name-wrapper">
+                    <span ng-bind-html="column.name" class="column-name"></span>
+                    <!-- <i class="fa fa-eye-slash"></i> -->
+                </span>
+            </li>
+            <li ng-if="$ctrl.columnNames.length > $ctrl.maxColumnCount && !$ctrl.showAllColumns" class="list-group-item columns-indicator">
+                <button ng-click="$ctrl.toggleShowAllColumns()" class="btn btn-eighth btn-block">
+                    <span class="columns-indicator-number" ng-bind-html="'+ ' + ($ctrl.columnNames.length - $ctrl.maxColumnCount)"></span>
+                    <span>Show All</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

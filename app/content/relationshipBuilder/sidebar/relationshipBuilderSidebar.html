@@ -1,0 +1,71 @@
+<div class="relationship-builder-sidebar">
+    <ul class="nav nav-tabs no-border">
+        <li><a href="#">Existing relations</a></li>
+    </ul>
+
+    <div class="form-group">
+        <ui-select class="w-100" on-select="$ctrl.selectRelation()" search-enabled="true" ng-model="$ctrl.relations.selected"
+                   ng-disabled="$ctrl.loadingRelations || !$ctrl.relations.length">
+            <ui-select-match placeholder="{{$ctrl.getRelationsPlaceholder()}}">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="item in $ctrl.relations | filter: {name: $select.search}" group-by="">
+                <span ng-bind-html="item.name"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <button class="btn btn-third btn-block" ng-if="!$ctrl.relation" ng-click="$ctrl.createRelation()">Create new relation</button>
+
+
+    <div ng-if="$ctrl.relation">
+        <ul class="nav nav-tabs no-border">
+            <li><a href="#">Goal metric</a></li>
+        </ul>
+
+        <div class="form-group">
+            <ui-select class="w-100" on-select="$ctrl.selectGoal()" search-enabled="true" ng-model="$ctrl.goalMetric" ng-disabled="$ctrl.loadingMetrics">
+                <ui-select-match placeholder="{{$ctrl.getMetricsPlaceholder()}}">{{$select.selected.label}}</ui-select-match>
+                <ui-select-choices repeat="item in $ctrl.metrics | filter: {label: $select.search}" group-by="'source'">
+                    <span ng-bind-html="item.label"></span>
+                </ui-select-choices>
+            </ui-select>
+
+        </div>
+
+        <div ng-if="$ctrl.relation.goal && !$ctrl.loadingMetrics">
+            <ul class="nav nav-tabs no-border">
+                <li><a href="#">Driver metrics</a></li>
+            </ul>
+
+            <div class="form-group has-feedback metrics-search">
+                <input type="text" class="form-control"
+                       ng-model="$ctrl.metricFilter" ng-change="$ctrl.filter()"
+                       ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                       placeholder="Search Driver Metrics">
+                <i class="fa fa-search form-control-feedback"></i>
+            </div>
+
+
+            <div class="metrics-folder-wrapper">
+                <div class="metrics-folder" ng-repeat="source in $ctrl.sources">
+                    <a href class="folder-name" ng-click="source.collapsed = !source.collapsed" ng-class="{'active': !source.collapsed}">
+                        <i class="fa" ng-class="{'fa-angle-right': source.collapsed, 'fa-angle-down': !source.collapsed}"></i>
+                        <i class="fa" ng-class="{'fa-folder-open-o': !source.collapsed, 'fa-folder-o': source.collapsed}"></i>
+                        {{source.name}}
+                        <span ng-if="$ctrl.countDrivers(source)" class="badge pull-right" ng-bind-html="$ctrl.countDrivers(source)"></span>
+                    </a>
+                    <ul class="folder-list collapse" ng-class="{'in': !source.collapsed}">
+                        <li ng-repeat="metric in source.metrics">
+                            <a href ng-click="$ctrl.relation.toggleMetric(metric)"
+                               ng-class="{'active': $ctrl.relation.hasDriverMetric(metric.id)}"
+                               ng-bind-html="metric.label"></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="no-tables" ng-if="!$ctrl.sources.length">
+                    No matching metrics
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

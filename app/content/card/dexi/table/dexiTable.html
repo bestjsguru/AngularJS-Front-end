@@ -1,0 +1,63 @@
+<div class="dexi-table" ng-if="$ctrl.card">
+    <div class="w-100" ng-if="!$ctrl.isError()">
+        <div class="dexi-table-header">
+            <div class="item" ng-if="$ctrl.results.length">
+                <span>Show</span>
+                <input type="number" step="1" min="1" max="{{$ctrl.max}}" class="form-control input-sm text-center"
+                       ng-model="$ctrl.pageSize" ng-change="$ctrl.reload()" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                       ng-disabled="$ctrl.card.metrics.loading">
+                <span>of</span><span><strong>{{$ctrl.total}}</strong></span><span>results</span>
+            </div>
+            <div class="item" ng-if="$ctrl.card.metrics.loading">
+                <i class="fa fa-fw fa-spin fa-circle-o-notch"></i>
+                <span>Loading...</span>
+            </div>
+            <div class="item">
+                <a class="btn btn-success" ng-click="$ctrl.process()" ng-disabled="$ctrl.card.metrics.loading || $ctrl.loading">
+                    <i class="fa fa-external-link fa-fw"></i> Send to Dexi
+                </a>
+            </div>
+        </div>
+        <div class="dexi-message alert alert-info" ng-if="$ctrl.message">
+            <span>{{$ctrl.message}}</span>
+        </div>
+        <div class="dexi-wrapper">
+            <table class="table table-hover table-condensed" ng-disabled="$ctrl.card.metrics.loading || $ctrl.loading">
+                <thead>
+                    <tr>
+                        <th ng-repeat="column in $ctrl.columns track by $index">
+                            {{column.name}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="row in $ctrl.results track by $index">
+                        <td ng-repeat="item in row track by $index" ng-class="{custom: item.isCustom}">
+                            <span ng-if="!$ctrl.columns[$index].isMetric">{{item.value}}</span>
+                            <div>
+                                <div class="auto-width-metric" ng-if="$ctrl.columns[$index].isMetric">{{item.value}}</div>
+                                <input ng-if="$ctrl.columns[$index].isMetric" type="text" ng-model="item.value" class="form-control">
+                                <i ng-if="item.isCustom" class="fa fa-times" ng-click="$ctrl.reset(item)"
+                                   tu-popover tu-popover-html="Reset value" tu-popover-placement="top"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="w-100" ng-if="$ctrl.isError()">
+        <div class="dexi-error-wrapper">
+            <div class="card-error-message">
+                <i class="fa fa-2x fa-exclamation-triangle"></i>
+                <span class="card-error-title">Oops!</span>
+                <span ng-bind-html="$ctrl.card.metrics.errorMessage"></span>
+
+                <a ng-click="$ctrl.reload()" class="btn btn-eighth">
+                    <i class="fa fa-refresh" ng-class="{'fa-spin': $ctrl.card.metrics.loading}"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

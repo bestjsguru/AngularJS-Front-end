@@ -1,0 +1,113 @@
+.metric-alerts-wrapper {
+    .full-height;
+
+    .sub-header {
+        margin-bottom: 0;
+
+        .metric-alerts-header {
+            display: block;
+            width: 100%;
+
+            .card-name {
+                text-transform: none;
+                font-size: 17px;
+                line-height: 22px;
+                font-weight: 500;
+                width: 100%;
+                display: block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .card-description {
+                font-weight: normal;
+                font-size: 11px;
+                line-height: 12px;
+                width: 100%;
+                display: block;
+            }
+        }
+    }
+
+    .smart-alert-wrapper {
+        background: @white;
+
+        .smart-alert-body {
+            text-align: center;
+            height: 250px;
+            position: relative;
+        }
+    }
+
+    .metric-table {
+        height: calc(~"100vh - 395px");
+        overflow-y: scroll;
+        border-top: 1px solid @borderColorLight;
+
+        th {
+            font-weight: 500;
+
+            &.metric-sort {
+                cursor: pointer;
+            }
+
+            i {
+                float: right;
+                margin-top: 2px;
+            }
+        }
+
+        tr {
+            .metric-link {
+                cursor: pointer;
+
+                .new {
+                    color: @brand-danger;
+                    border: 1px solid @brand-danger;
+                    border-radius: 3px;
+                    padding: 3px;
+                    font-size: 8px;
+                    margin-right: 10px;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    float: left;
+                }
+            }
+
+            .metric-actions {
+                .light {
+                    color: @silver-sand;
+                }
+            }
+
+            &.high {
+                .metric-link {
+                    .new {
+                        color: @td-turquoise;
+                        border: 1px solid @td-turquoise;
+                    }
+                }
+
+                .variance {
+                    color: @td-turquoise;
+                }
+            }
+
+            &.low {
+                .metric-link {
+                    .new {
+                        color: @brand-danger;
+                        border: 1px solid @brand-danger;
+                    }
+                }
+
+                .variance {
+                    color: @brand-danger;
+                }
+            }
+        }
+    }
+
+    @import (multiple) '../metricFavourites/metricFavourites';
+}

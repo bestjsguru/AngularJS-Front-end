@@ -1,0 +1,19 @@
+<div class="database-explorer-sql-data" ng-if="$ctrl.initiated()">
+    <div ng-if="$ctrl.showError()" class="data-error">
+        <strong>An error occured when executing SQL command:</strong>
+        </br>
+        </br>
+        <div class="error">
+            {{$ctrl.data.isError}}
+        </div>
+    </div>
+
+    <div ng-if="$ctrl.showData()">
+
+        <app-database-explorer-table table="$ctrl.data.result" limit="100" execution-time="$ctrl.executionTime"></app-database-explorer-table>
+
+    </div>
+
+    <div class="clearfix"></div>
+</div>
+

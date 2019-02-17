@@ -1,0 +1,103 @@
+<div class="group-users-modal">
+    <div class="modal-header">
+        <h4 class="modal-title">{{$ctrl.group.name}}</h4>
+        <i class="fa fa-fw fa-times modal-close" ng-click="$ctrl.modalInstance.dismiss()"></i>
+    </div>
+    <div class="modal-body">
+        <div class="panel panel-default searchable-list">
+            <div class="panel-heading">
+                <div class="left-inner-addon">
+                    <i class="fa fa-search"></i>
+                    <input type="text" class="form-control" ng-model="$ctrl.query" ng-change="$ctrl.filter()"
+                           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 100, 'blur': 0 } }"
+                           placeholder="Filter users">
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="user-list-wrapper">
+                    <loader ctrl-check="$ctrl.loading"></loader>
+
+                    <table ng-if="!$ctrl.loading && $ctrl.users.length" class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="user in $ctrl.users" ng-class="{'selected': $ctrl.group.hasUser(user)}"
+                                ng-click="$ctrl.toggleUser(user)">
+                                <td width="50">
+                                    <div class="user-image">
+                                        <img ng-src="{{user.photo}}" width="45" height="45" class="img-rounded">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-data">
+                                        <span ng-bind="user.fullName"></span>
+                                        <a ng-bind="user.email"></a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="user-data">
+                                        <span>&nbsp;</span>
+                                        <a ng-bind="user.roleName"></a>
+                                    </div>
+                                </td>
+                                <td width="30" class="text-right">
+                                    <i class="fa" ng-class="{'fa-square-o': !$ctrl.group.hasUser(user), 'fa-check-square-o': $ctrl.group.hasUser(user)}"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="preview-area-wrapper" ng-if="!$ctrl.loading && !$ctrl.users.length">
+                        <div class="preview-area">
+                            <div class="preview-icon animated zoomIn">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <span class="preview-title">No users found</span>
+                            <span>Please refine your search query to try again</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-if="!$ctrl.loading && $ctrl.users.length" class="user-list-actions">
+            <label class="checkbox" ng-disabled="!$ctrl.hasAtLeastOneUserInRole('admin')" ng-click="$ctrl.toggleByRole('admin')">
+                <i class="fa fa-fw" ng-class="{
+                    'fa-check-square-o': $ctrl.select.admin.selected,
+                    'fa-square-o': !$ctrl.select.admin.selected,
+                    'partialy-selected': !$ctrl.select.admin.selected && $ctrl.atLeastOneSelectedByRole('admin')
+                }">&nbsp;</i>
+                <span>Admin users</span>
+            </label>
+            <label class="checkbox" ng-disabled="!$ctrl.hasAtLeastOneUserInRole('basic')" ng-click="$ctrl.toggleByRole('basic')">
+                <i class="fa fa-fw" ng-class="{
+                    'fa-check-square-o': $ctrl.select.basic.selected,
+                    'fa-square-o': !$ctrl.select.basic.selected,
+                    'partialy-selected': !$ctrl.select.basic.selected && $ctrl.atLeastOneSelectedByRole('basic')
+                }">&nbsp;</i>
+                <span>Basic users</span>
+            </label>
+            <label class="checkbox" ng-disabled="!$ctrl.hasAtLeastOneUserInRole('readOnly')" ng-click="$ctrl.toggleByRole('readOnly')">
+                <i class="fa fa-fw" ng-class="{
+                    'fa-check-square-o': $ctrl.select.readOnly.selected,
+                    'fa-square-o': !$ctrl.select.readOnly.selected,
+                    'partialy-selected': !$ctrl.select.readOnly.selected && $ctrl.atLeastOneSelectedByRole('readOnly')
+                }">&nbsp;</i>
+                <span>Read-only users</span>
+            </label>
+
+            <span class="users-count">
+                <ng-pluralize count="$ctrl.group.users.length" when="{'0': '', '1': '1 user selected', 'other': '{} users selected'}"> </ng-pluralize>
+            </span>
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        <div class="row">
+            <div class="col-md-6">
+                <button ng-click="$ctrl.modalInstance.dismiss()" class="btn btn-second btn-lg btn-block">Cancel</button>
+            </div>
+            <div class="col-md-6">
+                <button ng-click="$ctrl.apply()" class="btn btn-first btn-lg btn-block">Apply</button>
+            </div>
+        </div>
+    </div>
+</div>

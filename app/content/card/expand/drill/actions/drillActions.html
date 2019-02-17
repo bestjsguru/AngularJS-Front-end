@@ -1,0 +1,43 @@
+<div ng-if="$ctrl.card.drill.isActive() || $ctrl.card.drill.presets.active || $ctrl.card.drill.isRecords">
+    <div class="drill-actions">
+        <a app-access permission="cards"
+           ng-disabled="$ctrl.card.metrics.loading" class="btn btn-info" ng-click="$ctrl.save()">
+            <i class="fa fa-fw fa-area-chart"></i> Save as card
+        </a>
+
+        <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle" type="button" data-toggle="dropdown" ng-disabled="$ctrl.card.metrics.loading">
+                <i class="fa fa-share-alt"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                    <a app-access permission="exporting-cards" ng-click="$ctrl.export('csv')">
+                        <i class="fa fa-file-text-o fa-fw"></i> Download CSV
+                    </a>
+                </li>
+                <li>
+                    <a app-access permission="exporting-cards" ng-click="$ctrl.export('excel')">
+                        <i class="fa fa-file-excel-o fa-fw"></i> Download Excel
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div ng-show="!$ctrl.card.drill.isRecords && !$ctrl.card.drill.isActive() && !$ctrl.card.drill.presets.active">
+    <div class="drill-actions">
+        <div class="dropdown">
+            <button class="btn btn-info" type="button" data-toggle="dropdown" ng-disabled="$ctrl.card.metrics.loading">
+                Show underlying records
+                <span class="beta">beta</span>
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li ng-repeat="metric in $ctrl.metrics">
+                    <a ng-click="$ctrl.selectMetric(metric)" ng-bind="metric.name"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

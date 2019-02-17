@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{$ctrl.column.name}}</h4>
+</div>
+<div class="modal-body">
+    <div>
+        <form name="$ctrl.form" novalidate>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label>Display name</label>
+
+                        <div class="input-group">
+                            <input ng-disabled="$ctrl.loading" type="text" class="form-control" name="name" ng-model="$ctrl.column.displayName" ng-minlength="3">
+                            <span class="input-group-btn">
+                                <button ng-disabled="$ctrl.loading" ng-click="$ctrl.column.displayName = ''" class="btn btn-lg btn-fourth">
+                                    Clear <i class="fa fa-fw fa-times" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                        <div class="error-messages" ng-messages="$ctrl.form.name.$error" ng-if="$ctrl.dirty($ctrl.form.name)">
+                            <div ng-messages-include="error-messages"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-second btn-block" ng-click="$ctrl.dismiss()">Cancel</button>
+        </div>
+        <div class="col-sm-6">
+            <button class="btn btn-lg btn-first btn-block" ng-click="$ctrl.save()" ng-disabled="$ctrl.loading">Save</button>
+        </div>
+    </div>
+</div>

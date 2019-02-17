@@ -1,0 +1,92 @@
+.explain-card-info {
+    .card-info-row {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        margin: 10px -10px 30px -10px;
+
+        .card-info-column {
+            flex: 1 1 0;
+            max-width: 100%;
+            padding: 0 10px;
+            margin: 10px 0 0 0;
+
+            &.double {
+                flex: 2 1 0;
+            }
+
+            .title {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+                text-transform: uppercase;
+                border-bottom: 1px solid @iron;
+                margin: 0 0 15px 0;
+                padding: 0 0 10px 0;
+            }
+
+            .card-info-content {
+                word-wrap: break-word;
+
+                .card-info-metric{
+                    display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    background: @porcelain;
+                    border-radius: 3px;
+                    padding: 0;
+                    min-height: 34px;
+                    margin: 0 0 7px 0;
+                    cursor: default;
+
+                    a {
+                        flex: 0 0 34px;
+                        color: @white;
+                        padding: 6px 0px;
+                        background: @td-deep-blue;
+                        border-radius: 3px 0 0 3px;
+                        cursor: default;
+                        align-items: center;
+                    }
+
+                    span {
+                        flex: 1 1 auto;
+                        padding: 7px 7px 7px 10px;
+                        text-transform: capitalize;
+                    }
+                }
+
+                .card-info-sorting {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+                    margin: 0 0 5px 0;
+
+                    span {
+                        flex: 1 1 auto;
+                        text-transform: capitalize;
+                    }
+
+                    .sorting-txt {
+                        flex: 0 0 auto;
+                        align-self: flex-start;
+                        padding-right: 7px;
+                        text-transform: uppercase;
+
+                        div {
+                            display: inline-block;
+                        }
+                    }
+                }
+
+                .filters-list, .groupings-list, .compares-list, .formulas-list {
+                    margin: 0 0 5px 0;
+                }
+
+                .filter, .group, .compare, .formula, .sort {
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}

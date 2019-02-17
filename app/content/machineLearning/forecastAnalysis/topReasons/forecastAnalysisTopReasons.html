@@ -1,0 +1,33 @@
+<div class="forecast-analysis-top-reasons">
+    <table class="table table-hover">
+        <thead class="bold">
+            <tr>
+                <td colspan="6">Top {{$ctrl.topReasons.length}} Reasons</td>
+            </tr>
+            <tr class="active">
+                <th>Dimension</th>
+                <th>Value</th>
+                <th class="text-right no-wrap">Variance (Actual - Forecast)</th>
+                <th class="text-right">Actual</th>
+                <th class="text-right">Forecast</th>
+                <th class="text-right">Percentage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in $ctrl.topReasons">
+                <td ng-bind-html="item.dimension"></td>
+                <td>
+                    <button class="btn btn-xs btn-eighth" ng-click="$ctrl.drillDown(item)">
+                        {{item.value}}
+                    </button>
+                </td>
+                <td class="text-right">
+                    <span ng-class="{'text-success': item.isIncrease, 'text-danger': !item.isIncrease}" ng-bind-html="item.variance"></span>
+                </td>
+                <td class="text-right" ng-bind-html="item.actual"></td>
+                <td class="text-right" ng-bind-html="item.forecast"></td>
+                <td class="text-right" ng-bind-html="item.percentage"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,36 @@
+<ul class="nav nav-tabs">
+    <li ng-class="{active: $ctrl.tabs.is('metrics')}">
+        <a href ng-click="$ctrl.tabs.activate('metrics')">METRICS</a>
+    </li>
+</ul>
+
+<div class="form-group m-b-0" ng-if="$ctrl.tabs.is('metrics')">
+    <ui-select ng-disabled="!$ctrl.canSelect()" class="w-100" on-select="$ctrl.addMetric($item)" search-enabled="true" ng-model="$ctrl.currentMetric">
+        <ui-select-match placeholder="{{$ctrl.getPlaceholder()}}">{{$ctrl.getPlaceholder('metrics')}}</ui-select-match>
+        <ui-select-choices repeat="metric in $ctrl.availableMetrics | customSearch: 'name,source,type': $select.search" group-by="'source'">
+            <span ng-bind-html="metric.getName() | highlight: $select.search"></span>
+        </ui-select-choices>
+    </ui-select>
+</div>
+
+<ul class="card-builder-metrics">
+    <li ng-if="metric.isRegular()" ng-repeat="metric in $ctrl.cardMetricsItems() track by metric.id" ng-class="{'hidden-metric': metric.isHidden()}">
+        <div class="single-card-metric">
+
+            <div ng-if="metric.color" class="metric-color" ng-style="{background: metric.color}"></div>
+
+            <a href class="metric-name" ng-click="$ctrl.selectMetric(metric)" ng-class="{active: $ctrl.isSelected(metric)}">
+                <span ng-bind-html="metric.label"></span>
+            </a>
+
+            <app-edit-metric-form metric="metric"></app-edit-metric-form>
+            <app-edit-metric-dropdown metric="metric"></app-edit-metric-dropdown>
+
+        </div>
+    </li>
+</ul>
+
+<div ng-if="$ctrl.showMetricHelper()" class="metric-helper-message">
+    <div class="arrow animated zoomIn"><img src='styles/images/curved-arrow.svg#svgView(viewBox(0, 0, 33, 37))'/></div>
+    <span class="animated zoomIn">Click on metric above to load available dimensions, manage groups and filters</span>
+</div>

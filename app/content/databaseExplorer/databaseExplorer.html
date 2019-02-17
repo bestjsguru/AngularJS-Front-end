@@ -1,0 +1,76 @@
+<div class="database-explorer-wrapper">
+
+    <div class="sub-header">
+        <div class="item">
+            <div class="breadcrumbs">
+                <span>Database Explorer</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="database-explorer">
+
+        <div class="database-explorer-sidebar">
+
+            <div class="table-search-wrapper">
+                <div class="form-group has-feedback table-search">
+                    <input type="text" class="form-control" ng-change="$ctrl.filter()" ng-model="$ctrl.tableFilter" placeholder="Search Tables"
+                           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 200, 'blur': 0 } }">
+                    <i class="fa fa-search form-control-feedback"></i>
+                </div>
+            </div>
+
+            <loader ctrl-check="$ctrl.loading"></loader>
+
+            <div class="metrics-folder-wrapper">
+                <div class="metrics-source" ng-repeat="source in $ctrl.sources track by $index">
+                    <a href ng-click="$ctrl.toggleSource(source)" ng-class="{active: !source.collapsed, 'bold': $ctrl.isActiveSource(source)}" class="source-name">
+                        <i class="fa" ng-class="{'fa-folder-open-o': !source.collapsed, 'fa-folder-o': source.collapsed}"></i>
+                        <span>{{source.name}}</span>
+                    </a>
+
+                    <div class="tables-list collapse" ng-class="{in: !source.collapsed}">
+                        <div class="metrics-folder" ng-repeat="table in source.tables track by table.id">
+                            <a href ng-class="{active: $ctrl.table.id === table.id}"
+                               class="folder-name">
+                                <i ng-click="$ctrl.toggleTable(table)" class="fa" ng-class="{'fa-minus': $ctrl.table.id === table.id, 'fa-plus': $ctrl.table.id !== table.id}"></i>
+                                <span ng-click="$ctrl.previewTable(table)">{{table.label}}</span>
+                            </a>
+                            <ul class="folder-list collapse" ng-class="{in: $ctrl.table.id === table.id}">
+                                <li ng-repeat="column in table.columns track by $index">
+                                    <a href>
+                                        {{column.name}}
+                                        <span ng-bind-html="column.type.toLowerCase()"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="no-tables" ng-if="!$ctrl.loading && !$ctrl.sources.length">
+                    No matching tables
+                </div>
+            </div>
+
+        </div>
+
+        <div class="database-explorer-visual">
+            <ul class="nav nav-tabs">
+                <li ng-class="{active : $ctrl.tabs.is('sql')}"><a href ng-click="$ctrl.setTab('sql')">SQL</a></li>
+                <li ng-class="{active : $ctrl.tabs.is('preview')}"><a href ng-click="$ctrl.setTab('preview')">Preview</a></li>
+            </ul>
+            <div class="tab-nav-content">
+                <div ng-show="$ctrl.tabs.is('sql')">
+                    <app-database-explorer-sql tables="$ctrl.tables"></app-database-explorer-sql>
+                </div>
+
+                <div ng-if="$ctrl.tabs.is('preview')">
+                    <app-database-explorer-preview table="$ctrl.table"></app-database-explorer-preview>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

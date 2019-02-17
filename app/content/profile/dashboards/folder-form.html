@@ -1,0 +1,47 @@
+<form name="$ctrl.forms.folderForm{{folder.id}}" ng-submit="$ctrl.edit(folder)" novalidate role="form" class="folder">
+    <a class="folder-toggle" ng-click="$ctrl.toggleDashboards(folder)">
+        <i class="fa fa-fw" ng-class="{'fa-folder-o': !folder.dashboardsAreVisible, 'fa-folder-open-o': folder.dashboardsAreVisible}"></i>
+    </a>
+    <div ng-if="!folder.inEditMode" class="folder-name">
+        <span ng-bind="folder.title"></span>
+        <small ng-if="!folder.active" class="text-danger"><i>(Inactive)</i></small>
+    </div>
+    <div class="folder-edit-mode" ng-if="folder.inEditMode && $ctrl.folderCanBeChanged(folder)">
+        <div class="folder-edit-input">
+            <input type="text" name="title" class="form-control input-sm" ng-model="folder.title" value="{{ ::folder.title }}" required>
+            <div class="error-messages" ng-messages="$ctrl.forms['folderForm' + folder.id].title.$error" ng-if="$ctrl.dirty($ctrl.forms['folderForm' + folder.id].title)">
+                <div ng-message="unique">{{$ctrl.forms['folderForm' + folder.id].title.$error.unique}}</div>
+                <div ng-messages-include="error-messages"></div>
+            </div>
+        </div>
+        <div class="folder-edit-buttons">
+            <span ng-click="folder.inEditMode = false" class="btn btn-sm btn-second">Cancel</span>
+            <button type="submit" class="btn btn-sm btn-first">Save</button>
+        </div>
+    </div>
+    <div ng-if="!folder.inEditMode && $ctrl.folderCanBeChanged(folder)" class="folder-dropdown">
+        <div class="dropdown pull-right">
+            <button class="btn btn-eighth dropdown-toggle" type="button" data-toggle="dropdown">
+                <i class="fa fa-fw fa-bars"></i>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a ng-click="folder.inEditMode = true">
+                        <i class="fa fa-fw fa-edit"></i> Edit Workspace
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="$ctrl.toggleActive(folder)">
+                        <i class="fa fa-fw" ng-class="{'fa-eye': !folder.active, 'fa-eye-slash': folder.active}"></i>
+                        {{folder.active ? 'Hide' : 'Show'}} Workspace
+                    </a>
+                </li>
+                <li>
+                    <a ng-click="$ctrl.delete(folder)">
+                        <i class="fa fa-fw fa-trash-o"></i> Delete Workspace
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>

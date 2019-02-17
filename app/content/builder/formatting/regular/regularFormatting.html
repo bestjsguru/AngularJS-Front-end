@@ -1,0 +1,139 @@
+<div class="formatting-wrapper">
+    <loader ng-if="$ctrl.loading" ctrl-check="true"></loader>
+
+    <div ng-if="!$ctrl.loading">
+        <div class="formatting-list" ui-sortable="$ctrl.reorderOptions" ng-model="$ctrl.card.formatting.items">
+            <div class="single-formatting" ng-repeat="item in $ctrl.card.formatting.items track by $index" ng-form="$ctrl.forms.item_{{$index}}_form">
+
+                <div class="item reorder-icon">
+                    <i class="table-icon" ng-class="{'column': item.type === 'column'}"></i>
+                </div>
+
+                <div class="condition-formatting-wrapper">
+                    <div class="condition">
+                        <div class="item">
+                            <app-multiselect-dropdown ng-if="item.type === 'column'"
+                                  required
+                                  name="columns"
+                                  multiple="true"
+                                  value-label="label"
+                                  options="$ctrl.columns"
+                                  ng-model="item.columns"
+                                  on-change="$ctrl.updateRegularFormatting()"
+                                  display-count="2"
+                                  search-enabled="true"
+                                  placeholder="Select columns">
+                            </app-multiselect-dropdown>
+
+                            <app-multiselect-dropdown ng-if="item.type === 'row'"
+                                  required
+                                  name="columns"
+                                  value-label="label"
+                                  options="$ctrl.columns"
+                                  ng-model="item.columns"
+                                  on-change="$ctrl.updateRegularFormatting()"
+                                  display-count="2"
+                                  search-enabled="false"
+                                  placeholder="Select columns">
+                            </app-multiselect-dropdown>
+                        </div>
+
+                        <div class="item">
+                            <ui-select on-select="$ctrl.onSelectOperator(item)" name="operator" ng-change="$ctrl.updateRegularFormatting()"
+                                       ng-model="item.operator" class="w-100" required>
+                                <ui-select-match placeholder="Select Operator">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="operator in item.operators">
+                                    <div ng-bind-html="operator.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item">
+                            <input ng-if="!$ctrl.isBetween(item)" ng-disabled="!$ctrl.showValues(item)" class="form-control" type="text"
+                                   name="value" ng-model="item.value" placeholder="Enter value" ng-change="$ctrl.updateRegularFormatting()">
+                            <div ng-if="$ctrl.isBetween(item) && $ctrl.showValues(item)" class="from-to">
+                                <input class="form-control" type="text" name="value" ng-model="item.value" placeholder="From" ng-change="$ctrl.updateRegularFormatting()">
+                                <input class="form-control" type="text" name="valueTo" ng-model="item.valueTo" placeholder="To" ng-change="$ctrl.updateRegularFormatting()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formatting">
+                        <div class="item decimal-select" tu-popover tu-popover-placement="top" tu-popover-html="Decimal places">
+                            <ui-select name="decimals" ng-change="$ctrl.updateRegularFormatting()" on-select="$ctrl.onSelectDecimal(item)" ng-model="item.decimals" class="w-100" required>
+                                <ui-select-match placeholder="Decimal places">{{$select.selected.label}}</ui-select-match>
+                                <ui-select-choices repeat="item in $ctrl.decimals">
+                                    <div ng-bind-html="item.label"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+
+                        <div class="item prefix-suffix">
+                            <input class="form-control" type="text" ng-trim="false" ng-change="$ctrl.updateRegularFormatting()" ng-model="item.prefix" ng-model-options="{ debounce: 200 }" placeholder="Prefix">
+                            <input class="form-control" type="text" ng-trim="false" ng-change="$ctrl.updateRegularFormatting()" ng-model="item.suffix" ng-model-options="{ debounce: 200 }" placeholder="Suffix">
+                        </div>
+
+                        <div class="item formatting-icons">
+                            <div class="formatting-icon">
+                                <button class="btn btn-default number-btn" ng-class="{active: item.useShortNumbers}" type="button" ng-click="$ctrl.toggleShortNumbers(item)"
+                                        tu-popover tu-popover-placement="top" tu-popover-html="Short Numbers"></button>
+                            </div>
+
+                            <div class="formatting-icon">
+                                <button class="btn btn-default comma-btn" ng-class="{active: item.commaSeparator}" type="button" ng-click="$ctrl.toggleCommaSeparator(item)"
+                                        tu-popover tu-popover-placement="top" tu-popover-html="Comma Separator"></button>
+                            </div>
+
+                            <div class="formatting-icon">
+                                <div class="color-picker background-picker" tu-popover tu-popover-placement="top" tu-popover-html="Background color">
+                                    <spectrum-colorpicker ng-model="item.color" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateRegularFormatting()"></spectrum-colorpicker>
+                                    <i class="fa fa-times remove-cross" ng-click="$ctrl.removeColor(item)"></i>
+                                </div>
+                            </div>
+
+                            <div class="formatting-icon">
+                                <div class="color-picker text-picker" tu-popover tu-popover-placement="top" tu-popover-html="Text color">
+                                    <spectrum-colorpicker ng-model="item.textColor" options="$ctrl.ColorPickerConfig.get()" ng-change="$ctrl.updateRegularFormatting()"></spectrum-colorpicker>
+                                    <i class="fa fa-times remove-cross" ng-click="$ctrl.removeTextColor(item)"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item align-icons">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-fourth" ng-class="{active: item.align === 'left'}" ng-click="$ctrl.setAlignment(item, 'left')">
+                                    <i class="fa fa-align-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-fourth" ng-class="{active: item.align === 'center'}" ng-click="$ctrl.setAlignment(item, 'center')">
+                                    <i class="fa fa-align-center"></i>
+                                </button>
+                                <button type="button" class="btn btn-fourth" ng-class="{active: item.align === 'right'}" ng-click="$ctrl.setAlignment(item, 'right')">
+                                    <i class="fa fa-align-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item delete-icon" ng-click="$ctrl.remove($index)">
+                    <i class="fa fa-fw fa-times"></i>
+                </div>
+            </div>
+
+            <div class="add-new-item text-center">
+                <a class="btn btn-fourth" ng-click="$ctrl.addNewItem('column')">
+                    <div class="add-new-item-btn">
+                        <i class="table-icon column"></i>
+                        <span>Add column condition</span>
+                    </div>
+                </a>
+                <a class="btn btn-fourth" ng-click="$ctrl.addNewItem('row')">
+                    <div class="add-new-item-btn">
+                        <i class="table-icon"></i>
+                        <span>Add row condition</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

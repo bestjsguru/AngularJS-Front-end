@@ -1,0 +1,136 @@
+<div class="explore-mode">
+    <div ng-if="!explore.card.isRemoved" class="card-dimensions" ng-class="{numeric: explore.getType() == 'numeric'}">
+        <loader ctrl-check="!explore.card"></loader>
+        <div ng-if="explore.card" class="card-wrapper-explore" ng-class="{'card-error': explore.isError() }">
+
+            <!-- Sub Header -->
+            <div class="sub-header border">
+                <div class="item">
+                    <div class="explore-card-header">
+                        <span class="card-name" title="{{::explore.card.getName()}}" ng-bind-html="::explore.card.getName()"></span>
+                        <span class="card-range" ng-if="!explore.card.isImageOrDraft() && !explore.card.isText()" ng-bind-html="explore.card.getDateRangeStringWithFrequencyAndTimezone(true)"></span>
+                    </div>
+                </div>
+                <div class="item" ng-if="!explore.card.isImageOrDraft() && !explore.card.isText()">
+
+                    <div class="explore-visual-picker pull-right" ng-if="explore.showTypes()">
+                        <button type="button" class="btn btn-fourth dropdown-toggle" data-toggle="dropdown">
+                            <span class="card-type-icon {{ explore.getType() }}"></span> <i class="fa fa-angle-down"></i>
+                        </button>
+                        <ul class="dropdown-menu arrow-menu">
+                            <li ng-repeat="type in explore.card.types.available"
+                                ng-click="explore.setType(type)" ng-class="{active: explore.getType() == type, disabled: explore.isDrillMode()}">
+                                <a href="#" tu-popover tu-popover-html="{{ type | capitalize }}" tu-popover-placement="top">
+                                    <span class="card-type-icon {{ type }}"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown date-dropdown frequencies fullscreen-show pull-right" ng-if="explore.getType() != 'numeric'">
+                        <a class="dropdown-toggle btn btn-fourth" data-toggle="dropdown" href="#">
+                            <span class="date-dropdown-txt" ng-bind-html="explore.card.frequencies.selected"></span>
+                            <i class="fa fa-sort"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu">
+                            <li ng-repeat="frequency in explore.cardAvailableFrequencies() track by $index" ng-click="explore.setFrequency(frequency)">
+                                <a ng-bind-html="frequency"></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <tu-date-picker refresh="explore.updateDates(dates, range, number)"
+                            from="explore.card.fromDate" to="explore.card.toDate"
+                            current-range="explore.card.rangeName"
+                            current-number="explore.card.customDateMap"
+                            show="['customDate']"
+                            hide="['cardDateRange']"
+                            delay="900"
+                            class="fullscreen-show pull-right m-r-10"
+                            starting-day="explore.card.dashboard.usedStartDayOfWeek">
+                    </tu-date-picker>
+
+                    <div app-access level="view" class="dropdown pull-right" id="card_dropdown_{{explore.card.id}}" ng-if="!explore.card.isText()">
+                        <a class="dropdown-toggle btn btn-eighth" data-toggle="dropdown" href="#">
+                            <i class="fa fa-fw fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu arrow-menu">
+                            <li app-access permission="exporting-cards" ng-if="!explore.card.isImageOrDraft()">
+                                <a ng-click="explore.exportCard('csv')">
+                                    <i class="fa fa-file-text-o fa-fw"></i>
+                                    <span>Download CSV</span>
+                                </a>
+                            </li>
+                            <li app-access permission="exporting-cards" ng-if="!explore.card.isImageOrDraft()">
+                                <a ng-click="explore.exportCard('excel')">
+                                    <i class="fa fa-file-excel-o fa-fw"></i>
+                                    <span>Download Excel</span>
+                                </a>
+                            </li>
+                            <li app-access level="user" ng-if="explore.card.userCanEdit() || explore.card.isOwnedByCurrentUser()">
+                                <a ui-sref="cardBuilder({cardId: explore.cardId})">
+                                    <i class="fa fa-pencil-square-o fa-fw"></i>
+                                    <span>Edit Card</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <a class="btn btn-eighth pull-right" ng-click="explore.exit()">
+                        <i class="fa fa-fw fa-compress"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Visual -->
+            <div class="row border-bottom">
+                <div class="col-lg-12">
+                    <tu-visual card="explore.card" reload="explore.reload()" ng-style="explore.card.image.cssStyle()" error="explore.isError()" type="explore.getType()"></tu-visual>
+                </div>
+            </div>
+
+            <!-- Tab Navigation -->
+            <ul class="nav nav-tabs" app-access level="user" ng-if="!explore.card.isImageOrDraft() && !explore.card.isText()">
+                <li ng-class="{active : explore.tabs.is('annotations')}">
+                    <a href ng-click="explore.setTab('annotations')">
+                        Annotations
+                    </a>
+                </li>
+                <li ng-class="{active : explore.tabs.is('preview')}" ng-if="explore.isDrilltableVisible()">
+                    <a href ng-click="explore.setTab('preview')">
+                        Preview
+                    </a>
+                </li>
+                <li ng-class="{active : explore.tabs.is('explain')}">
+                    <a href ng-click="explore.setTab('explain')">
+                        Explain
+                    </a>
+                </li>
+                <li ng-class="{active : explore.tabs.is('alerts')}">
+                    <a href ng-click="explore.setTab('alerts')">
+                        Alerts
+                        <span ng-show="explore.card.alerts.length" class="badge badge-danager animated bounceIn" ng-bind-html="explore.card.alerts.length"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-nav-content" app-access level="user" ng-if="!explore.card.isImageOrDraft() && !explore.card.isText()">
+                <div ng-if="explore.tabs.is('preview') && explore.isDrilltableVisible()">
+                    <app-drilltable ng-show="!explore.isLoading()"></app-drilltable>
+                </div>
+                <div ng-if="explore.tabs.is('explain')" class="explain-card">
+                    <app-explain-card-info card="explore.card"></app-explain-card-info>
+                    <app-explain-card-definition card="explore.card"></app-explain-card-definition>
+                    <app-explain-card-sql card="explore.card"></app-explain-card-sql>
+                </div>
+                <div ng-if="explore.tabs.is('alerts')">
+                    <app-alerts card="explore.card" ng-if="explore.cardInfoFullyLoaded"></app-alerts>
+                </div>
+                <div ng-show="explore.tabs.is('annotations')">
+                    <app-annotations card="explore.card"></app-annotations>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
